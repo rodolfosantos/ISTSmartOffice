@@ -3,6 +3,7 @@
  */
 package eu.smartcampus.api;
 
+import java.security.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -15,25 +16,25 @@ import eu.smartcampus.util.*;
  */
 public interface RemoteAPI {
 
-    public Map<DatapointAddress, SamplingRate> getCurrentSamplingRate(int idSensor, List<DatapointAddress> datapoints);
+    public Map<DatapointAddress, SamplingRate> getCurrentSamplingRate(Sensor sensor, List<DatapointAddress> datapoints);
     
-    public List<DatapointAddress> getDataPointAddresses(int idSensor);
+    public List<DatapointAddress> getDataPointAddresses(Sensor sensor);
     
-    public Map<DatapointAddress, Reading> getLastReading(int idSensor, List<DatapointAddress> datapoints);
+    public Map<DatapointAddress, Reading> getLastReading(Sensor sensor, List<DatapointAddress> datapoints);
     
-    public Map<Timestamp, List<Reading>> readTimeWindow(int idSensor, List<DatapointAddress> datapoints, Timewindow window);
+    public Map<Timestamp, List<Reading>> readTimeWindow(Sensor sensor, List<DatapointAddress> datapoints, Timewindow window);
     
-    public Map<Integer, List<Reading>> readSizeWindow(int idSensor, List<DatapointAddress> datapoints, Timewindow nReadings);
+    public Map<Timestamp, List<Reading>> readSizeWindow(Sensor sensor, List<DatapointAddress> datapoints, Integer nReadings);
             
-    public Map<DatapointAddress, Reading> forceDatapointReading(int idSensor, List<DatapointAddress> datapoints);
+    public Map<DatapointAddress, Reading> forceDatapointReading(Sensor sensor, List<DatapointAddress> datapoints);
 
-    public Map<DatapointAddress, Integer> getReadStorageCapacity(int idSensor, List<DatapointAddress> datapoints);
+    public Map<DatapointAddress, Integer> getReadStorageCapacity(Sensor sensor, List<DatapointAddress> datapoints);
     
-    public Map<DatapointAddress, Metadata> getSensorMetadata(int idSensor, List<DatapointAddress> datapoints);
+    public Map<DatapointAddress, Metadata> getSensorMetadata(Sensor sensor, List<DatapointAddress> datapoints);
     
-    public List<idSensor> getSensorByType(SensorType type);
+    public List<Sensor> getSensorByType(SensorType type);
     
-    public List<idSensor> getAllSensors();
+    public List<Sensor> getAllSensors();
     
     public void registerListner(Client client, int idSensor, List<DatapointAddress> datapoints);
     

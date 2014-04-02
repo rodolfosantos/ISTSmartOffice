@@ -16,6 +16,13 @@ import eu.smartcampus.util.*;
  */
 public interface RemoteAPI {
 
+    /**
+     * Gets an array with the corresponding sampling rate for the datapoints of a given sensor.
+     *
+     * @param  sensor the sensor to which belong the datapoints
+     * @param  datapoints the list of datapoints for which we want to know the sampling rate
+     * @return the sampling rate for the corresponding datapoint
+     */
     public Map<DatapointAddress, SamplingRate> getCurrentSamplingRate(Sensor sensor, List<DatapointAddress> datapoints);
     
     public List<DatapointAddress> getDataPointAddresses(Sensor sensor);

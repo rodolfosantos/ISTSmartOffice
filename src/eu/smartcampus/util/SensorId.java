@@ -1,6 +1,6 @@
 package eu.smartcampus.util;
 
-public class Sensor {
+public class SensorId {
 
     long id;
 

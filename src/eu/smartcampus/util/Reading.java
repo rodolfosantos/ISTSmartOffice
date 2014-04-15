@@ -1,32 +1,22 @@
 package eu.smartcampus.util;
 
-import java.security.Timestamp;
 
 public class Reading {
 
-    private int value;
-    private Timestamp ts;
-    private DatapointAddress datapoint;
-    
-    
+    private final int value;
+    private final long ts;
+
+    public Reading(int value, long ts) {
+        this.value = value;
+        this.ts = ts;
+    }
+
     public int getValue() {
         return value;
     }
-    public void setValue(int value) {
-        this.value = value;
-    }
-    public Timestamp getTs() {
+
+    public long getTs() {
         return ts;
     }
-    public void setTs(Timestamp ts) {
-        this.ts = ts;
-    }
-    public DatapointAddress getDatapoint() {
-        return datapoint;
-    }
-    public void setDatapoint(DatapointAddress datapoint) {
-        this.datapoint = datapoint;
-    }
-   
-    
+
 }

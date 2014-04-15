@@ -170,3 +170,4 @@ pip-log.txt
 /proj/lumina/*.log
 /proj/lumina/*.log
 examples/
+/doc

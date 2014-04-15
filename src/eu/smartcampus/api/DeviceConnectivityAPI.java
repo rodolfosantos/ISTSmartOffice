@@ -44,12 +44,10 @@ public interface DeviceConnectivityAPI {
     /**
      * Gets the last datapoint's reading of a given sensor
      *
-     * @param  sensor the sensor for which we want to know the last reading
-     * @param  datapoints the set of datapoints, belonging to the sensor, for which we want to know the last reading
+     * @param  datapoints the set of datapoints (that due the absolute path serves to identify the sensor) for which we want to know the last reading
      * @return the set of last readings for the corresponding datapoints
      */
-    public Map<DatapointAddress, Reading> getLastReading(SensorId sensor,
-                                                         List<DatapointAddress> datapoints);
+    public Map<DatapointAddress, Reading> getLastReading(List<DatapointAddress> datapoints);
     
     
     /**

@@ -3,15 +3,15 @@ package eu.smartcampus.util;
 
 public class Reading {
 
-    private final int value;
+    private final double value;
     private final long ts;
 
-    public Reading(int value, long ts) {
+    public Reading(double value, long ts) {
         this.value = value;
         this.ts = ts;
     }
 
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 

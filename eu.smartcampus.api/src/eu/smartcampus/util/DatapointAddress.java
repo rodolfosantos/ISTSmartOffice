@@ -11,8 +11,13 @@ public class DatapointAddress {
 
     private String address;
 
+    public DatapointAddress(String address){
+        this.address = address;
+    }
+    
+    
     public String getAddress() {
-        return address;
+        return this.address;
     }
 
     public void setAddress(String address) {

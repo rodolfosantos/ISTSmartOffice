@@ -10,6 +10,8 @@ import javax.ws.rs.core.Response;
 
 import com.google.gson.Gson;
 
+import eu.smartcampus.api.impl.UsersManagerImpl;
+
 @Path("/usersmanager")
 public class UsersManagerREST {
 
@@ -17,7 +19,7 @@ public class UsersManagerREST {
 	@Path("/getuserslist")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getUserList() {		
-		return Response.ok(new Gson().toJson(UsersManager.getInstance().getUsersList())).build();
+		return Response.ok(new Gson().toJson(UsersManagerImpl.getInstance().getUsersList())).build();
 	}
 	
 	
@@ -25,7 +27,7 @@ public class UsersManagerREST {
 	@Path("/adduser")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addUser(@HeaderParam("username") String username, @HeaderParam("password") String password) {	
-		boolean res = UsersManager.getInstance().addUser(username, password);
+		boolean res = UsersManagerImpl.getInstance().addUser(username, password);
 		return Response.ok(new Gson().toJson(res)).build();
 	}
 	
@@ -33,7 +35,7 @@ public class UsersManagerREST {
 	@Path("/removeuser")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response removeUser(@HeaderParam("username") String username) {	
-		boolean res = UsersManager.getInstance().removeUser(username);
+		boolean res = UsersManagerImpl.getInstance().removeUser(username);
 		return Response.ok(new Gson().toJson(res)).build();
 	}
 	
@@ -41,7 +43,7 @@ public class UsersManagerREST {
 	@Path("/checkcredentials")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response checkUserName(@HeaderParam("username") String username, @HeaderParam("password") String password) {	
-		boolean res = UsersManager.getInstance().checkCredentials(username, password);
+		boolean res = UsersManagerImpl.getInstance().checkCredentials(username, password);
 		return Response.ok(new Gson().toJson(res)).build();
 	}
 	

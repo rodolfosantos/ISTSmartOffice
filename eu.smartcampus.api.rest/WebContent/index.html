@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="ISO-8859-1">
+		<!-- Import Libs  -->	
+		<script src="amcharts.js" type="text/javascript"></script> 
+		<script src="serial.js" type="text/javascript"></script> 
+		<script src="amstock.js" type="text/javascript"></script>
+		
+		<link rel="stylesheet" href="style.css" type="text/css">
+		
+		<!-- JS code  -->
+		<script type="text/javascript">
+			//To ensure all the scripts and HTML is loaded
+			
+			function getRequest(url){
+				//document.write("Begin");	
+				var httpRequest = new XMLHttpRequest();
+				httpRequest.open( "GET", url, false); 	//false == not assyncronous call (no need for handling)
+				httpRequest.send( null );				//it's a GET params send with the URL
+				//document.write("<br>"+httpRequest.responseText+"<br>");	
+				//console.log("<br>"+httpRequest.responseText+"<br>");	
+				//document.write("End");
+				return httpRequest.responseText;
+			}
+	
+			function processRequest(dataReading){
+		     //   	{date: new Date(2011, 5, 1, 10, 0, 0, 0), val:10},
+			 //		{ "ts": "1396883813350", "reading": "757"}
+		     
+		     
+		     	var readingDate = JSON.parse(dataReading).ts;
+		     	console.log("Readed TS:"+readingDate);
+			 	var readingVal	= JSON.parse(dataReading).value;
+		     	console.log("Readed value:"+readingVal);		     	
+			 	var dateR = new Date(readingDate*1); //hack: *1 para converter a string para um inteiro
+				return {date: dateR, val:readingVal};
+			}
+			
+			
+			
+			var day = 1;
+			
+			AmCharts.ready(function(){ 
+			
+			
+			var chartData= [ //Date -> JScript data type			                 
+			                 /*{date: new Date(2011, 5, 1, 10, 0, 0, 0), val:10},
+			                 {date: new Date(2011, 5, 1, 11, 0, 0, 0), val:11},
+			                 {date: new Date(2011, 5, 1, 12, 0, 0, 0), val:12},
+			                 {date: new Date(2011, 5, 1, 13, 0, 0, 0), val:11},
+			                 {date: new Date(2011, 5, 1, 14, 0, 0, 0), val:10},
+			                 {date: new Date(2011, 5, 1, 15, 0, 0, 0), val:11},
+			                 {date: new Date(2011, 5, 1, 16, 0, 0, 0), val:13},
+			                 {date: new Date(2011, 5, 1, 17, 0, 0, 0), val:14},
+			                 {date: new Date(2011, 5, 1, 18, 0, 0, 0), val:17},
+			                 {date: new Date(2011, 5, 1, 19, 0, 0, 0), val:13}*/
+			            ];
+			
+			
+			for(var i = 0; i<2; i++){
+				//var dataReading = getRequest("/getRecentData");
+		        //var dataReading = getRequest("/getLastReading?sensorId=library");		
+		        var dataReading = getRequest("/eu.smartcampus.api.rest/service/deviceapi/readdatapoint/172.20.70.232");
+		        var newData = processRequest(dataReading);
+		        chartData.push(newData);
+			}
+				
+			
+			var chart = new AmCharts.AmStockChart(); 	//Create chart
+			chart.pathToImages = "amcharts/images/";	//specifie the image path
+			
+			var dataSet = new AmCharts.DataSet();		//define the chart data set (at least one data have to exist)
+			dataSet.dataProvider = chartData;			//populate the dataset
+			
+			dataSet.fieldMappings = [{fromField:"val", toField:"Watts"}];
+			dataSet.categoryField = "date";
+			
+			chart.dataSets = [dataSet];
+
+			var stockPanel = new AmCharts.StockPanel();
+			chart.panels = [stockPanel];
+			
+			var panelsSettings = new AmCharts.PanelsSettings();
+			panelsSettings.startDuration = 0; 			// duration of initial animation equal to 1 second.
+			chart.panelsSettings = panelsSettings;
+			
+			var graph = new AmCharts.StockGraph();
+			graph.valueField = "Watts";
+			graph.type = "smoothedLine"; // options: "line", "column", "step", "smoothedLine", "candlestick", "ohlc" 
+			graph.fillAlphas = 0;
+			graph.title = "Biblioteca";
+			stockPanel.addStockGraph(graph);
+			
+			var categoryAxesSettings = new AmCharts.CategoryAxesSettings();
+			categoryAxesSettings.minPeriod = "ss";
+			chart.categoryAxesSettings = categoryAxesSettings;
+			
+			//categoryAxesSettings.equalSpacing = true; //don't show between data gaps
+			
+			
+			var chartScrollbarSettings = new AmCharts.ChartScrollbarSettings();
+			chartScrollbarSettings.graph = graph;
+			chartScrollbarSettings.graphType = "line";
+			chart.chartScrollbarSettings = chartScrollbarSettings;
+			
+		//	chart.chartCursorSettings.enabled = false;
+		//	chart.chartScrollbarSettings.enabled = false;
+		
+			
+			var legend = new AmCharts.StockLegend();
+			stockPanel.stockLegend = legend;
+			
+			var chartCursorSettings = new AmCharts.ChartCursorSettings(); //mostrar legenda no gráfico
+			chartCursorSettings.valueBalloonsEnabled = true;
+			chart.chartCursorSettings = chartCursorSettings;
+			
+			var periodSelector = new AmCharts.PeriodSelector();
+			chart.periodSelector = periodSelector;
+			
+			periodSelector.periods = [
+			                          {period:"DD", count:1, label:"1 day"}, 
+			                          {period:"DD", selected:true, count:5, label:"5 days"},
+			                          {period:"MM", count:1, label:"1 month"},
+			                          {period:"YYYY", count:1, label:"1 year"},
+			                          {period:"YTD", label:"YTD"},
+			                          {period:"MAX", label:"MAX"}
+			                       ];
+			
+			
+			chart.write("chartdiv");
+			
+			// set up the chart to update every second
+		    setInterval(function () {
+
+		    	//chartData.shift();		    	
+		        //var dataReading = getRequest("/getRecentData");
+		        var dataReading = getRequest("/eu.smartcampus.api.rest/service/deviceapi/readdatapoint/172.20.70.232");		
+		        
+		        var newData = processRequest(dataReading);
+		        
+		        chartData.push(newData);
+		        chart.validateData();
+		        chart.write("chartdiv");
+		        console.log("ChartArraySize: "+chartData.length);
+		    }, 7000);
+			
+			
+			});
+						
+		</script>
+	
+	</head>
+
+	<body>
+		<!-- <h1>TESTE-A</h1> -->
+		<div id="chartdiv" style="width:90%; height:400px; position:fixed; top: 5%; left: 5%"></div>
+	</body>
+</html>

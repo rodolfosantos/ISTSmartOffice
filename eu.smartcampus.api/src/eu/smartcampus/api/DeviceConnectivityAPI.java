@@ -1,15 +1,11 @@
 package eu.smartcampus.api;
 
 import java.security.Timestamp;
-import java.util.List;
 
-import eu.smartcampus.util.Client;
 import eu.smartcampus.util.DatapointAddress;
 import eu.smartcampus.util.Metadata;
 import eu.smartcampus.util.Reading;
-import eu.smartcampus.util.SamplingRate;
-import eu.smartcampus.util.SensorId;
-import eu.smartcampus.util.SensorType;
+import eu.smartcampus.util.Value;
 
 /**
  * API that abstracts the connection details to devices.
@@ -18,78 +14,106 @@ import eu.smartcampus.util.SensorType;
  */
 public interface DeviceConnectivityAPI {
 
-    /**
-     * Possible errors
-     * - Gateway not found
-     * - Gateway communication error
-     * - Device communication error
-     * - 
-     * - Device not responding
-     * - Device busy
-     * - Device network busy
-     * - Wrong device address
-     * - 
-     */
-    
-    /**
-     * Metadata:
-     * 
-     * - Sampling rate min - 
-     * - Sampling rate max - readings/sec
-     * - Units - 
-     * - Precision - 
-     * - Datatype - 
-     * - 
-     */
-    
-    
-    public class InexistentDatapointException extends
-            Exception {
-
-
-    }
-
-    public class ConnectionErrorException extends
-            Exception {
-
-    }
-
-    public class TimeoutException extends
-            Exception {
-
-    }
 
     /**
-     * Gets all sensors belonging to a given type.
-     * 
-     * @param type the type of sensor for which we are looking for
-     * @return the list of sensors belonging to a certain type
+     * Type of write confirmation.
      */
-    List<SensorId> getSensorByType(SensorType type);
+    enum ConfirmationLevel {
+        /**
+         * Write operation sent to the gateway but confirmation so far. This is the level
+         * to be used when there no confirmation is possible.
+         */
+        UNCONFIRMED,
+
+        /**
+         * The write operation was sent to the gateway and confirmed. An acknowledge in
+         * this level means that the message has arrived at the gateway.
+         */
+        GATEWAY_CONFIRMED,
+
+        /**
+         * The device confirmed the write operation.
+         */
+        DEVICE_CONFIRMED,
+
+        /**
+         * The device has confirmed to take action upon the write request.
+         */
+        DEVICE_ACTION_TAKEN
+    }
+
+    enum ErrorType {
+        GATEWAY_NOT_FOUND, GATEWAY_CONNECTION_ERROR, GATEWAY_NOT_RESPONDING, GATEWAY_BUSY, DEVICE_NOT_FOUND, DEVICE_CONNECTION_ERROR, DEVICE_NOT_RESPONDING, DEVICE_BUSY
+    }
+
+    interface ReadListener {
+        /**
+         * Notifies that a write operation was aborted.
+         * 
+         * @param address the address of the datapoint
+         * @param value the value being written
+         * @param reason the reason that caused the write operation to be aborted
+         * @param requestId the id of the request
+         */
+        void readAborted(DatapointAddress address, Value value, ErrorType reason, int requestId);
+
+
+        /**
+         * Notifies that a value read from datapoint has arrived.
+         * <p>
+         * 
+         * @param address the datapoint where the datapoint was written.
+         * @param readings an array of readings.
+         */
+        void readAcknowledge(DatapointAddress address, Reading[] readings, int requestId);
+    };
+
+
+    interface WriteListener {
+        /**
+         * Notifies that a write operation was aborted.
+         * 
+         * @param address the address of the datapoint
+         * @param value the value being written
+         * @param reason the reason that caused the write operation to be aborted
+         * @param requestId the id of the request
+         */
+        void writeAborted(DatapointAddress address, Value value, ErrorType reason, int requestId);
+
+
+        /**
+         * Notifies that a value was written to the a datapoint.
+         * <p>
+         * In some situations it may not possible to guarantee that the value was written.
+         * The device or protocol may not support acknowledging writing events. This is
+         * the case for example of X10 devices. If the datapoint can be read, implementers
+         * 
+         * @param address the datapoint where the datapoint was written.
+         * @param value the value that was written.
+         */
+        void writeAcknowledge(DatapointAddress address,
+                              Value value,
+                              ConfirmationLevel confirmationLevel,
+                              int requestId);
+    }
+
+
 
     /**
      * Gets all sensors register in the system.
      * 
      * @return the list of all registered sensors
      */
-    List<SensorId> getAllSensors();
+    DatapointAddress[] getAllDatapoints();
 
     /**
-     * Gets the datapoints of a given sensor.
+     * For each datapoint of a given sensor gets their metadata.
      * 
-     * @param sensor the sensor for which we want to know the sampling rate
-     * @return the list of datapoints for the corresponding sensor
+     * @param address the set of datapoints, belonging to the sensor, for which we want to
+     *            know the metadata
+     * @return the metadata for each datapoint
      */
-    List<DatapointAddress> getDataPointAddresses(SensorId sensor);
-
-    /**
-     * Get the corresponding sampling rates for the datapoints of a given sensor.
-     * 
-     * @param sensor the sensor to which belong the datapoints
-     * @param address the list of datapoints for which we want to know the sampling rate
-     * @return the set of sampling rates for the corresponding datapoints
-     */
-    int getDatapointSamplingRate(DatapointAddress address);
+    Metadata getDatapointMetadata(DatapointAddress address);
 
     /**
      * Gets the last available reading of a datapoint.
@@ -100,10 +124,13 @@ public interface DeviceConnectivityAPI {
      * returned.
      * 
      * @param address the absolute address of the datapoint to be read
-     * @return the last reading of a datapoint
+     * @param clientKey the identifier of the client making the request * @return the id
+     *            of the write request used to by the client to identify the acknowledge
+     *            of this request
+     * @return the id of the write request used to by the client to identify the
+     *         acknowledge of this request
      */
-    Reading readDatapoint(DatapointAddress address) throws InexistentDatapointException,
-            ConnectionErrorException;
+    int requestDatapointRead(DatapointAddress address, int clientKey);
 
     /**
      * Gets the readings a datapoint within a given time window.
@@ -116,80 +143,60 @@ public interface DeviceConnectivityAPI {
      * @param start the timestamp that defines the initial window
      * @param finish timestamp that defines the final window. Should be greater or equal
      *            to start.
+     * @param clientKey the identifier of the client making the request
+     * @return the id of the read request used to by the client to identify the
+     *         acknowledge of this request
      * @return <ol>
      *         <li>an empty array, if <tt>start &gt; finish</tt></li><li>a single reading
      *         <i>r</i>, if available, such that <tt><i>r.ts</i> == start == finish</tt>,
      *         if <tt>start == finish</tt></li> <li>all readings <i>r</i>, if avaliable,
      *         such that <tt>start &le;<i>r.ts</i> &le; finish</tt>
      *         </ol>
-     * @throws InexistentDatapointException if the datapoint with the given address does
-     *             not exist
-     * @throws ConnectionErrorException if the device cannot be contacted
      */
-    Reading[] readDatapointWindow(DatapointAddress address, Timestamp start, Timestamp finish) throws InexistentDatapointException,
-            ConnectionErrorException;
+    int requestDatapointWindowRead(DatapointAddress address,
+                                   Timestamp start,
+                                   Timestamp finish,
+                                   int clientKey);
 
     /**
-     * Gets the maximum number of readings cached a given datapoint.
-     * <p>
-     * The value returned by this method can be used prioritize the readings to different
-     * datapoints. The devices that maintain have smaller storage capacities must be
-     * queried more often in order to maintain the required data freshness.
-     * <p>
-     * This method returns <tt>0</tt> to signify that the device (or the driver on its
-     * behalf) maintains no memory for the readings. As a consequence, every calling
-     * {@link #readDatapointWindow(DatapointAddress, Timestamp, Timestamp)} should return
-     * an empty array.z\
+     * Request a datapoint write.
      * 
-     * @param address the absolute address of the datapoint for which we want to know the
-     *            storage capacity
-     * @return an indicative value <i>n</i> of the maximum storage capacity for the
-     *         datapoint such that
-     *         <tt><i>n</i>&ge;count(readDatapointTimeWindow(address, <i>s</i>,
-     *         <i>f</i>))</tt> for any <tt><i>s</i></tt> &le; <tt><i>f</i></tt>
+     * @param address the address of the datapoint
+     * @param value the value to be written to the datapoint
+     * @param clientKey the identifier of the client making the request
+     * @return the id of the write request used to by the client to identify the
+     *         acknowledge of this request
      */
-    int getCacheCapacity(DatapointAddress address);
+    int requestDatapointWrite(DatapointAddress address, Value value, int clientKey);
 
     /**
-     * For each datapoint of a given sensor gets their metadata.
+     * Registers a datapoint read listener.
      * 
-     * @param address the set of datapoints, belonging to the sensor, for which we want to
-     *            know the metadata
-     * @return the metadata for each datapoint
+     * @param listener the read listener
+     * @return a client key
      */
-    Metadata getDatapointMetadata(DatapointAddress address);
+    int addReadListener(ReadListener listener);
 
     /**
-     * Gets all sensors belonging to a given type.
+     * Registers a datapoint write listener.
      * 
-     * @param type the type of sensor for which we are looking for
-     * @return the list of sensors belonging to a certain type
+     * @param listener a write listener
+     * @return a client key
      */
-    DatapointAddress getDatapointByType(SensorType type);
+    int addWriteListener(WriteListener listener);
 
     /**
-     * Gets all sensors register in the system.
+     * Removes a read listener.
      * 
-     * @return the list of all registered sensors
+     * @param listener the listener to be removed.
      */
-    DatapointAddress[] getAllDatapoints();
+    void removeReadListener(ReadListener listener);
 
     /**
-     * Register a client that should be notified for each new datapoint's sensor reading.
+     * Removes a datapoint write listener.
      * 
-     * @param client the client that should be notified
-     * @param sensor the sensor in which the client are interested
-     * @return datapoints the sensro's datapoints in which the client is interested
+     * @param listener a write listener
+     * @return a client key
      */
-    public void registerListner(Client client, int idSensor, List<DatapointAddress> datapoints);
-
-    /**
-     * Unregister a client to stop being notified for each new datapoint's sensor reading.
-     * 
-     * @param client the client that no longer wants to be notified notified
-     * @param sensor the sensor for which the client want to stop to be notified
-     * @return datapoints the sensro's datapoints in which the client is not interested
-     *         anymore
-     */
-    public void removeListner(Client client, int idSensor, List<DatapointAddress> datapoints);
+    void removeWriteListener(WriteListener listener);
 }

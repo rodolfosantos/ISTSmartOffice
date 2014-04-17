@@ -2,21 +2,19 @@ package eu.smartcampus.util;
 
 
 public class Reading {
+    private final Value value;
+    private final long timestamp;
 
-    private final double value;
-    private final long ts;
-
-    public Reading(double value, long ts) {
+    public Reading(Value value, long timestamp) {
         this.value = value;
-        this.ts = ts;
+        this.timestamp = timestamp;
     }
 
-    public double getValue() {
+    public Value getValue() {
         return value;
     }
 
-    public long getTs() {
-        return ts;
+    public long getTimestamp() {
+        return timestamp;
     }
-
 }

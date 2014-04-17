@@ -13,114 +13,103 @@ import eu.smartcampus.util.SamplingRate;
 import eu.smartcampus.util.SensorId;
 import eu.smartcampus.util.SensorType;
 import eu.smartcampus.util.Timewindow;
+import eu.smartcampus.util.Value;
 
-public class DeviceConnectivityImpl implements DeviceConnectivityAPI {
-
-    /* 
-    private static DeviceConnectivityImpl instance = null;
-    
-    
-    public DeviceConnectivityImpl() {
-        instance = new DeviceConnectivityImpl();
-    }*/
-    
+public class DeviceConnectivityImpl
+        implements DeviceConnectivityAPI {
     
     @Override
-    public Map<DatapointAddress, Reading> forceDatapointReading(SensorId arg0,
-                                                                List<DatapointAddress> arg1) {
+    public DatapointAddress[] getAllDatapoints() {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public List<SensorId> getAllSensors() {
+    public Metadata getDatapointMetadata(DatapointAddress address) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public Map<DatapointAddress, SamplingRate> getCurrentSamplingRate(SensorId arg0,
-                                                                      List<DatapointAddress> arg1) {
+    public int requestDatapointRead(DatapointAddress address, int clientKey) {
+
+
+        //          Reading response;
+        //          SensorDriver sensor = new SensorDriver("https://"+address.getAddress()+"/reading", "root", "root");
+        //          //String sensorId = address.getAddress();           
+        //          /*SensorDriver sensor = null;
+        //          switch(sensorId){
+        //              case "library"          : sensor = new SensorDriver("https://172.20.70.232/reading", "root", "root"); break;
+        //              case "kernel_14"        : sensor = new SensorDriver("https://172.20.70.229/reading", "root", "root"); break;
+        //              case "kernel_16"        : sensor = new SensorDriver("https://172.20.70.238/reading", "root", "root"); break;
+        //              case "room_1.17"        : sensor = new SensorDriver("https://172.20.70.234/reading", "root", "root"); break;
+        //              case "room_1.19"        : sensor = new SensorDriver("https://172.20.70.235/reading", "root", "root"); break;                
+        //              case "UTA_A4"           : sensor = new SensorDriver("https://172.20.70.237/reading", "root", "root"); break;                
+        //              case "amphitheater_A4"  : sensor = new SensorDriver("https://172.20.70.231/reading", "root", "root"); break;
+        //              case "amphitheater_A5"  : sensor = new SensorDriver("https://172.20.70.233/reading", "root", "root"); break;
+        //              case "laboratory_1.58"  : sensor = new SensorDriver("https://172.20.70.236/reading", "root", "root"); break;
+        //              default                 : System.out.println("*** Error ***: This sensor does NOT exist");
+        //          }*/           
+        //          double value = sensor.getNewMeasure().getTotalPower();                        
+        //          long ts = sensor.getNewMeasure().geTimestamp()*1000;            
+        //          response =  new Reading(value, ts);          
+        //          return response;
+
+        new Thread() {
+            public void run() {
+                //meter
+                
+            }
+        }.start();
+
+
+        return 0;
+    }
+
+    @Override
+    public int requestDatapointWindowRead(DatapointAddress address,
+                                          Timestamp start,
+                                          Timestamp finish,
+                                          int clientKey) {
         // TODO Auto-generated method stub
-        return null;
+        return 0;
     }
 
     @Override
-    public List<DatapointAddress> getDataPointAddresses(SensorId arg0) {
+    public int requestDatapointWrite(DatapointAddress address, Value value, int clientKey) {
         // TODO Auto-generated method stub
-        return null;
+        return 0;
     }
 
     @Override
-    public Map<DatapointAddress, Integer> getReadStorageCapacity(SensorId arg0,
-                                                                 List<DatapointAddress> arg1) {
+    public int addReadListener(ReadListener listener) {
         // TODO Auto-generated method stub
-        return null;
+        return 0;
     }
 
     @Override
-    public List<SensorId> getSensorByType(SensorType arg0) {
+    public int addWriteListener(WriteListener listener) {
         // TODO Auto-generated method stub
-        return null;
+        return 0;
     }
 
     @Override
-    public Map<DatapointAddress, Metadata> getSensorMetadata(SensorId arg0,
-                                                             List<DatapointAddress> arg1) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Reading readDatapoint(DatapointAddress address) {
-        
-        String sensorId = address.getAddress();   
-        Reading response;
-        SensorDriver sensor = null;
-        switch(sensorId){
-            case "library"          : sensor = new SensorDriver("https://172.20.70.232/reading", "root", "root"); break;
-            case "kernel_14"        : sensor = new SensorDriver("https://172.20.70.229/reading", "root", "root"); break;
-            case "kernel_16"        : sensor = new SensorDriver("https://172.20.70.238/reading", "root", "root"); break;
-            case "room_1.17"        : sensor = new SensorDriver("https://172.20.70.234/reading", "root", "root"); break;
-            case "room_1.19"        : sensor = new SensorDriver("https://172.20.70.235/reading", "root", "root"); break;                
-            case "UTA_A4"           : sensor = new SensorDriver("https://172.20.70.237/reading", "root", "root"); break;                
-            case "amphitheater_A4"  : sensor = new SensorDriver("https://172.20.70.231/reading", "root", "root"); break;
-            case "amphitheater_A5"  : sensor = new SensorDriver("https://172.20.70.233/reading", "root", "root"); break;
-            case "laboratory_1.58"  : sensor = new SensorDriver("https://172.20.70.236/reading", "root", "root"); break;
-            default                 : System.out.println("*** Error ***: This sensor does NOT exist");
-        }            
-        double value = sensor.getNewMeasure().getTotalPower();                        
-        long ts = sensor.getNewMeasure().geTimestamp()*1000;            
-        response =  new Reading(value, ts);          
-        return response;
-    }
-
-    @Override
-    public Map<Timestamp, List<Reading>> readSizeWindow(SensorId arg0,
-                                                        List<DatapointAddress> arg1,
-                                                        Integer arg2) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Map<Timestamp, List<Reading>> readTimeWindow(SensorId arg0,
-                                                        List<DatapointAddress> arg1,
-                                                        Timewindow arg2) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public void registerListner(Client arg0, int arg1, List<DatapointAddress> arg2) {
+    public void removeReadListener(ReadListener listener) {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void removeListner(Client arg0, int arg1, List<DatapointAddress> arg2) {
+    public void removeWriteListener(WriteListener listener) {
         // TODO Auto-generated method stub
 
     }
+
+
+
+
+
+
+
 
 }

@@ -15,7 +15,7 @@ import eu.smartcampus.api.UsersManagerAPI;
 
 public class UsersManagerImpl implements UsersManagerAPI {
 
-	private static UsersManagerImpl instance = null;
+	private static UsersManagerAPI instance = null;
 	private Map<String, String> users;
 
 	private UsersManagerImpl() {
@@ -28,7 +28,7 @@ public class UsersManagerImpl implements UsersManagerAPI {
 		this.addUser("user3", "user");
 	}
 
-	public static synchronized UsersManagerImpl getInstance() {
+	public static synchronized UsersManagerAPI getInstance() {
 		if (instance == null) {
 			instance = new UsersManagerImpl();
 		}

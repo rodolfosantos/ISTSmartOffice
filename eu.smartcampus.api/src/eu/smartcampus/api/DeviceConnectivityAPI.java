@@ -188,15 +188,16 @@ public interface DeviceConnectivityAPI {
     /**
      * Removes a read listener.
      * 
-     * @param listener the listener to be removed.
+     * @param listener the listener to be removed
+     * @return the client key of the listener
      */
-    void removeReadListener(ReadListener listener);
+    int removeReadListener(ReadListener listener);
 
     /**
      * Removes a datapoint write listener.
      * 
      * @param listener a write listener
-     * @return a client key
+     * @return the client key of the listener
      */
-    void removeWriteListener(WriteListener listener);
+    int removeWriteListener(WriteListener listener);
 }

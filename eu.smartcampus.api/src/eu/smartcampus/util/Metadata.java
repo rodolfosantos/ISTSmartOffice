@@ -51,12 +51,12 @@ public class Metadata {
     /**
      * The units of this data point.
      */
-    private final String units;
+    private String units;
 
     /**
      * The datatype of the datapoint.
      */
-    private final Datatype datatype;
+    private Datatype datatype;
 
     /**
      * The maximum number of digits on a datapoint reading.
@@ -67,44 +67,45 @@ public class Metadata {
      * The precision (i.e. the number of digits) of the datapoint values. Should be
      * positive and not greater than {@value #MAX_DIGITS}.
      */
-    private final int precision;
+    private int precision;
 
     /**
      * The number of decimal digits of the datapoint values. The scale can be negative,
      * positive or zero and indicates that the value <i>v</i> of a datapoint must be
      * interpreted as <i>v*10^-scale</i>
      */
-    private final int scale;
+    private int scale;
 
     /** The max sampling rate. */
-    private final int maxSamplignRate;
+    private int maxSamplignRate;
 
     /** The current sampling frequency. */
-    private final int samplingFrequency;
+    private int samplingFrequency;
 
     /** The access type. */
-    private final AccessType accessType;
+    private AccessType accessType;
 
     /** The change of value. */
-    private final int changeOfValue;
+    private int changeOfValue;
 
     /** The hysterisys. */
-    private final int hysterisys;
+    private int hysterisys;
 
     /** The display max. */
-    private final int displayMax;
+    private int displayMax;
 
     /** The display min. */
-    private final int displayMin;
 
+    private int displayMin;
     /** The hardware max. */
-    private final int readingUpperLimit;
+
+    private int readingUpperLimit;
 
     /** The hardware min. */
-    private final int readingLowerLimit;
+    private int readingLowerLimit;
 
     /** The read cache size. */
-    private final int readCacheSize;
+    private int readCacheSize;
 
     /**
      * Gets the maximum number of readings cached a given datapoint.
@@ -128,15 +129,17 @@ public class Metadata {
     int getCacheCapacity(DatapointAddress address) {
         return 0;
     }
-    
-    
+
+
     /**
-    * Get the corresponding sampling rates for the datapoints of a given sensor.
-    * 
-    * @param sensor the sensor to which belong the datapoints
-    * @param address the list of datapoints for which we want to know the sampling rate
-    * @return the set of sampling rates for the corresponding datapoints
-    */
-   int getDatapointSamplingRate(DatapointAddress address);
+     * Get the corresponding sampling rates for the datapoints of a given sensor.
+     * 
+     * @param sensor the sensor to which belong the datapoints
+     * @param address the list of datapoints for which we want to know the sampling rate
+     * @return the set of sampling rates for the corresponding datapoints
+     */
+    int getDatapointSamplingRate(DatapointAddress address) {
+        return 0;
+    }
 
 }

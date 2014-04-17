@@ -41,10 +41,18 @@ public abstract class AbstractDeviceConnectivityAPI
 
     protected void notifyReadAcknowledge(final int clientKey,
                                          DatapointAddress address,
-                                         Reading readings,
+                                         Reading reading,
                                          int requestId) {
         final ReadListener l = readListeners.get(Integer.valueOf(clientKey));
-        l.readAcknowledge(address, readings, requestId);
+        l.readAcknowledge(address, reading, requestId);
+    }
+
+    protected void notifyReadAcknowledge(final int clientKey,
+                                         DatapointAddress address,
+                                         Reading[] reading,
+                                         int requestId) {
+        final ReadListener l = readListeners.get(Integer.valueOf(clientKey));
+        l.readAcknowledge(address, reading, requestId);
     }
 
     @Override

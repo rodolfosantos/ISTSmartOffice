@@ -1,4 +1,4 @@
-package eu.smartcampus.api.rest;
+package eu.smartcampus.api.impl;
 
 /**
  * @author Rodolfo Santos
@@ -7,24 +7,30 @@ package eu.smartcampus.api.rest;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class UsersManager {
+import eu.smartcampus.api.UsersManagerAPI;
 
-	private static UsersManager instance = null;
+public class UsersManagerImpl implements UsersManagerAPI {
+
+	private static UsersManagerAPI instance = null;
 	private Map<String, String> users;
 
-	private UsersManager() {
-		users = new HashMap<String, String>();
+	private UsersManagerImpl() {
+		users = new ConcurrentHashMap<String, String>();
 		this.addUser("admin", "admin");
 		this.addUser("admin2", "admin");
+		this.addUser("admin3", "admin");
+		this.addUser("user", "user");
+		this.addUser("user2", "user");
+		this.addUser("user3", "user");
 	}
 
-	public static synchronized UsersManager getInstance() {
+	public static synchronized UsersManagerAPI getInstance() {
 		if (instance == null) {
-			instance = new UsersManager();
+			instance = new UsersManagerImpl();
 		}
 		return instance;
 	}
@@ -36,9 +42,6 @@ public class UsersManager {
 		return true;
 	}
 
-	private boolean checkUserName(String user) {
-		return users.containsKey(user.toLowerCase());
-	}
 
 	public boolean checkCredentials(String user, String pwd) {
 
@@ -58,7 +61,10 @@ public class UsersManager {
 	public Set<String> getUsersList() {
 		return users.keySet();
 	}
-
+	
+	private boolean checkUserName(String user) {
+		return users.containsKey(user.toLowerCase());
+	}
 
 	private String hash(String pwd) {
 		MessageDigest m;

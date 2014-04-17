@@ -43,10 +43,11 @@ public interface DeviceConnectivityAPI {
     }
 
     enum ErrorType {
-        GATEWAY_NOT_FOUND, GATEWAY_CONNECTION_ERROR, GATEWAY_NOT_RESPONDING, GATEWAY_BUSY, DEVICE_NOT_FOUND, DEVICE_CONNECTION_ERROR, DEVICE_NOT_RESPONDING, DEVICE_BUSY
+        GATEWAY_NOT_FOUND, GATEWAY_CONNECTION_ERROR, GATEWAY_NOT_RESPONDING, GATEWAY_BUSY,
+        DEVICE_NOT_FOUND, DEVICE_CONNECTION_ERROR, DEVICE_NOT_RESPONDING, DEVICE_BUSY
     }
 
-    interface ReadListener {
+    interface ReadCallback {
         /**
          * Notifies that a write operation was aborted.
          * 
@@ -75,10 +76,10 @@ public interface DeviceConnectivityAPI {
          * @param readings an array of readings.
          */
         void readAcknowledge(DatapointAddress address, Reading[] readings, int requestId);
-    };
+    }
 
 
-    interface WriteListener {
+    interface WriteCallback {
         /**
          * Notifies that a write operation was aborted.
          * 
@@ -105,8 +106,6 @@ public interface DeviceConnectivityAPI {
                               ConfirmationLevel confirmationLevel,
                               int requestId);
     }
-
-
 
     /**
      * Gets all sensors register in the system.
@@ -139,7 +138,7 @@ public interface DeviceConnectivityAPI {
      * @return the id of the write request used to by the client to identify the
      *         acknowledge of this request
      */
-    int requestDatapointRead(DatapointAddress address, int clientKey);
+    int requestDatapointRead(DatapointAddress address, ReadCallback readCallback);
 
     /**
      * Gets the readings a datapoint within a given time window.
@@ -165,7 +164,7 @@ public interface DeviceConnectivityAPI {
     int requestDatapointWindowRead(DatapointAddress address,
                                    Timestamp start,
                                    Timestamp finish,
-                                   int clientKey);
+                                   ReadCallback readCallback);
 
     /**
      * Request a datapoint write.
@@ -176,37 +175,5 @@ public interface DeviceConnectivityAPI {
      * @return the id of the write request used to by the client to identify the
      *         acknowledge of this request
      */
-    int requestDatapointWrite(DatapointAddress address, Value value, int clientKey);
-
-    /**
-     * Registers a datapoint read listener.
-     * 
-     * @param listener the read listener
-     * @return a client key
-     */
-    int addReadListener(ReadListener listener);
-
-    /**
-     * Registers a datapoint write listener.
-     * 
-     * @param listener a write listener
-     * @return a client key
-     */
-    int addWriteListener(WriteListener listener);
-
-    /**
-     * Removes a read listener.
-     * 
-     * @param listener the listener to be removed
-     * @return the client key of the listener
-     */
-    int removeReadListener(ReadListener listener);
-
-    /**
-     * Removes a datapoint write listener.
-     * 
-     * @param listener a write listener
-     * @return the client key of the listener
-     */
-    int removeWriteListener(WriteListener listener);
+    int requestDatapointWrite(DatapointAddress address, Value value, WriteCallback writeCallback);
 }

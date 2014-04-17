@@ -6,6 +6,10 @@ import java.util.Map;
 
 import eu.smartcampus.util.DatapointAddress;
 import eu.smartcampus.util.Metadata;
+<<<<<<< HEAD
+=======
+import eu.smartcampus.util.Reading;
+>>>>>>> [UPDATE] Updates to the API and Metadata classes
 import eu.smartcampus.util.Value;
 
 public abstract class AbstractDeviceConnectivityAPI
@@ -26,7 +30,10 @@ public abstract class AbstractDeviceConnectivityAPI
                                                    Timestamp finish,
                                                    int clientKey);
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> [UPDATE] Updates to the API and Metadata classes
     @Override
     public abstract int requestDatapointWrite(DatapointAddress address, Value value, int clientKey);
 
@@ -40,6 +47,17 @@ public abstract class AbstractDeviceConnectivityAPI
      */
     private final Map<Integer, WriteListener> writeListeners = new HashMap<Integer, WriteListener>();
 
+<<<<<<< HEAD
+=======
+    protected void notifyReadAcknowledge(final int clientKey,
+                                       DatapointAddress address,
+                                       Reading readings,
+                                       int requestId) {
+        final ReadListener l = readListeners.get(Integer.valueOf(clientKey));
+        l.readAcknowledge(address, readings, requestId);
+    }
+
+>>>>>>> [UPDATE] Updates to the API and Metadata classes
     @Override
     public final int addReadListener(ReadListener listener) {
         final int key = listener.hashCode();

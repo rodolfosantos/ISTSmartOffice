@@ -65,6 +65,15 @@ public interface DeviceConnectivityAPI {
          * @param address the datapoint where the datapoint was written.
          * @param readings an array of readings.
          */
+        void readAcknowledge(DatapointAddress address, Reading readings, int requestId);
+
+        /**
+         * Notifies that an array of values read from datapoint has arrived.
+         * <p>
+         * 
+         * @param address the address of the datapoint.
+         * @param readings an array of readings.
+         */
         void readAcknowledge(DatapointAddress address, Reading[] readings, int requestId);
     };
 

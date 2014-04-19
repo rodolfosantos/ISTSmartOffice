@@ -14,60 +14,71 @@ import eu.smartcampus.util.Value;
  */
 public interface DeviceConnectivityAPI {
 
-	/**
-	 * Type of write confirmation.
-	 */
-	enum ConfirmationLevel {
+	interface DatapointListener {
 		/**
-		 * Write operation sent to the gateway but confirmation so far. This is
-		 * the level to be used when there no confirmation is possible.
+		 * Invoked when datapoint value update occurs. This method can be used
+		 * to track external changes made in datapoints, such as a sensor
+		 * update.
+		 * 
+		 * @param address
+		 *            the datapoint's address
+		 * @param values
+		 *            the latest reading values
 		 */
-		UNCONFIRMED,
+		void datapointValueUpdated(DatapointAddress address, Reading[] values);
 
 		/**
-		 * The write operation was sent to the gateway and confirmed. An
-		 * acknowledge in this level means that the message has arrived at the
-		 * gateway.
+		 * Invoked when a write request is confirmed.
+		 * 
+		 * @param address
+		 *            the written datapoint's address
+		 * @param value
+		 *            the written value
+		 * @param confirmationLevel
+		 *            the confirmation level
+		 * @param requestId
+		 *            the request id
 		 */
-		GATEWAY_CONFIRMED,
+		void datapointWrite(DatapointAddress address, Value value,
+				WritingConfirmationLevel confirmationLevel, int requestId);
 
 		/**
-		 * The device confirmed the write operation.
+		 * Gets the listening datapoints addresses. This method is invoked each
+		 * time an event occurs in order to only notify the listeners interested
+		 * in a given set datapoints. If <b>null</b> is returned then the
+		 * listener will receive notifications concerning all datapoints.
+		 * 
+		 * @return the datapoint addresses to filter or <code>null</code> if no
+		 *         filter is desired
 		 */
-		DEVICE_CONFIRMED,
-
-		/**
-		 * The device has confirmed to take action upon the write request.
-		 */
-		DEVICE_ACTION_TAKEN
+		DatapointAddress[] getListeningDatapointsAddresses();
 	}
 
 	enum ErrorType {
-		GATEWAY_NOT_FOUND,
-		GATEWAY_CONNECTION_ERROR,
-		GATEWAY_NOT_RESPONDING,
-		GATEWAY_BUSY,
-		DEVICE_NOT_FOUND,
+		DEVICE_BUSY,
 		DEVICE_CONNECTION_ERROR,
+		DEVICE_NOT_FOUND,
 		DEVICE_NOT_RESPONDING,
-		DEVICE_BUSY
+		GATEWAY_BUSY,
+		GATEWAY_CONNECTION_ERROR,
+		GATEWAY_NOT_FOUND,
+		GATEWAY_NOT_RESPONDING
 	}
 
 	interface ReadCallback {
+
 		/**
 		 * Notifies that a write operation was aborted.
 		 * 
 		 * @param address
 		 *            the address of the datapoint
-		 * @param value
-		 *            the value being written
 		 * @param reason
 		 *            the reason that caused the write operation to be aborted
 		 * @param requestId
 		 *            the id of the request
 		 */
-		void readAborted(DatapointAddress address, Value value, int requestId,
-				ErrorType reason);
+		void readAborted(DatapointAddress address, ErrorType reason,
+				int requestId);
 
 		/**
 		 * Notifies that a value read from datapoint has arrived.
@@ -79,11 +90,9 @@ public interface DeviceConnectivityAPI {
 		 *            an array of readings.
 		 * @param requestId
 		 *            the request id
-		 * @param confirmationLevel
-		 *            the confirmation level
 		 */
 		void readAcknowledge(DatapointAddress address, Reading[] readings,
-				int requestId, ConfirmationLevel confirmationLevel);
+				int requestId);
 	}
 
 	interface WriteCallback {
@@ -92,18 +101,17 @@ public interface DeviceConnectivityAPI {
 		 * 
 		 * @param address
 		 *            the address of the datapoint
-		 * @param value
-		 *            the value being written
 		 * @param reason
 		 *            the reason that caused the write operation to be aborted
 		 * @param requestId
 		 *            the id of the request
 		 */
-		void writeAborted(DatapointAddress address, Value value,
-				ErrorType reason, int requestId);
+		void writeAborted(DatapointAddress address, ErrorType reason,
+				int requestId);
 
 		/**
-		 * Notifies that a value was written to the a datapoint.
+		 * Notifies for an update in the request status. This method should be
+		 * called every time a new confirmation level is reached.
 		 * <p>
 		 * In some situations it may not possible to guarantee that the value
 		 * was written. The device or protocol may not support acknowledging
@@ -112,12 +120,50 @@ public interface DeviceConnectivityAPI {
 		 * 
 		 * @param address
 		 *            the datapoint where the datapoint was written.
-		 * @param value
-		 *            the value that was written.
+		 * @param confirmationLevel
+		 *            the confirmation level
+		 * @param requestId
+		 *            the request id
 		 */
-		void writeAcknowledge(DatapointAddress address, Value value,
-				ConfirmationLevel confirmationLevel, int requestId);
+		void writeRequestStatusUpdate(DatapointAddress address,
+				WritingConfirmationLevel confirmationLevel, int requestId);
 	}
+
+	/**
+	 * Type of write confirmation.
+	 */
+	enum WritingConfirmationLevel {
+		/**
+		 * The device has confirmed to take action upon the write request.
+		 */
+		DEVICE_ACTION_TAKEN,
+
+		/**
+		 * The device confirmed the write operation.
+		 */
+		DEVICE_CONFIRMED,
+
+		/**
+		 * The write operation was sent to the gateway and confirmed. An
+		 * acknowledge in this level means that the message has arrived at the
+		 * gateway.
+		 */
+		GATEWAY_CONFIRMED,
+
+		/**
+		 * Write operation sent to the gateway but confirmation so far. This is
+		 * the level to be used when there no confirmation is possible.
+		 */
+		UNCONFIRMED
+	}
+
+	/**
+	 * Adds a datapoint listener.
+	 * 
+	 * @param listener
+	 *            the datapoint listener
+	 */
+	void addDatapointListener(DatapointListener listener);
 
 	/**
 	 * Gets all sensors register in the system.
@@ -135,6 +181,14 @@ public interface DeviceConnectivityAPI {
 	 * @return the metadata for each datapoint
 	 */
 	Metadata getDatapointMetadata(DatapointAddress address);
+
+	/**
+	 * Removes a datapoint listener.
+	 * 
+	 * @param listener
+	 *            the datapoint listener
+	 */
+	void removeDatapointListener(DatapointListener listener);
 
 	/**
 	 * Gets the last available reading of a datapoint.

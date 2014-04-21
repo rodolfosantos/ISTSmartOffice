@@ -3,14 +3,24 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>eu.smartcampus.api.rest</groupId>
 	<artifactId>eu.smartcampus.api.rest</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<packaging>war</packaging>
 
 	<dependencies>
 		<dependency>
+			<groupId>eu.smartcampus.api</groupId>
+			<artifactId>eu.smartcampus.api</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20140107</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-server</artifactId>
+			<version>1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.ws.rs</groupId>
@@ -44,6 +54,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
+				<version>2.4</version>
 				<configuration>
 					<webXml>WebContent\WEB-INF\web.xml</webXml>
 				</configuration>

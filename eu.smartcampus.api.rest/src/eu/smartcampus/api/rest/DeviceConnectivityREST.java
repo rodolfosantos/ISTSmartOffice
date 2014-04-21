@@ -13,7 +13,6 @@ import javax.ws.rs.core.Response;
 import com.google.gson.Gson;
 
 import eu.smartcampus.api.IDatapointConnectivityService;
-import eu.smartcampus.api.IDatapointConnectivityService.ReadCallback;
 import eu.smartcampus.api.impl.MeterDatapointServiceImpl;
 import eu.smartcampus.util.DatapointAddress;
 import eu.smartcampus.util.Reading;
@@ -46,7 +45,8 @@ public final class DeviceConnectivityREST {
     }
 
 
-    //http://localhost:8080/eu.smartcampus.api.rest/service/deviceapi/addReadListener
+    //http://localhost:8080/eu.smartcampus.api.rest/service/deviceapi/readdatapoint/172.20.70.229
 
+    //http://localhost:8080/eu.smartcampus.api.rest/service/deviceapi/addReadListener
 
 }

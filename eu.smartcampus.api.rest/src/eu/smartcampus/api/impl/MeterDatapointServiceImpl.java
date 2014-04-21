@@ -2,15 +2,17 @@ package eu.smartcampus.api.impl;
 
 import java.security.Timestamp;
 
-import eu.smartcampus.api.IDeviceConnectivity;
+import sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection;
+
+import eu.smartcampus.api.AbstractDatapointConnectivityService;
+import eu.smartcampus.api.IDatapointConnectivityService;
 import eu.smartcampus.util.DatapointAddress;
 import eu.smartcampus.util.Metadata;
 import eu.smartcampus.util.Reading;
 import eu.smartcampus.util.Value;
 
-public final class DeviceConnectivityImpl
-        implements IDeviceConnectivity {
-
+public final class MeterDatapointServiceImpl extends
+        AbstractDatapointConnectivityService {
     private int requestCount = 0;
 
     @Override

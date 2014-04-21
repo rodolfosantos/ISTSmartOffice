@@ -10,13 +10,13 @@ import javax.ws.rs.core.Response;
 
 import com.google.gson.Gson;
 
-import eu.smartcampus.api.UsersManagerAPI;
+import eu.smartcampus.api.IUserManagerService;
 import eu.smartcampus.api.impl.UsersManagerImpl;
 
 @Path("/usersmanager")
 public class UsersManagerREST {
 	
-	private static UsersManagerAPI USERS_MANAGER_API = UsersManagerImpl.getInstance();
+	private static IUserManagerService USERS_MANAGER_API = UsersManagerImpl.getInstance();
 
 	@GET
 	@Path("/getuserslist")

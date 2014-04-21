@@ -76,36 +76,57 @@ public class Metadata {
      */
     private int scale;
 
-    /** The max sampling rate. */
-    private int maxSamplignRate;
+    /**
+     * The max sampling frequency.
+     */
+    private int maxSamplingFrequency;
 
-    /** The current sampling frequency. */
-    private int samplingFrequency;
+    /**
+     * The current sampling frequency.
+     */
+    private int currentSamplingFrequency;
 
-    /** The access type. */
+    /**
+     * The read/write access type.
+     */
     private AccessType accessType;
 
-    /** The change of value. */
+    /**
+     * The minimum value change that is detected by the sensor.
+     */
     private int changeOfValue;
 
-    /** The hysterisys. */
+    /**
+     * The time (in milliseconds) to wait until the completion of a command.
+     */
     private int hysterisys;
 
-    /** The display max. */
+    /**
+     * The maximum value that should be displayed to the user.
+     */
     private int displayMax;
 
-    /** The display min. */
-
+    /**
+     * The minimum value to be displayed to the user.
+     */
     private int displayMin;
-    /** The hardware max. */
 
-    private int readingUpperLimit;
+    /**
+     * The upper acceptable limit. This is the maximum that a sensor can read or the
+     * minimum that the actuator can see.
+     */
+    private int upperLimit;
 
-    /** The hardware min. */
-    private int readingLowerLimit;
+    /**
+     * The lower acceptable limit. This is the minimum that a sensor can read or the
+     * minimum that the actuator can see.
+     */
+    private int lowerLimit;
 
-    /** The read cache size. */
-    private int readCacheSize;
+    /**
+     * The number or reads that can be cached.
+     */
+    private int readFifoCacheSize;
 
     /**
      * Gets the maximum number of readings cached a given datapoint.

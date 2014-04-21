@@ -15,8 +15,8 @@ public class Metadata {
      */
     public static enum Datatype {
         /**
-         * An integer data type can most numeric formats. Datapoints that have decimal
-         * values are encoded by the scale.
+         * An integer data type can most numeric formats. Datapoint values are represented
+         * as integers and decimal values, if required are encoded by the scale.
          */
         INTEGER,
 
@@ -127,6 +127,97 @@ public class Metadata {
      * The number or reads that can be cached.
      */
     private int readFifoCacheSize;
+
+    public static class Builder {
+        private String units = "";
+        private Datatype datatype = Datatype.INTEGER;
+        private int precision = 5;
+        private int scale = 2;
+        private double maxSamplingFrequency = 1.0;
+        private double currentSamplingFrequency = 1.0;
+        private AccessType accessType = AccessType.READ_ONLY;
+        private int changeOfValue = 5000;
+        private int hysterisys = 5000;
+        private int displayMax = 100;
+        private int displayMin = 0;
+        private int upperLimit = 100;
+        private int lowerLimit = 0;
+        private int readFifoCacheSize = 1;
+
+        public Builder units(String units) {
+            this.units = units;
+            return this;
+        }
+
+        public Builder datatype(Datatype datatype) {
+            this.datatype = datatype;
+            return this;
+        }
+
+        public Builder precision(int precision) {
+            this.precision = precision;
+            return this;
+        }
+
+        public Builder scale(int scale) {
+            this.scale = scale;
+            return this;
+        }
+
+        public Builder maxSamplingFrequency(int maxSamplingFrequency) {
+            this.maxSamplingFrequency = maxSamplingFrequency;
+            return this;
+        }
+
+        public Builder currentSamplingFrequency(int currentSamplingFrequency) {
+            this.currentSamplingFrequency = currentSamplingFrequency;
+            return this;
+        }
+
+        public Builder accessType(AccessType accessType) {
+            this.accessType = accessType;
+            return this;
+        }
+
+        public Builder changeOfValue(int changeOfValue) {
+            this.changeOfValue = changeOfValue;
+            return this;
+        }
+
+        public Builder hysterisys(int hysterisys) {
+            this.hysterisys = hysterisys;
+            return this;
+        }
+
+        public Builder displayMax(int displayMax) {
+            this.displayMax = displayMax;
+            return this;
+        }
+
+        public Builder displayMin(int displayMin) {
+            this.displayMin = displayMin;
+            return this;
+        }
+
+        public Builder upperLimit(int upperLimit) {
+            this.upperLimit = upperLimit;
+            return this;
+        }
+
+        public Builder lowerLimit(int lowerLimit) {
+            this.lowerLimit = lowerLimit;
+            return this;
+        }
+
+        public Builder readFifoCacheSize(int readFifoCacheSize) {
+            this.readFifoCacheSize = readFifoCacheSize;
+            return this;
+        }
+    };
+
+    private Metadata(Builder builder) {
+
+    }
 
     /**
      * Gets the maximum number of readings cached a given datapoint.

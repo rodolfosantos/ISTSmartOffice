@@ -12,9 +12,9 @@ import javax.ws.rs.core.Response;
 
 import com.google.gson.Gson;
 
-import eu.smartcampus.api.IDeviceConnectivity;
-import eu.smartcampus.api.IDeviceConnectivity.ReadCallback;
-import eu.smartcampus.api.impl.DeviceConnectivityImpl;
+import eu.smartcampus.api.IDatapointConnectivityService;
+import eu.smartcampus.api.IDatapointConnectivityService.ReadCallback;
+import eu.smartcampus.api.impl.MeterDatapointServiceImpl;
 import eu.smartcampus.util.DatapointAddress;
 import eu.smartcampus.util.Reading;
 
@@ -25,7 +25,7 @@ import eu.smartcampus.util.Reading;
 @Path("/deviceapi")
 public final class DeviceConnectivityREST {
 
-    private static IDeviceConnectivity DEVICE_CONNECTIVITY_API = new DeviceConnectivityImpl();
+    private static IDatapointConnectivityService DEVICE_CONNECTIVITY_API = new MeterDatapointServiceImpl();
 
     private static final RestReadCallback restReadCallback = new RestReadCallback();
 

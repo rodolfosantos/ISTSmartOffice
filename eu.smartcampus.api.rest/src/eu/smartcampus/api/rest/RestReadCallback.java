@@ -1,13 +1,13 @@
 package eu.smartcampus.api.rest;
 
-import eu.smartcampus.api.IDeviceConnectivity;
-import eu.smartcampus.api.IDeviceConnectivity.ErrorType;
+import eu.smartcampus.api.IDatapointConnectivityService;
+import eu.smartcampus.api.IDatapointConnectivityService.ErrorType;
 import eu.smartcampus.util.DatapointAddress;
 import eu.smartcampus.util.Reading;
 import eu.smartcampus.util.Value;
 
 public class RestReadCallback
-        implements IDeviceConnectivity.ReadCallback {
+        implements IDatapointConnectivityService.ReadCallback {
 
     private Reading reading = null;
 

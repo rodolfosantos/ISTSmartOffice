@@ -12,7 +12,7 @@ import eu.smartcampus.util.Value;
  * <p>
  * Timestamps are local to datapoints.
  */
-public interface IDeviceConnectivity {
+public interface IDatapointConnectivityService {
 
     /**
      * Interface for listeners of datapoint events.

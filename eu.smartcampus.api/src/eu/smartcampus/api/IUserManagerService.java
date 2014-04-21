@@ -5,7 +5,7 @@ import java.util.Set;
 /**
  * @author Rodolfo Santos
  */
-public interface UsersManagerAPI {
+public interface IUserManagerService {
 
 	
     /**

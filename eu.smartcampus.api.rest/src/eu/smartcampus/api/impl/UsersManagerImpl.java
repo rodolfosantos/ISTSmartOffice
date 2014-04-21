@@ -11,11 +11,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import eu.smartcampus.api.UsersManagerAPI;
+import eu.smartcampus.api.IUserManagerService;
 
-public class UsersManagerImpl implements UsersManagerAPI {
+public class UsersManagerImpl implements IUserManagerService {
 
-	private static UsersManagerAPI instance = null;
+	private static IUserManagerService instance = null;
 	private Map<String, String> users;
 
 	private UsersManagerImpl() {
@@ -28,7 +28,7 @@ public class UsersManagerImpl implements UsersManagerAPI {
 		this.addUser("user3", "user");
 	}
 
-	public static synchronized UsersManagerAPI getInstance() {
+	public static synchronized IUserManagerService getInstance() {
 		if (instance == null) {
 			instance = new UsersManagerImpl();
 		}

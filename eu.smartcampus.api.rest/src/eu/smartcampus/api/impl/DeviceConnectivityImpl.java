@@ -2,14 +2,14 @@ package eu.smartcampus.api.impl;
 
 import java.security.Timestamp;
 
-import eu.smartcampus.api.DeviceConnectivityAPI;
+import eu.smartcampus.api.IDeviceConnectivity;
 import eu.smartcampus.util.DatapointAddress;
 import eu.smartcampus.util.Metadata;
 import eu.smartcampus.util.Reading;
 import eu.smartcampus.util.Value;
 
 public final class DeviceConnectivityImpl
-        implements DeviceConnectivityAPI {
+        implements IDeviceConnectivity {
 
     private int requestCount = 0;
 
@@ -26,19 +26,24 @@ public final class DeviceConnectivityImpl
     }
 
     @Override
-    public int requestDatapointRead(final DatapointAddress address, final ReadCallback readCallback) {
+    public int requestDatapointRead(final DatapointAddress address,
+                                    final ReadCallback readCallback) {
         final int requestId = requestCount++;
         new Thread() {
             public void run() {
                 /*
                  * Read meter.
                  */
-                SensorDriver sensor = new SensorDriver("https://" + address.getAddress()
-                        + "/reading", "root", "root");
-                String value = sensor.getNewMeasure().getTotalPower() + "";
-                long ts = sensor.getNewMeasure().geTimestamp() * 1000;
-                Reading readings = new Reading(new Value(value), ts);
-                readCallback.readAcknowledge(address, readings, requestId);
+                SensorDriver sensor = new SensorDriver("https://"
+                                                       + address.getAddress()
+                                                       + "/reading", "root",
+                        "root");
+                final String value = sensor.getNewMeasure().getTotalPower()
+                                     + "";
+                final long ts = sensor.getNewMeasure().geTimestamp() * 1000;
+                final Reading[] readings = new Reading[] { new Reading(
+                        new Value(value), ts) };
+                readCallback.onReadCompleted(address, readings, requestId);
                 return;
             }
         }.start();
@@ -56,7 +61,7 @@ public final class DeviceConnectivityImpl
 
     @Override
     public int requestDatapointWrite(DatapointAddress address,
-                                     Value value,
+                                     Value[] values,
                                      WriteCallback writeCallback) {
         // TODO Auto-generated method stub
         return 0;

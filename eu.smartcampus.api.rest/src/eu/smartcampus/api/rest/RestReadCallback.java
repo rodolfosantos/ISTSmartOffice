@@ -1,13 +1,13 @@
 package eu.smartcampus.api.rest;
 
-import eu.smartcampus.api.DeviceConnectivityAPI;
-import eu.smartcampus.api.DeviceConnectivityAPI.ErrorType;
+import eu.smartcampus.api.IDeviceConnectivity;
+import eu.smartcampus.api.IDeviceConnectivity.ErrorType;
 import eu.smartcampus.util.DatapointAddress;
 import eu.smartcampus.util.Reading;
 import eu.smartcampus.util.Value;
 
 public class RestReadCallback
-        implements DeviceConnectivityAPI.ReadCallback {
+        implements IDeviceConnectivity.ReadCallback {
 
     private Reading reading = null;
 
@@ -23,7 +23,7 @@ public class RestReadCallback
     }
 
     @Override
-    public void readAcknowledge(DatapointAddress address, Reading[] readings, int requestId) {
+    public void onReadCompleted(DatapointAddress address, Reading[] readings, int requestId) {
         // TODO Auto-generated method stub
         
     }

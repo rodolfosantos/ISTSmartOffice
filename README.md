@@ -28,4 +28,4 @@ In simple terms this means that the authors of the files and documentation of th
 A copy of the license file is included in the root of the project.
 
 ## Aknowledgements
-SMARTCAMPUS and the SMARTCAMPUS Services API is soponored by the EU.
+SMARTCAMPUS and the SMARTCAMPUS Services API is soponsored by the EU.

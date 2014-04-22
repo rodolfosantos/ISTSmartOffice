@@ -1,11 +1,9 @@
 # SMARTCAMPUS API
 
-Yoy have reached the public repository of the SMARTCAMPUS project
+You have reached the public repository of the SMARTCAMPUS project
 
-## Motivation behind the Codebase library
-The fundamental idea of the Codebase library is to avoid replicating basic utility functionality over and over again. 
-
-In practice, programmers often need to replicate the code of utility classes and, moreover, have a tendency to regard this code as of lesser importance. An obvious consequence is that these classes don't get as thoroughly tested as they often should, often compromising code quality. Therefore, the underlying idea is to put here functionality that are commonly used in the code to avoid that each project/developer to implement its own version and have it throughly tested. 
+## Motivation behind the SMARTCAMPUS API library
+TBW.
 
 Technologies used:
 

@@ -2,10 +2,7 @@ package eu.smartcampus.api.impl;
 
 import java.security.Timestamp;
 
-import sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection;
-
 import eu.smartcampus.api.AbstractDatapointConnectivityService;
-import eu.smartcampus.api.IDatapointConnectivityService;
 import eu.smartcampus.util.DatapointAddress;
 import eu.smartcampus.util.Metadata;
 import eu.smartcampus.util.Reading;

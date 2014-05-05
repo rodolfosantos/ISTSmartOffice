@@ -5,26 +5,20 @@
 	<artifactId>eu.smartcampus.api.rest</artifactId>
 
 
-<parent>
+	<parent>
 		<relativePath>../pom.xml</relativePath>
 		<groupId>eu.smartcampus</groupId>
 		<artifactId>eu.smartcampus.pom</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-<packaging>war</packaging>
-
+	<packaging>war</packaging>
 
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -32,6 +26,30 @@
 				<version>2.4</version>
 				<configuration>
 					<webXml>WebContent\WEB-INF\web.xml</webXml>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>bundle-manifest</id>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>manifest</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<supportedProjectTypes>
+						<supportedProjectType>bundle</supportedProjectType>
+						<supportedProjectType>war</supportedProjectType>
+					</supportedProjectTypes>
+					<instructions>
+						<Export-Package>eu.smartcampus.api.rest.*</Export-Package>
+						<Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+					</instructions>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -68,6 +86,18 @@
 			<artifactId>json-simple</artifactId>
 			<version>1.1</version>
 		</dependency>
-
 	</dependencies>
+
+	<distributionManagement>
+		<repository>
+			<id>deployment</id>
+			<name>Releases</name>
+			<url>http://sb-buildmaster.tagus.ist.utl.pt:8082/nexus/content/repositories/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>deployment</id>
+			<name>Snapshots</name>
+			<url>http://sb-buildmaster.tagus.ist.utl.pt:8082/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>

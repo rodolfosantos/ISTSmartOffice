@@ -171,4 +171,3 @@ pip-log.txt
 /proj/lumina/*.log
 examples/
 /doc
-*.jar

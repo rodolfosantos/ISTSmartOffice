@@ -372,5 +372,4 @@ public class Metadata {
 	public int getReadCacheSize() {
 		return readCacheSize;
 	}
-
 }

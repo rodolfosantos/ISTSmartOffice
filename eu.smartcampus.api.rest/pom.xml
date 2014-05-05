@@ -3,14 +3,45 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>eu.smartcampus.api.rest</groupId>
 	<artifactId>eu.smartcampus.api.rest</artifactId>
-	<version>0.0.1</version>
-	<packaging>war</packaging>
+
+
+<parent>
+		<relativePath>../pom.xml</relativePath>
+		<groupId>eu.smartcampus</groupId>
+		<artifactId>eu.smartcampus.pom</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+<packaging>war</packaging>
+
+
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<webXml>WebContent\WEB-INF\web.xml</webXml>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 	<dependencies>
 		<dependency>
 			<groupId>eu.smartcampus.api</groupId>
 			<artifactId>eu.smartcampus.api</artifactId>
-			<version>0.0.1</version>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.json</groupId>
@@ -39,26 +70,4 @@
 		</dependency>
 
 	</dependencies>
-
-	<build>
-		<sourceDirectory>src</sourceDirectory>
-		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.4</version>
-				<configuration>
-					<webXml>WebContent\WEB-INF\web.xml</webXml>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>

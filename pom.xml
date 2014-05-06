@@ -45,25 +45,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.5</version>
-				<configuration>
-					<doclet>org.jboss.apiviz.APIviz</doclet>
-					<docletArtifact>
-						<groupId>org.jboss.apiviz</groupId>
-						<artifactId>apiviz</artifactId>
-						<version>1.3.2.GA</version>
-					</docletArtifact>
-					<useStandardDocletOptions>true</useStandardDocletOptions>
-					<charset>ISO-8859-1</charset>
-					<encoding>ISO-8859-1</encoding>
-					<docencoding>ISO-8859-1</docencoding>
-					<breakiterator>true</breakiterator>
-					<version>true</version>
-					<author>true</author>
-					<keywords>true</keywords>
-					<additionalparam>
-						-sourceclasspath ${project.build.outputDirectory}
-					</additionalparam>
-				</configuration>
 			</plugin>
 
 		</plugins>
@@ -105,11 +86,6 @@
 			<groupId>org.apache.felix</groupId>
 			<artifactId>org.osgi.core</artifactId>
 			<version>1.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.apiviz</groupId>
-			<artifactId>apiviz</artifactId>
-			<version>1.2.2.GA</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

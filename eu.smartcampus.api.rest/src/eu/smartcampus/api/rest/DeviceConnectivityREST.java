@@ -155,13 +155,14 @@ public final class DeviceConnectivityREST {
 	private static final RestReadCallback restReadCallback = new RestReadCallback();
 
 	/**
-	 * <h3>Description:</h3> This method wraps a read datapoint action from
+	 * <h3 style="color:blue;">Description:</h3> This method wraps a read datapoint action from
 	 * {@link IDatapointConnectivityService#requestDatapointRead(DatapointAddress, eu.smartcampus.api.IDatapointConnectivityService.ReadCallback)}
 	 * .<br>
 	 * This method acts as a synchronous blocking call to the datapoint read
 	 * service, returning as soon as the read request gets completed.
 	 * <p>
-	 * <h3>REST-JSON Protocol:</h3>
+	 * <h3 style="color:blue;">REST-JSON Protocol:</h3> <b>Endpoint:</b> /readdatapoint/{addr}
+	 * <p>
 	 * <b>GET Parameters</b><br>
 	 * <ul>
 	 * <li>addr - The desired datapoint's address.</li>
@@ -214,12 +215,14 @@ public final class DeviceConnectivityREST {
 	}
 
 	/**
-	 * <h3>Description:</h3> This method obtains a datapoint's metadata, through
+	 * <h3 style="color:blue;">Description:</h3> This method obtains a datapoint's metadata, through
 	 * the API method
 	 * {@link IDatapointConnectivityService#getDatapointMetadata(DatapointAddress)}
 	 * .
 	 * <p>
-	 * <h3>REST-JSON Protocol:</h3>
+	 * <h3 style="color:blue;">REST-JSON Protocol:</h3> <b>Endpoint:</b>
+	 * /getdatapointmetadata/{addr}
+	 * <p>
 	 * <b>GET Parameters</b><br>
 	 * <ul>
 	 * <li>addr - The desired datapoint's address.</li>
@@ -285,14 +288,16 @@ public final class DeviceConnectivityREST {
 	}
 
 	/**
-	 * <h3>Description:</h3> This method wraps a read datapoint window action
+	 * <h3 style="color:blue;">Description:</h3> This method wraps a read datapoint window action
 	 * from
 	 * {@link IDatapointConnectivityService#requestDatapointWindowRead(DatapointAddress, java.security.Timestamp, java.security.Timestamp, eu.smartcampus.api.IDatapointConnectivityService.ReadCallback)}
 	 * .<br>
 	 * This method acts as a synchronous blocking call to the datapoint read
 	 * service, returning as soon as the read request gets completed.
 	 * <p>
-	 * <h3>REST-JSON Protocol:</h3>
+	 * <h3 style="color:blue;">REST-JSON Protocol:</h3> <b>Endpoint:</b>
+	 * /readdatapointwindow/{addr}/{starttimestamp}/{finishtimestamp}
+	 * <p>
 	 * <b>GET Parameters</b><br>
 	 * <ul>
 	 * <li>addr - The desired datapoint's address.</li>

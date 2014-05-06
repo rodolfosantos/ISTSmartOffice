@@ -106,7 +106,7 @@ public class Metadata {
 
 	/**
 	 * The minimum amount of time that the client must wait until another device
-	 * is ready to receive another command though this datapoint.
+	 * is ready to receive another command though this datapoint in milliseconds.
 	 */
 	private int hysterisys;
 

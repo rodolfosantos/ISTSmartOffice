@@ -18,6 +18,9 @@ import eu.smartcampus.util.DatapointAddress;
 import eu.smartcampus.util.Reading;
 
 /**
+ * Wrapper of a {@link IDatapointConnectivityService} that creates a REST/JSON
+ * interface to use the provided services.
+ * 
  * <A NAME="REST_API_SUMMARY"><!-- --></A>
  * <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
  * <TR BGCOLOR="#FFCC99" CLASS="TableHeadingColor" style="background:#FFCC99;">
@@ -155,13 +158,15 @@ public final class DeviceConnectivityREST {
 	private static final RestReadCallback restReadCallback = new RestReadCallback();
 
 	/**
-	 * <h3 style="color:blue;">Description:</h3> This method wraps a read datapoint action from
+	 * This method wraps a read datapoint action from
 	 * {@link IDatapointConnectivityService#requestDatapointRead(DatapointAddress, eu.smartcampus.api.IDatapointConnectivityService.ReadCallback)}
 	 * .<br>
+	 * 
 	 * This method acts as a synchronous blocking call to the datapoint read
-	 * service, returning as soon as the read request gets completed.
+	 * service, returning as soon as the read request gets completed. <br>
 	 * <p>
-	 * <h3 style="color:blue;">REST-JSON Protocol:</h3> <b>Endpoint:</b> /readdatapoint/{addr}
+	 * <h3 style="color:blue;">REST-JSON Protocol:</h3> <b>Endpoint:</b>
+	 * /readdatapoint/{addr}
 	 * <p>
 	 * <b>GET Parameters</b><br>
 	 * <ul>
@@ -215,8 +220,7 @@ public final class DeviceConnectivityREST {
 	}
 
 	/**
-	 * <h3 style="color:blue;">Description:</h3> This method obtains a datapoint's metadata, through
-	 * the API method
+	 * This method obtains a datapoint's metadata, through the API method
 	 * {@link IDatapointConnectivityService#getDatapointMetadata(DatapointAddress)}
 	 * .
 	 * <p>
@@ -288,8 +292,7 @@ public final class DeviceConnectivityREST {
 	}
 
 	/**
-	 * <h3 style="color:blue;">Description:</h3> This method wraps a read datapoint window action
-	 * from
+	 * This method wraps a read datapoint window action from
 	 * {@link IDatapointConnectivityService#requestDatapointWindowRead(DatapointAddress, java.security.Timestamp, java.security.Timestamp, eu.smartcampus.api.IDatapointConnectivityService.ReadCallback)}
 	 * .<br>
 	 * This method acts as a synchronous blocking call to the datapoint read

@@ -13,7 +13,6 @@ import eu.smartcampus.api.DatapointAddress;
 import eu.smartcampus.api.DatapointReading;
 import eu.smartcampus.api.IDatapointConnectivityService;
 import eu.smartcampus.api.IDatapointConnectivityService.ErrorType;
-import eu.smartcampus.api.impl.MeterDatapointServiceImpl;
 
 /**
  * REST/JSON wrapper interface of a {@link IDatapointConnectivityService} services.
@@ -180,7 +179,9 @@ import eu.smartcampus.api.impl.MeterDatapointServiceImpl;
  * 				"gatewayconnectionerror",
  * 				"gatewaynotfound",
  * 				"gatewaynotresponding",
- * 				"gatewaybusy"
+ * 				"gatewaybusy",
+ * 				"serverinternalerror",
+ * 				"unsuporteddatapointoperation"
  * 			]    
  * &#125;
  * </pre>
@@ -232,7 +233,70 @@ public final class DeviceConnectivityREST {
         }
     }
 
+
     private final RestReadCallback restReadCallback = new RestReadCallback();
+
+    /**
+     * Request a datapoint write. This method wraps the API method
+     * {@link IDatapointConnectivityService#requestDatapointWrite(DatapointAddress, eu.smartcampus.api.DatapointValue[], eu.smartcampus.api.IDatapointConnectivityService.WriteCallback)}
+     * .
+     * <p>
+     * <h3 style="color:blue;">REST-JSON Protocol:</h3> <b>Endpoint:</b> /writedatapoint/
+     * <p>
+     * <b>POST Parameters:</b><br>
+     * <ul>
+     * <li><b>values:</b> The values to be written to the datapoint.</li>
+     * <li><b>addr:</b> The address of the datapoint to write to.</li>
+     * </ul>
+     * <br>
+     * <b>Call examples:</b><br>
+     * <br>
+     * <ul>
+     * <li><b>Writing to a KNX datapoint:</b> /deviceapi/writedatapoint/
+     * <ul>
+     * <li><b>values:</b> "1,2,3,4,5"</li>
+     * <li><b>addr:</b> "1/20/5"</li>
+     * </ul>
+     * </li>
+     * </ul>
+     * <br>
+     * <b>JSON Response:</b><br>
+     * 
+     * <pre>
+     * &#123;
+     * 	"operationstatus" : [
+     * 				"success",
+     * 				"datapointnotfound",
+     * 				"deviceconnectionerror",
+     * 				"devicenotresponding",
+     * 				"devicevanished",
+     * 				"devicebusy",
+     * 				"gatewayconnectionerror",
+     * 				"gatewaynotfound",
+     * 				"gatewaynotresponding",
+     * 				"gatewaybusy",
+     * 				"serverinternalerror",
+     * 				"unsuporteddatapointoperation"
+     * 			]    
+     * &#125;
+     * </pre>
+     * 
+     * <b>Response Example:</b><br>
+     * 
+     * <pre>
+     * &#123;
+     * 	"operationstatus" : "success"  
+     * &#125;
+     * </pre>
+     * 
+     * @return a JSON response
+     */
+    @GET
+    @Path("/getalldatapoints/")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response writeDatapoint() {
+        return null;
+    }
 
     /**
      * Creates a new REST wrapper for the Device Connectivity API.
@@ -515,63 +579,4 @@ public final class DeviceConnectivityREST {
         return null;
     }
 
-    /**
-     * Request a datapoint write. This method wraps the API method
-     * {@link IDatapointConnectivityService#requestDatapointWrite(DatapointAddress, eu.smartcampus.api.DatapointValue[], eu.smartcampus.api.IDatapointConnectivityService.WriteCallback)}
-     * .
-     * <p>
-     * <h3 style="color:blue;">REST-JSON Protocol:</h3> <b>Endpoint:</b> /writedatapoint/
-     * <p>
-     * <b>POST Parameters:</b><br>
-     * <ul>
-     * <li><b>values:</b> The values to be written to the datapoint.</li>
-     * <li><b>addr:</b> The address of the datapoint to write to.</li>
-     * </ul>
-     * <br>
-     * <b>Call examples:</b><br>
-     * <br>
-     * <ul>
-     * <li><b>Writing to a KNX datapoint:</b> /deviceapi/writedatapoint/
-     * <ul>
-     * <li><b>values:</b> "1,2,3,4,5"</li>
-     * <li><b>addr:</b> "1/20/5"</li>
-     * </ul>
-     * </li>
-     * </ul>
-     * <br>
-     * <b>JSON Response:</b><br>
-     * 
-     * <pre>
-     * &#123;
-     * 	"operationstatus" : [
-     * 				"success",
-     * 				"datapointnotfound",
-     * 				"deviceconnectionerror",
-     * 				"devicenotresponding",
-     * 				"devicevanished",
-     * 				"devicebusy",
-     * 				"gatewayconnectionerror",
-     * 				"gatewaynotfound",
-     * 				"gatewaynotresponding",
-     * 				"gatewaybusy"
-     * 			]    
-     * &#125;
-     * </pre>
-     * 
-     * <b>Response Example:</b><br>
-     * 
-     * <pre>
-     * &#123;
-     * 	"operationstatus" : "success"  
-     * &#125;
-     * </pre>
-     * 
-     * @return a JSON response
-     */
-    @GET
-    @Path("/getalldatapoints/")
-    @Produces(MediaType.TEXT_PLAIN)
-    public Response writeDatapoint() {
-        return null;
-    }
 }

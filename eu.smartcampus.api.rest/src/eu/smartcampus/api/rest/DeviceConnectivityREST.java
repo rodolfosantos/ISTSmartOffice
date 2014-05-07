@@ -16,11 +16,12 @@ import eu.smartcampus.util.Reading;
 
 /**
  * Wrapper of a {@link IDatapointConnectivityService} that creates a REST/JSON
- * interface to use the provided services.
+ * interface to use the provided services, and registers itself as a datapoint
+ * listener in the service.
  * 
  * <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
  * <TR BGCOLOR="#FFCC99" CLASS="TableHeadingColor" style="background:#FFCC99;">
- * <TH ALIGN="left" COLSPAN="5"><FONT SIZE="+2"> <B>REST API Summary</B></FONT></TH>
+ * <TH ALIGN="left" COLSPAN="6"><FONT SIZE="+2"> <B>REST API Summary</B></FONT></TH>
  * </TR>
  * <TR BGCOLOR="white" CLASS="TableRowColor">
  * <TD align="center">
@@ -31,6 +32,8 @@ import eu.smartcampus.util.Reading;
  * <b>Inputs</b></TD>
  * <TD align="center">
  * <b>JSON Output</b></TD>
+ * <TD align="center">
+ * <b>Description</b></TD>
  * <TD align="center">
  * <b>Implementation</b></TD>
  * </TR>
@@ -57,6 +60,8 @@ import eu.smartcampus.util.Reading;
  * </pre>
  * 
  * </TD>
+ * <TD align="left">
+ * Gets the last available reading of a datapoint.</TD>
  * <TD align="left">
  * {@link DeviceConnectivityREST#readDatapoint(String)}</TD>
  * </TR>
@@ -95,6 +100,8 @@ import eu.smartcampus.util.Reading;
  * </pre>
  * 
  * </TD>
+ * <TD align="left">
+ * Returns the metadata of a given datapoint.</TD>
  * <TD align="left">
  * {@link DeviceConnectivityREST#getDatapointMetadata(String)}</TD>
  * </TR>
@@ -136,6 +143,8 @@ import eu.smartcampus.util.Reading;
  * 
  * </TD>
  * <TD align="left">
+ * Gets the readings of a datapoint within a given time window.</TD>
+ * <TD align="left">
  * {@link DeviceConnectivityREST#readDatapointWindow(String, String, String)}</TD>
  * </TR>
  * 
@@ -166,6 +175,8 @@ import eu.smartcampus.util.Reading;
  * </pre>
  * 
  * </TD>
+ * <TD align="left">
+ * Gets the addresses of all datapoints of devices controlled by this service.</TD>
  * <TD align="left">
  * {@link DeviceConnectivityREST#getAllDatapoints()}</TD>
  * </TR>
@@ -206,6 +217,8 @@ import eu.smartcampus.util.Reading;
  * 
  * </TD>
  * <TD align="left">
+ * Request a datapoint write.</TD>
+ * <TD align="left">
  * {@link DeviceConnectivityREST#writeDatapoint()}</TD>
  * </TR>
  * 
@@ -222,6 +235,8 @@ public final class DeviceConnectivityREST {
 	private static final RestReadCallback restReadCallback = new RestReadCallback();
 
 	/**
+	 * Gets the last available reading of a datapoint.
+	 * 
 	 * This method wraps a read datapoint action from
 	 * {@link IDatapointConnectivityService#requestDatapointRead(DatapointAddress, eu.smartcampus.api.IDatapointConnectivityService.ReadCallback)}
 	 * .<br>
@@ -287,7 +302,9 @@ public final class DeviceConnectivityREST {
 	}
 
 	/**
-	 * This method obtains a datapoint's metadata, through the API method
+	 * Returns the metadata of a given datapoint.
+	 * 
+	 * This method wraps the API method
 	 * {@link IDatapointConnectivityService#getDatapointMetadata(DatapointAddress)}
 	 * .
 	 * <p>
@@ -362,6 +379,8 @@ public final class DeviceConnectivityREST {
 	}
 
 	/**
+	 * Gets the readings of a datapoint within a given time window.
+	 * 
 	 * This method wraps a read datapoint window action from
 	 * {@link IDatapointConnectivityService#requestDatapointWindowRead(DatapointAddress, java.security.Timestamp, java.security.Timestamp, eu.smartcampus.api.IDatapointConnectivityService.ReadCallback)}
 	 * .<br>
@@ -439,8 +458,11 @@ public final class DeviceConnectivityREST {
 	}
 
 	/**
-	 * This method obtains all registered datapoints' addresses, through the API
-	 * method {@link IDatapointConnectivityService#getAllDatapoints()} .
+	 * Gets the addresses of all datapoints of devices controlled by this
+	 * service.
+	 * 
+	 * This method wraps the API method
+	 * {@link IDatapointConnectivityService#getAllDatapoints()} .
 	 * <p>
 	 * <h3 style="color:blue;">REST-JSON Protocol:</h3> <b>Endpoint:</b>
 	 * /getalldatapoints/
@@ -495,7 +517,9 @@ public final class DeviceConnectivityREST {
 	}
 
 	/**
-	 * This method performs a datapoint write, through the API method
+	 * Request a datapoint write.
+	 * 
+	 * This method wraps the API method
 	 * {@link IDatapointConnectivityService#requestDatapointWrite(DatapointAddress, eu.smartcampus.util.Value[], eu.smartcampus.api.IDatapointConnectivityService.WriteCallback)}
 	 * .
 	 * <p>
@@ -516,7 +540,7 @@ public final class DeviceConnectivityREST {
 	 * <li><b>Writing to a KNX datapoint:</b> /deviceapi/writedatapoint/
 	 * <ul>
 	 * <li>
-	 * <b>values:</b> "0xAF,0x3D,0x0F,0x00"</li>
+	 * <b>values:</b> "1,2,3,4,5"</li>
 	 * <li>
 	 * <b>addr:</b> "1/20/5"</li>
 	 * </ul>

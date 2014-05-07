@@ -22,7 +22,7 @@ import eu.smartcampus.api.IDatapointConnectivityService.ErrorType;
  * {@link IDatapointConnectivityService} and registers itself as a datapoint
  * listener.
  * <p>
- * <b>Error reporting:</b> In a error situation a JSON message is returned
+ * <b>Error reporting:</b> In an error situation a JSON message is returned
  * instead of the expected output for each REST service invocation. The JSON
  * error message is presented with the following structure.
  * <p>

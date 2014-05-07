@@ -180,7 +180,9 @@ import eu.smartcampus.api.impl.MeterDatapointServiceImpl;
  * 				"gatewayconnectionerror",
  * 				"gatewaynotfound",
  * 				"gatewaynotresponding",
- * 				"gatewaybusy"
+ * 				"gatewaybusy",
+ * 				"serverinternalerror",
+ * 				"unsuporteddatapointoperation"
  * 			]    
  * &#125;
  * </pre>
@@ -515,7 +517,9 @@ public final class DeviceConnectivityREST {
 	 * 				"gatewayconnectionerror",
 	 * 				"gatewaynotfound",
 	 * 				"gatewaynotresponding",
-	 * 				"gatewaybusy"
+	 * 				"gatewaybusy",
+	 * 				"serverinternalerror",
+	 * 				"unsuporteddatapointoperation"
 	 * 			]    
 	 * &#125;
 	 * </pre>

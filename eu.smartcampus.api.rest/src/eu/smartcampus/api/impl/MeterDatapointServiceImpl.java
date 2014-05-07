@@ -3,10 +3,11 @@ package eu.smartcampus.api.impl;
 import java.security.Timestamp;
 
 import eu.smartcampus.api.AbstractDatapointConnectivityService;
-import eu.smartcampus.util.DatapointAddress;
-import eu.smartcampus.util.Metadata;
-import eu.smartcampus.util.Reading;
-import eu.smartcampus.util.Value;
+import eu.smartcampus.api.DatapointAddress;
+import eu.smartcampus.api.DatapointMetadata;
+import eu.smartcampus.api.DatapointReading;
+import eu.smartcampus.api.DatapointValue;
+import eu.smartcampus.api.IDatapointConnectivityService.WriteCallback;
 
 public final class MeterDatapointServiceImpl extends
         AbstractDatapointConnectivityService {
@@ -19,7 +20,7 @@ public final class MeterDatapointServiceImpl extends
     }
 
     @Override
-    public Metadata getDatapointMetadata(DatapointAddress address) {
+    public DatapointMetadata getDatapointMetadata(DatapointAddress address) {
         // TODO Auto-generated method stub
         return null;
     }
@@ -40,8 +41,8 @@ public final class MeterDatapointServiceImpl extends
                 final String value = sensor.getNewMeasure().getTotalPower()
                                      + "";
                 final long ts = sensor.getNewMeasure().geTimestamp() * 1000;
-                final Reading[] readings = new Reading[] { new Reading(
-                        new Value(value), ts) };
+                final DatapointReading[] readings = new DatapointReading[] { new DatapointReading(
+                        new DatapointValue(value), ts) };
                 readCallback.onReadCompleted(address, readings, requestId);
                 return;
             }
@@ -58,12 +59,12 @@ public final class MeterDatapointServiceImpl extends
         return 0;
     }
 
+
     @Override
     public int requestDatapointWrite(DatapointAddress address,
-                                     Value[] values,
+                                     DatapointValue[] values,
                                      WriteCallback writeCallback) {
         // TODO Auto-generated method stub
         return 0;
     }
-
 }

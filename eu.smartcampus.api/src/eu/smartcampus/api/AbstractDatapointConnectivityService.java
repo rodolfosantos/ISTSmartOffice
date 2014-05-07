@@ -4,11 +4,6 @@ import java.security.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
-import eu.smartcampus.util.DatapointAddress;
-import eu.smartcampus.util.Metadata;
-import eu.smartcampus.util.Reading;
-import eu.smartcampus.util.Value;
-
 /**
  * Skeleton implementation for {@link IDatapointConnectivityService}.
  */
@@ -21,7 +16,7 @@ public abstract class AbstractDatapointConnectivityService implements
 	private final Set<DatapointListener> readListeners = new HashSet<DatapointListener>();
 
 	protected void notifyReadAcknowledge(DatapointAddress address,
-			Reading readings, int requestId) {
+			DatapointReading readings, int requestId) {
 		// final DatapointListener l = readListeners.get(Integer
 		// .valueOf(clientKey));
 		// l.readAcknowledge(address, readings, requestId);
@@ -31,7 +26,7 @@ public abstract class AbstractDatapointConnectivityService implements
 	public abstract DatapointAddress[] getAllDatapoints();
 
 	@Override
-	public abstract Metadata getDatapointMetadata(DatapointAddress address);
+	public abstract DatapointMetadata getDatapointMetadata(DatapointAddress address);
 
 	@Override
 	public void addDatapointListener(DatapointListener listener) {
@@ -55,6 +50,6 @@ public abstract class AbstractDatapointConnectivityService implements
 
 	@Override
 	public abstract int requestDatapointWrite(DatapointAddress address,
-			Value[] values, WriteCallback writeCallback);
+			DatapointValue[] values, WriteCallback writeCallback);
 
 }

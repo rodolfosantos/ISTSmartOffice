@@ -2,18 +2,18 @@ package eu.smartcampus.api;
 
 import java.security.Timestamp;
 
-import eu.smartcampus.util.DatapointAddress;
-import eu.smartcampus.util.Metadata;
-import eu.smartcampus.util.Reading;
-import eu.smartcampus.util.Value;
-
 /**
  * Service definition that abstracts the connection to devices.
  * <p>
- * Timestamps are local to datapoints.
+ * 
+ */
+/*
+ * TODO: Doc updates
+ * - Timestamps are local to datapoints. 
+ * - Read and write operations are not instantaneous.
  */
 public interface IDatapointConnectivityService {
-
+    
     /**
      * Interface for listeners of datapoint events.
      */
@@ -27,7 +27,7 @@ public interface IDatapointConnectivityService {
          * @param address the address of the datapoint
          * @param values the latest reading values
          */
-        void onDatapointUpdate(DatapointAddress address, Reading[] values);
+        void onDatapointUpdate(DatapointAddress address, DatapointReading[] values);
 
         /**
          * Invoked when a datapoint error occurs.
@@ -45,6 +45,14 @@ public interface IDatapointConnectivityService {
      */
     enum ErrorType {
         /**
+         * The operation over the datapoint is not supported. This can happen if the
+         * datapoint is {@link Metadata.AccessType#READ_ONLY read-only} and the operation
+         * is a write request, or if the datapoint is
+         * {@link Metadata.AccessType#WRITE_ONLY write-only} and the operation is a read
+         * request.
+         */
+        UNSUPORTED_DATAPOINT_OPERATION,
+        /**
          * The datapoint was not found at the given address.
          */
         DATAPOINT_NOT_FOUND,
@@ -56,7 +64,7 @@ public interface IDatapointConnectivityService {
          * The device containing the specified datapoint is not responding. The connection
          * to the gateway or device can be established and the datapoint address is valid
          * but there is no response from the device regarding the datapoint. This can be
-         * due to a change in the configuration of the device or to a device malfunciton.
+         * due to a change in the configuration of the device or to a device malfunction.
          */
         DEVICE_NOT_RESPONDING,
         /**
@@ -75,18 +83,23 @@ public interface IDatapointConnectivityService {
          */
         GATEWAY_CONNECTION_ERROR,
         /**
-         * A gateway was not found.
+         * The operation could not be completed because the gateway was not found.
          */
         GATEWAY_NOT_FOUND,
         /**
-         * The gateway was found but is not responding.
+         * The gateway was found but is not responding to the datapoint operation request.
          */
         GATEWAY_NOT_RESPONDING,
         /**
-         * The gateway is busy at the moment, or the connection to the gateway is busy and
-         * canot take more commands.
+         * The operation could no be completed because the gateway is busy at the moment,
+         * or the connection to the gateway is busy and cannot take more commands.
          */
-        GATEWAY_BUSY
+        GATEWAY_BUSY,
+        /**
+         * The datapoint operation was aborted due to an internal error on the service
+         * implementation.
+         */
+        SERVER_INTERNAL_ERROR
     }
 
     /**
@@ -113,7 +126,7 @@ public interface IDatapointConnectivityService {
          * @param requestId the request id
          */
         void onReadCompleted(DatapointAddress address,
-                             Reading[] readings,
+                             DatapointReading[] readings,
                              int requestId);
     }
 
@@ -200,7 +213,7 @@ public interface IDatapointConnectivityService {
      * @param address the for which we want to know the metadata
      * @return the metadata object associated to the datapoint
      */
-    Metadata getDatapointMetadata(DatapointAddress address);
+    DatapointMetadata getDatapointMetadata(DatapointAddress address);
 
     /**
      * Removes a datapoint listener.
@@ -218,34 +231,41 @@ public interface IDatapointConnectivityService {
      * returned.
      * 
      * @param address the absolute address of the datapoint to be read
-     * @param clientKey the identifier of the client making the request * @return the id
-     *            of the write request used to by the client to identify the acknowledge
-     *            of this request
+     * @param readCallback the callback to be notified when data is available or if an
+     *            error occurred
      * @return the id of the write request used to by the client to identify the
      *         acknowledge of this request
      */
     int requestDatapointRead(DatapointAddress address, ReadCallback readCallback);
 
     /**
-     * Gets the readings a datapoint within a given time window.
+     * Request the readings a datapoint within a given time window.
      * <p>
-     * Implementations of this method may query the meter or return cached values. Since
-     * meters are devices with limited resources, specifying <tt>start</tt> to far into
-     * the past may result in only a subset of the values.
+     * Implementations may query a sensor or return cached values.
+     * <p>
+     * NOTE: Since sensors are devices with limited resources, specifying <tt>start</tt>
+     * to far into the past may result in returning only a subset of the values.
+     * <p>
+     * Upon calling this method, the method {@link ReadCallback#onReadCompleted} specified
+     * of <tt>callback</tt> will:
+     * <ol>
+     * <li><b>not be called</b>, if <tt>start &gt; finish</tt></li>
+     * <li><b>be called once</b> reporting a reading <i>r</i>, if available, such that
+     * <tt><i>r.ts</i> == start == finish</tt>, if <tt>start == finish</tt></li>
+     * <li><b>be called multiple times</b> for all readings<i>r</i>, such that
+     * <tt>start &le;<i>r.ts</i> &le; finish</tt>.
+     * </ol>
+     * Therefore, when no information exists {@link ReadCallback#onReadCompleted
+     * onReadCompleted} will not be called. If an error occurs the
+     * {@link ReadCallback#onReadAborted onReadAborted} is called instead.
      * 
      * @param address the absolute address of the datapoint to be read
      * @param start the timestamp that defines the initial window
      * @param finish timestamp that defines the final window. Should be greater or equal
      *            to start.
-     * @param clientKey the identifier of the client making the request
-     * @return the id of the read request used to by the client to identify the
-     *         acknowledge of this request
-     * @return <ol>
-     *         <li>an empty array, if <tt>start &gt; finish</tt></li><li>a single reading
-     *         <i>r</i>, if available, such that <tt><i>r.ts</i> == start == finish</tt>,
-     *         if <tt>start == finish</tt></li> <li>all readings <i>r</i>, if available,
-     *         such that <tt>start &le;<i>r.ts</i> &le; finish</tt>
-     *         </ol>
+     * @param readCallback the callback to the notified of the datapoint readings
+     * @return the id of the read request used later to identify the callback of this
+     *         request
      */
     int requestDatapointWindowRead(DatapointAddress address,
                                    Timestamp start,
@@ -257,11 +277,11 @@ public interface IDatapointConnectivityService {
      * 
      * @param address the address of the datapoint
      * @param values the values to be written to the datapoint
-     * @param clientKey the identifier of the client making the request
-     * @return the id of the write request used to by the client to identify the
-     *         acknowledge of this request
+     * @param writeCallback the callback to be notified of datapoint write operations.
+     * @return the id of the read request used later to identify the callback of this
+     *         request
      */
     int requestDatapointWrite(DatapointAddress address,
-                              Value[] values,
+                              DatapointValue[] values,
                               WriteCallback writeCallback);
 }

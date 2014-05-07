@@ -223,7 +223,7 @@ public interface IDatapointConnectivityService {
     void removeDatapointListener(DatapointListener listener);
 
     /**
-     * Gets the last available reading of a datapoint.
+     * Gets the latest available reading of a datapoint.
      * <p>
      * It is expected that implementations of this method force a reading to the specified
      * datapoint. However, when the reading cannot be forced on the device, it is expected

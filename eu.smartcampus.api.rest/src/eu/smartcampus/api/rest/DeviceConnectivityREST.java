@@ -186,20 +186,7 @@ import eu.smartcampus.api.IDatapointConnectivityService.ErrorType;
  * 
  * <pre>
  * &#123;
- * 	"operationstatus" : [
- * 				"success",
- * 				"datapointnotfound",
- * 				"deviceconnectionerror",
- * 				"devicenotresponding",
- * 				"devicevanished",
- * 				"devicebusy",
- * 				"gatewayconnectionerror",
- * 				"gatewaynotfound",
- * 				"gatewaynotresponding",
- * 				"gatewaybusy",
- * 				"serverinternalerror",
- * 				"unsuporteddatapointoperation"
- * 			]    
+ * 	"operationstatus" : "success"
  * &#125;
  * </pre>
  * 
@@ -278,20 +265,7 @@ public final class DeviceConnectivityREST {
 	 * 
 	 * <pre>
 	 * &#123;
-	 * 	"operationstatus" : [
-	 * 				"success",
-	 * 				"datapointnotfound",
-	 * 				"deviceconnectionerror",
-	 * 				"devicenotresponding",
-	 * 				"devicevanished",
-	 * 				"devicebusy",
-	 * 				"gatewayconnectionerror",
-	 * 				"gatewaynotfound",
-	 * 				"gatewaynotresponding",
-	 * 				"gatewaybusy",
-	 * 				"serverinternalerror",
-	 * 				"unsuporteddatapointoperation"
-	 * 			]    
+	 * 	"operationstatus" : "success" 
 	 * &#125;
 	 * </pre>
 	 * 

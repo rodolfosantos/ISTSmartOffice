@@ -1,5 +1,7 @@
 package eu.smartcampus.api.rest;
 
+import java.util.concurrent.Semaphore;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -212,29 +214,40 @@ public final class DeviceConnectivityREST {
 	 */
 	private final class RestReadCallback implements
 			IDatapointConnectivityService.ReadCallback {
-
+		/**
+		 * Semaphore used to indicate when the reading has arrived.
+		 */
+		private final Semaphore semaphore = new Semaphore(0);
+		/**
+		 * The resulting reading.
+		 */
 		private DatapointReading reading = null;
 
 		@Override
 		public void onReadCompleted(DatapointAddress address,
 				DatapointReading[] readings, int requestId) {
 			reading = readings[0];
+			semaphore.release();
 		}
 
 		public DatapointReading getReading() {
-			DatapointReading r = reading;
-			reading = null;
-			return r;
+			try {
+				semaphore.acquire();
+				DatapointReading r = reading;
+				reading = null;
+				return r;
+			} catch (InterruptedException e) {
+			}
+			return null;
 		}
 
 		@Override
 		public void onReadAborted(DatapointAddress address, ErrorType reason,
 				int requestId) {
+			semaphore.release();
 			// TODO: Return the appropriate error code
 		}
 	}
-
-	private final RestReadCallback restReadCallback = new RestReadCallback();
 
 	/**
 	 * Request a datapoint write. This method wraps the API method
@@ -347,16 +360,10 @@ public final class DeviceConnectivityREST {
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response readDatapoint(@PathParam("addr") String addr) {
 		DatapointReading reading = null;
+		final RestReadCallback restReadCallback = new RestReadCallback();
 		deviceConnectivityService.requestDatapointRead(new DatapointAddress(
 				addr), restReadCallback);
-		while ((reading = restReadCallback.getReading()) == null)
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				// TODO: Return appropriate error to the client
-				e.printStackTrace();
-			}
-
+		reading = restReadCallback.getReading();
 		final JSONObject response = new JSONObject();
 		response.put("value", reading.getValue());
 		response.put("timestamp", reading.getTimestamp());

@@ -24,7 +24,7 @@ public class DatapointValue {
 
     /**
      * Instantiates a new datapoint value.
-     *
+     * 
      * @param s the string value, cannot be <code>null</code>
      */
     public DatapointValue(String s) {
@@ -38,13 +38,12 @@ public class DatapointValue {
 
     /**
      * Instantiates a new datapoint value.
-     *
+     * 
      * @param i the integer value, must be greater that {@value Integer#MIN_VALUE}
      */
     public DatapointValue(int i) {
         if (i == Integer.MIN_VALUE) {
-            throw new IllegalArgumentException(
-                    "Value cannot be Integer.MIN_VALUE");
+            throw new IllegalArgumentException("Value cannot be Integer.MIN_VALUE");
         }
         datatype = DatapointMetadata.Datatype.INTEGER;
         intValue = i;
@@ -53,7 +52,7 @@ public class DatapointValue {
 
     /**
      * Gets the int value.
-     *
+     * 
      * @return the int value
      */
     public int getIntValue() {
@@ -65,7 +64,7 @@ public class DatapointValue {
 
     /**
      * Gets the string value.
-     *
+     * 
      * @return the string value
      */
     public String getStringValue() {
@@ -77,7 +76,7 @@ public class DatapointValue {
 
     /**
      * Checks if the value carrier is a string.
-     *
+     * 
      * @return <code>true</code>, if is string
      */
     public boolean isString() {
@@ -87,11 +86,28 @@ public class DatapointValue {
 
     /**
      * Checks if the value carrier is an integer.
-     *
+     * 
      * @return <code>true</code>, if is integer
      */
     public boolean isInteger() {
         assert stringValue != null;
         return intValue != Integer.MIN_VALUE;
+    }
+
+
+    /**
+     * Implements toString method in order to print concrete value
+     * 
+     * @return the value in form of string
+     */
+    public String toString() {
+        switch (datatype) {
+            case INTEGER:
+                return intValue + "";
+            case STRING:
+                return stringValue;
+        }
+        return "";
+
     }
 }

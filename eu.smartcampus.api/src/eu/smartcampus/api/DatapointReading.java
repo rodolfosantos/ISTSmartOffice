@@ -1,5 +1,7 @@
 package eu.smartcampus.api;
 
+import java.util.Date;
+
 /**
  * A datapoint value reading with a timestamp.
  */
@@ -20,6 +22,16 @@ public class DatapointReading {
     public DatapointReading(DatapointValue value, long timestamp) {
         this.value = value;
         this.timestamp = timestamp;
+    }
+    
+    /**
+     * Constructs a new datapoint reading.
+     *
+     * @param value the datapoint value
+     */
+    public DatapointReading(DatapointValue value) {
+        this.value = value;
+        this.timestamp = new Date().getTime();
     }
 
     /**

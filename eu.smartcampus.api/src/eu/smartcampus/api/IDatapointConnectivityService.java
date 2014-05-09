@@ -2,10 +2,10 @@ package eu.smartcampus.api;
 
 import java.security.Timestamp;
 
+// TODO: Auto-generated Javadoc
 /**
  * Service definition that abstracts the connection to devices.
  * <p>
- * 
  */
 /*
  * TODO: Doc updates
@@ -13,9 +13,11 @@ import java.security.Timestamp;
  * - Read and write operations are not instantaneous.
  */
 public interface IDatapointConnectivityService {
-    
+
     /**
      * Interface for listeners of datapoint events.
+     * 
+     * @see DatapointEvent
      */
     interface DatapointListener {
         /**
@@ -27,7 +29,8 @@ public interface IDatapointConnectivityService {
          * @param address the address of the datapoint
          * @param values the latest reading values
          */
-        void onDatapointUpdate(DatapointAddress address, DatapointReading[] values);
+        void onDatapointUpdate(DatapointAddress address,
+                               DatapointReading[] values);
 
         /**
          * Invoked when a datapoint error occurs.
@@ -212,8 +215,10 @@ public interface IDatapointConnectivityService {
      * 
      * @param address the for which we want to know the metadata
      * @return the metadata object associated to the datapoint
+     * @throws OperationFailedException the operation failed exception containing the
+     *             error type
      */
-    DatapointMetadata getDatapointMetadata(DatapointAddress address);
+    DatapointMetadata getDatapointMetadata(DatapointAddress address) throws OperationFailedException;
 
     /**
      * Removes a datapoint listener.
@@ -284,4 +289,31 @@ public interface IDatapointConnectivityService {
     int requestDatapointWrite(DatapointAddress address,
                               DatapointValue[] values,
                               WriteCallback writeCallback);
+
+    /**
+     * The Class OperationFailedException.
+     */
+    static class OperationFailedException extends
+            Exception {
+
+        /** The Constant serialVersionUID. */
+        private static final long serialVersionUID = 6714056390769181513L;
+
+        /** The error type. */
+        private final ErrorType errorType;
+
+        /**
+         * Instantiates a new operation failed exception.
+         * 
+         * @param errorType the error type
+         */
+        public OperationFailedException(ErrorType errorType) {
+            this.errorType = errorType;
+        }
+
+        public ErrorType getErrorType() {
+            return this.errorType;
+        }
+
+    }
 }

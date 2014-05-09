@@ -100,7 +100,7 @@ public class DatapointMetadata {
      * The minimum amount of time that the client must wait until another device is ready
      * to receive another command though this datapoint in milliseconds.
      */
-    private int hysterisys;
+    private int hysteresis;
 
     /**
      * The maximum value that can be displayed to the user.
@@ -259,7 +259,7 @@ public class DatapointMetadata {
          *
          * @param h the new hysteresis, must be positive
          */
-        public void setHysterisys(int h) {
+        public void sethysteresis(int h) {
             if (h <= 0) {
                 throw new IllegalArgumentException("Hyterisis must be positive");
             }
@@ -327,7 +327,7 @@ public class DatapointMetadata {
             result.smallestReadInterval = smallestSamplingInterval;
             result.currentSamplingInterval = currentSamplingInterval;
             result.changeOfValue = changeOfValue;
-            result.hysterisys = hysteresis;
+            result.hysteresis = hysteresis;
             result.displayMax = displayMax;
             result.displayMin = displayMin;
             result.readingMax = readingMax;
@@ -428,8 +428,8 @@ public class DatapointMetadata {
      *
      * @return the hysteresis value in milliseconds
      */
-    public int getHysterisys() {
-        return hysterisys;
+    public int getHysteresis() {
+        return hysteresis;
     }
 
     /**

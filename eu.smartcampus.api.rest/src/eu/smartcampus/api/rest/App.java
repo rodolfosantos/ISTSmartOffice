@@ -24,7 +24,7 @@ public class App {
         // Attach device api application
         MeterDriverIP driver = new MeterDriverIP("root", "root");
         IDatapointConnectivityService deviceapi = new DatapointConnectivityServiceImpl(driver);
-        component.getDefaultHost().attach("/deviceapi", new DatapointConnectivityServiceREST(deviceapi));
+        component.getDefaultHost().attach("/", new DatapointConnectivityServiceREST(deviceapi));
 
         // Start the component.  
         component.start();

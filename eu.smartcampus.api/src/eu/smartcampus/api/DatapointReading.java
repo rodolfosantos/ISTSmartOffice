@@ -30,8 +30,7 @@ public class DatapointReading {
      * @param value the datapoint value
      */
     public DatapointReading(DatapointValue value) {
-        this.value = value;
-        this.timestamp = new Date().getTime();
+        this(value, new Date().getTime());
     }
 
     /**

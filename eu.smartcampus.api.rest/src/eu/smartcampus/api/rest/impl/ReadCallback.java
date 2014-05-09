@@ -11,7 +11,7 @@ import eu.smartcampus.api.IDatapointConnectivityService.ErrorType;
 /**
  * The callback used by the REST wrapper to receive read requests.
  */
-public class ReadCallBack
+public class ReadCallback
         implements IDatapointConnectivityService.ReadCallback {
     /**
      * Semaphore used to indicate when the reading has arrived.
@@ -23,7 +23,7 @@ public class ReadCallBack
     private DatapointReading reading;
 
 
-    public ReadCallBack() {
+    public ReadCallback() {
         super();
         this.semaphore = new Semaphore(0);
         this.reading = null;

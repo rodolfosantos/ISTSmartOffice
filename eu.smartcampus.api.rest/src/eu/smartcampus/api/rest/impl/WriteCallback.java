@@ -10,7 +10,7 @@ import eu.smartcampus.api.IDatapointConnectivityService.WritingConfirmationLevel
 /**
  * The callback used by the REST wrapper to receive write requests.
  */
-public class WriteCallBack
+public class WriteCallback
         implements IDatapointConnectivityService.WriteCallback {
     /**
      * Semaphore used to indicate when the write has arrived.

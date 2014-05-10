@@ -17,6 +17,13 @@ public class DatapointMetadata {
          * that have decimal values are encoded by scale.
          */
         INTEGER,
+        
+        /**
+         * An boolean data type. Booleans can represent only two states, true or
+         * false
+         * 
+         */
+        BOOLEAN,
 
         /**
          * String datatypes are proxies to represent any other information.
@@ -133,7 +140,7 @@ public class DatapointMetadata {
     private int readCacheSize;
 
     /**
-     * The maximum valid valur for a scale.
+     * The maximum valid value for a scale.
      */
     private static final int SCALE_MAX = 32;
 

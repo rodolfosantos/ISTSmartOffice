@@ -1,6 +1,5 @@
 package eu.smartcampus.api.rest.deviceapi.impl;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -36,6 +35,7 @@ public class DatapointConnectivityServiceAdapter
         return datapointsDrivers.get(address);
     }
 
+    @SuppressWarnings("unused")
     private void notifyDatapointError(DatapointAddress address, ErrorType error) {
         synchronized (listeners) {
             Iterator<DatapointListener> it = listeners.iterator();
@@ -46,6 +46,7 @@ public class DatapointConnectivityServiceAdapter
         }
     }
 
+    @SuppressWarnings("unused")
     private void notifyDatapointUpdate(DatapointAddress address, DatapointReading[] values) {
         synchronized (listeners) {
             Iterator<DatapointListener> it = listeners.iterator();

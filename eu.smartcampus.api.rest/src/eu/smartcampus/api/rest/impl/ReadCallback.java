@@ -4,7 +4,6 @@ import java.util.concurrent.Semaphore;
 
 import eu.smartcampus.api.DatapointAddress;
 import eu.smartcampus.api.DatapointReading;
-import eu.smartcampus.api.DatapointValue;
 import eu.smartcampus.api.IDatapointConnectivityService;
 import eu.smartcampus.api.IDatapointConnectivityService.ErrorType;
 

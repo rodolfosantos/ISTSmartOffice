@@ -46,7 +46,7 @@ public abstract class AbstractDatapointConnectivityService implements
 
 	@Override
 	public abstract int requestDatapointWindowRead(DatapointAddress address,
-			Timestamp start, Timestamp finish, ReadCallback readCallback);
+			long startTimestamp, long finishTimestamp, ReadCallback readCallback);
 
 	@Override
 	public abstract int requestDatapointWrite(DatapointAddress address,

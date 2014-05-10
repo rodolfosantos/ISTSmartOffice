@@ -1,7 +1,5 @@
 package eu.smartcampus.api.rest.impl;
 
-import java.security.Timestamp;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,54 +52,48 @@ public class DatapointConnectivityServiceResources {
             ServerResource {
         @Get
         public JSONObject doGet() {
+            JSONObject result = new JSONObject();
             /**
-             * Get the address.
+             * Get the address
              */
-            String addressRESTParam = getRequest().getAttributes().get("addr")
-                    .toString();
+            String addressRESTParam = getRequest().getAttributes().get("addr").toString();
             DatapointAddress address = new DatapointAddress(addressRESTParam);
             /**
              * Get the time windows
              */
-            Timestamp start = new Timestamp()
-            /**
-             * Try getting the metadata.
-             */
-            DatapointMetadata metadata = null;
-            try {
-                metadata = DatapointConnectivityServiceREST.serviceImplementation
-                        .getDatapointMetadata(address);
-            } catch (OperationFailedException e) {
-                return provideErrorResponse(e.getErrorType(), e.getErrorType()
-                        .toString(), "");
+            String startRESTParam = getRequest().getAttributes().get("start").toString();
+            String finishRESTParam = getRequest().getAttributes().get("finish").toString();
+            long startTimestamp = Long.valueOf(startRESTParam).longValue();
+            long finishTimestamp = Long.valueOf(finishRESTParam).longValue();
+
+
+            ReadCallback readCallback = new ReadCallback();
+            DatapointConnectivityServiceREST.serviceImplementation.requestDatapointWindowRead(
+                    address, startTimestamp, finishTimestamp, readCallback);
+            DatapointReading[] readings = readCallback.getReadings();
+
+            if (readings == null) {
+                return provideErrorResponse(readCallback.getErrorReason(), "An error occurred",
+                        "Try again later.");
             }
+            
             /**
              * Build the JSON response.
              */
-            JSONObject result = null;
             try {
-                result = new JSONObject();
-                result.put("units", metadata.getUnits());
-                result.put("datatype", metadata.getDatatype());
-                result.put("accesstype", metadata.getAccessType());
-                result.put("precision", metadata.getPrecision());
-                result.put("scale", metadata.getScale());
-                result.put("smallestsamplinginterval",
-                        metadata.getSmallestReadInterval());
-                result.put("currentsamplinginterval",
-                        metadata.getCurrentSamplingInterval());
-                result.put("changeofvalue", metadata.getChangeOfValue());
-                result.put("hysteresis", metadata.getHysteresis());
-                result.put("displaymax", metadata.getDisplayMax());
-                result.put("displaymin", metadata.getDisplayMin());
-                result.put("readingmax", metadata.getReadingMax());
-                result.put("readingmin", metadata.getReadingMin());
-                result.put("readcachesize", metadata.getReadCacheSize());
+                JSONArray readingsArray = new JSONArray();
+                for (DatapointReading reading : readings) {
+                    JSONObject tmp = new JSONObject();
+                    tmp.put("value", reading.getValue());
+                    tmp.put("timestamp", reading.getTimestamp());
+                    readingsArray.put(tmp);
+                }
+                result.put("readings", readingsArray);
+                return result;
             } catch (JSONException e) {
                 getResponse().setStatus(Status.SERVER_ERROR_INTERNAL);
-                e.printStackTrace();
+                return result;
             }
-            return result;
         }
     }
 
@@ -120,8 +112,7 @@ public class DatapointConnectivityServiceResources {
             /**
              * Get the address.
              */
-            String addressRESTParam = getRequest().getAttributes().get("addr")
-                    .toString();
+            String addressRESTParam = getRequest().getAttributes().get("addr").toString();
             DatapointAddress address = new DatapointAddress(addressRESTParam);
             /**
              * Try getting the metadata.
@@ -131,8 +122,7 @@ public class DatapointConnectivityServiceResources {
                 metadata = DatapointConnectivityServiceREST.serviceImplementation
                         .getDatapointMetadata(address);
             } catch (OperationFailedException e) {
-                return provideErrorResponse(e.getErrorType(), e.getErrorType()
-                        .toString(), "");
+                return provideErrorResponse(e.getErrorType(), e.getErrorType().toString(), "");
             }
             /**
              * Build the JSON response.
@@ -145,10 +135,8 @@ public class DatapointConnectivityServiceResources {
                 result.put("accesstype", metadata.getAccessType());
                 result.put("precision", metadata.getPrecision());
                 result.put("scale", metadata.getScale());
-                result.put("smallestsamplinginterval",
-                        metadata.getSmallestReadInterval());
-                result.put("currentsamplinginterval",
-                        metadata.getCurrentSamplingInterval());
+                result.put("smallestsamplinginterval", metadata.getSmallestReadInterval());
+                result.put("currentsamplinginterval", metadata.getCurrentSamplingInterval());
                 result.put("changeofvalue", metadata.getChangeOfValue());
                 result.put("hysteresis", metadata.getHysteresis());
                 result.put("displaymax", metadata.getDisplayMax());
@@ -184,7 +172,7 @@ public class DatapointConnectivityServiceResources {
                 array.put(datapointAddress.getAddress());
             }
             try {
-                result.put("adresses", array);
+                result.put("addresses", array);
                 return result;
             } catch (JSONException e) {
                 getResponse().setStatus(Status.SERVER_ERROR_INTERNAL);
@@ -206,18 +194,16 @@ public class DatapointConnectivityServiceResources {
             ServerResource {
         @Get
         public JSONObject doGet() {
-            String address = getRequest().getAttributes().get("addr")
-                    .toString();
+            String address = getRequest().getAttributes().get("addr").toString();
             JSONObject result = new JSONObject();
 
             ReadCallback readCallback = new ReadCallback();
-            DatapointConnectivityServiceREST.serviceImplementation
-                    .requestDatapointRead(new DatapointAddress(address),
-                            readCallback);
+            DatapointConnectivityServiceREST.serviceImplementation.requestDatapointRead(
+                    new DatapointAddress(address), readCallback);
             DatapointReading reading = readCallback.getReading();
             if (reading == null) {
-                return provideErrorResponse(readCallback.getErrorReason(),
-                        "An error occurred", "Try again later.");
+                return provideErrorResponse(readCallback.getErrorReason(), "An error occurred",
+                        "Try again later.");
             }
             try {
                 result.put("value", reading.getValue());
@@ -238,16 +224,14 @@ public class DatapointConnectivityServiceResources {
             try {
                 JSONObject requestbody = entity.getJsonObject();
                 JSONArray values = requestbody.getJSONArray("values");
-                String addr = getRequest().getAttributes().get("addr")
-                        .toString();
+                String addr = getRequest().getAttributes().get("addr").toString();
 
                 System.out.println(values);
                 System.out.println(addr);
 
                 WriteCallback writeCallback = new WriteCallback();
-                DatapointConnectivityServiceREST.serviceImplementation
-                        .requestDatapointWrite(new DatapointAddress(addr),
-                                null, writeCallback);
+                DatapointConnectivityServiceREST.serviceImplementation.requestDatapointWrite(
+                        new DatapointAddress(addr), null, writeCallback);
                 boolean success = writeCallback.isWritten();
                 if (!success) {
                     return provideErrorResponse(writeCallback.getErrorReason(),

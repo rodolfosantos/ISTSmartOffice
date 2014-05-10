@@ -57,18 +57,20 @@ public class DatapointConnectivityServiceImpl
         return 0;
     }
 
-    public int requestDatapointWindowRead(DatapointAddress address,
-                                          Timestamp start,
-                                          Timestamp finish,
-                                          ReadCallback readCallback) {
-        // TODO Auto-generated method stub
-        return 0;
-    }
 
     public int requestDatapointWrite(DatapointAddress address,
                                      DatapointValue[] values,
                                      WriteCallback writeCallback) {
         writeCallback.onWriteCompleted(address, WritingConfirmationLevel.DEVICE_ACTION_TAKEN, 0);
+        return 0;
+    }
+
+    @Override
+    public int requestDatapointWindowRead(DatapointAddress address,
+                                          long startTimestamp,
+                                          long finishTimestamp,
+                                          ReadCallback readCallback) {
+        // TODO Auto-generated method stub
         return 0;
     }
 

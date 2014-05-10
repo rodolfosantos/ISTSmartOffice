@@ -21,7 +21,7 @@ public class ReadCallback
     /**
      * The resulting reading.
      */
-    private DatapointReading reading = null;
+    private DatapointReading[] reading = null;
 
     /** The error reason. */
     private ErrorType errorReason = null;
@@ -42,7 +42,7 @@ public class ReadCallback
                                 DatapointReading[] readings,
                                 int requestId) {
         semaphore.release();
-        this.reading = readings[0];
+        this.reading = readings;
     }
 
     /**
@@ -53,10 +53,25 @@ public class ReadCallback
     public DatapointReading getReading() {
         try {
             semaphore.acquire();
+            return reading[0];
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    /**
+     * Gets the readings.
+     * 
+     * @return the readings
+     */
+    public DatapointReading[] getReadings() {
+        try {
+            semaphore.acquire();
             return reading;
         } catch (InterruptedException e) {
             e.printStackTrace();
-            return new DatapointReading(new DatapointValue(-1), 0);
+            return null;
         }
     }
 

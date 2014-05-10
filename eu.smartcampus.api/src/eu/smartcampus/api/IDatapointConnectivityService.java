@@ -1,6 +1,5 @@
 package eu.smartcampus.api;
 
-import java.security.Timestamp;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -273,8 +272,8 @@ public interface IDatapointConnectivityService {
      *         request
      */
     int requestDatapointWindowRead(DatapointAddress address,
-                                   Timestamp start,
-                                   Timestamp finish,
+                                   long startTimestamp,
+                                   long finishTimestamp,
                                    ReadCallback readCallback);
 
     /**

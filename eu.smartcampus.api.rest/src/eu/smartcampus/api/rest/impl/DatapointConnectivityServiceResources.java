@@ -1,5 +1,7 @@
 package eu.smartcampus.api.rest.impl;
 
+import javax.lang.model.type.ErrorType;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,6 +14,7 @@ import org.restlet.resource.ServerResource;
 import eu.smartcampus.api.DatapointAddress;
 import eu.smartcampus.api.DatapointMetadata;
 import eu.smartcampus.api.DatapointReading;
+import eu.smartcampus.api.DatapointValue;
 import eu.smartcampus.api.IDatapointConnectivityService;
 import eu.smartcampus.api.IDatapointConnectivityService.OperationFailedException;
 
@@ -76,7 +79,7 @@ public class DatapointConnectivityServiceResources {
                 return provideErrorResponse(readCallback.getErrorReason(), "An error occurred",
                         "Try again later.");
             }
-            
+
             /**
              * Build the JSON response.
              */
@@ -131,6 +134,7 @@ public class DatapointConnectivityServiceResources {
             try {
                 result = new JSONObject();
                 result.put("units", metadata.getUnits());
+                System.out.println(metadata.getUnits());
                 result.put("datatype", metadata.getDatatype());
                 result.put("accesstype", metadata.getAccessType());
                 result.put("precision", metadata.getPrecision());
@@ -223,15 +227,43 @@ public class DatapointConnectivityServiceResources {
 
             try {
                 JSONObject requestbody = entity.getJsonObject();
-                JSONArray values = requestbody.getJSONArray("values");
-                String addr = getRequest().getAttributes().get("addr").toString();
+                JSONArray valuesRESTParam = requestbody.getJSONArray("values");
+                String addrRESTParam = getRequest().getAttributes().get("addr").toString();
+                DatapointAddress addr = new DatapointAddress(addrRESTParam);
 
-                System.out.println(values);
-                System.out.println(addr);
+                System.out.println(valuesRESTParam);
+                System.out.println(addrRESTParam);
+                DatapointValue[] values = new DatapointValue[valuesRESTParam.length()];
+                //-----
+                try {
+                    DatapointMetadata m = DatapointConnectivityServiceREST.serviceImplementation
+                            .getDatapointMetadata(addr);
+                    switch (m.getDatatype()) {
+                        case INTEGER:
+                            for (int i = 0; i < values.length; i++) {
+                                values[i] = new DatapointValue(valuesRESTParam.getInt(i));
+                            }
+                            break;
+                        case STRING:
+                            for (int i = 0; i < values.length; i++) {
+                                values[i] = new DatapointValue(valuesRESTParam.getString(i));
+                            }
+                            break;
+                        case BOOLEAN:
+                            for (int i = 0; i < values.length; i++) {
+                                values[i] = new DatapointValue(valuesRESTParam.getBoolean(i));
+                            }
+                            break;
+                    }
+                } catch (OperationFailedException e) {
+                    return provideErrorResponse(e.getErrorType(),
+                            "An error occurred", "Try again later.");
+                }
 
+                //-----
                 WriteCallback writeCallback = new WriteCallback();
-                DatapointConnectivityServiceREST.serviceImplementation.requestDatapointWrite(
-                        new DatapointAddress(addr), null, writeCallback);
+                DatapointConnectivityServiceREST.serviceImplementation.requestDatapointWrite(addr,
+                        values, writeCallback);
                 boolean success = writeCallback.isWritten();
                 if (!success) {
                     return provideErrorResponse(writeCallback.getErrorReason(),

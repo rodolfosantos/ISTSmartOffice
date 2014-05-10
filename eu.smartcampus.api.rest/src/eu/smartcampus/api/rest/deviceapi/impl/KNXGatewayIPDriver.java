@@ -76,7 +76,9 @@ public class KNXGatewayIPDriver {
 	public void writeBool(String addr, boolean value)
 			throws KNXTimeoutException, KNXLinkClosedException, KNXFormatException {
 		synchronized (pc) {
-		    GroupAddress dst = new GroupAddress(addr.replace('-', '/'));
+		    addr = addr.replace('-', '/');
+		    
+		    GroupAddress dst = new GroupAddress(addr);
 			pc.write(dst, value);
 		}
 	}

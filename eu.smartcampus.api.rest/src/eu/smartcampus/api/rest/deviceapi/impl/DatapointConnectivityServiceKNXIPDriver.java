@@ -52,12 +52,11 @@ public class DatapointConnectivityServiceKNXIPDriver
         switch (m.getDatatype()) {
             case INTEGER:
 
-                //Test scaler type (0-100)
-                if (m.getDisplayMax() <= 100 && m.getDisplayMin() >= 0) {
+                //Test scale type (0-100)
+                if (m.getDisplayMax() <= 100 && m.getDisplayMin() > 0) {
                     try {
-                        float value = driver.readScalar(addr);
-                        DatapointReading reading = new DatapointReading(new DatapointValue(
-                                Math.round(value * m.getScale())));
+                        String value = driver.readScalar(addr) + "";
+                        DatapointReading reading = new DatapointReading(new DatapointValue(value));
                         readCallback
                                 .onReadCompleted(address, new DatapointReading[] { reading }, 0);
 
@@ -71,9 +70,8 @@ public class DatapointConnectivityServiceKNXIPDriver
                     }
                 } else {
                     try {
-                        float value = driver.readFloat(addr);
-                        DatapointReading reading = new DatapointReading(new DatapointValue(
-                                Math.round(value * m.getScale())));
+                        String value = driver.readFloat(addr) + "";
+                        DatapointReading reading = new DatapointReading(new DatapointValue(value));
                         readCallback
                                 .onReadCompleted(address, new DatapointReading[] { reading }, 0);
                     } catch (KNXException e) {
@@ -132,6 +130,7 @@ public class DatapointConnectivityServiceKNXIPDriver
                     e.printStackTrace();
                     writeCallback.onWriteAborted(address, ErrorType.DEVICE_CONNECTION_ERROR, 0);
                 }
+                break;
             case BOOLEAN:
                 try {
                     driver.writeBool(addr, values[0].getBooleanValue());
@@ -141,12 +140,14 @@ public class DatapointConnectivityServiceKNXIPDriver
                     e.printStackTrace();
                     writeCallback.onWriteAborted(address, ErrorType.DEVICE_CONNECTION_ERROR, 0);
                 }
+                break;
 
             case STRING:// TODO not used yet
                 writeCallback.onWriteAborted(address, ErrorType.UNSUPORTED_DATAPOINT_OPERATION, 0);
+                break;
         }
 
-        writeCallback.onWriteAborted(address, ErrorType.UNSUPORTED_DATAPOINT_OPERATION, 0);
+        //writeCallback.onWriteAborted(address, ErrorType.UNSUPORTED_DATAPOINT_OPERATION, 0);
         return 0;
     }
 

@@ -8,6 +8,7 @@ import java.util.Map;
 import org.restlet.Component;
 import org.restlet.data.Protocol;
 
+import tuwien.auto.calimero.GroupAddress;
 import eu.smartcampus.api.DatapointAddress;
 import eu.smartcampus.api.DatapointMetadata;
 import eu.smartcampus.api.DatapointMetadata.AccessType;
@@ -69,7 +70,7 @@ public class App {
         MetadataBuilder knxMetadata1 = new DatapointMetadata.MetadataBuilder();
         knxMetadata1.setAccessType(AccessType.READ_ONLY);
         knxMetadata1.setDatatype(Datatype.INTEGER);
-        knxMetadata1.setScale(2);
+        knxMetadata1.setUnits("C");//TODO unit metadata problem (null)
         DatapointAddress d1 = new DatapointAddress("0-4-5");//energy lab temperature
         
         MetadataBuilder knxMetadata2 = new DatapointMetadata.MetadataBuilder();
@@ -80,33 +81,29 @@ public class App {
         MetadataBuilder knxMetadata3 = new DatapointMetadata.MetadataBuilder();
         knxMetadata3.setAccessType(AccessType.WRITE_ONLY);
         knxMetadata3.setDatatype(Datatype.INTEGER);
-        knxMetadata3.setScale(2);
         knxMetadata3.setDisplayMax(100);
-        knxMetadata3.setDisplayMin(0);
+        knxMetadata3.setDisplayMin(1);
         DatapointAddress d3 = new DatapointAddress("0-1-0");//blackboard lamps write (0-100)
         
         MetadataBuilder knxMetadata4 = new DatapointMetadata.MetadataBuilder();
         knxMetadata4.setAccessType(AccessType.READ_ONLY);
         knxMetadata4.setDatatype(Datatype.INTEGER);
         knxMetadata4.setDisplayMax(100);
-        knxMetadata4.setDisplayMin(0);
-        knxMetadata4.setScale(2);
-        DatapointAddress d4 = new DatapointAddress("0-4-5");//blackboard lamps read (0-100)
+        knxMetadata4.setDisplayMin(1);//TODO fix default int value of metadata (0)
+        DatapointAddress d4 = new DatapointAddress("0-7-1");//blackboard lamps read (0-100)
         
         MetadataBuilder knxMetadata5 = new DatapointMetadata.MetadataBuilder();
         knxMetadata5.setAccessType(AccessType.WRITE_ONLY);
         knxMetadata5.setDatatype(Datatype.INTEGER);
-        knxMetadata5.setScale(2);
         knxMetadata5.setDisplayMax(100);
-        knxMetadata5.setDisplayMin(0);
+        knxMetadata5.setDisplayMin(1);
         DatapointAddress d5 = new DatapointAddress("0-2-12");//energylab blinds write (0-100)
         
         MetadataBuilder knxMetadata6 = new DatapointMetadata.MetadataBuilder();
         knxMetadata6.setAccessType(AccessType.READ_ONLY);
         knxMetadata6.setDatatype(Datatype.INTEGER);
         knxMetadata6.setDisplayMax(100);
-        knxMetadata6.setDisplayMin(0);
-        knxMetadata6.setScale(2);
+        knxMetadata6.setDisplayMin(1);
         DatapointAddress d6 = new DatapointAddress("0-2-0");//energylab blinds read (0-100)
         
         knxDatapoints.put(d1, knxMetadata1.build());
@@ -117,7 +114,8 @@ public class App {
         knxDatapoints.put(d6, knxMetadata6.build());
         
         KNXGatewayIPDriver knxGatewayDriver = new KNXGatewayIPDriver("172.20.70.147");
-        //knxGatewayDriver.start(); //TODO you only can start this in the same KNXGateway network subnet
+        knxGatewayDriver.start(); //TODO you only can start this in the same KNXGateway network subnet
+        knxGatewayDriver.writeBool("0-3-0", true);
         
         IDatapointConnectivityService knxDriver = new DatapointConnectivityServiceKNXIPDriver(knxGatewayDriver, knxDatapoints);       
 

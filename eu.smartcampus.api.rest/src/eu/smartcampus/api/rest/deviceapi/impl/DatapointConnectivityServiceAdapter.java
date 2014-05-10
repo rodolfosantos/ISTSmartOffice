@@ -74,7 +74,7 @@ public class DatapointConnectivityServiceAdapter
         try {
             return getDriver(address).getDatapointMetadata(address);
         } catch (OperationFailedException e) {
-            return null;//TODO
+            return null;
         }
     }
 

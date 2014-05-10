@@ -63,10 +63,10 @@ public class DatapointValue {
      * @param i the integer value, must be greater that {@value Integer#MIN_VALUE}
      */
     public DatapointValue(boolean b) {
-        datatype = DatapointMetadata.Datatype.INTEGER;
+        datatype = DatapointMetadata.Datatype.BOOLEAN;
         intValue = Integer.MIN_VALUE;
         stringValue = null;
-        booleanValue = false;
+        booleanValue = b;
     }
 
     /**

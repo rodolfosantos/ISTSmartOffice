@@ -1,8 +1,5 @@
 package eu.smartcampus.api.rest.deviceapi.impl;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.security.Timestamp;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -14,30 +11,29 @@ import eu.smartcampus.api.DatapointMetadata;
 import eu.smartcampus.api.DatapointReading;
 import eu.smartcampus.api.DatapointValue;
 import eu.smartcampus.api.IDatapointConnectivityService;
-import eu.smartcampus.api.IDatapointConnectivityService.ErrorType;
 
-public class DatapointConnectivityServiceImpl
+public class DatapointConnectivityServiceAdapter
         implements IDatapointConnectivityService {
 
 
-    private MeterDriverIP driver;
-    private Map<DatapointAddress, DatapointMetadata> datapoints;
+    private Map<DatapointAddress, IDatapointConnectivityService> datapointsDrivers;
     private Set<DatapointListener> listeners;
 
-    public DatapointConnectivityServiceImpl(MeterDriverIP driver,
-                                            Map<DatapointAddress, DatapointMetadata> datapoints) {
+    public DatapointConnectivityServiceAdapter(Map<DatapointAddress, IDatapointConnectivityService> datapointsDrivers) {
         super();
-        this.driver = driver;
-        this.datapoints = new HashMap<DatapointAddress, DatapointMetadata>(datapoints);
+        this.datapointsDrivers = datapointsDrivers;
         this.listeners = new HashSet<DatapointListener>();
     }
-
 
     public void addDatapointListener(DatapointListener listener) {
         synchronized (listeners) {
             listeners.add(listener);
         }
 
+    }
+
+    private IDatapointConnectivityService getDriver(DatapointAddress address) {
+        return datapointsDrivers.get(address);
     }
 
     private void notifyDatapointError(DatapointAddress address, ErrorType error) {
@@ -61,8 +57,10 @@ public class DatapointConnectivityServiceImpl
     }
 
     public DatapointAddress[] getAllDatapoints() {
-        DatapointAddress[] result = new DatapointAddress[datapoints.size()];
-        Iterator<DatapointAddress> it = datapoints.keySet().iterator();
+        DatapointAddress[] result = new DatapointAddress[datapointsDrivers.size()];
+        
+        
+        Iterator<DatapointAddress> it = datapointsDrivers.keySet().iterator();
         int i = 0;
         while (it.hasNext()) {
             DatapointAddress datapointAddress = (DatapointAddress) it.next();
@@ -72,7 +70,11 @@ public class DatapointConnectivityServiceImpl
     }
 
     public DatapointMetadata getDatapointMetadata(DatapointAddress address) {
-        return this.datapoints.get(address);
+        try {
+            return getDriver(address).getDatapointMetadata(address);
+        } catch (OperationFailedException e) {
+            return null;//TODO
+        }
     }
 
     public void removeDatapointListener(DatapointListener listener) {
@@ -80,25 +82,14 @@ public class DatapointConnectivityServiceImpl
     }
 
     public int requestDatapointRead(DatapointAddress address, ReadCallback readCallback) {
-        try {
-            MeterMeasure value = driver.getNewMeasure(address.getAddress());
-            DatapointReading reading = new DatapointReading(new DatapointValue(
-                    value.getTotalPower() + ""));
-            readCallback.onReadCompleted(address, new DatapointReading[] { reading }, 0);
-            return 0;
-        } catch (MalformedURLException e) {
-            readCallback.onReadAborted(address, ErrorType.DATAPOINT_NOT_FOUND, 0);
-        }
-
-        return 0;
+        return getDriver(address).requestDatapointRead(address, readCallback);
     }
 
 
     public int requestDatapointWrite(DatapointAddress address,
                                      DatapointValue[] values,
                                      WriteCallback writeCallback) {
-        writeCallback.onWriteAborted(address, ErrorType.UNSUPORTED_DATAPOINT_OPERATION, 0);
-        return 0;
+        return getDriver(address).requestDatapointWrite(address, values, writeCallback);
     }
 
     @Override
@@ -106,8 +97,8 @@ public class DatapointConnectivityServiceImpl
                                           long startTimestamp,
                                           long finishTimestamp,
                                           ReadCallback readCallback) {
-        readCallback.onReadAborted(address, ErrorType.UNSUPORTED_DATAPOINT_OPERATION, 0);
-        return 0;
+        return getDriver(address).requestDatapointWindowRead(address, startTimestamp,
+                finishTimestamp, readCallback);
     }
 
 }

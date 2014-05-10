@@ -1,7 +1,5 @@
 package eu.smartcampus.api.rest.impl;
 
-import javax.lang.model.type.ErrorType;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -134,7 +132,6 @@ public class DatapointConnectivityServiceResources {
             try {
                 result = new JSONObject();
                 result.put("units", metadata.getUnits());
-                System.out.println(metadata.getUnits());
                 result.put("datatype", metadata.getDatatype());
                 result.put("accesstype", metadata.getAccessType());
                 result.put("precision", metadata.getPrecision());
@@ -156,7 +153,7 @@ public class DatapointConnectivityServiceResources {
         }
     }
 
-    // curl http://localhost:8182/deviceapi/datapoint/all
+
     /**
      * REST resource responsible for listing all datapoint addresses. A JSON error
      * response is returned in case the datapoint address cannot be reached.
@@ -186,7 +183,7 @@ public class DatapointConnectivityServiceResources {
         }
     }
 
-    // curl http://localhost:8182/deviceapi/datapoint/172.20.70.233
+
     /**
      * REST resource responsible for reading and writing to a datapoint. A JSON error
      * response is returned in case the datapoint address cannot be reached.
@@ -219,8 +216,7 @@ public class DatapointConnectivityServiceResources {
             }
         }
 
-        // curl -X PUT http://localhost:8182/deviceapi/datapoint/172.20.70.233
-        // -H "Content-Type: application/json" -d '{"values" : [1,2,3]}'
+        // curl -X PUT http://localhost:8182/deviceapi/datapoints/0-2-12 -H "Content-Type: application/json" -d '{"values" : [50]}'
         @Put
         public JSONObject doPost(JsonRepresentation entity) {
             JSONObject result = new JSONObject();
@@ -231,8 +227,7 @@ public class DatapointConnectivityServiceResources {
                 String addrRESTParam = getRequest().getAttributes().get("addr").toString();
                 DatapointAddress addr = new DatapointAddress(addrRESTParam);
 
-                System.out.println(valuesRESTParam);
-                System.out.println(addrRESTParam);
+
                 DatapointValue[] values = new DatapointValue[valuesRESTParam.length()];
                 //-----
                 try {
@@ -256,8 +251,8 @@ public class DatapointConnectivityServiceResources {
                             break;
                     }
                 } catch (OperationFailedException e) {
-                    return provideErrorResponse(e.getErrorType(),
-                            "An error occurred", "Try again later.");
+                    return provideErrorResponse(e.getErrorType(), "An error occurred",
+                            "Try again later.");
                 }
 
                 //-----

@@ -1,14 +1,12 @@
 package eu.smartcampus.api.rest;
 
 
-
 import java.util.HashMap;
 import java.util.Map;
 
 import org.restlet.Component;
 import org.restlet.data.Protocol;
 
-import tuwien.auto.calimero.GroupAddress;
 import eu.smartcampus.api.DatapointAddress;
 import eu.smartcampus.api.DatapointMetadata;
 import eu.smartcampus.api.DatapointMetadata.AccessType;
@@ -21,9 +19,7 @@ import eu.smartcampus.api.rest.deviceapi.impl.DatapointConnectivityServiceMeterI
 import eu.smartcampus.api.rest.deviceapi.impl.KNXGatewayIPDriver;
 import eu.smartcampus.api.rest.impl.DatapointConnectivityServiceREST;
 
-/**
- * Hello world!
- */
+
 public class App {
     public static void main(String[] args) throws Exception {
         // Create a new Component.  
@@ -70,7 +66,7 @@ public class App {
         MetadataBuilder knxMetadata1 = new DatapointMetadata.MetadataBuilder();
         knxMetadata1.setAccessType(AccessType.READ_ONLY);
         knxMetadata1.setDatatype(Datatype.INTEGER);
-        knxMetadata1.setUnits("C");//TODO unit metadata problem (null)
+        knxMetadata1.setUnits("ºC");
         DatapointAddress d1 = new DatapointAddress("0-4-5");//energy lab temperature
         
         MetadataBuilder knxMetadata2 = new DatapointMetadata.MetadataBuilder();
@@ -114,8 +110,8 @@ public class App {
         knxDatapoints.put(d6, knxMetadata6.build());
         
         KNXGatewayIPDriver knxGatewayDriver = new KNXGatewayIPDriver("172.20.70.147");
-        knxGatewayDriver.start(); //TODO you only can start this in the same KNXGateway network subnet
-        knxGatewayDriver.writeBool("0-3-0", true);
+        //knxGatewayDriver.start(); //TODO you only can start this in the same KNXGateway subnet
+        //knxGatewayDriver.writeBool("0-3-0", true);// be careful, this line opens de energy lab door
         
         IDatapointConnectivityService knxDriver = new DatapointConnectivityServiceKNXIPDriver(knxGatewayDriver, knxDatapoints);       
 

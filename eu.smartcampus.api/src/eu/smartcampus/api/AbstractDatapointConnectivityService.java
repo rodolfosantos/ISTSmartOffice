@@ -1,6 +1,5 @@
 package eu.smartcampus.api;
 
-import java.security.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 

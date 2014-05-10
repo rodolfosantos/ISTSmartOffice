@@ -28,6 +28,9 @@ import eu.smartcampus.api.DatapointReading;
 import eu.smartcampus.api.DatapointValue;
 import eu.smartcampus.api.IDatapointConnectivityService;
 
+/**
+ * The Class DatapointConnectivityServiceMeterIPDriver
+ */
 public class DatapointConnectivityServiceMeterIPDriver
         implements IDatapointConnectivityService {
 
@@ -35,6 +38,13 @@ public class DatapointConnectivityServiceMeterIPDriver
     private String password;
     private Map<DatapointAddress, DatapointMetadata> datapoints;
 
+    /**
+     * Instantiates a new datapoint connectivity service meter ip driver.
+     *
+     * @param datapoints the datapoints
+     * @param username the username
+     * @param password the password
+     */
     public DatapointConnectivityServiceMeterIPDriver(Map<DatapointAddress, DatapointMetadata> datapoints,
                                                      String username,
                                                      String password) {
@@ -43,11 +53,24 @@ public class DatapointConnectivityServiceMeterIPDriver
         this.datapoints = datapoints;
     }
 
+    /**
+     * Gets the new measure.
+     *
+     * @param address the address
+     * @return the new measure
+     * @throws MalformedURLException the malformed url exception
+     */
     private MeterMeasure getNewMeasure(String address) throws MalformedURLException {
         return new MeterMeasure(
                 fetchSensorReading_HTTPS(new URL("https://" + address + "/reading")));
     }
 
+    /**
+     * Fetch sensor reading_ https.
+     *
+     * @param address the address
+     * @return the string
+     */
     private String fetchSensorReading_HTTPS(URL address) {
 
         String res = "";
@@ -118,6 +141,12 @@ public class DatapointConnectivityServiceMeterIPDriver
         return res;
     }
 
+    /**
+     * Base64 encode.
+     *
+     * @param string the string
+     * @return the string
+     */
     private static String base64Encode(String string) {
         String encodedString = "";
         byte bytes[] = string.getBytes();

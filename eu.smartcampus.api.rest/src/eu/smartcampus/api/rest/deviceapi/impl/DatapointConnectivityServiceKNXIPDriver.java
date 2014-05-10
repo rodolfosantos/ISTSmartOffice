@@ -9,12 +9,28 @@ import eu.smartcampus.api.DatapointReading;
 import eu.smartcampus.api.DatapointValue;
 import eu.smartcampus.api.IDatapointConnectivityService;
 
+/**
+ * The Class DatapointConnectivityServiceKNXIPDriver.
+ */
 public class DatapointConnectivityServiceKNXIPDriver
         implements IDatapointConnectivityService {
 
+    /**
+     * The driver.
+     */
     private KNXGatewayIPDriver driver;
+
+    /**
+     * The datapoints.
+     */
     private Map<DatapointAddress, DatapointMetadata> datapoints;
 
+    /**
+     * Instantiates a new datapoint connectivity service knxip driver.
+     * 
+     * @param driver the driver
+     * @param datapoints the datapoints
+     */
     public DatapointConnectivityServiceKNXIPDriver(KNXGatewayIPDriver driver,
                                                    Map<DatapointAddress, DatapointMetadata> datapoints) {
         super();

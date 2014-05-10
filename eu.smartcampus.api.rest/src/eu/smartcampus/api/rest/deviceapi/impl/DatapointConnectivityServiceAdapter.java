@@ -11,13 +11,28 @@ import eu.smartcampus.api.DatapointReading;
 import eu.smartcampus.api.DatapointValue;
 import eu.smartcampus.api.IDatapointConnectivityService;
 
+/**
+ * The Class DatapointConnectivityServiceAdapter.
+ */
 public class DatapointConnectivityServiceAdapter
         implements IDatapointConnectivityService {
 
 
+    /**
+     * The datapoints drivers.
+     */
     private Map<DatapointAddress, IDatapointConnectivityService> datapointsDrivers;
+    
+    /**
+     * The listeners.
+     */
     private Set<DatapointListener> listeners;
 
+    /**
+     * Instantiates a new datapoint connectivity service adapter.
+     *
+     * @param datapointsDrivers the datapoints drivers
+     */
     public DatapointConnectivityServiceAdapter(Map<DatapointAddress, IDatapointConnectivityService> datapointsDrivers) {
         super();
         this.datapointsDrivers = datapointsDrivers;
@@ -31,6 +46,12 @@ public class DatapointConnectivityServiceAdapter
 
     }
 
+    /**
+     * Gets the correspondent driver for each Datapoint
+     *
+     * @param address the address
+     * @return the driver
+     */
     private IDatapointConnectivityService getDriver(DatapointAddress address) {
         return datapointsDrivers.get(address);
     }

@@ -35,12 +35,8 @@ public class ReadCallback
         this.semaphore = new Semaphore(0);
     }
 
-    /* (non-Javadoc)
-     * @see eu.smartcampus.api.IDatapointConnectivityService.ReadCallback#onReadCompleted(eu.smartcampus.api.DatapointAddress, eu.smartcampus.api.DatapointReading[], int)
-     */
-    public void onReadCompleted(DatapointAddress address,
-                                DatapointReading[] readings,
-                                int requestId) {
+
+    public void onReadCompleted(DatapointAddress address, DatapointReading[] readings, int requestId) {
         semaphore.release();
         this.reading = readings;
     }
@@ -53,13 +49,14 @@ public class ReadCallback
     public DatapointReading getReading() {
         try {
             semaphore.acquire();
+
             return reading[0];
         } catch (InterruptedException e) {
             e.printStackTrace();
             return null;
         }
     }
-    
+
     /**
      * Gets the readings.
      * 
@@ -85,12 +82,7 @@ public class ReadCallback
     }
 
 
-    /* (non-Javadoc)
-     * @see eu.smartcampus.api.IDatapointConnectivityService.ReadCallback#onReadAborted(eu.smartcampus.api.DatapointAddress, eu.smartcampus.api.IDatapointConnectivityService.ErrorType, int)
-     */
-    public void onReadAborted(DatapointAddress address,
-                              ErrorType reason,
-                              int requestId) {
+    public void onReadAborted(DatapointAddress address, ErrorType reason, int requestId) {
         this.errorReason = reason;
         semaphore.release();
     }

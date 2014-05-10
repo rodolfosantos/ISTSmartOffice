@@ -21,6 +21,11 @@ public class DatapointValue {
      * then {@link #intValue} in {@link Integer#MIN_VALUE}.
      */
     private final String stringValue;
+    
+    /**
+     * The boolean value. Used to encode binary states.
+     */
+    private final boolean booleanValue;
 
     /**
      * Instantiates a new datapoint value.
@@ -34,6 +39,7 @@ public class DatapointValue {
         datatype = DatapointMetadata.Datatype.STRING;
         stringValue = s;
         intValue = Integer.MIN_VALUE;
+        booleanValue = false;
     }
 
     /**
@@ -48,6 +54,19 @@ public class DatapointValue {
         datatype = DatapointMetadata.Datatype.INTEGER;
         intValue = i;
         stringValue = null;
+        booleanValue = false;
+    }
+    
+    /**
+     * Instantiates a new datapoint value.
+     * 
+     * @param i the integer value, must be greater that {@value Integer#MIN_VALUE}
+     */
+    public DatapointValue(boolean b) {
+        datatype = DatapointMetadata.Datatype.INTEGER;
+        intValue = Integer.MIN_VALUE;
+        stringValue = null;
+        booleanValue = false;
     }
 
     /**
@@ -73,6 +92,18 @@ public class DatapointValue {
         }
         return stringValue;
     }
+    
+    /**
+     * Gets the boolean value.
+     * 
+     * @return the boolean value
+     */
+    public boolean getBooleanValue() {
+        if (datatype != DatapointMetadata.Datatype.BOOLEAN) {
+            throw new UnsupportedOperationException();
+        }
+        return booleanValue;
+    }
 
     /**
      * Checks if the value carrier is a string.
@@ -93,6 +124,17 @@ public class DatapointValue {
         assert stringValue != null;
         return intValue != Integer.MIN_VALUE;
     }
+    
+    /**
+     * Checks if the value carrier is an boolean.
+     * 
+     * @return <code>true</code>, if is boolean
+     */
+    public boolean isBoolean() {
+        assert stringValue != null;
+        assert intValue != Integer.MIN_VALUE;
+        return true;
+    }
 
 
     /**
@@ -106,6 +148,8 @@ public class DatapointValue {
                 return intValue + "";
             case STRING:
                 return stringValue;
+            case BOOLEAN:
+                return booleanValue + "";
         }
         return "";
 

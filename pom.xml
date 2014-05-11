@@ -13,6 +13,7 @@
 
 	<modules>
 		<module>eu.smartcampus.api.deviceconnectivity</module>
+		<module>eu.smartcampus.api.osgi</module>
 		<module>eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration</module>
 		<module>eu.smartcampus.api.deviceconnectivity.impls.knxip</module>
 		<module>eu.smartcampus.api.deviceconnectivity.impls.meterip</module>

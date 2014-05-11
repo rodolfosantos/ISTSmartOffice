@@ -1,4 +1,4 @@
-package eu.smartcampus.api.deviceconnectivity.osgi.registries;
+package eu.smartcampus.api.osgi.registries;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,21 +6,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class AbstractExtensionRegistry.
+ * The Class AbstractServiceRegistry.
  * 
  * @author Pedro Domingues (pedro.domingues@ist.utl.pt)
  * 
  * @param <T>
  *            the service type
  */
-public abstract class AbstractExtensionRegistry<T> implements
-		ILuminaExtensionRegistry<T> {
+public abstract class AbstractServiceRegistry<T> implements IServiceRegistry<T> {
 
 	/** The service factories by name. */
 	private Map<String, T> servicesByName = new HashMap<String, T>();
-
+	
 	/** The service listeners. */
 	private List<ServiceRegistryListener> serviceListeners = new ArrayList<ServiceRegistryListener>();
 

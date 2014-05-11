@@ -1,14 +1,14 @@
-package eu.smartcampus.api.deviceconnectivity.osgi.registries;
+package eu.smartcampus.api.osgi.registries;
 
 /**
- * The Interface IServiceFactoryRegistry.
+ * The Interface IServiceRegistry.
  * 
  * @author Pedro Domingues (pedro.domingues@ist.utl.pt)
  * 
  * @param <T>
  *            the generic type
  */
-public interface ILuminaExtensionRegistry<T> {
+public interface IServiceRegistry<T> {
 
 	/**
 	 * Adds the service listener.

@@ -403,5 +403,10 @@ public class DatapointConnectivityServiceMeterIPDriver
 
     }
 
+	@Override
+	public String getImplementationName() {
+		return this.getClass().getName();
+	}
+
 
 }

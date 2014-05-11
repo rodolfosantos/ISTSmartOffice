@@ -166,5 +166,10 @@ public class DatapointConnectivityServiceKNXIPDriver
         //writeCallback.onWriteAborted(address, ErrorType.UNSUPORTED_DATAPOINT_OPERATION, 0);
         return 0;
     }
+    
+    @Override
+	public String getImplementationName() {
+		return this.getClass().getName();
+	}
 
 }

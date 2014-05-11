@@ -5,14 +5,13 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
 
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
+import eu.smartcampus.api.deviceconnectivity.osgi.registries.DeviceConnectivityServiceRegistry;
 
 @SuppressWarnings("rawtypes")
 public class DeviceConnectivityServicesTracker extends ServiceTracker {
 
-	/**
-	 * The context of the plugin lumina activator.
-	 */
-	private BundleContext bundleContext;
+	/** The service registry. */
+	private DeviceConnectivityServiceRegistry registry = new DeviceConnectivityServiceRegistry();
 
 	/**
 	 * Constructs a tracker that uses the specified bundle context to track
@@ -23,9 +22,9 @@ public class DeviceConnectivityServicesTracker extends ServiceTracker {
 	 * @param registry
 	 *            The application object to notify about service changes.
 	 **/
+	@SuppressWarnings("unchecked")
 	public DeviceConnectivityServicesTracker(BundleContext context) {
 		super(context, IDatapointConnectivityService.class.getName(), null);
-		this.bundleContext = context;
 	}
 
 	/**
@@ -38,6 +37,9 @@ public class DeviceConnectivityServicesTracker extends ServiceTracker {
 	 **/
 	@Override
 	public ServiceReference addingService(ServiceReference ref) {
+		IDatapointConnectivityService service = (IDatapointConnectivityService) context
+				.getService(ref);
+		registry.addService(service.getImplementationName(), service);
 		return ref;
 	}
 
@@ -52,6 +54,9 @@ public class DeviceConnectivityServicesTracker extends ServiceTracker {
 	 **/
 	@Override
 	public void modifiedService(ServiceReference ref, Object svc) {
+		IDatapointConnectivityService service = (IDatapointConnectivityService) context
+				.getService(ref);
+		registry.modifyService(service.getImplementationName(), service);
 	}
 
 	/**
@@ -65,6 +70,9 @@ public class DeviceConnectivityServicesTracker extends ServiceTracker {
 	 **/
 	@Override
 	public void removedService(ServiceReference ref, Object svc) {
+		IDatapointConnectivityService service = (IDatapointConnectivityService) context
+				.getService(ref);
+		registry.removeService(service.getImplementationName());
 	}
 
 }

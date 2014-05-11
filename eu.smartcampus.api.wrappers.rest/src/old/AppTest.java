@@ -1,4 +1,4 @@
-package eu.smartcampus.api.rest;
+package old;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

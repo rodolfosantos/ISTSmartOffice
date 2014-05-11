@@ -1,4 +1,4 @@
-package eu.smartcampus.api.rest.impl;
+package eu.smartcampus.api.wrappers.rest;
 
 import org.json.JSONArray;
 import org.json.JSONException;

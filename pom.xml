@@ -14,7 +14,8 @@
 
 	<modules>
 		<module>eu.smartcampus.api</module>
-		<module>eu.smartcampus.api.rest</module>
+		<module>eu.smartcampus.api.implementations.knxip</module>
+		<module>eu.smartcampus.api.wrappers.rest</module>
 	</modules>
 
 

@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: eu.smartcampus.api.implementations.knxip
+Bundle-SymbolicName: eu.smartcampus.api.implementations.knxip
+Bundle-Version: 1.0.0.alpha
+Export-Package: eu.smartcampus.api.implementations.knxip

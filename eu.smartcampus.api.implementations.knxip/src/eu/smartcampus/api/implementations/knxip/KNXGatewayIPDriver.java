@@ -1,4 +1,4 @@
-package eu.smartcampus.api.rest.deviceapi.impl;
+package eu.smartcampus.api.implementations.knxip;
 
 import tuwien.auto.calimero.GroupAddress;
 import tuwien.auto.calimero.exception.KNXException;

@@ -1,4 +1,4 @@
-package eu.smartcampus.api;
+package eu.smartcampus.api.deviceconnectivity;
 
 /**
  * Representation for datapoint values.

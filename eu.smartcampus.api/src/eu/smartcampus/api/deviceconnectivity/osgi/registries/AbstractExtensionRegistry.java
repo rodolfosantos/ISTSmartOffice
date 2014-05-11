@@ -1,4 +1,4 @@
-package eu.smartcampus.api.osgi.registries;
+package eu.smartcampus.api.deviceconnectivity.osgi.registries;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -101,4 +101,5 @@
 			<version>5.0.0</version>
 		</dependency>
 	</dependencies>
+	<name>eu.smartcampus.api.pom</name>
 </project>

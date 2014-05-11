@@ -3,4 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: eu.smartcampus.api
 Bundle-SymbolicName: eu.smartcampus.api
 Bundle-Version: 1.0.0.alpha
-Export-Package: eu.smartcampus.api
+Export-Package: eu.smartcampus.api.deviceconnectivity,
+ eu.smartcampus.api.deviceconnectivity.osgi.registries,
+ eu.smartcampus.api.deviceconnectivity.osgi.trackers

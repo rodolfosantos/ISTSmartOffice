@@ -1,4 +1,4 @@
-package eu.smartcampus.api.wrappers.rest.impl;
+package eu.smartcampus.api.deviceconnectivity.wrappers.rest.impl;
 
 import java.util.concurrent.Semaphore;
 

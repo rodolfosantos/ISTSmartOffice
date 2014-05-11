@@ -1,10 +1,10 @@
-package eu.smartcampus.api.osgi.trackers;
+package eu.smartcampus.api.deviceconnectivity.osgi.trackers;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
 
-import eu.smartcampus.api.IDatapointConnectivityService;
+import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
 
 @SuppressWarnings("rawtypes")
 public class DeviceConnectivityServicesTracker extends ServiceTracker {

@@ -18,10 +18,10 @@
 	</parent>
 
 	<groupId>eu.smartcampus.api</groupId>
-	<artifactId>eu.smartcampus.api.implementations.knxip</artifactId>
+	<artifactId>eu.smartcampus.api.deviceconnectivity.impls.knxip</artifactId>
 	<packaging>bundle</packaging>
 
-	<name>eu.smartcampus.api.implementations.knxip</name>
+	<name>eu.smartcampus.api.deviceconnectivity.impls.knxip</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>

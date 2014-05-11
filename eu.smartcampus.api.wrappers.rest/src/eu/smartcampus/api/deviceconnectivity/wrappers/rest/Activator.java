@@ -1,4 +1,4 @@
-package eu.smartcampus.api.wrappers.rest;
+package eu.smartcampus.api.deviceconnectivity.wrappers.rest;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;

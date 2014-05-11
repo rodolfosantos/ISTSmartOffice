@@ -19,10 +19,10 @@
 
 
 	<groupId>eu.smartcampus.api</groupId>
-	<artifactId>eu.smartcampus.api.wrappers.rest</artifactId>
+	<artifactId>eu.smartcampus.api.deviceconnectivity.wrappers.rest</artifactId>
 	<packaging>bundle</packaging>
 
-	<name>eu.smartcampus.api.wrappers.rest</name>
+	<name>eu.smartcampus.api.deviceconnectivity.wrappers.rest</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>

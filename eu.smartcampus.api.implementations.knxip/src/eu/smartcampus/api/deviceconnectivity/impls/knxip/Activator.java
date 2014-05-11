@@ -1,4 +1,4 @@
-package eu.smartcampus.api.implementations.knxip;
+package eu.smartcampus.api.deviceconnectivity.impls.knxip;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;

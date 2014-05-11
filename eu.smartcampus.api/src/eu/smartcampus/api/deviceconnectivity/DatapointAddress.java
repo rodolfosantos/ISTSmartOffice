@@ -1,7 +1,7 @@
 /**
  * 
  */
-package eu.smartcampus.api;
+package eu.smartcampus.api.deviceconnectivity;
 
 /**
  * @author Diogo

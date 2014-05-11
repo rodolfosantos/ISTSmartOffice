@@ -1,11 +1,11 @@
-package eu.smartcampus.api.wrappers.rest;
+package eu.smartcampus.api.deviceconnectivity.wrappers.rest;
 
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.routing.Router;
 
 import eu.smartcampus.api.IDatapointConnectivityService;
-import eu.smartcampus.api.wrappers.rest.impl.DatapointConnectivityServiceResources;
+import eu.smartcampus.api.deviceconnectivity.wrappers.rest.impl.DatapointConnectivityServiceResources;
 
 /**
  * The Class DatapointConnectivityServiceRESTWrapper.

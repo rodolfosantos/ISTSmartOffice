@@ -1,4 +1,4 @@
-package eu.smartcampus.api.wrappers.rest.impl;
+package eu.smartcampus.api.deviceconnectivity.wrappers.rest.impl;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,7 +15,7 @@ import eu.smartcampus.api.DatapointReading;
 import eu.smartcampus.api.DatapointValue;
 import eu.smartcampus.api.IDatapointConnectivityService;
 import eu.smartcampus.api.IDatapointConnectivityService.OperationFailedException;
-import eu.smartcampus.api.wrappers.rest.DatapointConnectivityServiceRESTWrapper;
+import eu.smartcampus.api.deviceconnectivity.wrappers.rest.DatapointConnectivityServiceRESTWrapper;
 
 public class DatapointConnectivityServiceResources {
 

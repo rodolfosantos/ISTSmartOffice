@@ -12,14 +12,14 @@
 
 	<parent>
 		<relativePath>../pom.xml</relativePath>
-		<groupId>eu.smartcampus</groupId>
-		<artifactId>eu.smartcampus.pom</artifactId>
+		<groupId>eu.smartcampus.api</groupId>
+		<artifactId>eu.smartcampus.api.pom</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
 	<groupId>eu.smartcampus.api</groupId>
 	<artifactId>eu.smartcampus.api.implementations.knxip</artifactId>
-	<packaging>jar</packaging>
+	<packaging>bundle</packaging>
 
 	<name>eu.smartcampus.api.rest</name>
 	<url>http://maven.apache.org</url>
@@ -29,6 +29,11 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>eu.smartcampus.api</groupId>
+			<artifactId>eu.smartcampus.api</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 			<groupId>tuwien.auto</groupId>
 			<artifactId>calimero-core</artifactId>

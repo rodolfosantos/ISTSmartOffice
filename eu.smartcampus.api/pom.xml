@@ -6,8 +6,8 @@
 
 	<parent>
 		<relativePath>../pom.xml</relativePath>
-		<groupId>eu.smartcampus</groupId>
-		<artifactId>eu.smartcampus.pom</artifactId>
+		<groupId>eu.smartcampus.api</groupId>
+		<artifactId>eu.smartcampus.api.pom</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 

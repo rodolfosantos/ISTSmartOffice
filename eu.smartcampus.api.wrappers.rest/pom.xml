@@ -12,15 +12,15 @@
 
 	<parent>
 		<relativePath>../pom.xml</relativePath>
-		<groupId>eu.smartcampus</groupId>
-		<artifactId>eu.smartcampus.pom</artifactId>
+		<groupId>eu.smartcampus.api</groupId>
+		<artifactId>eu.smartcampus.api.pom</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
 
 	<groupId>eu.smartcampus.api</groupId>
 	<artifactId>eu.smartcampus.api.wrappers.rest</artifactId>
-	<packaging>jar</packaging>
+	<packaging>bundle</packaging>
 
 	<name>eu.smartcampus.api.rest</name>
 	<url>http://maven.apache.org</url>
@@ -44,6 +44,11 @@
 			<groupId>org.restlet.jse</groupId>
 			<artifactId>org.restlet</artifactId>
 			<version>2.1-M1</version>
+		</dependency>
+		<dependency>
+			<groupId>eu.smartcampus.api</groupId>
+			<artifactId>eu.smartcampus.api</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.restlet.jse</groupId>

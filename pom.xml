@@ -5,7 +5,6 @@
 	<artifactId>eu.smartcampus.pom</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-
 	<properties>
 		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
 	</properties>
@@ -17,7 +16,6 @@
 		<module>eu.smartcampus.api.implementations.knxip</module>
 		<module>eu.smartcampus.api.wrappers.rest</module>
 	</modules>
-
 
 	<build>
 		<sourceDirectory>src</sourceDirectory>
@@ -83,6 +81,11 @@
 	</build>
 
 	<dependencies>
+		<dependency>
+			<groupId>eu.smartcampus.api</groupId>
+			<artifactId>eu.smartcampus.api</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.felix</groupId>
 			<artifactId>org.osgi.core</artifactId>

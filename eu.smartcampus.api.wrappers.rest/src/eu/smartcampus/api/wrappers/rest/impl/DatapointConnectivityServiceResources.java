@@ -1,4 +1,4 @@
-package eu.smartcampus.api.wrappers.rest;
+package eu.smartcampus.api.wrappers.rest.impl;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,6 +15,7 @@ import eu.smartcampus.api.DatapointReading;
 import eu.smartcampus.api.DatapointValue;
 import eu.smartcampus.api.IDatapointConnectivityService;
 import eu.smartcampus.api.IDatapointConnectivityService.OperationFailedException;
+import eu.smartcampus.api.wrappers.rest.DatapointConnectivityServiceRESTWrapper;
 
 public class DatapointConnectivityServiceResources {
 
@@ -69,7 +70,7 @@ public class DatapointConnectivityServiceResources {
 
 
             ReadCallback readCallback = new ReadCallback();
-            DatapointConnectivityServiceREST.serviceImplementation.requestDatapointWindowRead(
+            DatapointConnectivityServiceRESTWrapper.getInstance().getServiceImplementation().requestDatapointWindowRead(
                     address, startTimestamp, finishTimestamp, readCallback);
             DatapointReading[] readings = readCallback.getReadings();
 
@@ -120,7 +121,7 @@ public class DatapointConnectivityServiceResources {
              */
             DatapointMetadata metadata = null;
             try {
-                metadata = DatapointConnectivityServiceREST.serviceImplementation
+                metadata = DatapointConnectivityServiceRESTWrapper.getInstance().getServiceImplementation()
                         .getDatapointMetadata(address);
             } catch (OperationFailedException e) {
                 return provideErrorResponse(e.getErrorType(), e.getErrorType().toString(), "");
@@ -166,7 +167,7 @@ public class DatapointConnectivityServiceResources {
         @Get
         public JSONObject doGet() {
             JSONObject result = new JSONObject();
-            DatapointAddress[] allDatapoints = DatapointConnectivityServiceREST.serviceImplementation
+            DatapointAddress[] allDatapoints = DatapointConnectivityServiceRESTWrapper.getInstance().getServiceImplementation()
                     .getAllDatapoints();
             JSONArray array = new JSONArray();
             for (DatapointAddress datapointAddress : allDatapoints) {
@@ -199,7 +200,7 @@ public class DatapointConnectivityServiceResources {
             JSONObject result = new JSONObject();
 
             ReadCallback readCallback = new ReadCallback();
-            DatapointConnectivityServiceREST.serviceImplementation.requestDatapointRead(
+            DatapointConnectivityServiceRESTWrapper.getInstance().getServiceImplementation().requestDatapointRead(
                     new DatapointAddress(address), readCallback);
             DatapointReading reading = readCallback.getReading();
             if (reading == null) {
@@ -231,7 +232,7 @@ public class DatapointConnectivityServiceResources {
                 DatapointValue[] values = new DatapointValue[valuesRESTParam.length()];
                 //-----
                 try {
-                    DatapointMetadata m = DatapointConnectivityServiceREST.serviceImplementation
+                    DatapointMetadata m = DatapointConnectivityServiceRESTWrapper.getInstance().getServiceImplementation()
                             .getDatapointMetadata(addr);
                     switch (m.getDatatype()) {
                         case INTEGER:
@@ -257,7 +258,8 @@ public class DatapointConnectivityServiceResources {
 
                 //-----
                 WriteCallback writeCallback = new WriteCallback();
-                DatapointConnectivityServiceREST.serviceImplementation.requestDatapointWrite(addr,
+				DatapointConnectivityServiceRESTWrapper.getInstance()
+						.getServiceImplementation().requestDatapointWrite(addr,
                         values, writeCallback);
                 boolean success = writeCallback.isWritten();
                 if (!success) {

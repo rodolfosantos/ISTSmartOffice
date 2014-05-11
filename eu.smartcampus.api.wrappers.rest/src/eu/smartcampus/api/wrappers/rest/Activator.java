@@ -2,19 +2,26 @@ package eu.smartcampus.api.wrappers.rest;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 public final class Activator implements BundleActivator {
 
+	private ServiceRegistration registration;
+
 	@Override
 	public void start(BundleContext context) throws Exception {
-		// TODO Auto-generated method stub
-
+		DatapointConnectivityServiceRESTWrapper restWrapper = DatapointConnectivityServiceRESTWrapper
+				.getInstance();
+		if (registration == null) {
+			registration = context.registerService(
+					"eu.smartcampus.api.wrappers.rest", restWrapper, null);
+		}
 	}
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
-		// TODO Auto-generated method stub
-
+		registration.unregister();
+		registration = null;
 	}
 
 }

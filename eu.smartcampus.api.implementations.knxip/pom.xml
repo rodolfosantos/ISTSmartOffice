@@ -21,7 +21,7 @@
 	<artifactId>eu.smartcampus.api.implementations.knxip</artifactId>
 	<packaging>bundle</packaging>
 
-	<name>eu.smartcampus.api.rest</name>
+	<name>eu.smartcampus.api.implementations.knxip</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -33,6 +33,11 @@
 			<groupId>eu.smartcampus.api</groupId>
 			<artifactId>eu.smartcampus.api</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>tuwien.auto</groupId>

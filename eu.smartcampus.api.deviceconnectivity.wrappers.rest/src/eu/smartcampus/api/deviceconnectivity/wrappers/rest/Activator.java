@@ -14,7 +14,8 @@ public final class Activator implements BundleActivator {
 				.getInstance();
 		if (registration == null) {
 			registration = context.registerService(
-					"eu.smartcampus.api.wrappers.rest", restWrapper, null);
+					DatapointConnectivityServiceRESTWrapper.class.getName(),
+					restWrapper, null);
 		}
 	}
 

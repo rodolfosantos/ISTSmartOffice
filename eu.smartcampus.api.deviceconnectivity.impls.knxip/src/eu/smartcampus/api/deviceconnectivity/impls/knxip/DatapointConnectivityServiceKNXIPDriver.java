@@ -3,11 +3,11 @@ package eu.smartcampus.api.deviceconnectivity.impls.knxip;
 import java.util.Map;
 
 import tuwien.auto.calimero.exception.KNXException;
-import eu.smartcampus.api.DatapointAddress;
-import eu.smartcampus.api.DatapointMetadata;
-import eu.smartcampus.api.DatapointReading;
-import eu.smartcampus.api.DatapointValue;
-import eu.smartcampus.api.IDatapointConnectivityService;
+import eu.smartcampus.api.deviceconnectivity.DatapointAddress;
+import eu.smartcampus.api.deviceconnectivity.DatapointMetadata;
+import eu.smartcampus.api.deviceconnectivity.DatapointReading;
+import eu.smartcampus.api.deviceconnectivity.DatapointValue;
+import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
 
 /**
  * The Class DatapointConnectivityServiceKNXIPDriver.

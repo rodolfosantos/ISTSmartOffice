@@ -3,4 +3,5 @@ Bundle-ManifestVersion: 2
 Bundle-Name: eu.smartcampus.api.wrappers.rest
 Bundle-SymbolicName: eu.smartcampus.api.wrappers.rest
 Bundle-Version: 1.0.0.alpha
-Export-Package: eu.smartcampus.api.wrappers.rest
+Export-Package: eu.smartcampus.api.deviceconnectivity.wrappers.rest
+Require-Bundle: eu.smartcampus.api.eu.smartcampus.api.deviceconnectivity;bundle-version="0.0.1"

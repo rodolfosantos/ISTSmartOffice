@@ -4,7 +4,7 @@ import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.routing.Router;
 
-import eu.smartcampus.api.IDatapointConnectivityService;
+import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
 import eu.smartcampus.api.deviceconnectivity.wrappers.rest.impl.DatapointConnectivityServiceResources;
 
 /**

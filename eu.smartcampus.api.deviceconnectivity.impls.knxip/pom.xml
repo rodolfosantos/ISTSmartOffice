@@ -30,7 +30,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>eu.smartcampus.api</groupId>
-			<artifactId>eu.smartcampus.api</artifactId>
+			<artifactId>eu.smartcampus.api.deviceconnectivity</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>

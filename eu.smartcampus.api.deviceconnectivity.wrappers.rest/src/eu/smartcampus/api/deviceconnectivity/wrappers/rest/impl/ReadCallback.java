@@ -2,10 +2,10 @@ package eu.smartcampus.api.deviceconnectivity.wrappers.rest.impl;
 
 import java.util.concurrent.Semaphore;
 
-import eu.smartcampus.api.DatapointAddress;
-import eu.smartcampus.api.DatapointReading;
-import eu.smartcampus.api.IDatapointConnectivityService;
-import eu.smartcampus.api.IDatapointConnectivityService.ErrorType;
+import eu.smartcampus.api.deviceconnectivity.DatapointAddress;
+import eu.smartcampus.api.deviceconnectivity.DatapointReading;
+import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
+import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService.ErrorType;
 
 // TODO: Auto-generated Javadoc
 /**

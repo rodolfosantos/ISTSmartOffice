@@ -5,11 +5,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import eu.smartcampus.api.DatapointAddress;
-import eu.smartcampus.api.DatapointMetadata;
-import eu.smartcampus.api.DatapointReading;
-import eu.smartcampus.api.DatapointValue;
-import eu.smartcampus.api.IDatapointConnectivityService;
+import eu.smartcampus.api.deviceconnectivity.DatapointAddress;
+import eu.smartcampus.api.deviceconnectivity.DatapointMetadata;
+import eu.smartcampus.api.deviceconnectivity.DatapointReading;
+import eu.smartcampus.api.deviceconnectivity.DatapointValue;
+import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
 
 /**
  * The Class DatapointConnectivityServiceAdapter.

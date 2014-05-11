@@ -3,4 +3,5 @@ Bundle-ManifestVersion: 2
 Bundle-Name: eu.smartcampus.api.adapters.protocolintegration
 Bundle-SymbolicName: eu.smartcampus.api.adapters.protocolintegration
 Bundle-Version: 1.0.0.alpha
-Export-Package: eu.smartcampus.api.adapters.protocolintegration
+Export-Package: eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration
+Require-Bundle: eu.smartcampus.api.eu.smartcampus.api.deviceconnectivity;bundle-version="0.0.1"

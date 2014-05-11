@@ -3,4 +3,5 @@ Bundle-ManifestVersion: 2
 Bundle-Name: eu.smartcampus.api.implementations.meterip
 Bundle-SymbolicName: eu.smartcampus.api.implementations.meterip
 Bundle-Version: 1.0.0.alpha
-Export-Package: eu.smartcampus.api.implementations.meterip
+Export-Package: eu.smartcampus.api.deviceconnectivity.impls.meterip
+Require-Bundle: eu.smartcampus.api.eu.smartcampus.api.deviceconnectivity;bundle-version="0.0.1"

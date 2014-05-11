@@ -9,12 +9,12 @@ import org.restlet.resource.Get;
 import org.restlet.resource.Put;
 import org.restlet.resource.ServerResource;
 
-import eu.smartcampus.api.DatapointAddress;
-import eu.smartcampus.api.DatapointMetadata;
-import eu.smartcampus.api.DatapointReading;
-import eu.smartcampus.api.DatapointValue;
-import eu.smartcampus.api.IDatapointConnectivityService;
-import eu.smartcampus.api.IDatapointConnectivityService.OperationFailedException;
+import eu.smartcampus.api.deviceconnectivity.DatapointAddress;
+import eu.smartcampus.api.deviceconnectivity.DatapointMetadata;
+import eu.smartcampus.api.deviceconnectivity.DatapointReading;
+import eu.smartcampus.api.deviceconnectivity.DatapointValue;
+import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
+import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService.OperationFailedException;
 import eu.smartcampus.api.deviceconnectivity.wrappers.rest.DatapointConnectivityServiceRESTWrapper;
 
 public class DatapointConnectivityServiceResources {

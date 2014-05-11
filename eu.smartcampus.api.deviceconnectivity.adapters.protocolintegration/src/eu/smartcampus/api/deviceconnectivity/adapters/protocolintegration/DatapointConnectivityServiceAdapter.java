@@ -1,4 +1,4 @@
-package eu.smartcampus.api.adapters.protocolintegration;
+package eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration;
 
 import java.util.HashSet;
 import java.util.Iterator;

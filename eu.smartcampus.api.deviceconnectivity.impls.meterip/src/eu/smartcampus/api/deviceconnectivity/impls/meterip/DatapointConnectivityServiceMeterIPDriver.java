@@ -1,4 +1,4 @@
-package eu.smartcampus.api.implementations.meterip;
+package eu.smartcampus.api.deviceconnectivity.impls.meterip;
 
 
 import java.io.BufferedReader;

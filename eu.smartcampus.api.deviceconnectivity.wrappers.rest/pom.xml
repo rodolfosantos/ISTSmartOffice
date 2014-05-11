@@ -13,15 +13,15 @@
 	<parent>
 		<relativePath>../pom.xml</relativePath>
 		<groupId>eu.smartcampus.api</groupId>
-		<artifactId>eu.smartcampus.api.pom</artifactId>
+		<artifactId>eu.smartcampus.api</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<groupId>eu.smartcampus.api</groupId>
-	<artifactId>eu.smartcampus.api.deviceconnectivity.impls.knxip</artifactId>
+
+	<artifactId>eu.smartcampus.api.deviceconnectivity.wrappers.rest</artifactId>
 	<packaging>bundle</packaging>
 
-	<name>eu.smartcampus.api.deviceconnectivity.impls.knxip</name>
+	<name>eu.smartcampus.api.deviceconnectivity.wrappers.rest</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -30,16 +30,29 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.restlet.jse</groupId>
+			<artifactId>org.restlet.ext.json</artifactId>
+			<version>2.1-M1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.restlet.jse</groupId>
+			<artifactId>org.restlet</artifactId>
+			<version>2.1-M1</version>
+		</dependency>
+		<dependency>
 			<groupId>eu.smartcampus.api</groupId>
 			<artifactId>eu.smartcampus.api</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>tuwien.auto</groupId>
-			<artifactId>calimero-core</artifactId>
-			<version>2.2.0-SNAPSHOT</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/calimero-core-2.2.0-20140224.231752-3.jar</systemPath>
+			<groupId>org.restlet.jse</groupId>
+			<artifactId>org.restlet.lib.org.json</artifactId>
+			<version>2.0</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -1,4 +1,4 @@
-package eu.smartcampus.api.implementations.meterip;
+package eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;

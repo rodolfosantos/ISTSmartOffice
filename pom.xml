@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>eu.smartcampus.api</groupId>
-	<artifactId>eu.smartcampus.api.pom</artifactId>
+	<artifactId>eu.smartcampus.api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<properties>
@@ -12,11 +12,11 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>eu.smartcampus.api</module>
-		<module>eu.smartcampus.api.adapters.protocolintegration</module>
-		<module>eu.smartcampus.api.implementations.knxip</module>
-		<module>eu.smartcampus.api.implementations.meterip</module>
-		<module>eu.smartcampus.api.wrappers.rest</module>
+		<module>eu.smartcampus.api.deviceconnectivity</module>
+		<module>eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration</module>
+		<module>eu.smartcampus.api.deviceconnectivity.impls.knxip</module>
+		<module>eu.smartcampus.api.deviceconnectivity.impls.meterip</module>
+		<module>eu.smartcampus.api.deviceconnectivity.wrappers.rest</module>
 	</modules>
 
 	<build>
@@ -33,7 +33,6 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
@@ -101,5 +100,5 @@
 			<version>5.0.0</version>
 		</dependency>
 	</dependencies>
-	<name>eu.smartcampus.api.pom</name>
+	<name>eu.smartcampus.api</name>
 </project>

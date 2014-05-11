@@ -1,4 +1,4 @@
-package eu.smartcampus.api.implementations.knxip;
+package eu.smartcampus.api.implementations.meterip;
 
 
 import java.io.BufferedReader;

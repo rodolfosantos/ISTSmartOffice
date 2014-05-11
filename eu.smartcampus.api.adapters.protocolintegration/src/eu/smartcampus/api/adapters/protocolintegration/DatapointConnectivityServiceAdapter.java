@@ -1,4 +1,4 @@
-package eu.smartcampus.api.implementations.knxip;
+package eu.smartcampus.api.adapters.protocolintegration;
 
 import java.util.HashSet;
 import java.util.Iterator;

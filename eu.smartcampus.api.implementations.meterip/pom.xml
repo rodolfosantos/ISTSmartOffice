@@ -18,10 +18,10 @@
 	</parent>
 
 	<groupId>eu.smartcampus.api</groupId>
-	<artifactId>eu.smartcampus.api.implementations.knxip</artifactId>
+	<artifactId>eu.smartcampus.api.implementations.meterip</artifactId>
 	<packaging>bundle</packaging>
 
-	<name>eu.smartcampus.api.implementations.knxip</name>
+	<name>eu.smartcampus.api.implementations.meterip</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -35,11 +35,9 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>tuwien.auto</groupId>
-			<artifactId>calimero-core</artifactId>
-			<version>2.2.0-SNAPSHOT</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/calimero-core-2.2.0-20140224.231752-3.jar</systemPath>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -29,7 +29,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Bundle-SymbolicName>${pom.artifactId};singleton:=true</Bundle-SymbolicName>
+						<Bundle-SymbolicName>${project.artifactId};singleton:=true</Bundle-SymbolicName>
 						<Export-Package>eu.smartcampus.api.deviceconnectivity.impls.meterip</Export-Package>
 						<Bundle-Activator>eu.smartcampus.api.deviceconnectivity.impls.meterip.Activator</Bundle-Activator>
 					</instructions>

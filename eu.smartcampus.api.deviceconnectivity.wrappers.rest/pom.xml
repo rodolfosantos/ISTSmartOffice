@@ -30,7 +30,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
 						<Export-Package>eu.smartcampus.api.deviceconnectivity.wrappers.rest</Export-Package>
 						<Bundle-Activator>eu.smartcampus.api.deviceconnectivity.wrappers.rest.Activator</Bundle-Activator>
 					</instructions>

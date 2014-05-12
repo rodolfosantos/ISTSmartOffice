@@ -29,7 +29,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
 						<Export-Package>eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration</Export-Package>
 						<Bundle-Activator>eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration.Activator</Bundle-Activator>
 					</instructions>

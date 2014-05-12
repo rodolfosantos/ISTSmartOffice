@@ -34,7 +34,7 @@
 		<profile>
 			<id>create-osgi-bundles-from-dependencies</id>
 			<build>
-				<directory>${basedir}/target</directory>
+				<directory>${basedir}/bundles</directory>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.felix</groupId>
@@ -90,28 +90,6 @@
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>sonar-maven-plugin</artifactId>
 					<version>2.1</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.tomcat.maven</groupId>
-					<artifactId>tomcat6-maven-plugin</artifactId>
-					<version>2.2</version>
-					<configuration>
-						<url>http://sb-dev.tagus.ist.utl.pt:8080/manager/text</url>
-						<server>TomcatServer</server>
-						<update>true</update>
-						<path>/${project.artifactId}</path>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.tomcat.maven</groupId>
-					<artifactId>tomcat7-maven-plugin</artifactId>
-					<version>2.2</version>
-					<configuration>
-						<url>http://sb-dev.tagus.ist.utl.pt:8080/manager/text</url>
-						<server>TomcatServer</server>
-						<update>true</update>
-						<path>/${project.artifactId}</path>
-					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>

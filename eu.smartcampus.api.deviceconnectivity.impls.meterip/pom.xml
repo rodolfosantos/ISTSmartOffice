@@ -19,6 +19,28 @@
 
 	<artifactId>eu.smartcampus.api.deviceconnectivity.impls.meterip</artifactId>
 	<packaging>bundle</packaging>
+	
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-SymbolicName>${pom.artifactId};singleton:=true</Bundle-SymbolicName>
+						<Export-Package>eu.smartcampus.api.deviceconnectivity.impls.meterip</Export-Package>
+						<Bundle-Activator>eu.smartcampus.api.deviceconnectivity.impls.meterip.Activator</Bundle-Activator>
+					</instructions>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 
 	<name>eu.smartcampus.api.deviceconnectivity.impls.meterip</name>
 	<url>http://maven.apache.org</url>

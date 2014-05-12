@@ -16,12 +16,20 @@
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-			</plugin>
-			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-SymbolicName>${pom.artifactId};singleton:=true</Bundle-SymbolicName>
+						<Export-Package>eu.smartcampus.api.deviceconnectivity,eu.smartcampus.api.deviceconnectivity.osgi.registries,eu.smartcampus.api.deviceconnectivity.osgi.trackers</Export-Package>
+						<Bundle-Activator>eu.smartcampus.api.deviceconnectivity.osgi.trackers.Activator</Bundle-Activator>
+					</instructions>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>

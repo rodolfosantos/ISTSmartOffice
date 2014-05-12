@@ -2,7 +2,6 @@ package eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.osgi.util.tracker.ServiceTracker;
 
 
 public final class Activator implements BundleActivator {

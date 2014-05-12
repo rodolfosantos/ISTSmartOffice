@@ -11,6 +11,14 @@
 
 	<packaging>pom</packaging>
 
+	<repositories>
+		<repository>
+			<id>nexus</id>
+			<name>3rd party</name>
+			<url>http://it4energy.tagus.ist.utl.pt:8081/nexus/content/repositories/thirdparty/</url>
+		</repository>
+	</repositories>
+
 	<modules>
 		<module>eu.smartcampus.api.deviceconnectivity</module>
 		<module>eu.smartcampus.api.osgi</module>
@@ -19,6 +27,36 @@
 		<module>eu.smartcampus.api.deviceconnectivity.impls.meterip</module>
 		<module>eu.smartcampus.api.deviceconnectivity.wrappers.rest</module>
 	</modules>
+	
+	<profiles>
+		<!-- http://www.lucamasini.net/Home/osgi-with-felix/creating-osgi-bundles-of-your-maven-dependencies -->
+		<!-- -Pcreate-osgi-bundles-from-dependencies bundle:wrap -->
+		<profile>
+			<id>create-osgi-bundles-from-dependencies</id>
+			<build>
+				<directory>${basedir}/target</directory>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.felix</groupId>
+						<artifactId>maven-bundle-plugin</artifactId>
+						<version>2.0.1</version>
+						<extensions>true</extensions>
+						<executions>
+							<execution>
+								<id>wrap-my-dependency</id>
+								<goals>
+									<goal>wrap</goal>
+								</goals>
+								<configuration>
+									<wrapImportPackage>;</wrapImportPackage>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 	<build>
 		<sourceDirectory>src</sourceDirectory>

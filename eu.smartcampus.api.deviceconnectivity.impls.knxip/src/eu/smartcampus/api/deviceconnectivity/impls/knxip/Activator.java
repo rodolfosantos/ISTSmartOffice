@@ -14,7 +14,7 @@ public final class Activator implements BundleActivator {
 	@Override
 	public void start(BundleContext context) throws Exception {
 
-		gw = new KNXGatewayIPDriver("172.20.70.231"); // hard coded for testing
+		gw = new KNXGatewayIPDriver("172.20.70.147"); // hard coded for testing
 														// purpose
 		gw.start();
 

@@ -1,5 +1,6 @@
 package eu.smartcampus.api.deviceconnectivity.impls.knxip;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import tuwien.auto.calimero.exception.KNXException;
@@ -31,11 +32,11 @@ public class DatapointConnectivityServiceKNXIPDriver
      * @param driver the driver
      * @param datapoints the datapoints
      */
-    public DatapointConnectivityServiceKNXIPDriver(KNXGatewayIPDriver driver,
-                                                   Map<DatapointAddress, DatapointMetadata> datapoints) {
+    public DatapointConnectivityServiceKNXIPDriver(KNXGatewayIPDriver driver) {
         super();
         this.driver = driver;
-        this.datapoints = datapoints;
+        //TODO add datapoints and metadata
+        this.datapoints = new HashMap<DatapointAddress, DatapointMetadata>();
     }
 
     @Override

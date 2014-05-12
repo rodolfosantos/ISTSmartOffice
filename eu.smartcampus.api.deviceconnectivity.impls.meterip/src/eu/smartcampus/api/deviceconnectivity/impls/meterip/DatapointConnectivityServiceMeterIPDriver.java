@@ -9,6 +9,7 @@ import java.net.URLConnection;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.net.ssl.HostnameVerifier;
@@ -45,12 +46,12 @@ public class DatapointConnectivityServiceMeterIPDriver
      * @param username the username
      * @param password the password
      */
-    public DatapointConnectivityServiceMeterIPDriver(Map<DatapointAddress, DatapointMetadata> datapoints,
-                                                     String username,
-                                                     String password) {
+    public DatapointConnectivityServiceMeterIPDriver(String username, String password) {
         this.username = username;
         this.password = password;
-        this.datapoints = datapoints;
+        
+        //TODO
+        this.datapoints = new HashMap<DatapointAddress, DatapointMetadata>();
     }
 
     /**

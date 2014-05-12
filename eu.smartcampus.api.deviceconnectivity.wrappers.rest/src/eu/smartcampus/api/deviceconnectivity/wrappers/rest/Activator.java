@@ -5,30 +5,49 @@ import org.osgi.framework.BundleContext;
 import org.restlet.Component;
 import org.restlet.data.Protocol;
 
-public final class Activator implements BundleActivator {
+import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
+import eu.smartcampus.api.deviceconnectivity.osgi.registries.DeviceConnectivityServiceRegistry;
 
-	private Component component;
+public final class Activator
+        implements BundleActivator {
 
-	@Override
-	public void start(BundleContext context) throws Exception {
-		// Create a new Component.
-		Component component = new Component();
+    private Component component;
 
-		// Add a new HTTP server listening on port 8182.
-		component.getServers().add(Protocol.HTTP, 8182);
+    @Override
+    public void start(BundleContext context) throws Exception {
+        /**
+         * TODO: Add a way to set the port and the implementation to use through some
+         * configuration file, GUI, or so.
+         */
+        serverStart(
+                8182,
+                "eu.smartcampus.api.deviceconnectivity.impls.meterip.DatapointConnectivityServiceMeterIPDriver");
+    }
 
-		// Attach device api application
-		
-		component.getDefaultHost().attach("/deviceconnectivityapi",
-				DatapointConnectivityServiceRESTWrapper.getInstance());
+    private void serverStart(int serverPort, String implementationClassName) throws Exception {
+        // Create a new Component.
+        this.component = new Component();
 
-		// Start the component.
-		component.start();
-	}
+        // Add a new HTTP server listening on port 8182.
+        component.getServers().add(Protocol.HTTP, serverPort);
 
-	@Override
-	public void stop(BundleContext context) throws Exception {
-		component.stop();
-	}
+        // Bound an implementation to the REST adapter
+        final IDatapointConnectivityService serviceImplementation = DeviceConnectivityServiceRegistry
+                .getInstance().getService(implementationClassName);
+        DatapointConnectivityServiceRESTWrapper.getInstance()
+                .setServiceImplementation(serviceImplementation);
+        
+        // Attach device api application
+        component.getDefaultHost().attach("/deviceconnectivityapi",
+                DatapointConnectivityServiceRESTWrapper.getInstance());
+
+        // Start the component.
+        component.start();
+    }
+
+    @Override
+    public void stop(BundleContext context) throws Exception {
+        component.stop();
+    }
 
 }

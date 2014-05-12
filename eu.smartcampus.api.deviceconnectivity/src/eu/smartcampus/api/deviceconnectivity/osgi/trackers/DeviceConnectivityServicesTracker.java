@@ -11,7 +11,7 @@ import eu.smartcampus.api.deviceconnectivity.osgi.registries.DeviceConnectivityS
 public class DeviceConnectivityServicesTracker extends ServiceTracker {
 
 	/** The service registry. */
-	private DeviceConnectivityServiceRegistry registry = new DeviceConnectivityServiceRegistry();
+	private DeviceConnectivityServiceRegistry registry = DeviceConnectivityServiceRegistry.getInstance();
 
 	/**
 	 * Constructs a tracker that uses the specified bundle context to track

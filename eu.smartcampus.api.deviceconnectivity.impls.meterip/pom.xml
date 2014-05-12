@@ -30,6 +30,7 @@
 				<configuration>
 					<instructions>
 						<Bundle-SymbolicName>${project.artifactId};singleton:=true</Bundle-SymbolicName>
+						<Bundle-Version>${project.version}</Bundle-Version>
 						<Export-Package>eu.smartcampus.api.deviceconnectivity.impls.meterip</Export-Package>
 						<Bundle-Activator>eu.smartcampus.api.deviceconnectivity.impls.meterip.Activator</Bundle-Activator>
 					</instructions>

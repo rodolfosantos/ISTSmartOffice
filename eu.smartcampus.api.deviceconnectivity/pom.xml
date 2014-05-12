@@ -22,6 +22,7 @@
 				<configuration>
 					<instructions>
 						<Bundle-SymbolicName>${project.artifactId};singleton:=true</Bundle-SymbolicName>
+						<Bundle-Version>${project.version}</Bundle-Version>
 						<Export-Package>eu.smartcampus.api.deviceconnectivity,eu.smartcampus.api.deviceconnectivity.osgi.registries,eu.smartcampus.api.deviceconnectivity.osgi.trackers</Export-Package>
 						<Bundle-Activator>eu.smartcampus.api.deviceconnectivity.osgi.trackers.Activator</Bundle-Activator>
 					</instructions>

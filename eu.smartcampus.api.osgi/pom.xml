@@ -22,6 +22,7 @@
 				<configuration>
 					<instructions>
 						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+						<Bundle-Version>${project.version}</Bundle-Version>
 						<Export-Package>eu.smartcampus.api.osgi.registries</Export-Package>
 					</instructions>
 				</configuration>

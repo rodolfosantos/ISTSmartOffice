@@ -17,6 +17,7 @@ import eu.smartcampus.api.deviceconnectivity.DatapointMetadata.MetadataBuilder;
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
 import eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration.DatapointConnectivityServiceAdapter;
 import eu.smartcampus.api.deviceconnectivity.impls.knxip.DatapointConnectivityServiceKNXIPDriver;
+import eu.smartcampus.api.deviceconnectivity.impls.knxip.KNXGatewayIPDriver;
 import eu.smartcampus.api.deviceconnectivity.impls.meterip.DatapointConnectivityServiceMeterIPDriver;
 import eu.smartcampus.api.deviceconnectivity.osgi.registries.DeviceConnectivityServiceRegistry;
 
@@ -116,13 +117,18 @@ public final class Activator implements BundleActivator {
 		knxDatapoints.put(d5, knxMetadata5.build());
 		knxDatapoints.put(d6, knxMetadata6.build());
 
+		
+		
 		IDatapointConnectivityService knxDriver = new DatapointConnectivityServiceKNXIPDriver(
 				knxDatapoints);
-
-	
+		
 		Set<IDatapointConnectivityService> datapointsDrivers = new HashSet<IDatapointConnectivityService>();
-		datapointsDrivers.add(knxDriver);
 		datapointsDrivers.add(meterDriver);
+		
+		KNXGatewayIPDriver.getInstance().start();		
+		if(KNXGatewayIPDriver.getInstance().isConnected()){
+			datapointsDrivers.add(knxDriver);
+		}
 
 		IDatapointConnectivityService driverAdapter = new DatapointConnectivityServiceAdapter(datapointsDrivers);
 		DeviceConnectivityServiceRegistry.getInstance().addService(
@@ -135,6 +141,7 @@ public final class Activator implements BundleActivator {
 	public void stop(BundleContext context) throws Exception {
 		registration.unregister();
 		registration = null;
+		KNXGatewayIPDriver.getInstance().stop();
 	}
 
 }

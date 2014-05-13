@@ -39,7 +39,6 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			Map<DatapointAddress, DatapointMetadata> datapoints) {
 		super();
 		this.driver = KNXGatewayIPDriver.getInstance();
-		driver.start();
 		this.datapoints = datapoints;
 	}
 

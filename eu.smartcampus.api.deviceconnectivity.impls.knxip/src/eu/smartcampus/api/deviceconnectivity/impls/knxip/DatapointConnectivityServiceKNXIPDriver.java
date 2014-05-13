@@ -9,6 +9,7 @@ import eu.smartcampus.api.deviceconnectivity.DatapointMetadata;
 import eu.smartcampus.api.deviceconnectivity.DatapointReading;
 import eu.smartcampus.api.deviceconnectivity.DatapointValue;
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
+import eu.smartcampus.api.deviceconnectivity.DatapointMetadata.AccessType;
 
 /**
  * The Class DatapointConnectivityServiceKNXIPDriver.
@@ -75,10 +76,15 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			ReadCallback readCallback) {
 		DatapointMetadata m = getDatapointMetadata(address);
 		String addr = address.getAddress();
+		
+		if(m.getAccessType() == AccessType.WRITE_ONLY){
+			readCallback.onReadAborted(address, ErrorType.UNSUPORTED_DATAPOINT_OPERATION, 0);
+			return 0;
+		}
+			
 
 		switch (m.getDatatype()) {
 		case INTEGER:
-
 			// Test scale type (0-100)
 			if (m.getDisplayMax() <= 100 && m.getDisplayMin() > 0) {
 				try {
@@ -115,7 +121,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 							ErrorType.DEVICE_CONNECTION_ERROR, 0);
 				}
 			}
-
+			break;
 		case BOOLEAN:
 			try {
 				boolean value = driver.readBoolean(addr);
@@ -132,10 +138,11 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 				readCallback.onReadAborted(address,
 						ErrorType.DEVICE_CONNECTION_ERROR, 0);
 			}
-
+			break;
 		case STRING:// TODO not used yet
 			readCallback.onReadAborted(address,
 					ErrorType.UNSUPORTED_DATAPOINT_OPERATION, 0);
+			break;
 		}
 
 		readCallback.onReadAborted(address,
@@ -158,6 +165,11 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			DatapointValue[] values, WriteCallback writeCallback) {
 		DatapointMetadata m = getDatapointMetadata(address);
 		String addr = address.getAddress();
+		
+		if(m.getAccessType() == AccessType.READ_ONLY){
+			writeCallback.onWriteAborted(address, ErrorType.UNSUPORTED_DATAPOINT_OPERATION, 0);
+			return 0;
+		}
 
 		switch (m.getDatatype()) {
 		case INTEGER:

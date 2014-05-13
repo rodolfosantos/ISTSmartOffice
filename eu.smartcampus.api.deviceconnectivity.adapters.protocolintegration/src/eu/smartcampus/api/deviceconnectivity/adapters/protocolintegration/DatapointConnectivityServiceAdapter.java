@@ -122,12 +122,13 @@ public class DatapointConnectivityServiceAdapter implements
 		return result;
 	}
 
-	public DatapointMetadata getDatapointMetadata(DatapointAddress address) {
-		try {
-			return getDriver(address).getDatapointMetadata(address);
-		} catch (OperationFailedException e) {
-			return null;
-		}
+	public DatapointMetadata getDatapointMetadata(DatapointAddress address)
+			throws OperationFailedException {
+		IDatapointConnectivityService d = getDriver(address);
+		if(d == null)
+			throw new OperationFailedException(ErrorType.DATAPOINT_NOT_FOUND);
+		return getDriver(address).getDatapointMetadata(address);
+
 	}
 
 	public void removeDatapointListener(DatapointListener listener) {
@@ -136,20 +137,37 @@ public class DatapointConnectivityServiceAdapter implements
 
 	public int requestDatapointRead(DatapointAddress address,
 			ReadCallback readCallback) {
-		return getDriver(address).requestDatapointRead(address, readCallback);
+		IDatapointConnectivityService d = getDriver(address);
+		if (d == null) {
+			readCallback.onReadAborted(address, ErrorType.DATAPOINT_NOT_FOUND,
+					0);
+			return 0;
+		}
+		return d.requestDatapointRead(address, readCallback);
 	}
 
 	public int requestDatapointWrite(DatapointAddress address,
 			DatapointValue[] values, WriteCallback writeCallback) {
-		return getDriver(address).requestDatapointWrite(address, values,
-				writeCallback);
+		IDatapointConnectivityService d = getDriver(address);
+		if (d == null) {
+			writeCallback.onWriteAborted(address,
+					ErrorType.DATAPOINT_NOT_FOUND, 0);
+			return 0;
+		}
+		return d.requestDatapointWrite(address, values, writeCallback);
 	}
 
 	@Override
 	public int requestDatapointWindowRead(DatapointAddress address,
 			long startTimestamp, long finishTimestamp, ReadCallback readCallback) {
-		return getDriver(address).requestDatapointWindowRead(address,
-				startTimestamp, finishTimestamp, readCallback);
+		IDatapointConnectivityService d = getDriver(address);
+		if (d == null) {
+			readCallback.onReadAborted(address, ErrorType.DATAPOINT_NOT_FOUND,
+					0);
+			return 0;
+		}
+		return d.requestDatapointWindowRead(address, startTimestamp,
+				finishTimestamp, readCallback);
 	}
 
 	@Override

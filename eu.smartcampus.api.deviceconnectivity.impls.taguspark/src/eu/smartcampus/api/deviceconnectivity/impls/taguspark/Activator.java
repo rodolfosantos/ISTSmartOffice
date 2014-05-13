@@ -78,7 +78,7 @@ public final class Activator implements BundleActivator {
 		knxMetadata3.setDatatype(Datatype.INTEGER);
 		knxMetadata3.setScale(2);
 		knxMetadata3.setDisplayMax(100);
-		knxMetadata3.setDisplayMin(0);
+		knxMetadata3.setDisplayMin(1);
 		DatapointAddress d3 = new DatapointAddress("0-1-0");// blackboard lamps
 															// write (0-100)
 
@@ -86,9 +86,9 @@ public final class Activator implements BundleActivator {
 		knxMetadata4.setAccessType(AccessType.READ_ONLY);
 		knxMetadata4.setDatatype(Datatype.INTEGER);
 		knxMetadata4.setDisplayMax(100);
-		knxMetadata4.setDisplayMin(0);
+		knxMetadata4.setDisplayMin(1);
 		knxMetadata4.setScale(2);
-		DatapointAddress d4 = new DatapointAddress("0-4-5");// blackboard lamps
+		DatapointAddress d4 = new DatapointAddress("0-7-1");// blackboard lamps
 															// read (0-100)
 
 		MetadataBuilder knxMetadata5 = new DatapointMetadata.MetadataBuilder();
@@ -96,7 +96,7 @@ public final class Activator implements BundleActivator {
 		knxMetadata5.setDatatype(Datatype.INTEGER);
 		knxMetadata5.setScale(2);
 		knxMetadata5.setDisplayMax(100);
-		knxMetadata5.setDisplayMin(0);
+		knxMetadata5.setDisplayMin(1);
 		DatapointAddress d5 = new DatapointAddress("0-2-12");// energylab blinds
 																// write (0-100)
 
@@ -104,7 +104,7 @@ public final class Activator implements BundleActivator {
 		knxMetadata6.setAccessType(AccessType.READ_ONLY);
 		knxMetadata6.setDatatype(Datatype.INTEGER);
 		knxMetadata6.setDisplayMax(100);
-		knxMetadata6.setDisplayMin(0);
+		knxMetadata6.setDisplayMin(1);
 		knxMetadata6.setScale(2);
 		DatapointAddress d6 = new DatapointAddress("0-2-0");// energylab blinds
 															// read (0-100)

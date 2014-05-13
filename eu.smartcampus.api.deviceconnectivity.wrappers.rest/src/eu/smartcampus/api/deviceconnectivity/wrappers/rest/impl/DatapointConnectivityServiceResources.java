@@ -123,6 +123,7 @@ public class DatapointConnectivityServiceResources {
             try {
                 metadata = DatapointConnectivityServiceRESTWrapper.getInstance().getServiceImplementation()
                         .getDatapointMetadata(address);
+               
             } catch (OperationFailedException e) {
                 return provideErrorResponse(e.getErrorType(), e.getErrorType().toString(), "");
             }

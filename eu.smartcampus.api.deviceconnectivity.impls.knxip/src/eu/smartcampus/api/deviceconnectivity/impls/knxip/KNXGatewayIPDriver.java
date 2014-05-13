@@ -17,6 +17,7 @@ import tuwien.auto.calimero.process.ProcessCommunicatorImpl;
  */
 public class KNXGatewayIPDriver {
 
+	private static KNXGatewayIPDriver instance = null;
     private String remoteHost;
     private KNXNetworkLink knxLink;
     private ProcessCommunicator pc;
@@ -27,11 +28,19 @@ public class KNXGatewayIPDriver {
      * 
      * @param remoteHost the remote host address
      */
-    public KNXGatewayIPDriver(String remoteHost) {
+    private KNXGatewayIPDriver() {
         super();
-        this.remoteHost = remoteHost;
+        //TODO loads configs and set address;
+        this.remoteHost = "172.20.70.147";
         this.isConnected = false;
     }
+    
+    public static KNXGatewayIPDriver getInstance() {
+        if(instance == null) {
+           instance = new KNXGatewayIPDriver();
+        }
+        return instance;
+     }
 
 
 
@@ -50,18 +59,25 @@ public class KNXGatewayIPDriver {
      * Start a new connection with KNX Gateway.
      */
     public void start() {
-        try {
-            knxLink = new KNXNetworkLinkIP(remoteHost, TPSettings.TP1);
-            pc = new ProcessCommunicatorImpl(knxLink);
-            this.isConnected = true;
-        } catch (KNXException e) {
-            e.printStackTrace();
-            this.isConnected = false;
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            this.isConnected = false;
-        }
+    	new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+		            knxLink = new KNXNetworkLinkIP(remoteHost, TPSettings.TP1);
+		            pc = new ProcessCommunicatorImpl(knxLink);
+		            isConnected = true;
+		        } catch (KNXException e) {
+		            e.printStackTrace();
+		            isConnected = false;
+		        } catch (InterruptedException e) {
+		            // TODO Auto-generated catch block
+		            e.printStackTrace();
+		            isConnected = false;
+		        }
+			}
+		}).start();    	
+        
 
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             public void run() {

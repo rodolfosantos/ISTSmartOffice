@@ -32,9 +32,10 @@ public class DatapointConnectivityServiceKNXIPDriver
      * @param driver the driver
      * @param datapoints the datapoints
      */
-    public DatapointConnectivityServiceKNXIPDriver(KNXGatewayIPDriver driver) {
+    public DatapointConnectivityServiceKNXIPDriver() {
         super();
-        this.driver = driver;
+        this.driver = KNXGatewayIPDriver.getInstance();
+        driver.start();
         //TODO add datapoints and metadata
         this.datapoints = new HashMap<DatapointAddress, DatapointMetadata>();
     }

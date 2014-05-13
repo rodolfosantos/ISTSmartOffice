@@ -67,6 +67,7 @@ public class KNXGatewayIPDriver {
 		            knxLink = new KNXNetworkLinkIP(remoteHost, TPSettings.TP1);
 		            pc = new ProcessCommunicatorImpl(knxLink);
 		            isConnected = true;
+		            System.out.println("Connected to KNX-IP Gateway!");
 		        } catch (KNXException e) {
 		            e.printStackTrace();
 		            isConnected = false;
@@ -99,7 +100,7 @@ public class KNXGatewayIPDriver {
             knxLink.close();
 
         this.isConnected = false;
-        System.out.println("Connection closed.");
+        System.out.println("KNX-IP connection closed.");
     }
 
     /**

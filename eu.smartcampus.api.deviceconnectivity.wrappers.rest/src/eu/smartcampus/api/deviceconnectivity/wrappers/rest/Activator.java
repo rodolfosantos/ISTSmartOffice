@@ -21,7 +21,7 @@ public final class Activator
          */
         serverStart(
                 8182,
-                "eu.smartcampus.api.deviceconnectivity.impls.meterip.DatapointConnectivityServiceMeterIPDriver");
+                "DatapointConnectivityServiceAdapter");
     }
 
     private void serverStart(int serverPort, String implementationClassName) throws Exception {

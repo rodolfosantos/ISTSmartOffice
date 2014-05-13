@@ -1,5 +1,6 @@
 package eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -34,10 +35,37 @@ public class DatapointConnectivityServiceAdapter implements
 	 *            the datapoints drivers
 	 */
 	public DatapointConnectivityServiceAdapter(
-			Map<DatapointAddress, IDatapointConnectivityService> datapointsDrivers) {
+			Set<IDatapointConnectivityService> datapointsDrivers) {
 		super();
-		this.datapointsDrivers = datapointsDrivers;
 		this.listeners = new HashSet<DatapointListener>();
+		this.datapointsDrivers = initDatapointsDrivers(datapointsDrivers);
+	}
+
+	/**
+	 * Instantiates datapoints and correspondent driver implementation mapping
+	 * 
+	 * @param datapointsDrivers
+	 *            the datapoints drivers
+	 */
+	private Map<DatapointAddress, IDatapointConnectivityService> initDatapointsDrivers(
+			Set<IDatapointConnectivityService> datapointsDrivers) {
+		Map<DatapointAddress, IDatapointConnectivityService> result = new HashMap<DatapointAddress, IDatapointConnectivityService>();
+
+		Iterator<IDatapointConnectivityService> driversIterator = datapointsDrivers
+				.iterator();
+		while (driversIterator.hasNext()) {
+			IDatapointConnectivityService driver = (IDatapointConnectivityService) driversIterator
+					.next();
+
+			DatapointAddress[] allDatapoints = driver.getAllDatapoints();
+			for (DatapointAddress datapointAddress : allDatapoints) {
+				result.put(datapointAddress, driver);
+			}
+
+		}
+
+		return result;
+
 	}
 
 	public void addDatapointListener(DatapointListener listener) {

@@ -17,8 +17,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-
-	<artifactId>eu.smartcampus.api.deviceconnectivity.wrappers.rest</artifactId>
+	<artifactId>eu.smartcampus.api.deviceconnectivity.impls.taguspark</artifactId>
 	<packaging>bundle</packaging>
 	
 	<build>
@@ -30,10 +29,10 @@
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+						<Bundle-SymbolicName>${project.artifactId};singleton:=true</Bundle-SymbolicName>
 						<Bundle-Version>${project.version}</Bundle-Version>
-						<Export-Package>eu.smartcampus.api.deviceconnectivity.wrappers.rest</Export-Package>
-						<Bundle-Activator>eu.smartcampus.api.deviceconnectivity.wrappers.rest.Activator</Bundle-Activator>
+						<Export-Package>eu.smartcampus.api.deviceconnectivity.impls.taguspark</Export-Package>
+						<Bundle-Activator>eu.smartcampus.api.deviceconnectivity.impls.taguspark.Activator</Bundle-Activator>
 					</instructions>
 				</configuration>
 			</plugin>
@@ -44,7 +43,7 @@
 		</plugins>
 	</build>
 
-	<name>eu.smartcampus.api.deviceconnectivity.wrappers.rest</name>
+	<name>eu.smartcampus.api.deviceconnectivity.impls.meterip</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -52,21 +51,6 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.googlecode.json-simple</groupId>
-			<artifactId>json-simple</artifactId>
-			<version>1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.restlet.jse</groupId>
-			<artifactId>org.restlet.ext.json</artifactId>
-			<version>2.1-M1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.restlet.jse</groupId>
-			<artifactId>org.restlet</artifactId>
-			<version>2.1-M1</version>
-		</dependency>
 		<dependency>
 			<groupId>eu.smartcampus.api</groupId>
 			<artifactId>eu.smartcampus.api.deviceconnectivity</artifactId>
@@ -78,9 +62,14 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>org.restlet.jse</groupId>
-			<artifactId>org.restlet.lib.org.json</artifactId>
-			<version>2.0</version>
+			<groupId>eu.smartcampus.api</groupId>
+			<artifactId>eu.smartcampus.api.deviceconnectivity.impls.knxip</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>eu.smartcampus.api</groupId>
+			<artifactId>eu.smartcampus.api.deviceconnectivity.impls.meterip</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -6,48 +6,47 @@ import org.restlet.Component;
 import org.restlet.data.Protocol;
 
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
+import eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration.DatapointConnectivityServiceAdapter;
 import eu.smartcampus.api.deviceconnectivity.osgi.registries.DeviceConnectivityServiceRegistry;
 
-public final class Activator
-        implements BundleActivator {
+public final class Activator implements BundleActivator {
 
-    private Component component;
+	private Component component;
 
-    @Override
-    public void start(BundleContext context) throws Exception {
-        /**
-         * TODO: Add a way to set the port and the implementation to use through some
-         * configuration file, GUI, or so.
-         */
-        serverStart(
-                8182,
-                "DatapointConnectivityServiceAdapter");
-    }
+	@Override
+	public void start(BundleContext context) throws Exception {
+		/**
+		 * TODO: Add a way to set the port and the implementation to use through
+		 * some configuration file, GUI, or so.
+		 */
+		serverStart(8182, DatapointConnectivityServiceAdapter.class.getName());
+	}
 
-    private void serverStart(int serverPort, String implementationClassName) throws Exception {
-        // Create a new Component.
-        this.component = new Component();
+	private void serverStart(int serverPort, String implementationClassName)
+			throws Exception {
+		// Create a new Component.
+		this.component = new Component();
 
-        // Add a new HTTP server listening on port 8182.
-        component.getServers().add(Protocol.HTTP, serverPort);
+		// Add a new HTTP server listening on port 8182.
+		component.getServers().add(Protocol.HTTP, serverPort);
 
-        // Bound an implementation to the REST adapter
-        final IDatapointConnectivityService serviceImplementation = DeviceConnectivityServiceRegistry
-                .getInstance().getService(implementationClassName);
-        DatapointConnectivityServiceRESTWrapper.getInstance()
-                .setServiceImplementation(serviceImplementation);
-        
-        // Attach device api application
-        component.getDefaultHost().attach("/deviceconnectivityapi",
-                DatapointConnectivityServiceRESTWrapper.getInstance());
+		// Bound an implementation to the REST adapter
+		final IDatapointConnectivityService serviceImplementation = DeviceConnectivityServiceRegistry
+				.getInstance().getService(implementationClassName);
+		DatapointConnectivityServiceRESTWrapper.getInstance()
+				.setServiceImplementation(serviceImplementation);
 
-        // Start the component.
-        component.start();
-    }
+		// Attach device api application
+		component.getDefaultHost().attach("/deviceconnectivityapi",
+				DatapointConnectivityServiceRESTWrapper.getInstance());
 
-    @Override
-    public void stop(BundleContext context) throws Exception {
-        component.stop();
-    }
+		// Start the component.
+		component.start();
+	}
+
+	@Override
+	public void stop(BundleContext context) throws Exception {
+		component.stop();
+	}
 
 }

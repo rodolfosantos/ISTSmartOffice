@@ -173,6 +173,7 @@ public final class Activator implements BundleActivator {
 					.next();
 			knxDatapoints.put(new DatapointAddress(entry.getKey()), entry.getValue());			
 		}
+		
 		Map<DatapointAddress, DatapointMetadata> meterDatapoints = new HashMap<DatapointAddress, DatapointMetadata>();
 		Iterator<Entry<String, DatapointMetadata>> meterIt = meterDatapointsSettings.entrySet().iterator();
 		while (meterIt.hasNext()) {
@@ -189,7 +190,7 @@ public final class Activator implements BundleActivator {
 		Set<IDatapointConnectivityService> datapointsDrivers = new HashSet<IDatapointConnectivityService>();
 		datapointsDrivers.add(meterDriver);
 
-		// KNXGatewayIPDriver.getInstance().start();
+		KNXGatewayIPDriver.getInstance().start();
 		if (KNXGatewayIPDriver.getInstance().isConnected()) {
 			datapointsDrivers.add(knxDriver);
 		}

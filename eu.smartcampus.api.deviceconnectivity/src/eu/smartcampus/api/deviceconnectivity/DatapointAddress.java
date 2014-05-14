@@ -3,13 +3,17 @@
  */
 package eu.smartcampus.api.deviceconnectivity;
 
+
 /**
  * @author Diogo
  *
  */
 public class DatapointAddress {
 
-    private String address;
+    
+
+
+	private String address;
 
     public DatapointAddress(String address){
         this.address = address;
@@ -50,6 +54,13 @@ public class DatapointAddress {
             return false;
         return true;
     }
+
+
+	@Override
+	public String toString() {
+		return address;
+	}
+    
     
     
     

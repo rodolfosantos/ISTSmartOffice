@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * A datapoint value reading with a timestamp.
  */
-public class DatapointReading {
+public class DatapointReading implements Comparable<DatapointReading> {
 
     /** The value. */
     private final DatapointValue value;
@@ -50,4 +50,11 @@ public class DatapointReading {
     public long getTimestamp() {
         return timestamp;
     }
+
+	@Override
+	public int compareTo(DatapointReading other) {
+		Long thisLong = new Long(timestamp);
+		Long otherLong =  new Long(other.getTimestamp());
+		return thisLong.compareTo(otherLong);
+	}
 }

@@ -8,6 +8,7 @@ import java.net.URLConnection;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -243,10 +244,26 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 	@Override
 	public int requestDatapointRead(DatapointAddress address,
 			ReadCallback readCallback) {
+
+		DatapointReading lastReading = HistoryDataStorage.getInstance()
+				.getLastReading(address);
+
+		if (lastReading != null) {
+			if (new Date().getTime() - lastReading.getTimestamp() < 10000) {
+				readCallback.onReadCompleted(address,
+						new DatapointReading[] { lastReading }, 0);
+				return 0;
+			}
+		}
+
 		try {
 			MeterMeasure value = getNewMeasure(address.getAddress());
 			DatapointReading reading = new DatapointReading(new DatapointValue(
 					value.getTotalPower() + ""));
+			// store reading
+			HistoryDataStorage.getInstance().addDatapointReading(address,
+					reading);
+
 			readCallback.onReadCompleted(address,
 					new DatapointReading[] { reading }, 0);
 			return 0;
@@ -261,10 +278,13 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 	@Override
 	public int requestDatapointWindowRead(DatapointAddress address,
 			long startTimestamp, long finishTimestamp, ReadCallback readCallback) {
-		readCallback.onReadAborted(address,
-				ErrorType.UNSUPORTED_DATAPOINT_OPERATION, 0);// not yet (missing
-																// history data
-																// storage)
+
+		DatapointReading[] readings = HistoryDataStorage.getInstance()
+				.getTimeWindowReading(address, startTimestamp, finishTimestamp); // history
+																					// data
+
+		readCallback.onReadCompleted(address, readings, 0);
+
 		return 0;
 	}
 

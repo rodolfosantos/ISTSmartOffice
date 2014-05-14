@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimerTask;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -56,6 +57,51 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 		this.username = username;
 		this.password = password;
 		this.datapoints = datapoints;
+		startPolling(10);
+	}
+
+	private void startPolling(final long seconds) {
+
+		new Thread(new TimerTask() {
+
+			@Override
+			public void run() {
+				while (true) {
+					Iterator<DatapointAddress> it = datapoints.keySet()
+							.iterator();
+					while (it.hasNext()) {
+						DatapointAddress datapointAddress = it.next();
+
+						try {
+							MeterMeasure value = getNewMeasure(datapointAddress
+									.getAddress());
+							DatapointReading reading = new DatapointReading(
+									new DatapointValue(value.getTotalPower()
+											+ ""));
+							// store reading
+							HistoryDataStorage.getInstance()
+									.addDatapointReading(datapointAddress,
+											reading);
+							Thread.sleep(1000);
+						} catch (MalformedURLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+					}
+					try {
+						Thread.sleep(seconds * 1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+			}
+		}).start();
 	}
 
 	/**

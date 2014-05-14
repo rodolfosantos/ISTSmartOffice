@@ -45,13 +45,21 @@ public final class Activator implements BundleActivator {
 		DatapointAddress a7 = new DatapointAddress("172.20.70.236");
 		DatapointAddress a8 = new DatapointAddress("172.20.70.237");
 
+		meterMetadata.setAlias("D14");
 		meterDatapoints.put(a1, meterMetadata.build());
+		meterMetadata.setAlias("A4");
 		meterDatapoints.put(a2, meterMetadata.build());
+		meterMetadata.setAlias("Library");
 		meterDatapoints.put(a3, meterMetadata.build());
+		meterMetadata.setAlias("D16");
 		meterDatapoints.put(a4, meterMetadata.build());
+		meterMetadata.setAlias("R117");
 		meterDatapoints.put(a5, meterMetadata.build());
+		meterMetadata.setAlias("R119");
 		meterDatapoints.put(a6, meterMetadata.build());
+		meterMetadata.setAlias("Lab1-58");
 		meterDatapoints.put(a7, meterMetadata.build());
+		meterMetadata.setAlias("UTA_A4");
 		meterDatapoints.put(a8, meterMetadata.build());
 
 		IDatapointConnectivityService meterDriver = new DatapointConnectivityServiceMeterIPDriver(
@@ -61,6 +69,7 @@ public final class Activator implements BundleActivator {
 		Map<DatapointAddress, DatapointMetadata> knxDatapoints = new HashMap<DatapointAddress, DatapointMetadata>();
 
 		MetadataBuilder knxMetadata1 = new DatapointMetadata.MetadataBuilder();
+		knxMetadata1.setAlias("EnergyLab Temperature");
 		knxMetadata1.setAccessType(AccessType.READ_ONLY);
 		knxMetadata1.setDatatype(Datatype.INTEGER);
 		knxMetadata1.setScale(2);
@@ -68,6 +77,7 @@ public final class Activator implements BundleActivator {
 															// temperature
 
 		MetadataBuilder knxMetadata2 = new DatapointMetadata.MetadataBuilder();
+		knxMetadata2.setAlias("EnergyLab Door");
 		knxMetadata2.setAccessType(AccessType.WRITE_ONLY);
 		knxMetadata2.setDatatype(Datatype.BOOLEAN);
 		DatapointAddress d2 = new DatapointAddress("0-3-0");// energy lab door
@@ -75,6 +85,7 @@ public final class Activator implements BundleActivator {
 															// open)
 
 		MetadataBuilder knxMetadata3 = new DatapointMetadata.MetadataBuilder();
+		knxMetadata3.setAlias("EnergyLab BlackboardLamps (write)");
 		knxMetadata3.setAccessType(AccessType.WRITE_ONLY);
 		knxMetadata3.setDatatype(Datatype.INTEGER);
 		knxMetadata3.setScale(2);
@@ -84,6 +95,7 @@ public final class Activator implements BundleActivator {
 															// write (0-100)
 
 		MetadataBuilder knxMetadata4 = new DatapointMetadata.MetadataBuilder();
+		knxMetadata4.setAlias("EnergyLab BlackboardLamps (read)");
 		knxMetadata4.setAccessType(AccessType.READ_ONLY);
 		knxMetadata4.setDatatype(Datatype.INTEGER);
 		knxMetadata4.setDisplayMax(100);
@@ -93,6 +105,7 @@ public final class Activator implements BundleActivator {
 															// read (0-100)
 
 		MetadataBuilder knxMetadata5 = new DatapointMetadata.MetadataBuilder();
+		knxMetadata5.setAlias("EnergyLab Blinds (write)");
 		knxMetadata5.setAccessType(AccessType.WRITE_ONLY);
 		knxMetadata5.setDatatype(Datatype.INTEGER);
 		knxMetadata5.setScale(2);
@@ -102,6 +115,7 @@ public final class Activator implements BundleActivator {
 																// write (0-100)
 
 		MetadataBuilder knxMetadata6 = new DatapointMetadata.MetadataBuilder();
+		knxMetadata6.setAlias("EnergyLab Blinds (read)");
 		knxMetadata6.setAccessType(AccessType.READ_ONLY);
 		knxMetadata6.setDatatype(Datatype.INTEGER);
 		knxMetadata6.setDisplayMax(100);

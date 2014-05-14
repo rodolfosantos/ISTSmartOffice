@@ -133,6 +133,7 @@ public class DatapointConnectivityServiceResources {
             JSONObject result = null;
             try {
                 result = new JSONObject();
+                result.put("alias", metadata.getAlias());
                 result.put("units", metadata.getUnits());
                 result.put("datatype", metadata.getDatatype());
                 result.put("accesstype", metadata.getAccessType());

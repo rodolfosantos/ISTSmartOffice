@@ -51,6 +51,11 @@ public class DatapointMetadata {
          */
         READ_WRITE
     };
+    
+    /**
+     * The alias of this data point.
+     */
+    private String alias;
 
     /**
      * The units of this data point.
@@ -153,6 +158,7 @@ public class DatapointMetadata {
      * Builder for a {@link DatapointMetadata} object.
      */
     public static class MetadataBuilder {
+    	private String alias;
         private String units;
         private Datatype datatype;
         private AccessType accessType;
@@ -168,6 +174,15 @@ public class DatapointMetadata {
         private int readingMin;
         private int readCacheSize;
 
+        /**
+         * Sets the alias of the datapoint.
+         *
+         * @param alias the new alias
+         */
+        public void setAlias(String alias) {
+            this.alias = alias;
+        }
+        
         /**
          * Sets the units of the datapoint.
          *
@@ -326,6 +341,7 @@ public class DatapointMetadata {
         public DatapointMetadata build() {
             final DatapointMetadata result = new DatapointMetadata();
             result.accessType = accessType;
+            result.alias = alias;
             result.units = units;
             result.datatype = datatype;
             result.accessType = accessType;
@@ -348,6 +364,15 @@ public class DatapointMetadata {
      * Metadata cannot be instantiated from outside.
      */
     private DatapointMetadata() {
+    }
+    
+    /**
+     * Gets the alias.
+     *
+     * @return the alias
+     */
+    public String getAlias() {
+        return alias;
     }
 
 

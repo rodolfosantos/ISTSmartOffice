@@ -27,6 +27,7 @@
 		<module>eu.smartcampus.api.deviceconnectivity.impls.meterip</module>
 		<module>eu.smartcampus.api.deviceconnectivity.impls.taguspark</module>
 		<module>eu.smartcampus.api.deviceconnectivity.wrappers.rest</module>
+		<module>eu.smartcampus.api.historydatastorage</module>
 	</modules>
 
 	<profiles>

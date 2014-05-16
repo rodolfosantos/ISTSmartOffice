@@ -28,6 +28,7 @@ import eu.smartcampus.api.deviceconnectivity.wrappers.rest.DatapointConnectivity
  * </code>
  * 
  * @author Pedro Domingues (pedro.domingues@ist.utl.pt)
+ * @author Rodolfo Santos (rodolfo.santos@ist.utl.pt)
  */
 public class DatapointConnectivityServiceResources {
 
@@ -59,10 +60,10 @@ public class DatapointConnectivityServiceResources {
      * <script  type="text/javascript">
         result.push( {
 						method: "GET",
-						endpoint: "/abc/def/{lol}/{cu}",
-						params: ["teste1 - cenas e coisas", "teste2 - testando comments"],
-						json_syntax: "{<br>&nbsp;&nbsp;\"param\" : param<br>}",
-						description: "arroz",
+						endpoint: "/deviceconnectivityapi/datapoints/{address}/{starttimestamp}/{finishtimestamp}",
+						params: ["address - The desired datapoint address", "starttimestamp - The timestamp that defines the initial window", "finishtimestamp - The timestamp that defines the final window (should be greater or equal to start)"],
+						json_syntax: "{<br>&nbsp;&nbsp;\"readings\" : [<br>&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;\"timestamp\" : timestamp,<br>&nbsp;&nbsp;&nbsp;\"value\" : value<br>&nbsp;&nbsp;&nbsp;},<br>&nbsp;&nbsp;&nbsp;...<br>&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;\"timestamp\" : timestamp,<br>&nbsp;&nbsp;&nbsp;\"value\" : value<br>&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;]<br>}",
+						description: "Gets the readings of a datapoint within a given time window.",
 						});
         CreateCustomersTable();
 </script>
@@ -125,7 +126,18 @@ public class DatapointConnectivityServiceResources {
     }
 
     /**
-     * Requests the metadata of a datapoint to a {@link IDatapointConnectivityService}
+     * <code>
+     * <script  type="text/javascript">
+        result.push( {
+						method: "GET",
+						endpoint: "/deviceconnectivityapi/datapoints/{address}/metadata",
+						params: ["address - The desired datapoints address"],
+						json_syntax: "{<br>&nbsp;&nbsp;\"alias\" : alias<br>&nbsp;&nbsp;\"units\" : units<br>&nbsp;&nbsp;\"datatype\" : datatype<br>&nbsp;&nbsp;\"accesstype\" : accesstype<br>&nbsp;&nbsp;\"precision\" : precision<br>&nbsp;&nbsp;\"scale\" : scale<br>&nbsp;&nbsp;\"smallestsamplinginterval\" : smallestsamplinginterval<br>&nbsp;&nbsp;\"currentsamplinginterval\" : currentsamplinginterval<br>&nbsp;&nbsp;\"changeofvalue\" : changeofvalue<br>&nbsp;&nbsp;\"hysteresis\" : hysteresis<br>&nbsp;&nbsp;\"displaymax\" : displaymax<br>&nbsp;&nbsp;\"displaymin\" : displaymin<br>&nbsp;&nbsp;\"readingmax\" : readingmax<br>&nbsp;&nbsp;\"readingmin\" : readingmin<br>&nbsp;&nbsp;\"readcachesize\" : readcachesize<br>}",
+						description: "Returns the metadata of a given datapoint.",
+						});
+        CreateCustomersTable();
+</script>
+	 * </code> Requests the metadata of a datapoint to a {@link IDatapointConnectivityService}
      * implementation. A JSON error response is returned in case the datapoint address
      * cannot be reached.
      * 
@@ -182,7 +194,18 @@ public class DatapointConnectivityServiceResources {
     }
 
     /**
-     * REST resource responsible for listing all datapoint addresses. A JSON error
+     * <code>
+		<script  type="text/javascript">
+		result.push( {
+						method: "GET",
+						endpoint: "/deviceconnectivityapi/datapoints",
+						params: ["None"],
+						json_syntax: "{<br>&nbsp;&nbsp;\"addresses\" : [<br>&nbsp;&nbsp;&nbsp;\"address\",<br>&nbsp;&nbsp;&nbsp;\"address\",<br>&nbsp;&nbsp;&nbsp;...<br>&nbsp;&nbsp;&nbsp;\"address\"<br>&nbsp;&nbsp;]<br>}",
+						description: "Gets the addresses of all datapoints of devices controlled by this service.",
+						});
+        CreateCustomersTable();
+		</script>
+	 * </code> REST resource responsible for listing all datapoint addresses. A JSON error
      * response is returned in case the datapoint address cannot be reached.
      * 
      * @author Rodolfo Santos (rodolfo.santos@ist.utl.pt)
@@ -211,7 +234,25 @@ public class DatapointConnectivityServiceResources {
     }
 
     /**
-     * REST resource responsible for reading and writing to a datapoint. A JSON error
+     * <code>
+		<script  type="text/javascript">
+		result.push( {
+						method: "GET",
+						endpoint: "/deviceconnectivityapi/datapoints/{address}",
+						params: ["address - The desired datapoints address"],
+						json_syntax: "{<br>&nbsp;&nbsp;\"timestamp\" : timestamp,<br>&nbsp;&nbsp;\"value\" : value<br>}",
+						description: "Gets the latest available reading of a datapoint.",
+						});
+		result.push( {
+						method: "PUT",
+						endpoint: "/deviceconnectivityapi/datapoints/{address}",
+						params: ["Content-Type - application/json", "Request Body - {\"values\" : [value1, \.\.\., valueN]}"],
+						json_syntax: "{<br>&nbsp;&nbsp;\"operationstatus\" : operationstatus<br>}",
+						description: "Request a datapoint write.",
+						});
+        CreateCustomersTable();
+		</script>
+	 * </code> REST resource responsible for reading and writing to a datapoint. A JSON error
      * response is returned in case the datapoint address cannot be reached.
      * 
      * @author Rodolfo Santos (rodolfo.santos@ist.utl.pt)
@@ -293,6 +334,7 @@ public class DatapointConnectivityServiceResources {
                 result.put("operationstatus", "success");
                 return result;
             } catch (JSONException e1) {
+            	e1.printStackTrace();
                 getResponse().setStatus(Status.SERVER_ERROR_INTERNAL);
                 return result;
 

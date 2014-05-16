@@ -1,5 +1,9 @@
 package eu.smartcampus.api.deviceconnectivity.impls.knxip;
 
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.UnknownHostException;
+
 import tuwien.auto.calimero.GroupAddress;
 import tuwien.auto.calimero.exception.KNXException;
 import tuwien.auto.calimero.exception.KNXFormatException;
@@ -7,6 +11,7 @@ import tuwien.auto.calimero.exception.KNXTimeoutException;
 import tuwien.auto.calimero.link.KNXLinkClosedException;
 import tuwien.auto.calimero.link.KNXNetworkLink;
 import tuwien.auto.calimero.link.KNXNetworkLinkIP;
+import tuwien.auto.calimero.link.medium.KNXMediumSettings;
 import tuwien.auto.calimero.link.medium.TPSettings;
 import tuwien.auto.calimero.process.ProcessCommunicationBase;
 import tuwien.auto.calimero.process.ProcessCommunicator;
@@ -55,51 +60,60 @@ public class KNXGatewayIPDriver {
 
 	/**
 	 * Start a new connection with KNX Gateway.
+	 * 
+	 * @throws UnknownHostException
 	 */
-	public void start() {
-    	
-    	try {
-            knxLink = new KNXNetworkLinkIP(remoteHost, TPSettings.TP1);
-            pc = new ProcessCommunicatorImpl(knxLink);
-            isConnected = true;
-            System.out.println("Connected to KNX-IP Gateway!");
-        } catch (KNXException e) {
-            e.printStackTrace();
-            isConnected = false;
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            isConnected = false;
-        }
-    	
-   
-//    	new Thread(new Runnable() {
-			
-//			@Override
-//			public void run() {
-//				try {
-//		            knxLink = new KNXNetworkLinkIP(remoteHost, TPSettings.TP1);
-//		            pc = new ProcessCommunicatorImpl(knxLink);
-//		            isConnected = true;
-//		            System.out.println("Connected to KNX-IP Gateway!");
-//		        } catch (KNXException e) {
-//		            e.printStackTrace();
-//		            isConnected = false;
-//		        } catch (InterruptedException e) {
-//		            // TODO Auto-generated catch block
-//		            e.printStackTrace();
-//		            isConnected = false;
-//		        }
-//			}
-//		}).start();    	
-        
+	public void start() throws UnknownHostException {
 
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            public void run() {
-                stop();
-            }
-        }));
-    }
+		try {
+
+			InetSocketAddress localEP = new InetSocketAddress(
+					InetAddress.getByName("0.0.0.0"), 0);
+			final InetSocketAddress remoteEP = new InetSocketAddress(
+					remoteHost, 3671);
+
+			// knxLink = new KNXNetworkLinkIP(remoteHost, TPSettings.TP1);
+			knxLink = new KNXNetworkLinkIP(KNXNetworkLinkIP.TUNNELING, localEP,
+					remoteEP, true, TPSettings.TP1);
+
+			pc = new ProcessCommunicatorImpl(knxLink);
+			isConnected = true;
+			System.out.println("Connected to KNX-IP Gateway!");
+		} catch (KNXException e) {
+			e.printStackTrace();
+			isConnected = false;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			isConnected = false;
+		}
+
+		// new Thread(new Runnable() {
+
+		// @Override
+		// public void run() {
+		// try {
+		// knxLink = new KNXNetworkLinkIP(remoteHost, TPSettings.TP1);
+		// pc = new ProcessCommunicatorImpl(knxLink);
+		// isConnected = true;
+		// System.out.println("Connected to KNX-IP Gateway!");
+		// } catch (KNXException e) {
+		// e.printStackTrace();
+		// isConnected = false;
+		// } catch (InterruptedException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// isConnected = false;
+		// }
+		// }
+		// }).start();
+
+		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+			public void run() {
+				stop();
+			}
+		}));
+	}
 
 	/**
 	 * Stop the existent KNX Gateway connection.

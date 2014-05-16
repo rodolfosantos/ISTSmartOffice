@@ -7,6 +7,8 @@ sudo rm -r smartcampusapi
 git clone https://github.com/it4energy/smartcampusapi.git
 cd smartcampusapi
 
+git checkout origin/temporary
+
 #download apache felix
 wget http://mirrors.fe.up.pt/pub/apache//felix/org.apache.felix.main.distribution-4.4.0.zip
 unzip org.apache.felix.main.distribution-4.4.0.zip
@@ -25,4 +27,3 @@ cd felix-framework-4.4.0
 
 #run apache felix
 java -Dgosh.args=--nointeractive -jar bin/felix.jar
-

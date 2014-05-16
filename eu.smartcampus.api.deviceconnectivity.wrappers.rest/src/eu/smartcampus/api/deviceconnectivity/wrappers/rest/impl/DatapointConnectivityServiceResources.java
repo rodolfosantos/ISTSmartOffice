@@ -1,4 +1,3 @@
-// @formatter:on
 package eu.smartcampus.api.deviceconnectivity.wrappers.rest.impl;
 
 import org.json.JSONArray;

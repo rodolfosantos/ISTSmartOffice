@@ -8,40 +8,91 @@ import org.restlet.data.Protocol;
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
 import eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration.DatapointConnectivityServiceAdapter;
 import eu.smartcampus.api.deviceconnectivity.osgi.registries.DeviceConnectivityServiceRegistry;
+import eu.smartcampus.api.osgi.registries.IServiceRegistry.ServiceRegistryListener;
 
 public final class Activator implements BundleActivator {
 
+	private static final int SERVER_PORT = 8182;
+	private static final String PATH_TEMPLATE = "/deviceconnectivityapi";
 	private Component component;
 
 	@Override
 	public void start(BundleContext context) throws Exception {
+
 		/**
 		 * TODO: Add a way to set the port and the implementation to use through
 		 * some configuration file, GUI, or so.
 		 */
-		serverStart(8182, DatapointConnectivityServiceAdapter.class.getName());
+
+		ServiceRegistryListener l = new ServiceRegistryListener() {
+
+			@Override
+			public void serviceRemoved(String serviceName) {
+				serverDettach();
+			}
+
+			@Override
+			public void serviceModified(String serviceName) {
+				serverDettach();
+				IDatapointConnectivityService serviceImplementation = DeviceConnectivityServiceRegistry
+						.getInstance().getService(
+								DatapointConnectivityServiceAdapter.class
+										.getName());
+				serverAttach(PATH_TEMPLATE, serviceImplementation);
+			}
+
+			@Override
+			public void serviceAdded(String serviceName) {
+				// Bound an implementation to the REST adapter
+				IDatapointConnectivityService serviceImplementation = DeviceConnectivityServiceRegistry
+						.getInstance().getService(
+								DatapointConnectivityServiceAdapter.class
+										.getName());
+
+				try {
+					if(component == null)
+						serverStart(SERVER_PORT, serviceImplementation);
+					else
+						serverAttach(PATH_TEMPLATE, serviceImplementation);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		};
+
+		DeviceConnectivityServiceRegistry.getInstance().addServiceListener(l);
+
 	}
 
-	private void serverStart(int serverPort, String implementationClassName)
+	private void serverStart(int serverPort,
+			IDatapointConnectivityService serviceImplementation)
 			throws Exception {
 		// Create a new Component.
 		this.component = new Component();
 
-		// Add a new HTTP server listening on port 8182.
+		// Add a new HTTP server listening on default port.
 		component.getServers().add(Protocol.HTTP, serverPort);
 
-		// Bound an implementation to the REST adapter
-		final IDatapointConnectivityService serviceImplementation = DeviceConnectivityServiceRegistry
-				.getInstance().getService(implementationClassName);
+		serverAttach(PATH_TEMPLATE, serviceImplementation);
+
+		// Start the component.
+		component.start();
+	}
+
+	private void serverAttach(String pathTemplate,
+			IDatapointConnectivityService serviceImplementation) {
 		DatapointConnectivityServiceRESTWrapper.getInstance()
 				.setServiceImplementation(serviceImplementation);
 
 		// Attach device api application
-		component.getDefaultHost().attach("/deviceconnectivityapi",
+		component.getDefaultHost().attach(pathTemplate,
 				DatapointConnectivityServiceRESTWrapper.getInstance());
+	}
 
-		// Start the component.
-		component.start();
+	private void serverDettach() {
+		// Dettach device api application
+		component.getDefaultHost().detach(
+				DatapointConnectivityServiceRESTWrapper.getInstance());
 	}
 
 	@Override

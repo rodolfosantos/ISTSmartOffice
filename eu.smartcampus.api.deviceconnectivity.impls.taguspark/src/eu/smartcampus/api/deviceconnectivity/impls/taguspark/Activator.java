@@ -1,5 +1,6 @@
 package eu.smartcampus.api.deviceconnectivity.impls.taguspark;
 
+import java.net.UnknownHostException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -19,7 +20,8 @@ import eu.smartcampus.api.deviceconnectivity.osgi.registries.DeviceConnectivityS
 
 public final class Activator implements BundleActivator {
 
-	private ServiceRegistration registration;
+	//private ServiceRegistration registration;
+	private Thread activatorThread;
 
 	/* (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
@@ -27,55 +29,61 @@ public final class Activator implements BundleActivator {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		
-		String metersFilename = "Settings_tagusparkMeters.json";
-		String knxFilename = "Settings_tagusparkKNX.json";
+		final String metersFilename = "Settings_tagusparkMeters.json";
+		final String knxFilename = "Settings_tagusparkKNX.json";
 
-		Map<DatapointAddress, DatapointMetadata> knxDatapoints = ServiceSettings
-				.loadDatapointSettings(knxFilename);
-		Map<DatapointAddress, DatapointMetadata> meterDatapoints = ServiceSettings
-				.loadDatapointSettings(metersFilename);
+		Runnable activatorJob = new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				Map<DatapointAddress, DatapointMetadata> knxDatapoints = ServiceSettings
+						.loadDatapointSettings(knxFilename);
+				Map<DatapointAddress, DatapointMetadata> meterDatapoints = ServiceSettings
+						.loadDatapointSettings(metersFilename);
 
-		if (knxDatapoints == null) {
-			System.err
-					.println("KNX Datapoint settings file not exist. Generated "
-							+ knxFilename + " with default settigns.");
-			knxDatapoints = ServiceSettings
-					.setDefaultKNXDatapoints(knxFilename);
-		}
-		if (meterDatapoints == null) {
-			System.err
-					.println("Meter Datapoint settings file not exist. Generated "
-							+ metersFilename + " with default settigns.");
-			meterDatapoints = ServiceSettings
-					.setDefaultMetersDatapoints(metersFilename);
-		}
+				
+				IDatapointConnectivityService knxDriver = new DatapointConnectivityServiceKNXIPDriver(
+						knxDatapoints);
+				IDatapointConnectivityService meterDriver = new DatapointConnectivityServiceMeterIPDriver(
+						"root", "root", meterDatapoints);
 
-		IDatapointConnectivityService knxDriver = new DatapointConnectivityServiceKNXIPDriver(
-				knxDatapoints);
-		IDatapointConnectivityService meterDriver = new DatapointConnectivityServiceMeterIPDriver(
-				"root", "root", meterDatapoints);
+				Set<IDatapointConnectivityService> datapointsDrivers = new HashSet<IDatapointConnectivityService>();
+				datapointsDrivers.add(meterDriver);
 
-		Set<IDatapointConnectivityService> datapointsDrivers = new HashSet<IDatapointConnectivityService>();
-		datapointsDrivers.add(meterDriver);
+				try {
+					KNXGatewayIPDriver.getInstance().start();
+					if (KNXGatewayIPDriver.getInstance().isConnected()) {
+						datapointsDrivers.add(knxDriver);
+					}
+				} catch (UnknownHostException e) {
+					e.printStackTrace();
+				}				
 
-		KNXGatewayIPDriver.getInstance().start();
-		if (KNXGatewayIPDriver.getInstance().isConnected()) {
-			datapointsDrivers.add(knxDriver);
-		}
-
-		IDatapointConnectivityService driverAdapter = new DatapointConnectivityServiceAdapter(
-				datapointsDrivers);
-		DeviceConnectivityServiceRegistry.getInstance().addService(
-				DatapointConnectivityServiceAdapter.class.getName(),
-				driverAdapter);
+				IDatapointConnectivityService driverAdapter = new DatapointConnectivityServiceAdapter(
+						datapointsDrivers);
+				DeviceConnectivityServiceRegistry.getInstance().addService(
+						DatapointConnectivityServiceAdapter.class.getName(),
+						driverAdapter);
+				
+				
+			}
+		};
+		
+		activatorThread = new Thread(activatorJob);
+		activatorThread.start();		
 
 	}
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
-		registration.unregister();
-		registration = null;
-		KNXGatewayIPDriver.getInstance().stop();
+		DeviceConnectivityServiceRegistry.getInstance().removeService(DatapointConnectivityServiceAdapter.class.getName());
+		System.out.println("unregistedes tagus");
+		
+		if(KNXGatewayIPDriver.getInstance().isConnected())
+			KNXGatewayIPDriver.getInstance().stop();
+		
+		activatorThread.join();
 	}
 
 }

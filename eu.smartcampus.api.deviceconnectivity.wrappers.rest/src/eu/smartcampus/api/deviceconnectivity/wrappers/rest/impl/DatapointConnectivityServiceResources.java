@@ -335,6 +335,7 @@ public class DatapointConnectivityServiceResources {
                 result.put("operationstatus", "success");
                 return result;
             } catch (JSONException e1) {
+            	e1.printStackTrace();
                 getResponse().setStatus(Status.SERVER_ERROR_INTERNAL);
                 return result;
 

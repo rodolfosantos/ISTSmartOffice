@@ -7,7 +7,6 @@ import java.util.Set;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
 
 import eu.smartcampus.api.deviceconnectivity.DatapointAddress;
 import eu.smartcampus.api.deviceconnectivity.DatapointMetadata;
@@ -20,7 +19,6 @@ import eu.smartcampus.api.deviceconnectivity.osgi.registries.DeviceConnectivityS
 
 public final class Activator implements BundleActivator {
 
-	//private ServiceRegistration registration;
 	private Thread activatorThread;
 
 	/* (non-Javadoc)
@@ -58,8 +56,9 @@ public final class Activator implements BundleActivator {
 					}
 				} catch (UnknownHostException e) {
 					e.printStackTrace();
-				}				
-
+				}
+				
+				/** Create the instance and regist service. */
 				IDatapointConnectivityService driverAdapter = new DatapointConnectivityServiceAdapter(
 						datapointsDrivers);
 				DeviceConnectivityServiceRegistry.getInstance().addService(
@@ -78,7 +77,6 @@ public final class Activator implements BundleActivator {
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		DeviceConnectivityServiceRegistry.getInstance().removeService(DatapointConnectivityServiceAdapter.class.getName());
-		System.out.println("unregistedes tagus");
 		
 		if(KNXGatewayIPDriver.getInstance().isConnected())
 			KNXGatewayIPDriver.getInstance().stop();

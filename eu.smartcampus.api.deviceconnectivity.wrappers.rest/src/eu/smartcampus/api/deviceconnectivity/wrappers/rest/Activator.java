@@ -24,7 +24,7 @@ public final class Activator implements BundleActivator {
 		 * some configuration file, GUI, or so.
 		 */
 
-		ServiceRegistryListener l = new ServiceRegistryListener() {
+		ServiceRegistryListener serviceListener = new ServiceRegistryListener() {
 
 			@Override
 			public void serviceRemoved(String serviceName) {
@@ -55,12 +55,12 @@ public final class Activator implements BundleActivator {
 					else
 						serverAttach(PATH_TEMPLATE, serviceImplementation);
 				} catch (Exception e) {
-					e.printStackTrace();
+					System.err.println(e.getMessage());
 				}
 			}
 		};
 
-		DeviceConnectivityServiceRegistry.getInstance().addServiceListener(l);
+		DeviceConnectivityServiceRegistry.getInstance().addServiceListener(serviceListener);
 
 	}
 
@@ -90,7 +90,7 @@ public final class Activator implements BundleActivator {
 	}
 
 	private void serverDettach() {
-		// Dettach device api application
+		// Detach device api application
 		component.getDefaultHost().detach(
 				DatapointConnectivityServiceRESTWrapper.getInstance());
 	}

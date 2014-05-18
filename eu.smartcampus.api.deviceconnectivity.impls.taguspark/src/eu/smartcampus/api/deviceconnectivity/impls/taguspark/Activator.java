@@ -15,6 +15,7 @@ import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
 import eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration.DatapointConnectivityServiceAdapter;
 import eu.smartcampus.api.deviceconnectivity.impls.knxip.DatapointConnectivityServiceKNXIPDriver;
 import eu.smartcampus.api.deviceconnectivity.impls.knxip.KNXGatewayIPDriver;
+import eu.smartcampus.api.deviceconnectivity.impls.lifx.DatapointConnectivityServiceLifxDriver;
 import eu.smartcampus.api.deviceconnectivity.impls.meterip.DatapointConnectivityServiceMeterIPDriver;
 import eu.smartcampus.api.deviceconnectivity.osgi.registries.DeviceConnectivityServiceRegistry;
 
@@ -50,6 +51,9 @@ public final class Activator implements BundleActivator {
 
 				Set<IDatapointConnectivityService> datapointsDrivers = new HashSet<IDatapointConnectivityService>();
 				datapointsDrivers.add(meterDriver);
+				
+				//TODO add lifx driver
+				datapointsDrivers.add(new DatapointConnectivityServiceLifxDriver());
 
 				try {
 					KNXGatewayIPDriver.getInstance().start();

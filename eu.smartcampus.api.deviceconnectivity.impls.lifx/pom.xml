@@ -17,7 +17,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>eu.smartcampus.api.deviceconnectivity.impls.taguspark</artifactId>
+	<artifactId>eu.smartcampus.api.deviceconnectivity.impls.lifx</artifactId>
 	<packaging>bundle</packaging>
 
 	<build>
@@ -31,8 +31,9 @@
 					<instructions>
 						<Bundle-SymbolicName>${project.artifactId};singleton:=true</Bundle-SymbolicName>
 						<Bundle-Version>${project.version}</Bundle-Version>
-						<Export-Package>eu.smartcampus.api.deviceconnectivity.impls.taguspark</Export-Package>
-						<Bundle-Activator>eu.smartcampus.api.deviceconnectivity.impls.taguspark.Activator</Bundle-Activator>
+						<Export-Package>eu.smartcampus.api.deviceconnectivity.impls.lifx</Export-Package>
+						<Bundle-Activator>eu.smartcampus.api.deviceconnectivity.impls.lifx.Activator</Bundle-Activator>
+						<!-- <Embed-Dependency>*;scope=compile;inline=true</Embed-Dependency> -->
 					</instructions>
 				</configuration>
 			</plugin>
@@ -43,7 +44,7 @@
 		</plugins>
 	</build>
 
-	<name>eu.smartcampus.api.deviceconnectivity.impls.meterip</name>
+	<name>eu.smartcampus.api.deviceconnectivity.impls.lifx</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -57,29 +58,24 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>eu.smartcampus.api</groupId>
-			<artifactId>eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.1</version>
 		</dependency>
 		<dependency>
-			<groupId>eu.smartcampus.api</groupId>
-			<artifactId>eu.smartcampus.api.deviceconnectivity.impls.knxip</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
 		</dependency>
 		<dependency>
-			<groupId>eu.smartcampus.api</groupId>
-			<artifactId>eu.smartcampus.api.deviceconnectivity.impls.meterip</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1</version>
 		</dependency>
 		<dependency>
-			<groupId>eu.smartcampus.api</groupId>
-			<artifactId>eu.smartcampus.api.deviceconnectivity.impls.lifx</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>1.7.1</version>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId>
+			<version>5.0.0.Alpha1</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -55,7 +55,7 @@ public class DatapointMetadata {
     /**
      * The alias of this data point.
      */
-    private String alias;
+    private String description;
 
     /**
      * The units of this data point.
@@ -341,7 +341,7 @@ public class DatapointMetadata {
         public DatapointMetadata build() {
             final DatapointMetadata result = new DatapointMetadata();
             result.accessType = accessType;
-            result.alias = alias;
+            result.description = alias;
             result.units = units;
             result.datatype = datatype;
             result.accessType = accessType;
@@ -372,7 +372,7 @@ public class DatapointMetadata {
      * @return the alias
      */
     public String getAlias() {
-        return alias;
+        return description;
     }
 
 

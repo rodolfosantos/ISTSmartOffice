@@ -9,7 +9,7 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -31,6 +31,8 @@ import eu.smartcampus.api.deviceconnectivity.DatapointMetadata;
 import eu.smartcampus.api.deviceconnectivity.DatapointReading;
 import eu.smartcampus.api.deviceconnectivity.DatapointValue;
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
+import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService.DatapointListener;
+import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService.ErrorType;
 
 /**
  * The Class DatapointConnectivityServiceMeterIPDriver
@@ -41,6 +43,10 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 	private String username;
 	private String password;
 	private Map<DatapointAddress, DatapointMetadata> datapoints;
+	/**
+	 * The listeners set
+	 */
+	private Set<DatapointListener> listeners;
 
 	/**
 	 * Instantiates a new datapoint connectivity service meter ip driver.
@@ -57,6 +63,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 		this.username = username;
 		this.password = password;
 		this.datapoints = datapoints;
+		this.listeners = new HashSet<DatapointListener>();
 		startPolling(10);
 	}
 
@@ -260,7 +267,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 
 	@Override
 	public void addDatapointListener(DatapointListener listener) {
-		return;// TODO never call this
+		listeners.add(listener);
 	}
 
 	@Override
@@ -283,10 +290,33 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 
 	@Override
 	public void removeDatapointListener(DatapointListener listener) {
-		return;// TODO never call this
+		listeners.remove(listener);
 
 	}
+	
+	@SuppressWarnings("unused")
+	private void notifyDatapointError(DatapointAddress address, ErrorType error) {
+		synchronized (listeners) {
+			Iterator<DatapointListener> it = listeners.iterator();
+			while (it.hasNext()) {
+				DatapointListener listener = it.next();
+				listener.onDatapointError(address, error);
+			}
+		}
+	}
 
+	@SuppressWarnings("unused")
+	private void notifyDatapointUpdate(DatapointAddress address,
+			DatapointReading[] values) {
+		synchronized (listeners) {
+			Iterator<DatapointListener> it = listeners.iterator();
+			while (it.hasNext()) {
+				DatapointListener listener = it.next();
+				listener.onDatapointUpdate(address, values);
+			}
+		}
+	}
+	
 	@Override
 	public int requestDatapointRead(DatapointAddress address,
 			ReadCallback readCallback) {

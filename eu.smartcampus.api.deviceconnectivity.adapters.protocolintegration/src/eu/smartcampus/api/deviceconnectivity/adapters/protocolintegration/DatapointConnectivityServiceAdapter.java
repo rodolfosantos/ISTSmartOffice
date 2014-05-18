@@ -19,14 +19,14 @@ public class DatapointConnectivityServiceAdapter implements
 		IDatapointConnectivityService {
 
 	/**
+	 * The datapoints drivers mapping.
+	 */
+	private Map<DatapointAddress, IDatapointConnectivityService> datapointsDriversMap;
+	
+	/**
 	 * The datapoints drivers.
 	 */
-	private Map<DatapointAddress, IDatapointConnectivityService> datapointsDrivers;
-
-	/**
-	 * The listeners.
-	 */
-	private Set<DatapointListener> listeners;
+	private Set<IDatapointConnectivityService> drivers;
 
 	/**
 	 * Instantiates a new datapoint connectivity service adapter.
@@ -37,8 +37,8 @@ public class DatapointConnectivityServiceAdapter implements
 	public DatapointConnectivityServiceAdapter(
 			Set<IDatapointConnectivityService> datapointsDrivers) {
 		super();
-		this.listeners = new HashSet<DatapointListener>();
-		this.datapointsDrivers = initDatapointsDrivers(datapointsDrivers);
+		this.drivers = datapointsDrivers;
+		this.datapointsDriversMap = initDatapointsDriversMap(datapointsDrivers);
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class DatapointConnectivityServiceAdapter implements
 	 * @param datapointsDrivers
 	 *            the datapoints drivers
 	 */
-	private Map<DatapointAddress, IDatapointConnectivityService> initDatapointsDrivers(
+	private Map<DatapointAddress, IDatapointConnectivityService> initDatapointsDriversMap(
 			Set<IDatapointConnectivityService> datapointsDrivers) {
 		Map<DatapointAddress, IDatapointConnectivityService> result = new HashMap<DatapointAddress, IDatapointConnectivityService>();
 
@@ -69,10 +69,9 @@ public class DatapointConnectivityServiceAdapter implements
 	}
 
 	public void addDatapointListener(DatapointListener listener) {
-		synchronized (listeners) {
-			listeners.add(listener);
+		for (IDatapointConnectivityService driver : drivers) {
+			driver.addDatapointListener(listener);
 		}
-
 	}
 
 	/**
@@ -83,37 +82,14 @@ public class DatapointConnectivityServiceAdapter implements
 	 * @return the driver
 	 */
 	private IDatapointConnectivityService getDriver(DatapointAddress address) {
-		return datapointsDrivers.get(address);
-	}
-
-	@SuppressWarnings("unused")
-	private void notifyDatapointError(DatapointAddress address, ErrorType error) {
-		synchronized (listeners) {
-			Iterator<DatapointListener> it = listeners.iterator();
-			while (it.hasNext()) {
-				DatapointListener listener = it.next();
-				listener.onDatapointError(address, error);
-			}
-		}
-	}
-
-	@SuppressWarnings("unused")
-	private void notifyDatapointUpdate(DatapointAddress address,
-			DatapointReading[] values) {
-		synchronized (listeners) {
-			Iterator<DatapointListener> it = listeners.iterator();
-			while (it.hasNext()) {
-				DatapointListener listener = it.next();
-				listener.onDatapointUpdate(address, values);
-			}
-		}
+		return datapointsDriversMap.get(address);
 	}
 
 	public DatapointAddress[] getAllDatapoints() {
-		DatapointAddress[] result = new DatapointAddress[datapointsDrivers
+		DatapointAddress[] result = new DatapointAddress[datapointsDriversMap
 				.size()];
 
-		Iterator<DatapointAddress> it = datapointsDrivers.keySet().iterator();
+		Iterator<DatapointAddress> it = datapointsDriversMap.keySet().iterator();
 		int i = 0;
 		while (it.hasNext()) {
 			DatapointAddress datapointAddress = (DatapointAddress) it.next();
@@ -132,7 +108,9 @@ public class DatapointConnectivityServiceAdapter implements
 	}
 
 	public void removeDatapointListener(DatapointListener listener) {
-		this.listeners.remove(listener);
+		for (IDatapointConnectivityService driver : drivers) {
+			driver.removeDatapointListener(listener);
+		}
 	}
 
 	public int requestDatapointRead(DatapointAddress address,

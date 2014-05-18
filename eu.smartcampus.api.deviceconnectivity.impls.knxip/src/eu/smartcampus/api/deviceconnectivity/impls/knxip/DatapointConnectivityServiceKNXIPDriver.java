@@ -1,7 +1,9 @@
 package eu.smartcampus.api.deviceconnectivity.impls.knxip;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import tuwien.auto.calimero.exception.KNXException;
 import eu.smartcampus.api.deviceconnectivity.DatapointAddress;
@@ -23,6 +25,11 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 	private KNXGatewayIPDriver driver;
 
 	/**
+	 * The listeners set
+	 */
+	private Set<DatapointListener> listeners;
+
+	/**
 	 * The datapoints.
 	 */
 	private Map<DatapointAddress, DatapointMetadata> datapoints;
@@ -40,11 +47,12 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 		super();
 		this.driver = KNXGatewayIPDriver.getInstance();
 		this.datapoints = datapoints;
+		this.listeners = new HashSet<DatapointListener>();
 	}
 
 	@Override
 	public void addDatapointListener(DatapointListener listener) {
-		return;// TODO never call this
+		listeners.add(listener);
 	}
 
 	@Override
@@ -62,9 +70,33 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 	@Override
 	public void removeDatapointListener(DatapointListener listener) {
-		return;// TODO never call this
+		listeners.remove(listener);
 	}
 
+	
+	@SuppressWarnings("unused")
+	private void notifyDatapointError(DatapointAddress address, ErrorType error) {
+		synchronized (listeners) {
+			Iterator<DatapointListener> it = listeners.iterator();
+			while (it.hasNext()) {
+				DatapointListener listener = it.next();
+				listener.onDatapointError(address, error);
+			}
+		}
+	}
+
+	@SuppressWarnings("unused")
+	private void notifyDatapointUpdate(DatapointAddress address,
+			DatapointReading[] values) {
+		synchronized (listeners) {
+			Iterator<DatapointListener> it = listeners.iterator();
+			while (it.hasNext()) {
+				DatapointListener listener = it.next();
+				listener.onDatapointUpdate(address, values);
+			}
+		}
+	}
+	
 	@Override
 	public DatapointMetadata getDatapointMetadata(DatapointAddress address) {
 		return this.datapoints.get(address);
@@ -75,12 +107,12 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			ReadCallback readCallback) {
 		DatapointMetadata m = getDatapointMetadata(address);
 		String addr = address.getAddress();
-		
-		if(m.getAccessType() == AccessType.WRITE_ONLY){
-			readCallback.onReadAborted(address, ErrorType.UNSUPORTED_DATAPOINT_OPERATION, 0);
+
+		if (m.getAccessType() == AccessType.WRITE_ONLY) {
+			readCallback.onReadAborted(address,
+					ErrorType.UNSUPORTED_DATAPOINT_OPERATION, 0);
 			return 0;
 		}
-			
 
 		switch (m.getDatatype()) {
 		case INTEGER:
@@ -164,9 +196,10 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			DatapointValue[] values, WriteCallback writeCallback) {
 		DatapointMetadata m = getDatapointMetadata(address);
 		String addr = address.getAddress();
-		
-		if(m.getAccessType() == AccessType.READ_ONLY){
-			writeCallback.onWriteAborted(address, ErrorType.UNSUPORTED_DATAPOINT_OPERATION, 0);
+
+		if (m.getAccessType() == AccessType.READ_ONLY) {
+			writeCallback.onWriteAborted(address,
+					ErrorType.UNSUPORTED_DATAPOINT_OPERATION, 0);
 			return 0;
 		}
 

@@ -132,7 +132,7 @@ public class DatapointConnectivityServiceResources {
 						method: "GET",
 						endpoint: "/deviceconnectivityapi/datapoints/{address}/metadata",
 						params: ["address - The desired datapoints address"],
-						json_syntax: "{<br>&nbsp;&nbsp;\"alias\" : alias<br>&nbsp;&nbsp;\"units\" : units<br>&nbsp;&nbsp;\"datatype\" : datatype<br>&nbsp;&nbsp;\"accesstype\" : accesstype<br>&nbsp;&nbsp;\"precision\" : precision<br>&nbsp;&nbsp;\"scale\" : scale<br>&nbsp;&nbsp;\"smallestsamplinginterval\" : smallestsamplinginterval<br>&nbsp;&nbsp;\"currentsamplinginterval\" : currentsamplinginterval<br>&nbsp;&nbsp;\"changeofvalue\" : changeofvalue<br>&nbsp;&nbsp;\"hysteresis\" : hysteresis<br>&nbsp;&nbsp;\"displaymax\" : displaymax<br>&nbsp;&nbsp;\"displaymin\" : displaymin<br>&nbsp;&nbsp;\"readingmax\" : readingmax<br>&nbsp;&nbsp;\"readingmin\" : readingmin<br>&nbsp;&nbsp;\"readcachesize\" : readcachesize<br>}",
+						json_syntax: "{<br>&nbsp;&nbsp;\"description\" : description<br>&nbsp;&nbsp;\"units\" : units<br>&nbsp;&nbsp;\"datatype\" : datatype<br>&nbsp;&nbsp;\"accesstype\" : accesstype<br>&nbsp;&nbsp;\"precision\" : precision<br>&nbsp;&nbsp;\"scale\" : scale<br>&nbsp;&nbsp;\"smallestsamplinginterval\" : smallestsamplinginterval<br>&nbsp;&nbsp;\"currentsamplinginterval\" : currentsamplinginterval<br>&nbsp;&nbsp;\"changeofvalue\" : changeofvalue<br>&nbsp;&nbsp;\"hysteresis\" : hysteresis<br>&nbsp;&nbsp;\"displaymax\" : displaymax<br>&nbsp;&nbsp;\"displaymin\" : displaymin<br>&nbsp;&nbsp;\"readingmax\" : readingmax<br>&nbsp;&nbsp;\"readingmin\" : readingmin<br>&nbsp;&nbsp;\"readcachesize\" : readcachesize<br>}",
 						description: "Returns the metadata of a given datapoint.",
 						});
         CreateCustomersTable();
@@ -170,7 +170,7 @@ public class DatapointConnectivityServiceResources {
             JSONObject result = null;
             try {
                 result = new JSONObject();
-                result.put("alias", metadata.getAlias());
+                result.put("description", metadata.getDescription());
                 result.put("units", metadata.getUnits());
                 result.put("datatype", metadata.getDatatype());
                 result.put("accesstype", metadata.getAccessType());

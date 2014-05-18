@@ -53,9 +53,9 @@ public class DatapointMetadata {
     };
     
     /**
-     * The alias of this data point.
+     * The description of this data point.
      */
-    private String alias;
+    private String description;
 
     /**
      * The units of this data point.
@@ -158,7 +158,7 @@ public class DatapointMetadata {
      * Builder for a {@link DatapointMetadata} object.
      */
     public static class MetadataBuilder {
-    	private String alias;
+    	private String description;
         private String units;
         private Datatype datatype;
         private AccessType accessType;
@@ -175,12 +175,12 @@ public class DatapointMetadata {
         private int readCacheSize;
 
         /**
-         * Sets the alias of the datapoint.
+         * Sets the description of the datapoint.
          *
-         * @param alias the new alias
+         * @param description the new description
          */
-        public void setAlias(String alias) {
-            this.alias = alias;
+        public void setDescription(String description) {
+            this.description = description;
         }
         
         /**
@@ -341,7 +341,7 @@ public class DatapointMetadata {
         public DatapointMetadata build() {
             final DatapointMetadata result = new DatapointMetadata();
             result.accessType = accessType;
-            result.alias = alias;
+            result.description = description;
             result.units = units;
             result.datatype = datatype;
             result.accessType = accessType;
@@ -367,12 +367,12 @@ public class DatapointMetadata {
     }
     
     /**
-     * Gets the alias.
+     * Gets the description.
      *
-     * @return the alias
+     * @return the description
      */
-    public String getAlias() {
-        return alias;
+    public String getDescription() {
+        return description;
     }
 
 

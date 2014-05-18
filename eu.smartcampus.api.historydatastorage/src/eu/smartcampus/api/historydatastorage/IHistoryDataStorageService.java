@@ -8,9 +8,9 @@ public interface IHistoryDataStorageService {
 
 	void addValue(String address, long timestamp, String value);
 
-	String getLastValue(String address);
+	HistoryValue getLastValue(String address);
 
-	String[] getValuesTimeWindow(String address, long startTimestamp,
+	HistoryValue[] getValuesTimeWindow(String address, long startTimestamp,
 			long finishTimestamp);
 
 }

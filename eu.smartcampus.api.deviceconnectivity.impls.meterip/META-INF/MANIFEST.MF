@@ -4,4 +4,5 @@ Bundle-Name: eu.smartcampus.api.implementations.meterip
 Bundle-SymbolicName: eu.smartcampus.api.implementations.meterip
 Bundle-Version: 1.0.0.alpha
 Export-Package: eu.smartcampus.api.deviceconnectivity.impls.meterip
-Import-Package: eu.smartcampus.api.deviceconnectivity;version="0.0.1.SNAPSHOT"
+Import-Package: eu.smartcampus.api.deviceconnectivity;version="0.0.1.SNAPSHOT",
+ eu.smartcampus.api.osgi.registries

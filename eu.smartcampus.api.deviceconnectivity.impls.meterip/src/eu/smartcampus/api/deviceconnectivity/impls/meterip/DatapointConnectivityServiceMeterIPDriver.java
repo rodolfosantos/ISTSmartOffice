@@ -8,11 +8,14 @@ import java.net.URLConnection;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.net.ssl.HostnameVerifier;
@@ -31,8 +34,10 @@ import eu.smartcampus.api.deviceconnectivity.DatapointMetadata;
 import eu.smartcampus.api.deviceconnectivity.DatapointReading;
 import eu.smartcampus.api.deviceconnectivity.DatapointValue;
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
-import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService.DatapointListener;
-import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService.ErrorType;
+import eu.smartcampus.api.historydatastorage.HistoryDataStorageServiceImpl;
+import eu.smartcampus.api.historydatastorage.HistoryValue;
+import eu.smartcampus.api.historydatastorage.IHistoryDataStorageService;
+import eu.smartcampus.api.historydatastorage.osgi.registries.HistoryDataStorageServiceRegistry;
 
 /**
  * The Class DatapointConnectivityServiceMeterIPDriver
@@ -43,6 +48,8 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 	private String username;
 	private String password;
 	private Map<DatapointAddress, DatapointMetadata> datapoints;
+	private IHistoryDataStorageService storageService;
+
 	/**
 	 * The listeners set
 	 */
@@ -64,51 +71,46 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 		this.password = password;
 		this.datapoints = datapoints;
 		this.listeners = new HashSet<DatapointListener>();
-		startPolling(10);
+		this.storageService = HistoryDataStorageServiceRegistry.getInstance()
+				.getService(HistoryDataStorageServiceImpl.class.getName());
+		startPollingJob();
 	}
 
-	private void startPolling(final long seconds) {
+	private void startPollingJob() {
+		Timer timer = new Timer();
+		System.out.println(datapoints.size());
+		Iterator<Entry<DatapointAddress, DatapointMetadata>> elems = datapoints
+				.entrySet().iterator();
+		while (elems.hasNext()) {
+			Map.Entry<DatapointAddress, DatapointMetadata> entry = (Map.Entry<DatapointAddress, DatapointMetadata>) elems
+					.next();
+			final DatapointAddress addr = entry.getKey();
+			long interval = entry.getValue().getCurrentSamplingInterval();
+			if (interval != 0) {
 
-		new Thread(new TimerTask() {
+				timer.scheduleAtFixedRate(new TimerTask() {
 
-			@Override
-			public void run() {
-				while (true) {
-					Iterator<DatapointAddress> it = datapoints.keySet()
-							.iterator();
-					while (it.hasNext()) {
-						DatapointAddress datapointAddress = it.next();
+					@Override
+					public void run() {
 
 						try {
-							MeterMeasure value = getNewMeasure(datapointAddress
+							MeterMeasure value = getNewMeasure(addr
 									.getAddress());
 							DatapointReading reading = new DatapointReading(
 									new DatapointValue(value.getTotalPower()
 											+ ""));
 							// store reading
-							HistoryDataStorage.getInstance()
-									.addDatapointReading(datapointAddress,
-											reading);
-							Thread.sleep(1000);
+							storageService.addValue(addr.getAddress(), reading
+									.getTimestamp(), reading.getValue()
+									.toString());
 						} catch (MalformedURLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
 						}
 
 					}
-					try {
-						Thread.sleep(seconds * 1000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-
+				}, 1000, interval);
 			}
-		}).start();
+		}
+
 	}
 
 	/**
@@ -293,7 +295,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 		listeners.remove(listener);
 
 	}
-	
+
 	@SuppressWarnings("unused")
 	private void notifyDatapointError(DatapointAddress address, ErrorType error) {
 		synchronized (listeners) {
@@ -316,18 +318,22 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 			}
 		}
 	}
-	
+
 	@Override
 	public int requestDatapointRead(DatapointAddress address,
 			ReadCallback readCallback) {
 
-		DatapointReading lastReading = HistoryDataStorage.getInstance()
-				.getLastReading(address);
+		HistoryValue lastReading = storageService.getLastValue(address
+				.getAddress());
+
+		DatapointMetadata m = datapoints.get(address);
 
 		if (lastReading != null) {
-			if (new Date().getTime() - lastReading.getTimestamp() < 10000) {
+			if (new Date().getTime() - lastReading.getTimestamp() < m.getCurrentSamplingInterval()) {
 				readCallback.onReadCompleted(address,
-						new DatapointReading[] { lastReading }, 0);
+						new DatapointReading[] { new DatapointReading(
+								new DatapointValue(lastReading.getValue())) },
+						0);
 				return 0;
 			}
 		}
@@ -337,8 +343,8 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 			DatapointReading reading = new DatapointReading(new DatapointValue(
 					value.getTotalPower() + ""));
 			// store reading
-			HistoryDataStorage.getInstance().addDatapointReading(address,
-					reading);
+			storageService.addValue(address.getAddress(), value.ts,
+					value.getTotalPower() + "");
 
 			readCallback.onReadCompleted(address,
 					new DatapointReading[] { reading }, 0);
@@ -355,11 +361,17 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 	public int requestDatapointWindowRead(DatapointAddress address,
 			long startTimestamp, long finishTimestamp, ReadCallback readCallback) {
 
-		DatapointReading[] readings = HistoryDataStorage.getInstance()
-				.getTimeWindowReading(address, startTimestamp, finishTimestamp); // history
-																					// data
+		HistoryValue[] readings = storageService.getValuesTimeWindow(
+				address.getAddress(), startTimestamp, finishTimestamp);
 
-		readCallback.onReadCompleted(address, readings, 0);
+		DatapointReading[] result = new DatapointReading[readings.length];
+
+		for (int i = 0; i < result.length; i++) {
+			result[i] = new DatapointReading(new DatapointValue(
+					readings[i].getValue()), readings[i].getTimestamp());
+		}
+
+		readCallback.onReadCompleted(address, result, 0);
 
 		return 0;
 	}
@@ -418,11 +430,11 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 			return phase1.getVoltage();
 		}
 
-		public double getCurrentPhase1() {
+		public float getCurrentPhase1() {
 			return phase1.getCurrent();
 		}
 
-		public double getPowerFactorPhase1() {
+		public float getPowerFactorPhase1() {
 			return phase1.getPowerFactor();
 		}
 
@@ -430,11 +442,11 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 			return phase2.getVoltage();
 		}
 
-		public double getCurrentPhase2() {
+		public float getCurrentPhase2() {
 			return phase2.getCurrent();
 		}
 
-		public double getPowerFactorPhase2() {
+		public float getPowerFactorPhase2() {
 			return phase2.getPowerFactor();
 		}
 
@@ -442,22 +454,27 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 			return phase3.getVoltage();
 		}
 
-		public double getCurrentPhase3() {
+		public float getCurrentPhase3() {
 			return phase3.getCurrent();
 		}
 
-		public double getPowerFactorPhase3() {
+		public float getPowerFactorPhase3() {
 			return phase3.getPowerFactor();
 		}
 
-		public double getTotalPower() {
-			double totalPower1 = getCurrentPhase1() * getVoltagePhase1()
+		public float getTotalPower() {
+			float totalPower1 = getCurrentPhase1() * getVoltagePhase1()
 					* getPowerFactorPhase1();
-			double totalPower2 = getCurrentPhase2() * getVoltagePhase2()
+			float totalPower2 = getCurrentPhase2() * getVoltagePhase2()
 					* getPowerFactorPhase2();
-			double totalPower3 = getCurrentPhase3() * getVoltagePhase3()
+			float totalPower3 = getCurrentPhase3() * getVoltagePhase3()
 					* getPowerFactorPhase3();
-			return totalPower1 + totalPower2 + totalPower3;
+			float result = totalPower1 + totalPower2 + totalPower3;
+			
+			float val = result*100;
+			val = Math.round(val);
+			val = val /100;
+			return val;			
 		}
 
 		@Override
@@ -472,36 +489,20 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 			JSONObject phases = (JSONObject) obj.get((String) "phases");
 			JSONObject specificPhase = (JSONObject) phases.get(phaseNumber);
 
-			Double current;
-			@SuppressWarnings("unused")
-			Double voltage;
-
-			try {
-				current = (Double) specificPhase.get("current");
-			} catch (ClassCastException e) {
-				current = 0.0;
-			}
-
-			if (specificPhase.get("voltage").getClass().equals(Long.class)) {
-				voltage = (Double) new Double(
-						(Long) specificPhase.get("voltage"));
-			}
-
-			if (specificPhase.get("voltage").getClass().equals(Double.class)) {
-				voltage = (Double) specificPhase.get("voltage");
-			}
-
-			Phase result = new Phase((Long) specificPhase.get("voltage"),
-					current, (Double) specificPhase.get("powerfactor"));
+			Float current = Float.parseFloat(specificPhase.get("current").toString());
+			int voltage = Integer.parseInt(specificPhase.get("voltage").toString());
+			Float powerfactor = Float.parseFloat(specificPhase.get("powerfactor").toString());
+			
+			Phase result = new Phase(voltage, current, powerfactor);
 			return result;
 		}
 
 		private class Phase {
-			private long voltage;
-			private double current;
-			private double powerFactor;
+			private int voltage;
+			private float current;
+			private float powerFactor;
 
-			public Phase(long v, double c, double pf) {
+			public Phase(int v, float c, float pf) {
 				voltage = v;
 				current = c;
 				powerFactor = pf;
@@ -511,11 +512,11 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 				return voltage;
 			}
 
-			public double getCurrent() {
+			public float getCurrent() {
 				return current;
 			}
 
-			public double getPowerFactor() {
+			public float getPowerFactor() {
 				return powerFactor;
 			}
 

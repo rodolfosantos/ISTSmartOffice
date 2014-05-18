@@ -227,6 +227,7 @@ public class ServiceSettings {
 		MetadataBuilder meterMetadata = new DatapointMetadata.MetadataBuilder();
 		meterMetadata.setAccessType(AccessType.READ_ONLY);
 		meterMetadata.setDatatype(Datatype.STRING);
+		meterMetadata.setCurrentSamplingInterval(15000);
 
 		Map<DatapointAddress, DatapointMetadata> meterDatapoints = new HashMap<DatapointAddress, DatapointMetadata>();
 		DatapointAddress a1 = new DatapointAddress("172.20.70.229");
@@ -271,7 +272,6 @@ public class ServiceSettings {
 	public static void toJsonFile(String filename, Object object) {
 		Gson gson = new Gson();
 		String json = gson.toJson(object);
-
 		try {
 			FileWriter writer = new FileWriter(filename);
 			writer.write(json);

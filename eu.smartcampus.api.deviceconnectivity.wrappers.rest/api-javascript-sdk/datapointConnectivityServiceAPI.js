@@ -15,8 +15,11 @@ DatapointConnectivityService.prototype.getAllDatapoints = function(callback){
         type: "GET",
         url: "http://" + this.remoteAddress +":"+this.remotePort+ "/deviceconnectivityapi/datapoints",
         dataType: "json",
-        success: callback,
-        failure: callback
+        success : callback;
+        },
+        error : function(msg) {
+            alert("Falha na comunicação, verifica a tua ligação por favor");
+        }
     });
 }
 

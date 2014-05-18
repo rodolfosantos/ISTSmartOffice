@@ -16,6 +16,9 @@ import eu.smartcampus.api.deviceconnectivity.impls.knxip.DatapointConnectivitySe
 import eu.smartcampus.api.deviceconnectivity.impls.knxip.KNXGatewayIPDriver;
 import eu.smartcampus.api.deviceconnectivity.impls.meterip.DatapointConnectivityServiceMeterIPDriver;
 import eu.smartcampus.api.deviceconnectivity.osgi.registries.DeviceConnectivityServiceRegistry;
+import eu.smartcampus.api.historydatastorage.HistoryDataStorageServiceImpl;
+import eu.smartcampus.api.historydatastorage.IHistoryDataStorageService;
+import eu.smartcampus.api.historydatastorage.osgi.registries.HistoryDataStorageServiceRegistry;
 
 public final class Activator implements BundleActivator {
 
@@ -29,6 +32,9 @@ public final class Activator implements BundleActivator {
 		
 		final String metersFilename = "Settings_tagusparkMeters.json";
 		final String knxFilename = "Settings_tagusparkKNX.json";
+		
+		IHistoryDataStorageService service = new HistoryDataStorageServiceImpl();
+		HistoryDataStorageServiceRegistry.getInstance().addService(HistoryDataStorageServiceImpl.class.getName(), service);
 
 		Runnable activatorJob = new Runnable() {
 			
@@ -39,6 +45,11 @@ public final class Activator implements BundleActivator {
 						.loadDatapointSettings(knxFilename);
 				Map<DatapointAddress, DatapointMetadata> meterDatapoints = ServiceSettings
 						.loadDatapointSettings(metersFilename);
+
+				if(knxDatapoints == null)
+					knxDatapoints = ServiceSettings.setDefaultKNXDatapoints(knxFilename);
+				if(meterDatapoints == null)
+					meterDatapoints = ServiceSettings.setDefaultMetersDatapoints(metersFilename);
 
 				
 				IDatapointConnectivityService knxDriver = new DatapointConnectivityServiceKNXIPDriver(

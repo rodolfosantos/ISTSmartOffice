@@ -43,7 +43,7 @@
 		</plugins>
 	</build>
 
-	<name>eu.smartcampus.api.deviceconnectivity.impls.meterip</name>
+	<name>eu.smartcampus.api.deviceconnectivity.impls.taguspark</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>

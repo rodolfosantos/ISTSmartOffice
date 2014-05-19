@@ -65,6 +65,7 @@ public class ServiceSettings {
 		Map<DatapointAddress, DatapointMetadata> knxDatapoints = new HashMap<DatapointAddress, DatapointMetadata>();
 
 		MetadataBuilder knxMetadata1 = new DatapointMetadata.MetadataBuilder();
+		knxMetadata1.setCurrentSamplingInterval(5000);
 		knxMetadata1.setDescription("EnergyLab Temperature (door)");
 		knxMetadata1.setAccessType(AccessType.READ_ONLY);
 		knxMetadata1.setDatatype(Datatype.INTEGER);
@@ -87,6 +88,7 @@ public class ServiceSettings {
 		DatapointAddress d3 = new DatapointAddress("0-1-0");// blackboard lamps write (0-100)
 
 		MetadataBuilder knxMetadata4 = new DatapointMetadata.MetadataBuilder();
+		knxMetadata4.setCurrentSamplingInterval(10000);
 		knxMetadata4.setDescription("EnergyLab BlackboardLamps (read)");
 		knxMetadata4.setAccessType(AccessType.READ_ONLY);
 		knxMetadata4.setDatatype(Datatype.INTEGER);
@@ -105,6 +107,7 @@ public class ServiceSettings {
 		DatapointAddress d5 = new DatapointAddress("0-2-12");// energylab blinds write (0-100)
 
 		MetadataBuilder knxMetadata6 = new DatapointMetadata.MetadataBuilder();
+		knxMetadata6.setCurrentSamplingInterval(10000);
 		knxMetadata6.setDescription("EnergyLab Blinds 1 (read)");
 		knxMetadata6.setAccessType(AccessType.READ_ONLY);
 		knxMetadata6.setDatatype(Datatype.INTEGER);
@@ -152,6 +155,7 @@ public class ServiceSettings {
 		DatapointAddress d10 = new DatapointAddress("0-2-9");// energylab blinds write (0-100)
 		
 		MetadataBuilder knxMetadata11 = new DatapointMetadata.MetadataBuilder();
+		knxMetadata11.setCurrentSamplingInterval(10000);
 		knxMetadata11.setDescription("EnergyLab Blinds 2 (read)");
 		knxMetadata11.setAccessType(AccessType.READ_ONLY);
 		knxMetadata11.setDatatype(Datatype.INTEGER);
@@ -161,6 +165,7 @@ public class ServiceSettings {
 		DatapointAddress d11 = new DatapointAddress("0-2-13");// energylab blinds read (0-100)
 		
 		MetadataBuilder knxMetadata12 = new DatapointMetadata.MetadataBuilder();
+		knxMetadata12.setCurrentSamplingInterval(10000);
 		knxMetadata12.setDescription("EnergyLab Blinds 3 (read)");
 		knxMetadata12.setAccessType(AccessType.READ_ONLY);
 		knxMetadata12.setDatatype(Datatype.INTEGER);
@@ -170,6 +175,7 @@ public class ServiceSettings {
 		DatapointAddress d12 = new DatapointAddress("0-2-14");// energylab blinds read (0-100)
 		
 		MetadataBuilder knxMetadata13 = new DatapointMetadata.MetadataBuilder();
+		knxMetadata13.setCurrentSamplingInterval(10000);
 		knxMetadata13.setDescription("EnergyLab Lux");
 		knxMetadata13.setAccessType(AccessType.READ_ONLY);
 		knxMetadata13.setDatatype(Datatype.INTEGER);
@@ -177,6 +183,7 @@ public class ServiceSettings {
 		DatapointAddress d13 = new DatapointAddress("0-4-4");// energy lab temperature
 		
 		MetadataBuilder knxMetadata14 = new DatapointMetadata.MetadataBuilder();
+		knxMetadata14.setCurrentSamplingInterval(10000);
 		knxMetadata14.setDescription("EnergyLab ppm");
 		knxMetadata14.setAccessType(AccessType.READ_ONLY);
 		knxMetadata14.setDatatype(Datatype.INTEGER);
@@ -184,6 +191,7 @@ public class ServiceSettings {
 		DatapointAddress d14 = new DatapointAddress("0-4-0");// energy lab ppm
 		
 		MetadataBuilder knxMetadata15 = new DatapointMetadata.MetadataBuilder();
+		knxMetadata15.setCurrentSamplingInterval(10000);
 		knxMetadata15.setDescription("EnergyLab temperature");
 		knxMetadata15.setAccessType(AccessType.READ_ONLY);
 		knxMetadata15.setDatatype(Datatype.INTEGER);

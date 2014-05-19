@@ -62,5 +62,10 @@
 			<artifactId>calimero-core</artifactId>
 			<version>2.2.0</version>
 		</dependency>
+		<dependency>
+			<groupId>eu.smartcampus.api</groupId>
+			<artifactId>eu.smartcampus.api.historydatastorage</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

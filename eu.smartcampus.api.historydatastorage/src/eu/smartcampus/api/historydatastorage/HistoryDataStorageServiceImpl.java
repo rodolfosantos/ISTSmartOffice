@@ -8,13 +8,37 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.reflect.TypeToken;
+
 public class HistoryDataStorageServiceImpl implements
 		IHistoryDataStorageService {
+
+	final String DB_FILE = "HistoryDataDB.json";
 
 	private Map<String, List<HistoryValue>> readingsHistory;
 
 	public HistoryDataStorageServiceImpl() {
 		readingsHistory = new HashMap<String, List<HistoryValue>>();
+		loadFromDisk();
+		if (readingsHistory == null)
+			readingsHistory = new HashMap<String, List<HistoryValue>>();
+	}
+
+	private void saveOnDisk() {
+		synchronized (readingsHistory) {
+			DataStorage.toJsonFile(DB_FILE, readingsHistory);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private void loadFromDisk() {
+		synchronized (readingsHistory) {
+			readingsHistory = (Map<String, List<HistoryValue>>) DataStorage
+					.fromJsonFile(DB_FILE,
+							new TypeToken<Map<String, List<HistoryValue>>>() {
+							}.getType());
+		}
+
 	}
 
 	@Override
@@ -30,6 +54,8 @@ public class HistoryDataStorageServiceImpl implements
 			}
 			readingsHistory.get(address)
 					.add(new HistoryValue(timestamp, value));
+
+			saveOnDisk();
 		}
 
 	}

@@ -26,7 +26,6 @@ find . -iname *.jar -exec cp {} felix-framework-4.4.0/bundle/ \;
 cd felix-framework-4.4.0
 
 #run apache felix
-java -Dgosh.args=--nointeractive -jar bin/felix.jar > log.txt
+java -Dgosh.args=--nointeractive -jar bin/felix.jar > log.txt &
 
-#run a http server for log access
-python -m SimpleHTTPServer &
+

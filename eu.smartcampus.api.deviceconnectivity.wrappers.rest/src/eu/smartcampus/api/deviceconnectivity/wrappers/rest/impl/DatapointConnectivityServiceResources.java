@@ -7,6 +7,7 @@ import org.restlet.data.Form;
 import org.restlet.data.Status;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Get;
+import org.restlet.resource.Options;
 import org.restlet.resource.Put;
 import org.restlet.resource.ServerResource;
 
@@ -288,6 +289,69 @@ public class DatapointConnectivityServiceResources {
         // "Content-Type: application/json" -d '{"values" : [50]}'
         @Put
         public JSONObject doPost(JsonRepresentation entity) {
+            JSONObject result = new JSONObject();
+            
+            Form responseHeaders = (Form) getResponse().getAttributes().get("org.restlet.http.headers"); 
+            if (responseHeaders == null) { 
+                responseHeaders = new Form(); 
+                getResponse().getAttributes().put("org.restlet.http.headers", responseHeaders); 
+            } 
+            responseHeaders.add("Access-Control-Allow-Origin", "*"); 
+
+            try {
+                JSONObject requestbody = entity.getJsonObject();
+                JSONArray valuesRESTParam = requestbody.getJSONArray("values");
+                String addrRESTParam = getRequest().getAttributes().get("addr").toString();
+                DatapointAddress addr = new DatapointAddress(addrRESTParam);
+
+                DatapointValue[] values = new DatapointValue[valuesRESTParam.length()];
+                // -----
+                try {
+                    DatapointMetadata m = DatapointConnectivityServiceRESTWrapper.getInstance()
+                            .getServiceImplementation().getDatapointMetadata(addr);
+                    switch (m.getDatatype()) {
+                        case INTEGER:
+                            for (int i = 0; i < values.length; i++) {
+                                values[i] = new DatapointValue(valuesRESTParam.getInt(i));
+                            }
+                            break;
+                        case STRING:
+                            for (int i = 0; i < values.length; i++) {
+                                values[i] = new DatapointValue(valuesRESTParam.getString(i));
+                            }
+                            break;
+                        case BOOLEAN:
+                            for (int i = 0; i < values.length; i++) {
+                                values[i] = new DatapointValue(valuesRESTParam.getBoolean(i));
+                            }
+                            break;
+                    }
+                } catch (OperationFailedException e) {
+                    return provideErrorResponse(e.getErrorType(), "An error occurred",
+                            "Try again later.");
+                }
+
+                // -----
+                WriteCallback writeCallback = new WriteCallback();
+                DatapointConnectivityServiceRESTWrapper.getInstance().getServiceImplementation()
+                        .requestDatapointWrite(addr, values, writeCallback);
+                boolean success = writeCallback.isWritten();
+                if (!success) {
+                    return provideErrorResponse(writeCallback.getErrorReason(),
+                            "An error occurred", "Try again later.");
+                }
+                result.put("operationstatus", "success");
+                return result;
+            } catch (JSONException e1) {
+            	e1.printStackTrace();
+                getResponse().setStatus(Status.SERVER_ERROR_INTERNAL);
+                return result;
+
+            }
+        }
+        
+        @Options
+        public JSONObject doPost2(JsonRepresentation entity) {
             JSONObject result = new JSONObject();
             
             Form responseHeaders = (Form) getResponse().getAttributes().get("org.restlet.http.headers"); 

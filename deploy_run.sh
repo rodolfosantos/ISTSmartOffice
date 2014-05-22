@@ -1,13 +1,13 @@
 #!/bin/bash
 
 #remove previews folder
-sudo rm -r smartcampusapi
+#sudo rm -r smartcampusapi
 
 #download source code
 git clone https://github.com/it4energy/smartcampusapi.git
 cd smartcampusapi
 
-git checkout origin/temporary
+git checkout origin/master
 
 #download apache felix
 wget http://mirrors.fe.up.pt/pub/apache//felix/org.apache.felix.main.distribution-4.4.0.zip

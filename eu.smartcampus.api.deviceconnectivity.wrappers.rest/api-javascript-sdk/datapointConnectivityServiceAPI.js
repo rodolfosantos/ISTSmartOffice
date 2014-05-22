@@ -15,8 +15,7 @@ DatapointConnectivityService.prototype.getAllDatapoints = function(callback){
         type: "GET",
         url: "http://" + this.remoteAddress +":"+this.remotePort+ "/deviceconnectivityapi/datapoints",
         dataType: "json",
-        success : callback;
-        },
+        success : callback,
         error : function(msg) {
             alert("Falha na comunicação, verifica a tua ligação por favor");
         }
@@ -57,7 +56,7 @@ DatapointConnectivityService.prototype.requestDatapointWindowRead = function(add
 DatapointConnectivityService.prototype.requestDatapointWrite = function(address, values, callback){
     $.ajax({
         type: "PUT",
-        data: '{ values: [true]}',
+        data: JSON.stringify(values),
         url: "http://" + this.remoteAddress +":"+this.remotePort+ "/deviceconnectivityapi/datapoints/"+ address,
         dataType: "application/json",
         success: callback,

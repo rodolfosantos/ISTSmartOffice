@@ -3,6 +3,7 @@ package eu.smartcampus.api.deviceconnectivity.wrappers.rest.impl;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.restlet.data.Form;
 import org.restlet.data.Status;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Get;
@@ -288,6 +289,13 @@ public class DatapointConnectivityServiceResources {
         @Put
         public JSONObject doPost(JsonRepresentation entity) {
             JSONObject result = new JSONObject();
+            
+            Form responseHeaders = (Form) getResponse().getAttributes().get("org.restlet.http.headers"); 
+            if (responseHeaders == null) { 
+                responseHeaders = new Form(); 
+                getResponse().getAttributes().put("org.restlet.http.headers", responseHeaders); 
+            } 
+            responseHeaders.add("Access-Control-Allow-Origin", "*"); 
 
             try {
                 JSONObject requestbody = entity.getJsonObject();

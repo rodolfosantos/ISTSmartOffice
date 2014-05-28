@@ -3,6 +3,10 @@ package eu.smartcampus.api.historydatastorage.osgi.trackers;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
+import eu.smartcampus.api.historydatastorage.HistoryDataStorageServiceImpl;
+import eu.smartcampus.api.historydatastorage.IHistoryDataStorageService;
+import eu.smartcampus.api.historydatastorage.osgi.registries.HistoryDataStorageServiceRegistry;
+
 /**
  * The Class Activator.
  */
@@ -23,6 +27,9 @@ public final class Activator implements BundleActivator {
 		if (tracker == null)
 			tracker = new HistoryDataStorageServicesTracker(context);
 		tracker.open();
+		
+		IHistoryDataStorageService service = new HistoryDataStorageServiceImpl();
+		HistoryDataStorageServiceRegistry.getInstance().addService(HistoryDataStorageServiceImpl.class.getName(), service);
 	}
 
 	/*

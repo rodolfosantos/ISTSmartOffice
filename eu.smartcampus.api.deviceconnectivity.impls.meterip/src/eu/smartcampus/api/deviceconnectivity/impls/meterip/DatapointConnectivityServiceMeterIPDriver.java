@@ -38,6 +38,7 @@ import eu.smartcampus.api.historydatastorage.HistoryDataStorageServiceImpl;
 import eu.smartcampus.api.historydatastorage.HistoryValue;
 import eu.smartcampus.api.historydatastorage.IHistoryDataStorageService;
 import eu.smartcampus.api.historydatastorage.osgi.registries.HistoryDataStorageServiceRegistry;
+import eu.smartcampus.api.osgi.registries.IServiceRegistry.ServiceRegistryListener;
 
 /**
  * The Class DatapointConnectivityServiceMeterIPDriver
@@ -72,7 +73,41 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 		this.listeners = new HashSet<DatapointListener>();
 		this.storageService = HistoryDataStorageServiceRegistry.getInstance()
 				.getService(HistoryDataStorageServiceImpl.class.getName());
-		//startPollingJob();
+
+		if (this.storageService != null)
+			startPollingJob();
+		else {
+			HistoryDataStorageServiceRegistry.getInstance().addServiceListener(
+					new ServiceRegistryListener() {
+						@Override
+						public void serviceRemoved(String serviceName) {
+							// TODO Auto-generated method stub
+
+						}
+
+						@Override
+						public void serviceModified(String serviceName) {
+							// TODO Auto-generated method stub
+
+						}
+
+						@Override
+						public void serviceAdded(String serviceName) {
+							if (serviceName
+									.equals(HistoryDataStorageServiceImpl.class
+											.getName())) {
+								storageService = HistoryDataStorageServiceRegistry
+										.getInstance()
+										.getService(
+												HistoryDataStorageServiceImpl.class
+														.getName());
+								startPollingJob();
+							}
+
+						}
+					});
+		}
+
 	}
 
 	private void startPollingJob() {
@@ -328,7 +363,8 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 		DatapointMetadata m = datapoints.get(address);
 
 		if (lastReading != null) {
-			if (new Date().getTime() - lastReading.getTimestamp() < m.getCurrentSamplingInterval()) {
+			if (new Date().getTime() - lastReading.getTimestamp() < m
+					.getCurrentSamplingInterval()) {
 				readCallback.onReadCompleted(address,
 						new DatapointReading[] { new DatapointReading(
 								new DatapointValue(lastReading.getValue())) },
@@ -469,11 +505,11 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 			float totalPower3 = getCurrentPhase3() * getVoltagePhase3()
 					* getPowerFactorPhase3();
 			float result = totalPower1 + totalPower2 + totalPower3;
-			
-			float val = result*100;
+
+			float val = result * 100;
 			val = Math.round(val);
-			val = val /100;
-			return val;			
+			val = val / 100;
+			return val;
 		}
 
 		@Override
@@ -488,10 +524,13 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 			JSONObject phases = (JSONObject) obj.get((String) "phases");
 			JSONObject specificPhase = (JSONObject) phases.get(phaseNumber);
 
-			Float current = Float.parseFloat(specificPhase.get("current").toString());
-			int voltage = Integer.parseInt(specificPhase.get("voltage").toString());
-			Float powerfactor = Float.parseFloat(specificPhase.get("powerfactor").toString());
-			
+			Float current = Float.parseFloat(specificPhase.get("current")
+					.toString());
+			int voltage = Integer.parseInt(specificPhase.get("voltage")
+					.toString());
+			Float powerfactor = Float.parseFloat(specificPhase.get(
+					"powerfactor").toString());
+
 			Phase result = new Phase(voltage, current, powerfactor);
 			return result;
 		}
@@ -532,6 +571,38 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 	@Override
 	public String getImplementationName() {
 		return this.getClass().getName();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime
+				* result
+				+ ((this.getClass().getName() == null) ? 0 : this.getClass()
+						.getName().hashCode());
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (this.getClass().getName().equals(obj.getClass().getName()))
+			return false;
+		return true;
 	}
 
 }

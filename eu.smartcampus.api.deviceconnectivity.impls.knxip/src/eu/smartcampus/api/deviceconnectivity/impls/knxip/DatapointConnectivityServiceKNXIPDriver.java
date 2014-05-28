@@ -19,6 +19,7 @@ import eu.smartcampus.api.historydatastorage.HistoryDataStorageServiceImpl;
 import eu.smartcampus.api.historydatastorage.HistoryValue;
 import eu.smartcampus.api.historydatastorage.IHistoryDataStorageService;
 import eu.smartcampus.api.historydatastorage.osgi.registries.HistoryDataStorageServiceRegistry;
+import eu.smartcampus.api.osgi.registries.IServiceRegistry.ServiceRegistryListener;
 
 /**
  * The Class DatapointConnectivityServiceKNXIPDriver.
@@ -58,7 +59,40 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 		this.listeners = new HashSet<DatapointListener>();
 		this.storageService = HistoryDataStorageServiceRegistry.getInstance()
 				.getService(HistoryDataStorageServiceImpl.class.getName());
-		//startPollingJob();
+
+		if (this.storageService != null)
+			startPollingJob();
+		else {
+			HistoryDataStorageServiceRegistry.getInstance().addServiceListener(
+					new ServiceRegistryListener() {
+						@Override
+						public void serviceRemoved(String serviceName) {
+							// TODO Auto-generated method stub
+
+						}
+
+						@Override
+						public void serviceModified(String serviceName) {
+							// TODO Auto-generated method stub
+
+						}
+
+						@Override
+						public void serviceAdded(String serviceName) {
+							if (serviceName
+									.equals(HistoryDataStorageServiceImpl.class
+											.getName())) {
+								storageService = HistoryDataStorageServiceRegistry
+										.getInstance()
+										.getService(
+												HistoryDataStorageServiceImpl.class
+														.getName());
+								startPollingJob();
+							}
+
+						}
+					});
+		}
 	}
 
 	private void startPollingJob() {
@@ -90,6 +124,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 										readings[0].getTimestamp(), readings[0]
 												.getValue().toString());
 							}
+
 							@Override
 							public void onReadAborted(DatapointAddress address,
 									ErrorType reason, int requestId) {
@@ -248,7 +283,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 		}
 
 		readCallback.onReadCompleted(address, result, 0);
-		
+
 		return 0;
 	}
 
@@ -302,6 +337,38 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 	@Override
 	public String getImplementationName() {
 		return this.getClass().getName();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime
+				* result
+				+ ((this.getClass().getName() == null) ? 0 : this.getClass()
+						.getName().hashCode());
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (this.getClass().getName().equals(obj.getClass().getName()))
+			return false;
+		return true;
 	}
 
 }

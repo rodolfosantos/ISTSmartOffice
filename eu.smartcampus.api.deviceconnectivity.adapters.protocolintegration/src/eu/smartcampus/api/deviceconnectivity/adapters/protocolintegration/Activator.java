@@ -74,7 +74,7 @@ public final class Activator implements BundleActivator {
 	}
 
 	private void removeServiceImplementation(String serviceName) {
-		discoveredServices.remove(serviceName);
+		System.out.println("Removed!! ->>>> " + discoveredServices.remove(serviceName));
 		serviceAdapterImpl = new DatapointConnectivityServiceAdapter(
 				discoveredServices);
 		DeviceConnectivityServiceRegistry.getInstance().modifyService(

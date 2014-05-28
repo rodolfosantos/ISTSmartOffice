@@ -6,7 +6,6 @@ import org.restlet.Component;
 import org.restlet.data.Protocol;
 
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
-import eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration.DatapointConnectivityServiceAdapter;
 import eu.smartcampus.api.deviceconnectivity.osgi.registries.DeviceConnectivityServiceRegistry;
 import eu.smartcampus.api.osgi.registries.IServiceRegistry.ServiceRegistryListener;
 
@@ -23,12 +22,11 @@ public final class Activator implements BundleActivator {
 		 * TODO: Add a way to set the port and the implementation to use through
 		 * some configuration file, GUI, or so.
 		 */
-		
-		//try discover service
+
+		// try discover service
 		IDatapointConnectivityService serviceImplementation = DeviceConnectivityServiceRegistry
 				.getInstance().getService(
-						IDatapointConnectivityService.class
-								.getName());
+						IDatapointConnectivityService.class.getName());
 
 		try {
 			if (component == null)
@@ -38,55 +36,66 @@ public final class Activator implements BundleActivator {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-		
-		
-		ServiceRegistryListener serviceListener = new ServiceRegistryListener() {
 
-			@Override
-			public void serviceRemoved(String serviceName) {
-				if (serviceName.equals(IDatapointConnectivityService.class
-						.getName())) {
-					serverDettach();
-				}
-			}
-
-			@Override
-			public void serviceModified(String serviceName) {
-				if (serviceName.equals(IDatapointConnectivityService.class
-						.getName())) {
-					serverDettach();
-					IDatapointConnectivityService serviceImplementation = DeviceConnectivityServiceRegistry
-							.getInstance().getService(
-									DatapointConnectivityServiceAdapter.class
-											.getName());
-					serverAttach(PATH_TEMPLATE, serviceImplementation);
-				}
-			}
-
-			@Override
-			public void serviceAdded(String serviceName) {
-				// Bound an implementation to the REST adapter
-				if (serviceName.equals(IDatapointConnectivityService.class
-						.getName())) {
-					IDatapointConnectivityService serviceImplementation = DeviceConnectivityServiceRegistry
-							.getInstance().getService(
-									IDatapointConnectivityService.class
-											.getName());
-
-					try {
-						if (component == null)
-							serverStart(SERVER_PORT, serviceImplementation);
-						else
-							serverAttach(PATH_TEMPLATE, serviceImplementation);
-					} catch (Exception e) {
-						System.err.println(e.getMessage());
-					}
-				}
-			}
-		};
+		// add service listener
 
 		DeviceConnectivityServiceRegistry.getInstance().addServiceListener(
-				serviceListener);
+				new ServiceRegistryListener() {
+
+					@Override
+					public void serviceRemoved(String serviceName) {
+						System.out.println("Wrapper- Service Removed  " + serviceName);
+						if (serviceName
+								.equals(IDatapointConnectivityService.class
+										.getName())) {
+							serverDettach();
+						}
+					}
+
+					@Override
+					public void serviceModified(String serviceName) {
+						System.out.println("Wrapper- Service Modif  " + serviceName);
+						if (serviceName
+								.equals(IDatapointConnectivityService.class
+										.getName())) {
+							serverDettach();
+							IDatapointConnectivityService serviceImplementation = DeviceConnectivityServiceRegistry
+									.getInstance()
+									.getService(
+											IDatapointConnectivityService.class
+													.getName());
+							serverAttach(PATH_TEMPLATE, serviceImplementation);
+						}
+					}
+
+					@Override
+					public void serviceAdded(String serviceName) {
+						System.out.println("Wrapper- Service Added  " + serviceName);
+						// Bound an implementation to the REST adapter
+						if (serviceName
+								.equals(IDatapointConnectivityService.class
+										.getName())) {
+							IDatapointConnectivityService serviceImplementation = DeviceConnectivityServiceRegistry
+									.getInstance().getService(
+											IDatapointConnectivityService.class
+													.getName());
+
+							try {
+								if (component == null)
+									serverStart(SERVER_PORT,
+											serviceImplementation);
+								else
+									serverAttach(PATH_TEMPLATE,
+											serviceImplementation);
+							} catch (Exception e) {
+								System.err.println(e.getMessage());
+							}
+						}
+					}
+				});
+		
+		
+
 		System.out.println("inserted service listener");
 
 	}

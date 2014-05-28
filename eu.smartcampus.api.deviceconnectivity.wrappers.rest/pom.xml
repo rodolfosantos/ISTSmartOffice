@@ -73,11 +73,6 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>eu.smartcampus.api</groupId>
-			<artifactId>eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
 			<groupId>org.restlet.jse</groupId>
 			<artifactId>org.restlet.lib.org.json</artifactId>
 			<version>2.0</version>

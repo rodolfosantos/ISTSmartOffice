@@ -5,6 +5,9 @@ import org.osgi.framework.BundleContext;
 
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
 import eu.smartcampus.api.deviceconnectivity.osgi.registries.DeviceConnectivityServiceRegistry;
+import eu.smartcampus.api.historydatastorage.HistoryDataStorageServiceImpl;
+import eu.smartcampus.api.historydatastorage.osgi.registries.HistoryDataStorageServiceRegistry;
+import eu.smartcampus.api.osgi.registries.IServiceRegistry.ServiceRegistryListener;
 
 public final class Activator implements BundleActivator {
 
@@ -17,6 +20,8 @@ public final class Activator implements BundleActivator {
 				DatapointConnectivityServiceMeterIPDriver.class.getName(),
 				serviceImpl);
 		System.out.println("Meter Started!");
+		
+		
 	}
 
 	@Override

@@ -72,7 +72,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 		this.listeners = new HashSet<DatapointListener>();
 		this.storageService = HistoryDataStorageServiceRegistry.getInstance()
 				.getService(HistoryDataStorageServiceImpl.class.getName());
-		startPollingJob();
+		//startPollingJob();
 	}
 
 	private void startPollingJob() {

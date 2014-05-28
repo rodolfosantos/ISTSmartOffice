@@ -51,15 +51,14 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 	 * @param datapoints
 	 *            the datapoints
 	 */
-	public DatapointConnectivityServiceKNXIPDriver(
-			Map<DatapointAddress, DatapointMetadata> datapoints) {
+	public DatapointConnectivityServiceKNXIPDriver() {
 		super();
 		this.driver = KNXGatewayIPDriver.getInstance();
-		this.datapoints = datapoints;
+		this.datapoints = KNXServiceConfig.loadDatapointsConfigs();
 		this.listeners = new HashSet<DatapointListener>();
 		this.storageService = HistoryDataStorageServiceRegistry.getInstance()
 				.getService(HistoryDataStorageServiceImpl.class.getName());
-		startPollingJob();
+		//startPollingJob();
 	}
 
 	private void startPollingJob() {

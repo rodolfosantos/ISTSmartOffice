@@ -64,7 +64,7 @@ public class MeterIPServiceConfig {
 	 *            the filename
 	 * @return the map
 	 */
-	public static Map<DatapointAddress, DatapointMetadata> defaultMetersDatapointsConfig() {
+	private static Map<DatapointAddress, DatapointMetadata> defaultMetersDatapointsConfig() {
 
 		// meters datapoints
 		MetadataBuilder meterMetadata = new DatapointMetadata.MetadataBuilder();

@@ -77,7 +77,8 @@ public final class Activator implements BundleActivator {
 		discoveredServices.remove(serviceName);
 		serviceAdapterImpl = new DatapointConnectivityServiceAdapter(
 				discoveredServices);
-		DeviceConnectivityServiceRegistry.getInstance().removeService(
-				serviceName);
+		DeviceConnectivityServiceRegistry.getInstance().modifyService(
+				IDatapointConnectivityService.class.getName(),
+				serviceAdapterImpl);
 	}
 }

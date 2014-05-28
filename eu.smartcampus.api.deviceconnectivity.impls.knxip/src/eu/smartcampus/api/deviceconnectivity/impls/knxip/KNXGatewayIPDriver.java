@@ -36,8 +36,7 @@ public class KNXGatewayIPDriver {
 	 */
 	private KNXGatewayIPDriver() {
 		super();
-		// TODO loads configs and set address;
-		this.remoteHost = "172.20.70.147";
+		this.remoteHost = KNXGatewayIPConfig.loadGatewayConfig();
 		this.isConnected = false;
 	}
 

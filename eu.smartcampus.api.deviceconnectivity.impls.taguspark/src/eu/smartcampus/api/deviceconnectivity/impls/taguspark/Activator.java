@@ -29,59 +29,60 @@ public final class Activator implements BundleActivator {
 	 */
 	@Override
 	public void start(BundleContext context) throws Exception {
+		return;
 		
-		final String metersFilename = "Settings_tagusparkMeters.json";
-		final String knxFilename = "Settings_tagusparkKNX.json";
-		
-		IHistoryDataStorageService service = new HistoryDataStorageServiceImpl();
-		HistoryDataStorageServiceRegistry.getInstance().addService(HistoryDataStorageServiceImpl.class.getName(), service);
-
-		Runnable activatorJob = new Runnable() {
-			
-			@Override
-			public void run() {
-				
-				Map<DatapointAddress, DatapointMetadata> knxDatapoints = ServiceSettings
-						.loadDatapointSettings(knxFilename);
-				Map<DatapointAddress, DatapointMetadata> meterDatapoints = ServiceSettings
-						.loadDatapointSettings(metersFilename);
-
-				if(knxDatapoints == null)
-					knxDatapoints = ServiceSettings.setDefaultKNXDatapoints(knxFilename);
-				if(meterDatapoints == null)
-					meterDatapoints = ServiceSettings.setDefaultMetersDatapoints(metersFilename);
-
-				
-				IDatapointConnectivityService knxDriver = new DatapointConnectivityServiceKNXIPDriver(
-						knxDatapoints);
-				IDatapointConnectivityService meterDriver = new DatapointConnectivityServiceMeterIPDriver(
-						"root", "root", meterDatapoints);
-
-				Set<IDatapointConnectivityService> datapointsDrivers = new HashSet<IDatapointConnectivityService>();
-				datapointsDrivers.add(meterDriver);
-
-				try {
-					KNXGatewayIPDriver.getInstance().start();
-					if (KNXGatewayIPDriver.getInstance().isConnected()) {
-						datapointsDrivers.add(knxDriver);
-					}
-				} catch (UnknownHostException e) {
-					e.printStackTrace();
-				}
-				
-				/** Create the instance and regist service. */
-				IDatapointConnectivityService driverAdapter = new DatapointConnectivityServiceAdapter(
-						datapointsDrivers);
-				DeviceConnectivityServiceRegistry.getInstance().addService(
-						DatapointConnectivityServiceAdapter.class.getName(),
-						driverAdapter);
-				
-				
-			}
-		};
-		
-		activatorThread = new Thread(activatorJob);
-		activatorThread.start();		
+//		final String metersFilename = "Settings_tagusparkMeters.json";
+//		final String knxFilename = "Settings_tagusparkKNX.json";
+//		
+//		IHistoryDataStorageService service = new HistoryDataStorageServiceImpl();
+//		HistoryDataStorageServiceRegistry.getInstance().addService(HistoryDataStorageServiceImpl.class.getName(), service);
+//
+//		Runnable activatorJob = new Runnable() {
+//			
+//			@Override
+//			public void run() {
+//				
+//				Map<DatapointAddress, DatapointMetadata> knxDatapoints = ServiceSettings
+//						.loadDatapointSettings(knxFilename);
+//				Map<DatapointAddress, DatapointMetadata> meterDatapoints = ServiceSettings
+//						.loadDatapointSettings(metersFilename);
+//
+//				if(knxDatapoints == null)
+//					knxDatapoints = ServiceSettings.setDefaultKNXDatapoints(knxFilename);
+//				if(meterDatapoints == null)
+//					meterDatapoints = ServiceSettings.setDefaultMetersDatapoints(metersFilename);
+//
+//				
+//				IDatapointConnectivityService knxDriver = new DatapointConnectivityServiceKNXIPDriver(
+//						knxDatapoints);
+//				IDatapointConnectivityService meterDriver = new DatapointConnectivityServiceMeterIPDriver(
+//						"root", "root", meterDatapoints);
+//
+//				Set<IDatapointConnectivityService> datapointsDrivers = new HashSet<IDatapointConnectivityService>();
+//				datapointsDrivers.add(meterDriver);
+//
+//				try {
+//					KNXGatewayIPDriver.getInstance().start();
+//					if (KNXGatewayIPDriver.getInstance().isConnected()) {
+//						datapointsDrivers.add(knxDriver);
+//					}
+//				} catch (UnknownHostException e) {
+//					e.printStackTrace();
+//				}
+//				
+//				/** Create the instance and regist service. */
+//				IDatapointConnectivityService driverAdapter = new DatapointConnectivityServiceAdapter(
+//						datapointsDrivers);
+//				DeviceConnectivityServiceRegistry.getInstance().addService(
+//						DatapointConnectivityServiceAdapter.class.getName(),
+//						driverAdapter);
+//				
+//				
+//			}
+//		};
+//		
+//		activatorThread = new Thread(activatorJob);
+//		activatorThread.start();		
 
 	}
 

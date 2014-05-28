@@ -31,6 +31,7 @@
 					<instructions>
 						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
 						<Bundle-Version>${project.version}</Bundle-Version>
+						<Bundle-Activator>eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration.Activator</Bundle-Activator>
 						<Export-Package>eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration</Export-Package>
 					</instructions>
 				</configuration>

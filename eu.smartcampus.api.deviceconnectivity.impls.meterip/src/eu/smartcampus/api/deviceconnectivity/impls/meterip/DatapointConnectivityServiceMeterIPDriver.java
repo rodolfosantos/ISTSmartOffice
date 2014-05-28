@@ -65,11 +65,10 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 	 * @param password
 	 *            the password
 	 */
-	public DatapointConnectivityServiceMeterIPDriver(String username,
-			String password, Map<DatapointAddress, DatapointMetadata> datapoints) {
-		this.username = username;
-		this.password = password;
-		this.datapoints = datapoints;
+	public DatapointConnectivityServiceMeterIPDriver() {
+		this.username = "root";
+		this.password = "root";
+		this.datapoints = MeterIPServiceConfig.loadDatapointsConfigs();
 		this.listeners = new HashSet<DatapointListener>();
 		this.storageService = HistoryDataStorageServiceRegistry.getInstance()
 				.getService(HistoryDataStorageServiceImpl.class.getName());

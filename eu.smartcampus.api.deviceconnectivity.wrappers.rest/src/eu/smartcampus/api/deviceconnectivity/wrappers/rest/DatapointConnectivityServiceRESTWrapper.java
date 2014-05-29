@@ -77,7 +77,7 @@ public class DatapointConnectivityServiceRESTWrapper extends Application {
 		// GET
 		router.attach("/datapoints/{addr}/{start}/{finish}",
 				DatapointConnectivityServiceResources.ReadDatapointWindow.class);
-		System.out.println("Started!!!!");
+		System.out.println("REST Wrapper Started!");
 		return router;
 	}
 

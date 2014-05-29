@@ -1,7 +1,7 @@
 package eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -13,7 +13,7 @@ import eu.smartcampus.api.osgi.registries.IServiceRegistry.ServiceRegistryListen
 public final class Activator implements BundleActivator {
 
 	IDatapointConnectivityService serviceAdapterImpl = null;
-	Set<IDatapointConnectivityService> discoveredServices = new HashSet<IDatapointConnectivityService>();
+	Map<String, IDatapointConnectivityService> discoveredServices = new HashMap<String, IDatapointConnectivityService>();
 
 	@Override
 	public void start(BundleContext context) throws Exception {
@@ -23,9 +23,10 @@ public final class Activator implements BundleActivator {
 
 					@Override
 					public void serviceRemoved(String serviceName) {
-						if(!serviceName.contains("eu.smartcampus.api.deviceconnectivity.impls."))
+						if (!serviceName
+								.contains("eu.smartcampus.api.deviceconnectivity.impls."))
 							return;
-						
+
 						System.out.println("Service removed: " + serviceName);
 						removeServiceImplementation(serviceName);
 					}
@@ -33,14 +34,15 @@ public final class Activator implements BundleActivator {
 					@Override
 					public void serviceModified(String serviceName) {
 						System.out.println("Service modified: " + serviceName);
-						//do notting
+						// do notting
 					}
 
 					@Override
 					public void serviceAdded(String serviceName) {
-						if(!serviceName.contains("eu.smartcampus.api.deviceconnectivity.impls."))
+						if (!serviceName
+								.contains("eu.smartcampus.api.deviceconnectivity.impls."))
 							return;
-						
+
 						System.out.println("Service added: " + serviceName);
 						addServiceImplementation(serviceName);
 					}
@@ -55,17 +57,17 @@ public final class Activator implements BundleActivator {
 	private void addServiceImplementation(String serviceName) {
 		IDatapointConnectivityService newServiceImpl = DeviceConnectivityServiceRegistry
 				.getInstance().getService(serviceName);
-		discoveredServices.add(newServiceImpl);
+		discoveredServices.put(serviceName, newServiceImpl);
 
 		if (serviceAdapterImpl == null) {
 			serviceAdapterImpl = new DatapointConnectivityServiceAdapter(
-					discoveredServices);
+					discoveredServices.values());
 			DeviceConnectivityServiceRegistry.getInstance().addService(
 					IDatapointConnectivityService.class.getName(),
 					serviceAdapterImpl);
 		} else {
 			serviceAdapterImpl = new DatapointConnectivityServiceAdapter(
-					discoveredServices);
+					discoveredServices.values());
 			DeviceConnectivityServiceRegistry.getInstance().modifyService(
 					IDatapointConnectivityService.class.getName(),
 					serviceAdapterImpl);
@@ -74,9 +76,10 @@ public final class Activator implements BundleActivator {
 	}
 
 	private void removeServiceImplementation(String serviceName) {
-		System.out.println("Removed!! ->>>> " + discoveredServices.remove(serviceName));
+		discoveredServices.remove(serviceName);
+
 		serviceAdapterImpl = new DatapointConnectivityServiceAdapter(
-				discoveredServices);
+				discoveredServices.values());
 		DeviceConnectivityServiceRegistry.getInstance().modifyService(
 				IDatapointConnectivityService.class.getName(),
 				serviceAdapterImpl);

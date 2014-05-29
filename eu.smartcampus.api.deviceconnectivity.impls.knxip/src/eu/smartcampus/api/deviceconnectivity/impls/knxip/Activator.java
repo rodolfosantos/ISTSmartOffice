@@ -18,12 +18,13 @@ public final class Activator implements BundleActivator {
 			@Override
 			public void run() {
 				// Connect to KNX gateway
-				try {
-					KNXGatewayIPDriver.getInstance().start();
-				} catch (UnknownHostException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+					try {
+						KNXGatewayIPDriver.getInstance().start();
+					} catch (UnknownHostException e) {
+						e.printStackTrace();
+						return;
+					}
+
 
 				if (KNXGatewayIPDriver.getInstance().isConnected()) {
 					System.out.println("Connected to KNX Gateway!");

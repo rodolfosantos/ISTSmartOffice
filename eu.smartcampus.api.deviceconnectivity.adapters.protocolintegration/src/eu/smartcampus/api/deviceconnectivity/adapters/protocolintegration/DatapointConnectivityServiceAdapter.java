@@ -1,14 +1,12 @@
 package eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration;
 
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 import eu.smartcampus.api.deviceconnectivity.DatapointAddress;
 import eu.smartcampus.api.deviceconnectivity.DatapointMetadata;
-import eu.smartcampus.api.deviceconnectivity.DatapointReading;
 import eu.smartcampus.api.deviceconnectivity.DatapointValue;
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
 
@@ -26,7 +24,7 @@ public class DatapointConnectivityServiceAdapter implements
 	/**
 	 * The datapoints drivers.
 	 */
-	private Set<IDatapointConnectivityService> drivers;
+	private Collection<IDatapointConnectivityService> drivers;
 
 	/**
 	 * Instantiates a new datapoint connectivity service adapter.
@@ -35,7 +33,7 @@ public class DatapointConnectivityServiceAdapter implements
 	 *            the datapoints drivers
 	 */
 	public DatapointConnectivityServiceAdapter(
-			Set<IDatapointConnectivityService> datapointsDrivers) {
+			Collection<IDatapointConnectivityService> datapointsDrivers) {
 		super();
 		this.drivers = datapointsDrivers;
 		this.datapointsDriversMap = initDatapointsDriversMap(datapointsDrivers);
@@ -48,7 +46,7 @@ public class DatapointConnectivityServiceAdapter implements
 	 *            the datapoints drivers
 	 */
 	private Map<DatapointAddress, IDatapointConnectivityService> initDatapointsDriversMap(
-			Set<IDatapointConnectivityService> datapointsDrivers) {
+			Collection<IDatapointConnectivityService> datapointsDrivers) {
 		Map<DatapointAddress, IDatapointConnectivityService> result = new HashMap<DatapointAddress, IDatapointConnectivityService>();
 
 		Iterator<IDatapointConnectivityService> driversIterator = datapointsDrivers

@@ -22,29 +22,25 @@ public final class Activator implements BundleActivator {
 		 * TODO: Add a way to set the port and the implementation to use through
 		 * some configuration file, GUI, or so.
 		 */
+		// start Restlet component
+		serverStart(SERVER_PORT);
 
 		// try discover service
 		IDatapointConnectivityService serviceImplementation = DeviceConnectivityServiceRegistry
 				.getInstance().getService(
 						IDatapointConnectivityService.class.getName());
 
-		try {
-			if (component == null)
-				serverStart(SERVER_PORT, serviceImplementation);
-			else
-				serverAttach(PATH_TEMPLATE, serviceImplementation);
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
+		// try attach implementation
+		if (serviceImplementation != null) {
+			serverAttach(PATH_TEMPLATE, serviceImplementation);
 		}
 
 		// add service listener
-
 		DeviceConnectivityServiceRegistry.getInstance().addServiceListener(
 				new ServiceRegistryListener() {
 
 					@Override
 					public void serviceRemoved(String serviceName) {
-						System.out.println("Wrapper- Service Removed  " + serviceName);
 						if (serviceName
 								.equals(IDatapointConnectivityService.class
 										.getName())) {
@@ -54,23 +50,25 @@ public final class Activator implements BundleActivator {
 
 					@Override
 					public void serviceModified(String serviceName) {
-						System.out.println("Wrapper- Service Modif  " + serviceName);
+						System.out.println("Wrapper- Service Modif  "
+								+ serviceName);
 						if (serviceName
 								.equals(IDatapointConnectivityService.class
 										.getName())) {
-							serverDettach();
 							IDatapointConnectivityService serviceImplementation = DeviceConnectivityServiceRegistry
-									.getInstance()
-									.getService(
+									.getInstance().getService(
 											IDatapointConnectivityService.class
 													.getName());
-							serverAttach(PATH_TEMPLATE, serviceImplementation);
+							DatapointConnectivityServiceRESTWrapper
+									.getInstance().setServiceImplementation(
+											serviceImplementation);
 						}
 					}
 
 					@Override
 					public void serviceAdded(String serviceName) {
-						System.out.println("Wrapper- Service Added  " + serviceName);
+						System.out.println("Wrapper- Service Added  "
+								+ serviceName);
 						// Bound an implementation to the REST adapter
 						if (serviceName
 								.equals(IDatapointConnectivityService.class
@@ -81,35 +79,30 @@ public final class Activator implements BundleActivator {
 													.getName());
 
 							try {
-								if (component == null)
-									serverStart(SERVER_PORT,
-											serviceImplementation);
-								else
-									serverAttach(PATH_TEMPLATE,
-											serviceImplementation);
+								serverAttach(PATH_TEMPLATE,
+										serviceImplementation);
 							} catch (Exception e) {
 								System.err.println(e.getMessage());
 							}
 						}
 					}
 				});
-		
-		
 
 		System.out.println("inserted service listener");
 
 	}
 
-	private void serverStart(int serverPort,
-			IDatapointConnectivityService serviceImplementation)
-			throws Exception {
+	@Override
+	public void stop(BundleContext context) throws Exception {
+		component.stop();
+	}
+
+	private void serverStart(int serverPort) throws Exception {
 		// Create a new Component.
 		this.component = new Component();
 
 		// Add a new HTTP server listening on default port.
 		component.getServers().add(Protocol.HTTP, serverPort);
-
-		serverAttach(PATH_TEMPLATE, serviceImplementation);
 
 		// Start the component.
 		component.start();
@@ -129,11 +122,6 @@ public final class Activator implements BundleActivator {
 		// Detach device api application
 		component.getDefaultHost().detach(
 				DatapointConnectivityServiceRESTWrapper.getInstance());
-	}
-
-	@Override
-	public void stop(BundleContext context) throws Exception {
-		component.stop();
 	}
 
 }

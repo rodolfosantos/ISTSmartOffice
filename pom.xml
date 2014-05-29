@@ -25,6 +25,7 @@
 		<module>eu.smartcampus.api.deviceconnectivity.impls.knxip</module>
 		<module>eu.smartcampus.api.deviceconnectivity.impls.meterip</module>
 		<module>eu.smartcampus.api.deviceconnectivity.impls.modbus</module>
+		<module>eu.smartcampus.api.deviceconnectivity.impls.lifx</module>
 		<module>eu.smartcampus.api.deviceconnectivity.wrappers.rest</module>
 		<module>eu.smartcampus.api.historydatastorage</module>
 	</modules>

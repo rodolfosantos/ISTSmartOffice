@@ -29,11 +29,11 @@ public final class Activator implements BundleActivator {
         try {
         	ModbusMasterLib emu = new ModbusMasterLib();
             emu.createModbusTcpMaster();
-            for (int i = 0; i < nRegisters + 1; i++) {
-                emu.writeCoil(slaveId, registerId + i, true);
-            }
-            emu.readCoils(slaveId, registerId, nRegisters);
-            emu.destroyModbusMaster();
+//            for (int i = 0; i < nRegisters + 1; i++) {
+//                emu.writeCoil(slaveId, registerId + i, true);
+//            }
+//            emu.readCoils(slaveId, registerId, nRegisters);
+//            emu.destroyModbusMaster();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -13,9 +13,8 @@
 
 	<repositories>
 		<repository>
-			<id>nexus</id>
-			<name>3rd party</name>
-			<url>http://it4energy.tagus.ist.utl.pt:8081/nexus/content/repositories/thirdparty/</url>
+			<id>thirdparty</id>
+			<url>http://sb-buildmaster.tagus.ist.utl.pt:8082/nexus/content/repositories/thirdparty</url>
 		</repository>
 	</repositories>
 
@@ -25,6 +24,7 @@
 		<module>eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration</module>
 		<module>eu.smartcampus.api.deviceconnectivity.impls.knxip</module>
 		<module>eu.smartcampus.api.deviceconnectivity.impls.meterip</module>
+		<module>eu.smartcampus.api.deviceconnectivity.impls.modbus</module>
 		<module>eu.smartcampus.api.deviceconnectivity.wrappers.rest</module>
 		<module>eu.smartcampus.api.historydatastorage</module>
 	</modules>

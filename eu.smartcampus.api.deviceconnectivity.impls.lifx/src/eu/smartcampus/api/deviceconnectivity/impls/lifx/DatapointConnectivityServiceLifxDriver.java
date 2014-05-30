@@ -1,10 +1,7 @@
 package eu.smartcampus.api.deviceconnectivity.impls.lifx;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import jlifx.bulb.IBulb;
 import jlifx.commandline.Utils;
@@ -57,10 +54,10 @@ public class DatapointConnectivityServiceLifxDriver implements
 	@Override
 	public DatapointMetadata getDatapointMetadata(DatapointAddress address)
 			throws OperationFailedException {
-		 MetadataBuilder m = new DatapointMetadata.MetadataBuilder();
-		 m.setAccessType(AccessType.READ_WRITE);
-		 m.setDatatype(Datatype.BOOLEAN);
-		 return m.build();		
+		MetadataBuilder m = new DatapointMetadata.MetadataBuilder();
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.STRING);
+		return m.build();
 	}
 
 	@Override
@@ -79,18 +76,20 @@ public class DatapointConnectivityServiceLifxDriver implements
 			IBulb bulb = allDevices.get(address.getAddress());
 			String res = "";
 			res += "\nHue         : " + Utils.wordToHexString(bulb.getHue());
-			res += "\nSaturation  : " + Utils.wordToHexString(bulb.getSaturation());
-			res += "\nBrightness  : " + Utils.wordToHexString(bulb.getBrightness());
+			res += "\nSaturation  : "
+					+ Utils.wordToHexString(bulb.getSaturation());
+			res += "\nBrightness  : "
+					+ Utils.wordToHexString(bulb.getBrightness());
 			res += "\nKelvin      : " + Utils.wordToHexString(bulb.getKelvin());
 			res += "\nDim         : " + Utils.wordToHexString(bulb.getDim());
 			res += "\nPower       : " + Utils.wordToHexString(bulb.getPower());
-			
-			
+
 			DatapointReading r = new DatapointReading(new DatapointValue(res));
 			readCallback.onReadCompleted(address, new DatapointReading[] { r },
 					0);
 		} else {
-			readCallback.onReadAborted(address, ErrorType.DATAPOINT_NOT_FOUND, 0);
+			readCallback.onReadAborted(address, ErrorType.DATAPOINT_NOT_FOUND,
+					0);
 		}
 
 		return 0;
@@ -108,7 +107,7 @@ public class DatapointConnectivityServiceLifxDriver implements
 
 		if (values.length == 1) {
 			DatapointValue value = values[0];
-			if (value.getBooleanValue()) {
+			if (value.getStringValue().equals("true")) {
 				gateway.switchOn(address.getAddress());
 				writeCallback.onWriteCompleted(address,
 						WritingConfirmationLevel.DEVICE_ACTION_TAKEN, 0);
@@ -119,7 +118,10 @@ public class DatapointConnectivityServiceLifxDriver implements
 			}
 		} else if (values.length == 3) {
 			gateway.setColor(address.getAddress(), values[0].getStringValue(),
-					values[1].getIntValue(), values[2].getStringValue());
+					Integer.parseInt(values[1].getStringValue()),
+					values[2].getStringValue());
+			writeCallback.onWriteCompleted(address,
+					WritingConfirmationLevel.DEVICE_ACTION_TAKEN, 0);
 		}
 
 		return 0;

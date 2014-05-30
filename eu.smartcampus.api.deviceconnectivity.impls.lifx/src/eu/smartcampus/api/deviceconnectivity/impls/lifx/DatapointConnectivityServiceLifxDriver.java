@@ -55,9 +55,19 @@ public class DatapointConnectivityServiceLifxDriver implements
 	public DatapointMetadata getDatapointMetadata(DatapointAddress address)
 			throws OperationFailedException {
 		MetadataBuilder m = new DatapointMetadata.MetadataBuilder();
-		m.setAccessType(AccessType.READ_WRITE);
-		m.setDatatype(Datatype.STRING);
-		return m.build();
+		Map<String, IBulb> allDevices = gateway.getAllDevices(false);
+		System.out.println(allDevices.entrySet().toString());
+		if (allDevices.containsKey(address.getAddress())) {
+			IBulb bulb = allDevices.get(address.getAddress());
+			m.setAccessType(AccessType.READ_WRITE);
+			m.setDatatype(Datatype.STRING);
+			m.setDescription(bulb.getName());
+			return m.build();
+			
+		}
+		throw new OperationFailedException(ErrorType.DATAPOINT_NOT_FOUND);
+		
+		
 	}
 
 	@Override
@@ -71,18 +81,17 @@ public class DatapointConnectivityServiceLifxDriver implements
 			ReadCallback readCallback) {
 		System.out.println(address);
 		Map<String, IBulb> allDevices = gateway.getAllDevices(false);
-		System.out.println(allDevices.entrySet().toString());
 		if (allDevices.containsKey(address.getAddress())) {
 			IBulb bulb = allDevices.get(address.getAddress());
 			String res = "";
-			res += "\nHue         : " + Utils.wordToHexString(bulb.getHue());
-			res += "\nSaturation  : "
+			res += "Hue:" + Utils.wordToHexString(bulb.getHue());
+			res += " - Saturation:"
 					+ Utils.wordToHexString(bulb.getSaturation());
-			res += "\nBrightness  : "
+			res += " - Brightness:"
 					+ Utils.wordToHexString(bulb.getBrightness());
-			res += "\nKelvin      : " + Utils.wordToHexString(bulb.getKelvin());
-			res += "\nDim         : " + Utils.wordToHexString(bulb.getDim());
-			res += "\nPower       : " + Utils.wordToHexString(bulb.getPower());
+			res += " - Kelvin:" + Utils.wordToHexString(bulb.getKelvin());
+			res += " - Dim:" + Utils.wordToHexString(bulb.getDim());
+			res += " - Power:" + Utils.wordToHexString(bulb.getPower());
 
 			DatapointReading r = new DatapointReading(new DatapointValue(res));
 			readCallback.onReadCompleted(address, new DatapointReading[] { r },

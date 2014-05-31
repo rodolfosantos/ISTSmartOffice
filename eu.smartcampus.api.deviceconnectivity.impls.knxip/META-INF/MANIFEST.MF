@@ -1,8 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: eu.smartcampus.api.implementations.knxip
-Bundle-SymbolicName: eu.smartcampus.api.implementations.knxip;singleton:=true
-Bundle-Version: 1.0.0.alpha
-Export-Package: eu.smartcampus.api.deviceconnectivity.impls.knxip
-Bundle-Activator: eu.smartcampus.api.deviceconnectivity.impls.knxip.Activator
-Import-Package: eu.smartcampus.api.deviceconnectivity;version="0.0.1.SNAPSHOT"

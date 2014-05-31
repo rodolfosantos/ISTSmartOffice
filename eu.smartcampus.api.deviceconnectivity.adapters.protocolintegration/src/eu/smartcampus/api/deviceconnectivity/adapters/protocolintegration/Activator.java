@@ -17,6 +17,8 @@ public final class Activator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext context) throws Exception {
+		
+		
 
 		DeviceConnectivityServiceRegistry.getInstance().addServiceListener(
 				new ServiceRegistryListener() {

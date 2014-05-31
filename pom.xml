@@ -10,6 +10,19 @@
 	</properties>
 
 	<packaging>pom</packaging>
+	
+	<distributionManagement>
+		<repository>
+			<id>deployment</id>
+			<name>Internal Releases</name>
+			<url>http://sb-buildmaster.tagus.ist.utl.pt:8082/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>deployment</id>
+			<name>Internal Snapshots</name>
+			<url>http://sb-buildmaster.tagus.ist.utl.pt:8082/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 	<repositories>
 		<repository>

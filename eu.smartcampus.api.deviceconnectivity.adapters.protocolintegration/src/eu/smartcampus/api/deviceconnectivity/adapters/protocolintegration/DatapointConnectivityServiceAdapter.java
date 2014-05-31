@@ -20,7 +20,10 @@ public class DatapointConnectivityServiceAdapter implements
 	 * The datapoints drivers mapping.
 	 */
 	private Map<DatapointAddress, IDatapointConnectivityService> datapointsDriversMap;
-	
+
+	private Map<DatapointAddress, DatapointAddress> datapointsDriversAddressMap;
+	private Map<DatapointAddress, DatapointAddress> datapointsDriversReverseAddressMap;
+
 	/**
 	 * The datapoints drivers.
 	 */
@@ -36,7 +39,7 @@ public class DatapointConnectivityServiceAdapter implements
 			Collection<IDatapointConnectivityService> datapointsDrivers) {
 		super();
 		this.drivers = datapointsDrivers;
-		this.datapointsDriversMap = initDatapointsDriversMap(datapointsDrivers);
+		initDatapointsDriversMap(datapointsDrivers);
 	}
 
 	/**
@@ -45,9 +48,11 @@ public class DatapointConnectivityServiceAdapter implements
 	 * @param datapointsDrivers
 	 *            the datapoints drivers
 	 */
-	private Map<DatapointAddress, IDatapointConnectivityService> initDatapointsDriversMap(
+	private void initDatapointsDriversMap(
 			Collection<IDatapointConnectivityService> datapointsDrivers) {
-		Map<DatapointAddress, IDatapointConnectivityService> result = new HashMap<DatapointAddress, IDatapointConnectivityService>();
+		this.datapointsDriversMap = new HashMap<DatapointAddress, IDatapointConnectivityService>();
+		this.datapointsDriversAddressMap = new HashMap<DatapointAddress, DatapointAddress>();
+		this.datapointsDriversReverseAddressMap = new HashMap<DatapointAddress, DatapointAddress>();
 
 		Iterator<IDatapointConnectivityService> driversIterator = datapointsDrivers
 				.iterator();
@@ -56,17 +61,23 @@ public class DatapointConnectivityServiceAdapter implements
 					.next();
 
 			DatapointAddress[] allDatapoints = driver.getAllDatapoints();
+			int i = 0;
 			for (DatapointAddress datapointAddress : allDatapoints) {
-				result.put(datapointAddress, driver);
+				// ================================================================
+				// Address translation
+				String newAddr = driver.getImplementationName() + i;
+				datapointsDriversMap.put(datapointAddress, driver);
+				datapointsDriversReverseAddressMap.put(datapointAddress,
+						new DatapointAddress(newAddr));
+				datapointsDriversAddressMap.put(new DatapointAddress(newAddr),
+						datapointAddress);
+				i++;
 			}
-
 		}
-
-		return result;
-
 	}
 
 	public void addDatapointListener(DatapointListener listener) {
+
 		for (IDatapointConnectivityService driver : drivers) {
 			driver.addDatapointListener(listener);
 		}
@@ -80,14 +91,20 @@ public class DatapointConnectivityServiceAdapter implements
 	 * @return the driver
 	 */
 	private IDatapointConnectivityService getDriver(DatapointAddress address) {
-		return datapointsDriversMap.get(address);
+		return datapointsDriversMap.get(datapointsDriversAddressMap
+				.get(address));
+	}
+
+	private DatapointAddress getRealDatapointAddress(DatapointAddress address) {
+		return datapointsDriversAddressMap.get(address);
 	}
 
 	public DatapointAddress[] getAllDatapoints() {
-		DatapointAddress[] result = new DatapointAddress[datapointsDriversMap
+		DatapointAddress[] result = new DatapointAddress[datapointsDriversAddressMap
 				.size()];
 
-		Iterator<DatapointAddress> it = datapointsDriversMap.keySet().iterator();
+		Iterator<DatapointAddress> it = datapointsDriversAddressMap.keySet()
+				.iterator();
 		int i = 0;
 		while (it.hasNext()) {
 			DatapointAddress datapointAddress = (DatapointAddress) it.next();
@@ -99,9 +116,10 @@ public class DatapointConnectivityServiceAdapter implements
 	public DatapointMetadata getDatapointMetadata(DatapointAddress address)
 			throws OperationFailedException {
 		IDatapointConnectivityService d = getDriver(address);
-		if(d == null)
+		if (d == null)
 			throw new OperationFailedException(ErrorType.DATAPOINT_NOT_FOUND);
-		return getDriver(address).getDatapointMetadata(address);
+		return getDriver(address).getDatapointMetadata(
+				getRealDatapointAddress(address));
 
 	}
 
@@ -119,7 +137,8 @@ public class DatapointConnectivityServiceAdapter implements
 					0);
 			return 0;
 		}
-		return d.requestDatapointRead(address, readCallback);
+		return d.requestDatapointRead(getRealDatapointAddress(address),
+				readCallback);
 	}
 
 	public int requestDatapointWrite(DatapointAddress address,
@@ -130,7 +149,8 @@ public class DatapointConnectivityServiceAdapter implements
 					ErrorType.DATAPOINT_NOT_FOUND, 0);
 			return 0;
 		}
-		return d.requestDatapointWrite(address, values, writeCallback);
+		return d.requestDatapointWrite(getRealDatapointAddress(address),
+				values, writeCallback);
 	}
 
 	@Override
@@ -142,8 +162,8 @@ public class DatapointConnectivityServiceAdapter implements
 					0);
 			return 0;
 		}
-		return d.requestDatapointWindowRead(address, startTimestamp,
-				finishTimestamp, readCallback);
+		return d.requestDatapointWindowRead(getRealDatapointAddress(address),
+				startTimestamp, finishTimestamp, readCallback);
 	}
 
 	@Override

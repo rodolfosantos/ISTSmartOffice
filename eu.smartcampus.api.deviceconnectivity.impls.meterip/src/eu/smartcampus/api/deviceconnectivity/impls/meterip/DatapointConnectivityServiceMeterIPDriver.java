@@ -572,7 +572,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 
 	@Override
 	public String getImplementationName() {
-		return this.getClass().getName();
+		return "meter";
 	}
 
 

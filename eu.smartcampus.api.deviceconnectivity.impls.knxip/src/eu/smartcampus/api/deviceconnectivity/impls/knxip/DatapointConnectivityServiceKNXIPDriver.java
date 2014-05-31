@@ -336,7 +336,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 	@Override
 	public String getImplementationName() {
-		return this.getClass().getName();
+		return "knx";
 	}
 
 

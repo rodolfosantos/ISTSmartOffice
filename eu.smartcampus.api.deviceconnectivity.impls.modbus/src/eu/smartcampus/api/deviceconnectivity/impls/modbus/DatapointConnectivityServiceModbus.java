@@ -570,7 +570,7 @@ public class DatapointConnectivityServiceModbus implements
 
 	@Override
 	public String getImplementationName() {
-		return this.getClass().getName();
+		return "modbus";
 	}
 
 

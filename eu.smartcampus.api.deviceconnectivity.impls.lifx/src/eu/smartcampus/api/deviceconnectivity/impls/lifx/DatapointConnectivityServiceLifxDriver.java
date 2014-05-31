@@ -27,7 +27,7 @@ public class DatapointConnectivityServiceLifxDriver implements
 
 	@Override
 	public String getImplementationName() {
-		return "LIFX";
+		return "lifx";
 	}
 
 	@Override

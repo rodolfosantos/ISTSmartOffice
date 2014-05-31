@@ -56,15 +56,5 @@
 			<artifactId>eu.smartcampus.api.deviceconnectivity</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		<dependency>
-			<groupId>eu.smartcampus.api</groupId>
-			<artifactId>eu.smartcampus.api.deviceconnectivity.impls.knxip</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>eu.smartcampus.api</groupId>
-			<artifactId>eu.smartcampus.api.deviceconnectivity.impls.meterip</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
 	</dependencies>
 </project>

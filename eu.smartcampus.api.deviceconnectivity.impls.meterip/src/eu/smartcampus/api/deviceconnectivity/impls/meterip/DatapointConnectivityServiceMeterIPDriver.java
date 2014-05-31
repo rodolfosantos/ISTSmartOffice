@@ -133,6 +133,10 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 							DatapointReading reading = new DatapointReading(
 									new DatapointValue(value.getTotalPower()
 											+ ""));
+							//notify update
+							notifyDatapointUpdate(addr, new DatapointReading[]{reading});
+							System.out.println("METER UPDATE "+ reading);
+							
 							// store reading
 							storageService.addValue(addr.getAddress(), reading
 									.getTimestamp(), reading.getValue()
@@ -330,7 +334,6 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 
 	}
 
-	@SuppressWarnings("unused")
 	private void notifyDatapointError(DatapointAddress address, ErrorType error) {
 		synchronized (listeners) {
 			Iterator<DatapointListener> it = listeners.iterator();
@@ -341,7 +344,6 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 		}
 	}
 
-	@SuppressWarnings("unused")
 	private void notifyDatapointUpdate(DatapointAddress address,
 			DatapointReading[] values) {
 		synchronized (listeners) {

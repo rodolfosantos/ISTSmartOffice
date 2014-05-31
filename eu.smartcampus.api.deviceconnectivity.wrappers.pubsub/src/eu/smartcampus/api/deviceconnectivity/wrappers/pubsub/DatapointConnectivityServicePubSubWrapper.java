@@ -47,12 +47,14 @@ public class DatapointConnectivityServicePubSubWrapper {
 			@Override
 			public void onDatapointUpdate(DatapointAddress address,
 					DatapointReading[] values) {
+				System.out.println("WRAPPER update" + values[0]);
 				DatapointReading reading = values[0];
 				JSONObject result = new JSONObject();
 				result.put("value", reading.getValue());
 				result.put("timestamp", reading.getTimestamp());
 
 				clientChannels.get(address).publish(result.toJSONString());
+				//client.getChannel("/foo/1").publish(result.toJSONString());
 			}
 
 			@Override
@@ -70,10 +72,12 @@ public class DatapointConnectivityServicePubSubWrapper {
 		System.out.println(dps);
 
 		for (DatapointAddress datapointAddress : dps) {
+			String channelID = "/"+datapointAddress.getAddress().replaceAll("\\.", "");
+			channelID = channelID.replaceAll("-", "");
+			System.out.println(datapointAddress.getAddress() +"--->"+ channelID);
 			clientChannels.put(
 					datapointAddress,
-					client.getChannel("/deviceconnectivityapi/"
-							+ datapointAddress.getAddress()));
+					client.getChannel(channelID));
 		}
 	}
 

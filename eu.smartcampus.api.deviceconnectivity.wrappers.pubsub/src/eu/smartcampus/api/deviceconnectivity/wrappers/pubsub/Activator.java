@@ -74,33 +74,6 @@ public final class Activator implements BundleActivator {
 				});
 		
 		
-//		final BayeuxClient client = new BayeuxClient(
-//				"http://localhost:8000/faye", LongPollingTransport.create(null));
-//		client.handshake();	
-//		client.waitFor(1000, BayeuxClient.State.CONNECTED);
-//		ClientSessionChannel channel = client.getChannel("/foo");
-//		ClientSessionChannel channel2 = client.getChannel("/nodes/private");
-//		channel.subscribe(new ClientSessionChannel.MessageListener() {
-//			public void onMessage(ClientSessionChannel channel, Message message) {
-//				log.info(MessageFormat.format(
-//						"Got {0} on Channel {1}", message.getData(), channel));
-//			}
-//		});
-//		
-//		channel2.subscribe(new ClientSessionChannel.MessageListener() {
-//			public void onMessage(ClientSessionChannel channel, Message message) {
-//				System.err.println(MessageFormat.format(
-//						"Got {0} on Channel {1}", message.getData(), channel));
-//			}
-//		});
-//		boolean t = true;
-//		
-//	
-//			channel.publish("Hello RabbitttFenix");
-//	
-//		
-//		client.disconnect();
-//		client.waitFor(1000, BayeuxClient.State.DISCONNECTED);
 	}
 
 	@Override

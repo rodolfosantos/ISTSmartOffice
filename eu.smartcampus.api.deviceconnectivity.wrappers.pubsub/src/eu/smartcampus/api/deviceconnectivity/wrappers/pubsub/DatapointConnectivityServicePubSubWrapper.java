@@ -49,7 +49,7 @@ public class DatapointConnectivityServicePubSubWrapper {
 			@Override
 			public void onDatapointUpdate(DatapointAddress address,
 					DatapointReading[] values) {
-				log.info("WRAPPER update" + values[0]);
+				//log.info("WRAPPER update" + values[0]);
 				DatapointReading reading = values[0];
 				JSONObject result = new JSONObject();
 				result.put("value", reading.getValue());

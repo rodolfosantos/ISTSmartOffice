@@ -307,6 +307,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 		case INTEGER:
 			try {
 				driver.writeScalar(addr, values[0].getIntValue());
+				
 				writeCallback.onWriteCompleted(address,
 						WritingConfirmationLevel.DEVICE_ACTION_TAKEN, 0);
 			} catch (KNXException e) {
@@ -333,8 +334,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			break;
 		}
 
-		// writeCallback.onWriteAborted(address,
-		// ErrorType.UNSUPORTED_DATAPOINT_OPERATION, 0);
+		notifyDatapointUpdate(address, new DatapointReading[]{new DatapointReading(values[0])});
 		return 0;
 	}
 

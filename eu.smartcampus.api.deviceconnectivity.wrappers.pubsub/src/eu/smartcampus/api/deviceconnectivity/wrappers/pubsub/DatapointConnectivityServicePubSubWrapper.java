@@ -28,7 +28,7 @@ public class DatapointConnectivityServicePubSubWrapper {
 	 * Instantiates a new datapoint connectivity service rest wrapper.
 	 */
 	DatapointConnectivityServicePubSubWrapper() {
-		this.client = new BayeuxClient("http://localhost:8000/faye",
+		this.client = new BayeuxClient("http://sb-dev.tagus.ist.utl.pt:8000/faye",
 				LongPollingTransport.create(null));
 		client.handshake();
 		client.waitFor(1000, BayeuxClient.State.CONNECTED);
@@ -54,7 +54,7 @@ public class DatapointConnectivityServicePubSubWrapper {
 				result.put("timestamp", reading.getTimestamp());
 
 				clientChannels.get(address).publish(result.toJSONString());
-				//client.getChannel("/foo/1").publish(result.toJSONString());
+				// client.getChannel("/foo/1").publish(result.toJSONString());
 			}
 
 			@Override
@@ -72,12 +72,10 @@ public class DatapointConnectivityServicePubSubWrapper {
 		System.out.println(dps);
 
 		for (DatapointAddress datapointAddress : dps) {
-			String channelID = "/"+datapointAddress.getAddress().replaceAll("\\.", "");
-			channelID = channelID.replaceAll("-", "");
-			System.out.println(datapointAddress.getAddress() +"--->"+ channelID);
 			clientChannels.put(
 					datapointAddress,
-					client.getChannel(channelID));
+					client.getChannel("/datapoints/"
+							+ datapointAddress.getAddress()));
 		}
 	}
 

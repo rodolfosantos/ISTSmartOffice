@@ -10,6 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.text.DecimalFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -69,44 +70,45 @@ public class DatapointConnectivityServiceModbus implements
 	public DatapointConnectivityServiceModbus() {
 		this.username = "root";
 		this.password = "root";
-		this.datapoints = MeterIPServiceConfig.loadDatapointsConfigs();
+		//this.datapoints = MeterIPServiceConfig.loadDatapointsConfigs();
+		this.datapoints = new HashMap<DatapointAddress, DatapointMetadata>();
 		this.listeners = new HashSet<DatapointListener>();
 		this.storageService = HistoryDataStorageServiceRegistry.getInstance()
 				.getService(HistoryDataStorageServiceImpl.class.getName());
 
-		if (this.storageService != null)
-			startPollingJob();
-		else {
-			HistoryDataStorageServiceRegistry.getInstance().addServiceListener(
-					new ServiceRegistryListener() {
-						@Override
-						public void serviceRemoved(String serviceName) {
-							// TODO Auto-generated method stub
-
-						}
-
-						@Override
-						public void serviceModified(String serviceName) {
-							// TODO Auto-generated method stub
-
-						}
-
-						@Override
-						public void serviceAdded(String serviceName) {
-							if (serviceName
-									.equals(HistoryDataStorageServiceImpl.class
-											.getName())) {
-								storageService = HistoryDataStorageServiceRegistry
-										.getInstance()
-										.getService(
-												HistoryDataStorageServiceImpl.class
-														.getName());
-								startPollingJob();
-							}
-
-						}
-					});
-		}
+//		if (this.storageService != null)
+//			startPollingJob();
+//		else {
+//			HistoryDataStorageServiceRegistry.getInstance().addServiceListener(
+//					new ServiceRegistryListener() {
+//						@Override
+//						public void serviceRemoved(String serviceName) {
+//							// TODO Auto-generated method stub
+//
+//						}
+//
+//						@Override
+//						public void serviceModified(String serviceName) {
+//							// TODO Auto-generated method stub
+//
+//						}
+//
+//						@Override
+//						public void serviceAdded(String serviceName) {
+//							if (serviceName
+//									.equals(HistoryDataStorageServiceImpl.class
+//											.getName())) {
+//								storageService = HistoryDataStorageServiceRegistry
+//										.getInstance()
+//										.getService(
+//												HistoryDataStorageServiceImpl.class
+//														.getName());
+//								startPollingJob();
+//							}
+//
+//						}
+//					});
+//		}
 
 	}
 

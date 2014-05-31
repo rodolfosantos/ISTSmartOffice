@@ -2,13 +2,18 @@ package eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import eu.smartcampus.api.deviceconnectivity.DatapointAddress;
 import eu.smartcampus.api.deviceconnectivity.DatapointMetadata;
+import eu.smartcampus.api.deviceconnectivity.DatapointReading;
 import eu.smartcampus.api.deviceconnectivity.DatapointValue;
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
+import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService.DatapointListener;
+import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService.ErrorType;
 
 /**
  * The Class DatapointConnectivityServiceAdapter.
@@ -30,6 +35,11 @@ public class DatapointConnectivityServiceAdapter implements
 	private Collection<IDatapointConnectivityService> drivers;
 
 	/**
+	 * The listeners set
+	 */
+	private Set<DatapointListener> listeners;
+
+	/**
 	 * Instantiates a new datapoint connectivity service adapter.
 	 * 
 	 * @param datapointsDrivers
@@ -39,7 +49,8 @@ public class DatapointConnectivityServiceAdapter implements
 			Collection<IDatapointConnectivityService> datapointsDrivers) {
 		super();
 		this.drivers = datapointsDrivers;
-		initDatapointsDriversMap(datapointsDrivers);
+		this.listeners = new HashSet<IDatapointConnectivityService.DatapointListener>();
+		initDatapointsDriversMapAndListeners(datapointsDrivers);
 	}
 
 	/**
@@ -48,7 +59,7 @@ public class DatapointConnectivityServiceAdapter implements
 	 * @param datapointsDrivers
 	 *            the datapoints drivers
 	 */
-	private void initDatapointsDriversMap(
+	private void initDatapointsDriversMapAndListeners(
 			Collection<IDatapointConnectivityService> datapointsDrivers) {
 		this.datapointsDriversMap = new HashMap<DatapointAddress, IDatapointConnectivityService>();
 		this.datapointsDriversAddressMap = new HashMap<DatapointAddress, DatapointAddress>();
@@ -71,16 +82,34 @@ public class DatapointConnectivityServiceAdapter implements
 						new DatapointAddress(newAddr));
 				datapointsDriversAddressMap.put(new DatapointAddress(newAddr),
 						datapointAddress);
+				
+				//debug translation
+				
+				System.out.println(datapointAddress.getAddress() +"-->>"+ newAddr);
+				
 				i++;
 			}
+			
+			//add event listener			
+			driver.addDatapointListener(new DatapointListener() {
+				
+				@Override
+				public void onDatapointUpdate(DatapointAddress address,
+						DatapointReading[] values) {
+					notifyDatapointUpdate(datapointsDriversReverseAddressMap.get(address), values);
+					
+				}
+				
+				@Override
+				public void onDatapointError(DatapointAddress address, ErrorType error) {
+					notifyDatapointError(datapointsDriversReverseAddressMap.get(address), error);					
+				}
+			});
 		}
 	}
 
 	public void addDatapointListener(DatapointListener listener) {
-
-		for (IDatapointConnectivityService driver : drivers) {
-			driver.addDatapointListener(listener);
-		}
+		listeners.add(listener);
 	}
 
 	/**
@@ -169,6 +198,27 @@ public class DatapointConnectivityServiceAdapter implements
 	@Override
 	public String getImplementationName() {
 		return this.getClass().getName();
+	}
+	
+	private void notifyDatapointError(DatapointAddress address, ErrorType error) {
+		synchronized (listeners) {
+			Iterator<DatapointListener> it = listeners.iterator();
+			while (it.hasNext()) {
+				DatapointListener listener = it.next();
+				listener.onDatapointError(address, error);
+			}
+		}
+	}
+
+	private void notifyDatapointUpdate(DatapointAddress address,
+			DatapointReading[] values) {
+		synchronized (listeners) {
+			Iterator<DatapointListener> it = listeners.iterator();
+			while (it.hasNext()) {
+				DatapointListener listener = it.next();
+				listener.onDatapointUpdate(address, values);
+			}
+		}
 	}
 
 }

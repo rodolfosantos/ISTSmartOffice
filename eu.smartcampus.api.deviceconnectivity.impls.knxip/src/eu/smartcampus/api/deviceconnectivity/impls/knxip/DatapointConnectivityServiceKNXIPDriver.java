@@ -119,6 +119,10 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 									DatapointAddress address,
 									DatapointReading[] readings, int requestId) {
 
+								//notify update
+								notifyDatapointUpdate(addr, new DatapointReading[]{readings[0]});
+								System.out.println("METER UPDATE "+ readings[0]);
+								
 								// store reading
 								storageService.addValue(addr.getAddress(),
 										readings[0].getTimestamp(), readings[0]

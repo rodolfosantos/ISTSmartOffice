@@ -2,6 +2,7 @@ package eu.smartcampus.api.deviceconnectivity.wrappers.pubsub;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.cometd.bayeux.client.ClientSessionChannel;
 import org.cometd.client.BayeuxClient;
@@ -18,6 +19,7 @@ import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService.Error
  * The Class DatapointConnectivityServicePubSubWrapper.
  */
 public class DatapointConnectivityServicePubSubWrapper {
+	static private Logger log = Logger.getLogger(DatapointConnectivityServicePubSubWrapper.class.getName());  
 
 	/** The service implementation. */
 	private IDatapointConnectivityService serviceImplementation;
@@ -47,7 +49,7 @@ public class DatapointConnectivityServicePubSubWrapper {
 			@Override
 			public void onDatapointUpdate(DatapointAddress address,
 					DatapointReading[] values) {
-				System.out.println("WRAPPER update" + values[0]);
+				log.info("WRAPPER update" + values[0]);
 				DatapointReading reading = values[0];
 				JSONObject result = new JSONObject();
 				result.put("value", reading.getValue());
@@ -69,7 +71,6 @@ public class DatapointConnectivityServicePubSubWrapper {
 	private void createDatapointChannels() {
 		clientChannels = new HashMap<DatapointAddress, ClientSessionChannel>();
 		DatapointAddress[] dps = serviceImplementation.getAllDatapoints();
-		System.out.println(dps);
 
 		for (DatapointAddress datapointAddress : dps) {
 			clientChannels.put(

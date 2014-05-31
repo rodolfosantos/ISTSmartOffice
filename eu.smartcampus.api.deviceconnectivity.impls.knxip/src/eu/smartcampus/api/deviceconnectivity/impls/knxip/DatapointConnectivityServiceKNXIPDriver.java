@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Logger;
 
 import tuwien.auto.calimero.exception.KNXException;
 import eu.smartcampus.api.deviceconnectivity.DatapointAddress;
@@ -26,6 +27,7 @@ import eu.smartcampus.api.osgi.registries.IServiceRegistry.ServiceRegistryListen
  */
 public class DatapointConnectivityServiceKNXIPDriver implements
 		IDatapointConnectivityService {
+	static private Logger log = Logger.getLogger(DatapointConnectivityServiceKNXIPDriver.class.getName());  
 
 	/**
 	 * The driver.
@@ -97,7 +99,6 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 	private void startPollingJob() {
 		Timer timer = new Timer();
-		System.out.println(datapoints.size());
 		Iterator<Entry<DatapointAddress, DatapointMetadata>> elems = datapoints
 				.entrySet().iterator();
 		while (elems.hasNext()) {
@@ -121,7 +122,6 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 								//notify update
 								notifyDatapointUpdate(addr, new DatapointReading[]{readings[0]});
-								System.out.println("METER UPDATE "+ readings[0]);
 								
 								// store reading
 								storageService.addValue(addr.getAddress(),
@@ -217,12 +217,12 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 							new DatapointReading[] { reading }, 0);
 
 				} catch (KNXException e) {
-					e.printStackTrace();
+					log.info(e.getMessage());
 					readCallback.onReadAborted(address,
 							ErrorType.DEVICE_CONNECTION_ERROR, 0);
 
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					log.info(e.getMessage());
 					readCallback.onReadAborted(address,
 							ErrorType.DEVICE_CONNECTION_ERROR, 0);
 				}
@@ -234,11 +234,11 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 					readCallback.onReadCompleted(address,
 							new DatapointReading[] { reading }, 0);
 				} catch (KNXException e) {
-					e.printStackTrace();
+					log.info(e.getMessage());
 					readCallback.onReadAborted(address,
 							ErrorType.DEVICE_CONNECTION_ERROR, 0);
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					log.info(e.getMessage());
 					readCallback.onReadAborted(address,
 							ErrorType.DEVICE_CONNECTION_ERROR, 0);
 				}
@@ -252,11 +252,11 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 				readCallback.onReadCompleted(address,
 						new DatapointReading[] { reading }, 0);
 			} catch (KNXException e) {
-				e.printStackTrace();
+				log.info(e.getMessage());
 				readCallback.onReadAborted(address,
 						ErrorType.DEVICE_CONNECTION_ERROR, 0);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				log.info(e.getMessage());
 				readCallback.onReadAborted(address,
 						ErrorType.DEVICE_CONNECTION_ERROR, 0);
 			}
@@ -310,7 +310,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 				writeCallback.onWriteCompleted(address,
 						WritingConfirmationLevel.DEVICE_ACTION_TAKEN, 0);
 			} catch (KNXException e) {
-				e.printStackTrace();
+				log.info(e.getMessage());
 				writeCallback.onWriteAborted(address,
 						ErrorType.DEVICE_CONNECTION_ERROR, 0);
 			}
@@ -321,7 +321,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 				writeCallback.onWriteCompleted(address,
 						WritingConfirmationLevel.DEVICE_ACTION_TAKEN, 0);
 			} catch (KNXException e) {
-				e.printStackTrace();
+				log.info(e.getMessage());
 				writeCallback.onWriteAborted(address,
 						ErrorType.DEVICE_CONNECTION_ERROR, 0);
 			}

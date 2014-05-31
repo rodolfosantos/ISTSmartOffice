@@ -52,7 +52,7 @@ public class DatapointConnectivityServiceResources {
             response.put("message", message);
             response.put("resolution", resolutionHint);
         } catch (JSONException e) {
-            e.printStackTrace();
+        	System.err.println(e.getMessage());
         }
         return response;
     }
@@ -189,7 +189,7 @@ public class DatapointConnectivityServiceResources {
                 result.put("readcachesize", metadata.getReadCacheSize());
             } catch (JSONException e) {
                 getResponse().setStatus(Status.SERVER_ERROR_INTERNAL);
-                e.printStackTrace();
+                System.err.println(e.getMessage());
             }
             return result;
         }
@@ -229,7 +229,7 @@ public class DatapointConnectivityServiceResources {
                 return result;
             } catch (JSONException e) {
                 getResponse().setStatus(Status.SERVER_ERROR_INTERNAL);
-                e.printStackTrace();
+                System.err.println(e.getMessage());
             }
             return result;
         }

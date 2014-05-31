@@ -52,8 +52,7 @@ public class LifxGateway {
 		try {
 			PacketService.closeSocket();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 	}
 	
@@ -62,8 +61,7 @@ public class LifxGateway {
 			try {
 				discoverDevices();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.err.println(e.getMessage());
 			}
 		
 		return devices;
@@ -74,8 +72,7 @@ public class LifxGateway {
 		try {
 			devices.get(macAddress).switchOn();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 	}
 	
@@ -83,8 +80,7 @@ public class LifxGateway {
 		try {
 			devices.get(macAddress).switchOff();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}		
 	}
 	
@@ -93,11 +89,9 @@ public class LifxGateway {
 		try {
 			devices.get(macAddress).colorize(color, fadeTime, Float.parseFloat(brigthness));
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}		
 	}
 	

@@ -6,20 +6,20 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import eu.smartcampus.api.deviceconnectivity.DatapointAddress;
 import eu.smartcampus.api.deviceconnectivity.DatapointMetadata;
 import eu.smartcampus.api.deviceconnectivity.DatapointReading;
 import eu.smartcampus.api.deviceconnectivity.DatapointValue;
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
-import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService.DatapointListener;
-import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService.ErrorType;
 
 /**
  * The Class DatapointConnectivityServiceAdapter.
  */
 public class DatapointConnectivityServiceAdapter implements
 		IDatapointConnectivityService {
+	static private Logger log = Logger.getLogger(DatapointConnectivityServiceAdapter.class.getName());  
 
 	/**
 	 * The datapoints drivers mapping.
@@ -85,7 +85,7 @@ public class DatapointConnectivityServiceAdapter implements
 				
 				//debug translation
 				
-				System.out.println(datapointAddress.getAddress() +"-->>"+ newAddr);
+				log.info(datapointAddress.getAddress() +"-->>"+ newAddr);
 				
 				i++;
 			}

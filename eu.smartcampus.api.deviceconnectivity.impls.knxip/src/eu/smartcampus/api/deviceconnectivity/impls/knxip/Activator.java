@@ -1,6 +1,7 @@
 package eu.smartcampus.api.deviceconnectivity.impls.knxip;
 
 import java.net.UnknownHostException;
+import java.util.logging.Logger;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -9,10 +10,11 @@ import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
 import eu.smartcampus.api.deviceconnectivity.osgi.registries.DeviceConnectivityServiceRegistry;
 
 public final class Activator implements BundleActivator {
-
+	static private Logger log = Logger.getLogger(Activator.class.getName());  
+	
 	@Override
-	public void start(BundleContext context) throws Exception {
-
+	public void start(final BundleContext context) throws Exception {
+		
 		new Thread(new Runnable() {
 
 			@Override
@@ -21,21 +23,27 @@ public final class Activator implements BundleActivator {
 					try {
 						KNXGatewayIPDriver.getInstance().start();
 					} catch (UnknownHostException e) {
-						e.printStackTrace();
+						log.info(e.getMessage());
+						try {
+							stop(context);
+						} catch (Exception e1) {}
 						return;
 					}
 
 
 				if (KNXGatewayIPDriver.getInstance().isConnected()) {
-					System.out.println("Connected to KNX Gateway!");
+					log.info("Connected to KNX Gateway!");
 					// Create service implementation
 					IDatapointConnectivityService serviceImpl = new DatapointConnectivityServiceKNXIPDriver();
 					// Publish Service
 					DeviceConnectivityServiceRegistry.getInstance().addService(
 							DatapointConnectivityServiceKNXIPDriver.class
 									.getName(), serviceImpl);
-					System.out.println("KNX Started!");
-				}
+					log.info("KNX Started!");
+				} else
+					try {
+						stop(context);
+					} catch (Exception e) {}
 			}
 		}).start();
 
@@ -48,7 +56,7 @@ public final class Activator implements BundleActivator {
 					DatapointConnectivityServiceKNXIPDriver.class.getName());
 
 			KNXGatewayIPDriver.getInstance().stop();
-			System.out.println("KNX Stopped!");
+			log.info("KNX Stopped!");
 		}
 
 	}

@@ -1,11 +1,7 @@
 package eu.smartcampus.api.deviceconnectivity.wrappers.pubsub;
 
-import java.text.MessageFormat;
+import java.util.logging.Logger;
 
-import org.cometd.bayeux.Message;
-import org.cometd.bayeux.client.ClientSessionChannel;
-import org.cometd.client.BayeuxClient;
-import org.cometd.client.transport.LongPollingTransport;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
@@ -14,11 +10,12 @@ import eu.smartcampus.api.deviceconnectivity.osgi.registries.DeviceConnectivityS
 import eu.smartcampus.api.osgi.registries.IServiceRegistry.ServiceRegistryListener;
 
 public final class Activator implements BundleActivator {
+	static private Logger log = Logger.getLogger(Activator.class.getName());  
 
 	@Override
 	public void start(BundleContext arg0) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println("PUBSUUUUB!!");
+		log.info("PUBSUUUUB!!");
 		
 		final DatapointConnectivityServicePubSubWrapper pubsubwrapper = new DatapointConnectivityServicePubSubWrapper();
 		
@@ -45,7 +42,7 @@ public final class Activator implements BundleActivator {
 
 					@Override
 					public void serviceModified(String serviceName) {
-						System.out.println("Wrapper- Service Modif  "
+						log.info("Wrapper- Service Modif  "
 								+ serviceName);
 						if (serviceName
 								.equals(IDatapointConnectivityService.class
@@ -60,7 +57,7 @@ public final class Activator implements BundleActivator {
 
 					@Override
 					public void serviceAdded(String serviceName) {
-						System.out.println("Wrapper- Service Added  "
+						log.info("Wrapper- Service Added  "
 								+ serviceName);
 						// Bound an implementation to the REST adapter
 						if (serviceName
@@ -85,7 +82,7 @@ public final class Activator implements BundleActivator {
 //		ClientSessionChannel channel2 = client.getChannel("/nodes/private");
 //		channel.subscribe(new ClientSessionChannel.MessageListener() {
 //			public void onMessage(ClientSessionChannel channel, Message message) {
-//				System.out.println(MessageFormat.format(
+//				log.info(MessageFormat.format(
 //						"Got {0} on Channel {1}", message.getData(), channel));
 //			}
 //		});

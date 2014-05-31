@@ -1,5 +1,7 @@
 package eu.smartcampus.api.deviceconnectivity.wrappers.rest;
 
+import java.util.logging.Logger;
+
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.routing.Router;
@@ -11,6 +13,8 @@ import eu.smartcampus.api.deviceconnectivity.wrappers.rest.impl.DatapointConnect
  * The Class DatapointConnectivityServiceRESTWrapper.
  */
 public class DatapointConnectivityServiceRESTWrapper extends Application {
+	
+	static private Logger log = Logger.getLogger(DatapointConnectivityServiceRESTWrapper.class.getName());  
 
 	/** The service implementation. */
 	private static IDatapointConnectivityService serviceImplementation;
@@ -77,7 +81,7 @@ public class DatapointConnectivityServiceRESTWrapper extends Application {
 		// GET
 		router.attach("/datapoints/{addr}/{start}/{finish}",
 				DatapointConnectivityServiceResources.ReadDatapointWindow.class);
-		System.out.println("REST Wrapper Started!");
+		log.info("REST Wrapper Started!");
 		return router;
 	}
 

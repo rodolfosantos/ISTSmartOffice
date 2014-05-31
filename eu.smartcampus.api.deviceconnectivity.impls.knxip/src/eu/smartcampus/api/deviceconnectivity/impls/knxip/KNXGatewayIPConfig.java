@@ -80,7 +80,7 @@ public class KNXGatewayIPConfig {
 			writer.close();
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 
 	}

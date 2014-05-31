@@ -1,5 +1,7 @@
 package eu.smartcampus.api.deviceconnectivity.impls.modbus;
 
+import java.util.logging.Logger;
+
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
@@ -11,6 +13,7 @@ import eu.smartcampus.api.historydatastorage.osgi.registries.HistoryDataStorageS
 import eu.smartcampus.api.osgi.registries.IServiceRegistry.ServiceRegistryListener;
 
 public final class Activator implements BundleActivator {
+	static private Logger log = Logger.getLogger(Activator.class.getName());  
 
 	@Override
 	public void start(BundleContext context) throws Exception {
@@ -35,11 +38,11 @@ public final class Activator implements BundleActivator {
 //            emu.readCoils(slaveId, registerId, nRegisters);
 //            emu.destroyModbusMaster();
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.info(e.getMessage());
 		}
         
 		
-		System.out.println("Modbus Started!");
+		log.info("Modbus Started!");
 		
 		
 	}
@@ -48,7 +51,7 @@ public final class Activator implements BundleActivator {
 	public void stop(BundleContext context) throws Exception {
 		DeviceConnectivityServiceRegistry.getInstance().removeService(
 				DatapointConnectivityServiceModbus.class.getName());
-		System.out.println("Mosbus Stopped!");
+		log.info("Mosbus Stopped!");
 	}
 
 }

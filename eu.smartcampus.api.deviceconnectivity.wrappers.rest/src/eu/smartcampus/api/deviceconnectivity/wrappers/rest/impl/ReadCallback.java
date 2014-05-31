@@ -49,7 +49,7 @@ public class ReadCallback implements IDatapointConnectivityService.ReadCallback 
 
 			return reading[0];
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 			return null;
 		} catch (NullPointerException e) {
 			return null;
@@ -66,7 +66,7 @@ public class ReadCallback implements IDatapointConnectivityService.ReadCallback 
 			semaphore.acquire();
 			return reading;
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 			return null;
 		}
 	}

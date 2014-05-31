@@ -8,7 +8,6 @@ import java.net.URLConnection;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
-import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -17,6 +16,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Logger;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -45,6 +45,7 @@ import eu.smartcampus.api.osgi.registries.IServiceRegistry.ServiceRegistryListen
  */
 public class DatapointConnectivityServiceMeterIPDriver implements
 		IDatapointConnectivityService {
+	static private Logger log = Logger.getLogger(DatapointConnectivityServiceMeterIPDriver.class.getName());  
 
 	private String username;
 	private String password;
@@ -112,7 +113,6 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 
 	private void startPollingJob() {
 		Timer timer = new Timer();
-		System.out.println(datapoints.size());
 		Iterator<Entry<DatapointAddress, DatapointMetadata>> elems = datapoints
 				.entrySet().iterator();
 		while (elems.hasNext()) {
@@ -135,7 +135,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 											+ ""));
 							//notify update
 							notifyDatapointUpdate(addr, new DatapointReading[]{reading});
-							System.out.println("METER UPDATE "+ reading);
+
 							
 							// store reading
 							storageService.addValue(addr.getAddress(), reading
@@ -202,9 +202,9 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 			HttpsURLConnection
 					.setDefaultSSLSocketFactory(sc.getSocketFactory());
 		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
+			log.info(e.getMessage());
 		} catch (KeyManagementException e) {
-			e.printStackTrace();
+			log.info(e.getMessage());
 		}
 
 		// Create all-trusting host name verifier
@@ -237,12 +237,12 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 
 			String inputLine;
 			while ((inputLine = in.readLine()) != null) {
-				// System.out.println(inputLine);
+				// log.info(inputLine);
 				res = res + inputLine + "\n";
 			}
 			in.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.info(e.getMessage());
 		}
 		return res;
 	}
@@ -447,7 +447,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 			} catch (ParseException e) {
 				System.err
 						.println("[Diogo] Constructor JavaMeasure.Java: probably malformed JSON file...");
-				e.printStackTrace();
+				log.info(e.getMessage());
 			}
 		}
 

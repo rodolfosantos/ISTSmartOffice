@@ -1,5 +1,7 @@
 package eu.smartcampus.api.deviceconnectivity.impls.modbus.master;
 
+import java.util.logging.Logger;
+
 import com.serotonin.modbus4j.ModbusFactory;
 import com.serotonin.modbus4j.ModbusMaster;
 import com.serotonin.modbus4j.base.ModbusUtils;
@@ -31,6 +33,8 @@ import com.serotonin.modbus4j.msg.WriteRegistersResponse;
  * The Class ModbusMasterEmulator.
  */
 public class ModbusMasterLib {
+	
+	static private Logger log = Logger.getLogger(ModbusMasterLib.class.getName());  
 
     /** The timeout. */
     private final int timeout = 2000;
@@ -66,7 +70,7 @@ public class ModbusMasterLib {
             master.setRetries(nRetry);
             master.init();
         } catch (ModbusInitException e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
     }
 
@@ -92,7 +96,7 @@ public class ModbusMasterLib {
             response = (ReadCoilsResponse) master.send(request);
             checkResponse(response);
         } catch (ModbusTransportException e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
         return response.getBooleanData();
     }
@@ -113,7 +117,7 @@ public class ModbusMasterLib {
 
             checkResponse(response);
         } catch (ModbusTransportException e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
         return response.getBooleanData();
     }
@@ -135,7 +139,7 @@ public class ModbusMasterLib {
 
             checkResponse(response);
         } catch (ModbusTransportException e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
         return response.getShortData();
     }
@@ -156,7 +160,7 @@ public class ModbusMasterLib {
 
             checkResponse(response);
         } catch (ModbusTransportException e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
         return response.getShortData();
     }
@@ -174,7 +178,7 @@ public class ModbusMasterLib {
             response = (ReadExceptionStatusResponse) master.send(request);
             checkResponse(response);
         } catch (ModbusTransportException e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
         return response.getExceptionStatus();
     }
@@ -192,7 +196,7 @@ public class ModbusMasterLib {
             response = (ReportSlaveIdResponse) master.send(request);
             checkResponse(response);
         } catch (ModbusTransportException e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
         return response.getData();
     }
@@ -210,7 +214,7 @@ public class ModbusMasterLib {
             WriteCoilRequest request = new WriteCoilRequest(slaveId, offset, value);
             checkResponse(master.send(request));
         } catch (ModbusTransportException e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
     }
 
@@ -226,7 +230,7 @@ public class ModbusMasterLib {
             WriteCoilsRequest request = new WriteCoilsRequest(slaveId, offset, values);
             checkResponse(master.send(request));
         } catch (ModbusTransportException e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
     }
 
@@ -243,7 +247,7 @@ public class ModbusMasterLib {
             WriteRegisterResponse response = (WriteRegisterResponse) master.send(request);
             checkResponse(response);
         } catch (ModbusTransportException e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
     }
 
@@ -260,7 +264,7 @@ public class ModbusMasterLib {
             WriteRegistersResponse response = (WriteRegistersResponse) master.send(request);
             checkResponse(response);
         } catch (ModbusTransportException e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
     }
 
@@ -271,8 +275,8 @@ public class ModbusMasterLib {
      */
     private void checkResponse(ModbusResponse response) {
         if (response.isException())
-            System.out.println("Exception response: message=" + response.getExceptionMessage());
+            log.info("Exception response: message=" + response.getExceptionMessage());
         else
-            System.out.println("Success");
+            log.info("Success");
     }
 }

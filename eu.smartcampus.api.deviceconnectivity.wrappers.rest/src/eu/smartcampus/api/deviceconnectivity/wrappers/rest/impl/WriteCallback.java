@@ -36,7 +36,7 @@ public class WriteCallback
             semaphore.acquire();
             return isWritten;
         } catch (InterruptedException e) {
-            e.printStackTrace();
+        	System.err.println(e.getMessage());
         }
         return isWritten;
     }

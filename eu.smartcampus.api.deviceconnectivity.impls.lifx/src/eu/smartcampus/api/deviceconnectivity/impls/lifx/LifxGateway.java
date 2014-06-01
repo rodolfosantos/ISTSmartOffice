@@ -1,6 +1,8 @@
 package eu.smartcampus.api.deviceconnectivity.impls.lifx;
 import java.awt.Color;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,7 +37,17 @@ public class LifxGateway {
 	private void discoverDevices() throws IOException{
 		gatewayBulb = DiscoveryService.discoverGatewayBulb();
         if (gatewayBulb == null) {
-        	devices = new HashMap<String, IBulb>();
+        	//Try a specific gateway TODO read bulbs from config file
+        	System.out.println("Discovering Lifx bulb at 1-42 Lab... (IP: 172.20.70.84)");
+        	gatewayBulb = new GatewayBulb(InetAddress.getByName("172.20.70.84"), new byte[]{-48, 115, -43, 0, 97, 5});
+    		Collection<IBulb> allBulbs = DiscoveryService.discoverAllBulbs(gatewayBulb);
+    		devices = new HashMap<String, IBulb>();
+    		
+    		Iterator<IBulb> it = allBulbs.iterator();
+    		while (it.hasNext()) {
+    			IBulb iBulb = (IBulb) it.next();
+    			devices.put(iBulb.getMacAddressAsString(), iBulb);		
+    		}
         } else {
             Collection<IBulb> allBulbs = DiscoveryService.discoverAllBulbs(gatewayBulb);
             devices = new HashMap<String, IBulb>();

@@ -369,7 +369,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 					.getCurrentSamplingInterval()) {
 				readCallback.onReadCompleted(address,
 						new DatapointReading[] { new DatapointReading(
-								new DatapointValue(lastReading.getValue())) },
+								new DatapointValue(lastReading.getValue()), lastReading.getTimestamp()) },
 						0);
 				return 0;
 			}

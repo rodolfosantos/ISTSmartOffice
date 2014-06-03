@@ -84,8 +84,7 @@ public class DatapointConnectivityServiceAdapter implements
 						datapointAddress);
 				
 				//debug translation
-				
-				log.info(datapointAddress.getAddress() +"-->>"+ newAddr);
+				System.out.println(datapointAddress.getAddress() +" --> "+ newAddr);
 				
 				i++;
 			}

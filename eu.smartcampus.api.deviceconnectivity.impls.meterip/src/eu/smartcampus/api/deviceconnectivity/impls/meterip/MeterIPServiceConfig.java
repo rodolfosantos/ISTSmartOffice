@@ -81,6 +81,7 @@ public class MeterIPServiceConfig {
 		DatapointAddress a6 = new DatapointAddress("172.20.70.235");
 		DatapointAddress a7 = new DatapointAddress("172.20.70.236");
 		DatapointAddress a8 = new DatapointAddress("172.20.70.237");
+		DatapointAddress a9 = new DatapointAddress("172.20.70.233");
 
 		meterMetadata.setDescription("D14");
 		meterDatapoints.put(a1, meterMetadata.build());
@@ -98,6 +99,8 @@ public class MeterIPServiceConfig {
 		meterDatapoints.put(a7, meterMetadata.build());
 		meterMetadata.setDescription("UTA_A4");
 		meterDatapoints.put(a8, meterMetadata.build());
+		meterMetadata.setDescription("new A4");
+		meterDatapoints.put(a9, meterMetadata.build());
 
 		// store
 		toJsonFile(CONFIG_FILENAME, meterDatapoints);

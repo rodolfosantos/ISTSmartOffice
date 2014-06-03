@@ -369,7 +369,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 					.getCurrentSamplingInterval()) {
 				readCallback.onReadCompleted(address,
 						new DatapointReading[] { new DatapointReading(
-								new DatapointValue(lastReading.getValue()), lastReading.getTimestamp()) },
+								new DatapointValue(lastReading.getValue())) },
 						0);
 				return 0;
 			}
@@ -380,8 +380,8 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 			DatapointReading reading = new DatapointReading(new DatapointValue(
 					value.getTotalPower() + ""));
 			// store reading
-			storageService.addValue(address.getAddress(), value.ts,
-					value.getTotalPower() + "");
+			storageService.addValue(address.getAddress(), reading.getTimestamp(),
+					reading.getValue() + "");
 
 			readCallback.onReadCompleted(address,
 					new DatapointReading[] { reading }, 0);
@@ -400,6 +400,11 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 
 		HistoryValue[] readings = storageService.getValuesTimeWindow(
 				address.getAddress(), startTimestamp, finishTimestamp);
+		
+		if(readings == null){
+			readCallback.onReadAborted(address, ErrorType.SERVER_INTERNAL_ERROR, 0);
+			return 0;
+		}
 
 		DatapointReading[] result = new DatapointReading[readings.length];
 

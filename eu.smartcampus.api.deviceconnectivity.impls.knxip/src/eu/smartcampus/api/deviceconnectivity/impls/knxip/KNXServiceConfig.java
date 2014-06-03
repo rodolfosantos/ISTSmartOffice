@@ -11,6 +11,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import eu.smartcampus.api.deviceconnectivity.DatapointAddress;
@@ -251,9 +254,15 @@ public class KNXServiceConfig {
 	private static void toJsonFile(String filename, Object object) {
 		Gson gson = new Gson();
 		String json = gson.toJson(object);
+		
+		Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
+		JsonParser jp = new JsonParser();
+		JsonElement je = jp.parse(json);
+		String prettyJsonString = gsonPretty.toJson(je);
+		
 		try {
 			FileWriter writer = new FileWriter(filename);
-			writer.write(json);
+			writer.write(prettyJsonString);
 			writer.close();
 
 		} catch (IOException e) {

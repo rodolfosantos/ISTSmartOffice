@@ -2,7 +2,7 @@ package eu.smartcampus.api.deviceconnectivity.wrappers.pubsub;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
+import eu.smartcampus.api.deviceconnectivity.Logger;
 
 import org.cometd.bayeux.client.ClientSessionChannel;
 import org.cometd.client.BayeuxClient;

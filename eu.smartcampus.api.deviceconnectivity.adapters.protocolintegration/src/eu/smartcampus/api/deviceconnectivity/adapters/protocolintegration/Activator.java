@@ -2,7 +2,7 @@ package eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
+import eu.smartcampus.api.deviceconnectivity.Logger;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -32,13 +32,13 @@ public final class Activator implements BundleActivator {
 								.contains("eu.smartcampus.api.deviceconnectivity.impls."))
 							return;
 
-						log.info("Service removed: " + serviceName);
+						log.i("Service removed: " + serviceName);
 						removeServiceImplementation(serviceName);
 					}
 
 					@Override
 					public void serviceModified(String serviceName) {
-						log.info("Service modified: " + serviceName);
+						log.i("Service modified: " + serviceName);
 						// do notting
 					}
 
@@ -48,7 +48,7 @@ public final class Activator implements BundleActivator {
 								.contains("eu.smartcampus.api.deviceconnectivity.impls."))
 							return;
 
-						log.info("Service added: " + serviceName);
+						log.i("Service added: " + serviceName);
 						addServiceImplementation(serviceName);
 					}
 				});

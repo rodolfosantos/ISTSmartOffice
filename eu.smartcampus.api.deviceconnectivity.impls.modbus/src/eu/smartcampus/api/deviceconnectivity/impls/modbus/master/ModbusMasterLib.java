@@ -1,6 +1,6 @@
 package eu.smartcampus.api.deviceconnectivity.impls.modbus.master;
 
-import java.util.logging.Logger;
+import eu.smartcampus.api.deviceconnectivity.Logger;
 
 import com.serotonin.modbus4j.ModbusFactory;
 import com.serotonin.modbus4j.ModbusMaster;
@@ -70,7 +70,7 @@ public class ModbusMasterLib {
             master.setRetries(nRetry);
             master.init();
         } catch (ModbusInitException e) {
-            log.info(e.getMessage());
+            log.i(e.getMessage());
         }
     }
 
@@ -96,7 +96,7 @@ public class ModbusMasterLib {
             response = (ReadCoilsResponse) master.send(request);
             checkResponse(response);
         } catch (ModbusTransportException e) {
-            log.info(e.getMessage());
+            log.e(e.getMessage());
         }
         return response.getBooleanData();
     }
@@ -117,7 +117,7 @@ public class ModbusMasterLib {
 
             checkResponse(response);
         } catch (ModbusTransportException e) {
-            log.info(e.getMessage());
+            log.e(e.getMessage());
         }
         return response.getBooleanData();
     }
@@ -139,7 +139,7 @@ public class ModbusMasterLib {
 
             checkResponse(response);
         } catch (ModbusTransportException e) {
-            log.info(e.getMessage());
+            log.e(e.getMessage());
         }
         return response.getShortData();
     }
@@ -160,7 +160,7 @@ public class ModbusMasterLib {
 
             checkResponse(response);
         } catch (ModbusTransportException e) {
-            log.info(e.getMessage());
+            log.e(e.getMessage());
         }
         return response.getShortData();
     }
@@ -178,7 +178,7 @@ public class ModbusMasterLib {
             response = (ReadExceptionStatusResponse) master.send(request);
             checkResponse(response);
         } catch (ModbusTransportException e) {
-            log.info(e.getMessage());
+            log.e(e.getMessage());
         }
         return response.getExceptionStatus();
     }
@@ -196,7 +196,7 @@ public class ModbusMasterLib {
             response = (ReportSlaveIdResponse) master.send(request);
             checkResponse(response);
         } catch (ModbusTransportException e) {
-            log.info(e.getMessage());
+            log.e(e.getMessage());
         }
         return response.getData();
     }
@@ -214,7 +214,7 @@ public class ModbusMasterLib {
             WriteCoilRequest request = new WriteCoilRequest(slaveId, offset, value);
             checkResponse(master.send(request));
         } catch (ModbusTransportException e) {
-            log.info(e.getMessage());
+            log.e(e.getMessage());
         }
     }
 
@@ -230,7 +230,7 @@ public class ModbusMasterLib {
             WriteCoilsRequest request = new WriteCoilsRequest(slaveId, offset, values);
             checkResponse(master.send(request));
         } catch (ModbusTransportException e) {
-            log.info(e.getMessage());
+            log.e(e.getMessage());
         }
     }
 
@@ -247,7 +247,7 @@ public class ModbusMasterLib {
             WriteRegisterResponse response = (WriteRegisterResponse) master.send(request);
             checkResponse(response);
         } catch (ModbusTransportException e) {
-            log.info(e.getMessage());
+            log.e(e.getMessage());
         }
     }
 
@@ -264,7 +264,7 @@ public class ModbusMasterLib {
             WriteRegistersResponse response = (WriteRegistersResponse) master.send(request);
             checkResponse(response);
         } catch (ModbusTransportException e) {
-            log.info(e.getMessage());
+            log.e(e.getMessage());
         }
     }
 
@@ -275,8 +275,8 @@ public class ModbusMasterLib {
      */
     private void checkResponse(ModbusResponse response) {
         if (response.isException())
-            log.info("Exception response: message=" + response.getExceptionMessage());
+            log.e("Exception response: message=" + response.getExceptionMessage());
         else
-            log.info("Success");
+            log.e("Success");
     }
 }

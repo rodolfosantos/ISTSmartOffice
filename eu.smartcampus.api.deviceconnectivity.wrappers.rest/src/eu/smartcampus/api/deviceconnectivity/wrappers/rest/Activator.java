@@ -1,6 +1,6 @@
 package eu.smartcampus.api.deviceconnectivity.wrappers.rest;
 
-import java.util.logging.Logger;
+import eu.smartcampus.api.deviceconnectivity.Logger;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -53,7 +53,7 @@ public final class Activator implements BundleActivator {
 
 					@Override
 					public void serviceModified(String serviceName) {
-						log.info("Wrapper- Service Modif  "
+						log.i("Wrapper- Service Modif  "
 								+ serviceName);
 						if (serviceName
 								.equals(IDatapointConnectivityService.class
@@ -70,7 +70,7 @@ public final class Activator implements BundleActivator {
 
 					@Override
 					public void serviceAdded(String serviceName) {
-						log.info("Wrapper- Service Added  "
+						log.i("Wrapper- Service Added  "
 								+ serviceName);
 						// Bound an implementation to the REST adapter
 						if (serviceName
@@ -91,7 +91,7 @@ public final class Activator implements BundleActivator {
 					}
 				});
 
-		log.info("inserted service listener");
+		log.i("inserted service listener");
 
 	}
 

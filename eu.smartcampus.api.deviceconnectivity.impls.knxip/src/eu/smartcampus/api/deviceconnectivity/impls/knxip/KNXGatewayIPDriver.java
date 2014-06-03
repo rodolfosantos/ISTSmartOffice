@@ -3,7 +3,7 @@ package eu.smartcampus.api.deviceconnectivity.impls.knxip;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
-import java.util.logging.Logger;
+import eu.smartcampus.api.deviceconnectivity.Logger;
 
 import tuwien.auto.calimero.GroupAddress;
 import tuwien.auto.calimero.exception.KNXException;
@@ -79,13 +79,13 @@ public class KNXGatewayIPDriver {
 
 			pc = new ProcessCommunicatorImpl(knxLink);
 			isConnected = true;
-			log.info("Connected to KNX-IP Gateway!");
+			log.i("Connected to KNX-IP Gateway!");
 		} catch (KNXException e) {
-			log.info(e.getMessage());
+			log.e(e.getMessage());
 			isConnected = false;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			log.info(e.getMessage());
+			log.e(e.getMessage());
 			isConnected = false;
 		}
 
@@ -129,7 +129,7 @@ public class KNXGatewayIPDriver {
 			knxLink.close();
 
 		this.isConnected = false;
-		log.info("KNX-IP connection closed.");
+		log.i("KNX-IP connection closed.");
 	}
 
 	/**

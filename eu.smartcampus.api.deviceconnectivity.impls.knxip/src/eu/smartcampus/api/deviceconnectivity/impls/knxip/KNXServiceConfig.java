@@ -5,8 +5,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -41,7 +41,7 @@ public class KNXServiceConfig {
 						new TypeToken<Map<String, DatapointMetadata>>() {
 						}.getType());
 
-		Map<DatapointAddress, DatapointMetadata> datapoints = new HashMap<DatapointAddress, DatapointMetadata>();
+		Map<DatapointAddress, DatapointMetadata> datapoints = new LinkedHashMap<DatapointAddress, DatapointMetadata>();
 
 		if (datapointSettings != null) {
 			Iterator<Entry<String, DatapointMetadata>> it = datapointSettings
@@ -70,7 +70,7 @@ public class KNXServiceConfig {
 	private static Map<DatapointAddress, DatapointMetadata> defaultKNXDatapointsConfig() {
 
 		// knx datapoints
-		Map<DatapointAddress, DatapointMetadata> knxDatapoints = new HashMap<DatapointAddress, DatapointMetadata>();
+		Map<DatapointAddress, DatapointMetadata> knxDatapoints = new LinkedHashMap<DatapointAddress, DatapointMetadata>();
 
 		MetadataBuilder knxMetadata1 = new DatapointMetadata.MetadataBuilder();
 		knxMetadata1.setCurrentSamplingInterval(5000);

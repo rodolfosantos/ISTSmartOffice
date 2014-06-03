@@ -16,7 +16,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Logger;
+import eu.smartcampus.api.deviceconnectivity.Logger;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -202,9 +202,9 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 			HttpsURLConnection
 					.setDefaultSSLSocketFactory(sc.getSocketFactory());
 		} catch (NoSuchAlgorithmException e) {
-			log.info(e.getMessage());
+			log.e(e.getMessage());
 		} catch (KeyManagementException e) {
-			log.info(e.getMessage());
+			log.e(e.getMessage());
 		}
 
 		// Create all-trusting host name verifier
@@ -242,7 +242,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 			}
 			in.close();
 		} catch (Exception e) {
-			log.info(e.getMessage());
+			log.e(e.getMessage());
 		}
 		return res;
 	}
@@ -452,7 +452,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 			} catch (ParseException e) {
 				System.err
 						.println("[Diogo] Constructor JavaMeasure.Java: probably malformed JSON file...");
-				log.info(e.getMessage());
+				log.e(e.getMessage());
 			}
 		}
 

@@ -1,6 +1,6 @@
 package eu.smartcampus.api.deviceconnectivity.impls.meterip;
 
-import java.util.logging.Logger;
+import eu.smartcampus.api.deviceconnectivity.Logger;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -19,7 +19,7 @@ public final class Activator implements BundleActivator {
 		DeviceConnectivityServiceRegistry.getInstance().addService(
 				DatapointConnectivityServiceMeterIPDriver.class.getName(),
 				serviceImpl);
-		log.info("Meter Started!");
+		log.i("Meter Started!");
 		
 		
 	}
@@ -28,7 +28,7 @@ public final class Activator implements BundleActivator {
 	public void stop(BundleContext context) throws Exception {
 		DeviceConnectivityServiceRegistry.getInstance().removeService(
 				DatapointConnectivityServiceMeterIPDriver.class.getName());
-		log.info("Meter Stopped!");
+		log.i("Meter Stopped!");
 	}
 
 }

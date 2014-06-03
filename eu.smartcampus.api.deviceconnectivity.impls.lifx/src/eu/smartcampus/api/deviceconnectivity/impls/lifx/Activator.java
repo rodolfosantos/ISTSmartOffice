@@ -1,6 +1,6 @@
 package eu.smartcampus.api.deviceconnectivity.impls.lifx;
 
-import java.util.logging.Logger;
+import eu.smartcampus.api.deviceconnectivity.Logger;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -20,7 +20,7 @@ public final class Activator implements BundleActivator {
 		DeviceConnectivityServiceRegistry.getInstance().addService(
 				DatapointConnectivityServiceLifxDriver.class.getName(),
 				serviceImpl);
-		log.info("Lifx Started!");
+		log.i("Lifx Started!");
 
 	}
 
@@ -28,7 +28,7 @@ public final class Activator implements BundleActivator {
 	public void stop(BundleContext context) throws Exception {
 		DeviceConnectivityServiceRegistry.getInstance().removeService(
 				DatapointConnectivityServiceLifxDriver.class.getName());
-		log.info("Lifx Stopped!");
+		log.i("Lifx Stopped!");
 	}
 
 }

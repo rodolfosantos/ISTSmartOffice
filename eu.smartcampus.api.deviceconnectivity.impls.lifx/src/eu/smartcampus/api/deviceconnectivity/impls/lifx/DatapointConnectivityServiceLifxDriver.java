@@ -2,7 +2,7 @@ package eu.smartcampus.api.deviceconnectivity.impls.lifx;
 
 import java.util.Iterator;
 import java.util.Map;
-import java.util.logging.Logger;
+import eu.smartcampus.api.deviceconnectivity.Logger;
 
 import jlifx.bulb.IBulb;
 import jlifx.commandline.Utils;
@@ -59,7 +59,7 @@ public class DatapointConnectivityServiceLifxDriver implements
 			throws OperationFailedException {
 		MetadataBuilder m = new DatapointMetadata.MetadataBuilder();
 		Map<String, IBulb> allDevices = gateway.getAllDevices(false);
-		log.info(allDevices.entrySet().toString());
+		log.i(allDevices.entrySet().toString());
 		if (allDevices.containsKey(address.getAddress())) {
 			IBulb bulb = allDevices.get(address.getAddress());
 			m.setAccessType(AccessType.READ_WRITE);

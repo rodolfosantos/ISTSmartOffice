@@ -1,6 +1,6 @@
 package eu.smartcampus.api.deviceconnectivity.wrappers.pubsub;
 
-import java.util.logging.Logger;
+import eu.smartcampus.api.deviceconnectivity.Logger;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -15,7 +15,7 @@ public final class Activator implements BundleActivator {
 	@Override
 	public void start(BundleContext arg0) throws Exception {
 		// TODO Auto-generated method stub
-		log.info("PUBSUUUUB!!");
+		log.i("PUBSUUUUB!!");
 		
 		final DatapointConnectivityServicePubSubWrapper pubsubwrapper = new DatapointConnectivityServicePubSubWrapper();
 		
@@ -42,7 +42,7 @@ public final class Activator implements BundleActivator {
 
 					@Override
 					public void serviceModified(String serviceName) {
-						log.info("Wrapper- Service Modif  "
+						log.i("Wrapper- Service Modif  "
 								+ serviceName);
 						if (serviceName
 								.equals(IDatapointConnectivityService.class
@@ -57,7 +57,7 @@ public final class Activator implements BundleActivator {
 
 					@Override
 					public void serviceAdded(String serviceName) {
-						log.info("Wrapper- Service Added  "
+						log.i("Wrapper- Service Added  "
 								+ serviceName);
 						// Bound an implementation to the REST adapter
 						if (serviceName

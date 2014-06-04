@@ -23,8 +23,7 @@ public final class Activator implements BundleActivator {
 				try {
 					KNXGatewayIPDriver.getInstance().start();
 				} catch (UnknownHostException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					log.e(e1.getMessage());
 				}
 
 				boolean connected = KNXGatewayIPDriver.getInstance()
@@ -37,11 +36,9 @@ public final class Activator implements BundleActivator {
 								.isConnected();
 						Thread.sleep(10000);
 					} catch (UnknownHostException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						log.e(e.getMessage());
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						log.e(e.getMessage());
 					}
 
 				}
@@ -59,8 +56,7 @@ public final class Activator implements BundleActivator {
 					try {
 						stop(context);
 					} catch (Exception e) {
-						e.printStackTrace();
-						log.e(e.getLocalizedMessage());
+						log.e(e.getMessage());
 					}
 			}
 		}).start();

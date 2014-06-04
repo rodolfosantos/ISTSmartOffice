@@ -1,13 +1,17 @@
 package eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import eu.smartcampus.api.deviceconnectivity.Logger;
 
+import eu.smartcampus.api.deviceconnectivity.Logger;
 import eu.smartcampus.api.deviceconnectivity.DatapointAddress;
 import eu.smartcampus.api.deviceconnectivity.DatapointMetadata;
 import eu.smartcampus.api.deviceconnectivity.DatapointReading;
@@ -51,6 +55,42 @@ public class DatapointConnectivityServiceAdapter implements
 		this.drivers = datapointsDrivers;
 		this.listeners = new HashSet<IDatapointConnectivityService.DatapointListener>();
 		initDatapointsDriversMapAndListeners(datapointsDrivers);
+		debugAddressList2File();
+	}
+
+	private void debugAddressList2File() {
+		ArrayList<String> resultList = new ArrayList<String>();
+		
+		Iterator<DatapointAddress> it = datapointsDriversAddressMap.keySet().iterator();
+		while (it.hasNext()) {
+			DatapointAddress datapointAddress = (DatapointAddress) it.next();
+			String otherAddr = datapointsDriversAddressMap.get(datapointAddress).getAddress();
+			try {
+				String description = this.getDatapointMetadata(datapointAddress).getDescription();
+				String access = this.getDatapointMetadata(datapointAddress).getAccessType().name();
+				resultList.add(datapointAddress.getAddress()+";"+otherAddr+";"+description+";"+access);
+			} catch (OperationFailedException e) {
+				resultList.add(datapointAddress.getAddress()+";"+otherAddr+";");
+			}
+		}
+		
+		Collections.sort(resultList);
+		String result = "";
+		Iterator<String> it2 = resultList.iterator();
+		while (it2.hasNext()) {
+			String string = (String) it2.next();
+			result+=string + "\n";
+		}
+		
+		try {
+			FileWriter writer = new FileWriter("AddressMapping.txt");
+			writer.write(result);
+			writer.close();
+
+		} catch (IOException e) {
+			System.err.println(e.getMessage());
+		}
+		
 	}
 
 	/**
@@ -83,8 +123,6 @@ public class DatapointConnectivityServiceAdapter implements
 				datapointsDriversAddressMap.put(new DatapointAddress(newAddr),
 						datapointAddress);
 				
-				//debug translation
-				System.out.println(datapointAddress.getAddress() +" --> "+ newAddr);
 				
 				i++;
 			}

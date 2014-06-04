@@ -236,6 +236,183 @@ public class KNXServiceConfig {
 		knxDatapoints.put(d14, knxMetadata14.build());
 		knxDatapoints.put(d15, knxMetadata15.build());
 
+//		// ================================================================
+//		// EnergyLab Plugs
+//		MetadataBuilder knxMetadataPlugs = new DatapointMetadata.MetadataBuilder();
+//		knxMetadataPlugs.setAccessType(AccessType.WRITE_ONLY);
+//		knxMetadataPlugs.setDatatype(Datatype.BOOLEAN);
+//
+//		for (int i = 1; i <= 12; i++) {
+//			DatapointAddress add = new DatapointAddress("0/0/" + i);
+//			knxMetadataPlugs.setDescription("Tomadas " + i);
+//			knxDatapoints.put(add, knxMetadataPlugs.build());
+//		}
+//
+//		// EnergyLab lights READ
+//		MetadataBuilder knxMetadataLightR = new DatapointMetadata.MetadataBuilder();
+//		knxMetadataLightR.setCurrentSamplingInterval(30000);
+//		knxMetadataLightR.setAccessType(AccessType.READ_ONLY);
+//		knxMetadataLightR.setDatatype(Datatype.INTEGER);
+//		knxMetadataLightR.setDisplayMax(100);
+//		knxMetadataLightR.setDisplayMin(1);
+//		knxMetadataLightR.setScale(2);
+//
+//		DatapointAddress l = new DatapointAddress("0/1/3");
+//		knxMetadataLightR.setDescription("Luz Quadro Status");
+//		knxDatapoints.put(l, knxMetadataLightR.build());
+//
+//		l = new DatapointAddress("0/1/5");
+//		knxMetadataLightR.setDescription("Luz Meio 1 Status");
+//		knxDatapoints.put(l, knxMetadataLightR.build());
+//
+//		l = new DatapointAddress("0/1/7");
+//		knxMetadataLightR.setDescription("Luz Meio 2 Status");
+//		knxDatapoints.put(l, knxMetadataLightR.build());
+//
+//		l = new DatapointAddress("0/1/9");
+//		knxMetadataLightR.setDescription("Luz TV Status");
+//		knxDatapoints.put(l, knxMetadataLightR.build());
+//
+//		// EnergyLab lights WRITE
+//		MetadataBuilder knxMetadataLightW = new DatapointMetadata.MetadataBuilder();
+//		knxMetadataLightW.setAccessType(AccessType.WRITE_ONLY);
+//		knxMetadataLightW.setDatatype(Datatype.INTEGER);
+//		knxMetadataLightW.setDisplayMax(100);
+//		knxMetadataLightW.setDisplayMin(1);
+//
+//		l = new DatapointAddress("0/1/1");
+//		knxMetadataLightW.setDescription("￼ On/Off Luzes todas");
+//		knxDatapoints.put(l, knxMetadataLightW.build());
+//
+//		l = new DatapointAddress("0/1/0");
+//		knxMetadataLightW.setDescription("Luz Quadro");
+//		knxDatapoints.put(l, knxMetadataLightW.build());
+//
+//		l = new DatapointAddress("0/1/2");
+//		knxMetadataLightW.setDescription("Luz Meio 1");
+//		knxDatapoints.put(l, knxMetadataLightW.build());
+//
+//		l = new DatapointAddress("0/1/4");
+//		knxMetadataLightW.setDescription("Luz Meio 2");
+//		knxDatapoints.put(l, knxMetadataLightW.build());
+//
+//		l = new DatapointAddress("0/1/6");
+//		knxMetadataLightW.setDescription("Luz TV");
+//		knxDatapoints.put(l, knxMetadataLightW.build());
+//
+//		// EnergyLab Lamelas READ
+//		MetadataBuilder knxMetadataBlindsR = new DatapointMetadata.MetadataBuilder();
+//		knxMetadataBlindsR.setCurrentSamplingInterval(30000);
+//		knxMetadataBlindsR.setAccessType(AccessType.READ_ONLY);
+//		knxMetadataBlindsR.setDatatype(Datatype.INTEGER);
+//		knxMetadataBlindsR.setDisplayMax(100);
+//		knxMetadataBlindsR.setDisplayMin(1);
+//		knxMetadataBlindsR.setScale(2);
+//		
+//		l = new DatapointAddress("0/2/0");
+//		knxMetadataBlindsR.setDescription("Posição Lamelas 1 Status");
+//		knxDatapoints.put(l, knxMetadataBlindsR.build());
+//		
+//		l = new DatapointAddress("0/2/13");
+//		knxMetadataBlindsR.setDescription("Posição Lamelas 2 Status");
+//		knxDatapoints.put(l, knxMetadataBlindsR.build());
+//		
+//		l = new DatapointAddress("0/2/14");
+//		knxMetadataBlindsR.setDescription("Posição Lamelas 3 Status");
+//		knxDatapoints.put(l, knxMetadataBlindsR.build());
+//
+//		// EnergyLab Lamelas WRITE
+//		MetadataBuilder knxMetadataBlindsW = new DatapointMetadata.MetadataBuilder();
+//		knxMetadataBlindsW.setAccessType(AccessType.WRITE_ONLY);
+//		knxMetadataBlindsW.setDatatype(Datatype.INTEGER);
+//		knxMetadataBlindsW.setDisplayMax(100);
+//		knxMetadataBlindsW.setDisplayMin(1);
+//		
+//		l = new DatapointAddress("0/2/3");
+//		knxMetadataBlindsW.setDescription("Posição Lamelas 1");
+//		knxDatapoints.put(l, knxMetadataBlindsW.build());
+//		
+//		l = new DatapointAddress("0/2/6");
+//		knxMetadataBlindsW.setDescription("Posição Lamelas 2");
+//		knxDatapoints.put(l, knxMetadataBlindsW.build());
+//		
+//		l = new DatapointAddress("0/2/9");
+//		knxMetadataBlindsW.setDescription("Posição Lamelas 3");
+//		knxDatapoints.put(l, knxMetadataBlindsW.build());
+//		
+//		l = new DatapointAddress("0/2/12");
+//		knxMetadataBlindsW.setDescription("Posição Lamelas Todas");
+//		knxDatapoints.put(l, knxMetadataBlindsW.build());
+//		
+//		//Energy Lab Door
+//		MetadataBuilder knxMetadatDoor = new DatapointMetadata.MetadataBuilder();
+//		knxMetadatDoor.setDescription("Controlo da Porta");
+//		knxMetadatDoor.setAccessType(AccessType.WRITE_ONLY);
+//		knxMetadatDoor.setDatatype(Datatype.BOOLEAN);
+//		l = new DatapointAddress("0/3/0");
+//		knxDatapoints.put(l, knxMetadatDoor.build());	
+//		
+//		//Energy Lab Sensing
+//		MetadataBuilder knxMetadataSens = new DatapointMetadata.MetadataBuilder();
+//		knxMetadataSens.setCurrentSamplingInterval(10000);
+//		knxMetadataSens.setAccessType(AccessType.READ_ONLY);
+//		knxMetadataSens.setDatatype(Datatype.INTEGER);
+//		knxMetadataSens.setScale(2);
+//		
+//		l = new DatapointAddress("0/4/0");
+//		knxMetadataSens.setDescription("CO2");
+//		knxDatapoints.put(l, knxMetadataSens.build());	
+//		
+//		l = new DatapointAddress("0/4/1");
+//		knxMetadataSens.setDescription("￼Humidade Relativa");
+//		knxDatapoints.put(l, knxMetadataSens.build());
+//		
+//		l = new DatapointAddress("0/4/3");
+//		knxMetadataSens.setDescription("Temperatura");
+//		knxDatapoints.put(l, knxMetadataSens.build());
+//		
+//		l = new DatapointAddress("0/4/4");
+//		knxMetadataSens.setDescription("Luminosidade");
+//		knxDatapoints.put(l, knxMetadataSens.build());
+//		
+//		// ==
+//		
+//		l = new DatapointAddress("0/5/0");
+//		knxMetadataSens.setDescription("Porta");
+//		knxDatapoints.put(l, knxMetadataSens.build());
+//		
+//		l = new DatapointAddress("0/5/1");
+//		knxMetadataSens.setDescription("Janelas");
+//		knxDatapoints.put(l, knxMetadataSens.build());
+//		
+//		// ==
+//		
+//		l = new DatapointAddress("0/6/0");
+//		knxMetadataSens.setDescription("Temperatura");
+//		knxDatapoints.put(l, knxMetadataSens.build());
+//		
+//		l = new DatapointAddress("0/6/1");
+//		knxMetadataSens.setDescription("Vento");
+//		knxDatapoints.put(l, knxMetadataSens.build());
+//		
+//		l = new DatapointAddress("0/6/2");
+//		knxMetadataSens.setDescription("Chuva");
+//		knxDatapoints.put(l, knxMetadataSens.build());
+//		
+//		l = new DatapointAddress("0/6/3");
+//		knxMetadataSens.setDescription("Luminosidade");
+//		knxDatapoints.put(l, knxMetadataSens.build());
+//		
+//		l = new DatapointAddress("0/6/4");
+//		knxMetadataSens.setDescription("Alimentacao");
+//		knxDatapoints.put(l, knxMetadataSens.build());
+//		
+//		// AC TODO
+//		
+//	
+		
+		
+
 		// store
 		toJsonFile(CONFIG_FILENAME, knxDatapoints);
 
@@ -254,12 +431,12 @@ public class KNXServiceConfig {
 	private static void toJsonFile(String filename, Object object) {
 		Gson gson = new Gson();
 		String json = gson.toJson(object);
-		
+
 		Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
 		JsonParser jp = new JsonParser();
 		JsonElement je = jp.parse(json);
 		String prettyJsonString = gsonPretty.toJson(je);
-		
+
 		try {
 			FileWriter writer = new FileWriter(filename);
 			writer.write(prettyJsonString);

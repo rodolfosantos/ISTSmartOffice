@@ -158,7 +158,7 @@ public class KNXGatewayIPDriver {
 	 */
 	public boolean writeBool(String addr, boolean value) {
 		synchronized (pc) {
-			addr = addr.replace('-', '/');
+			
 
 			GroupAddress dst;
 			try {
@@ -194,7 +194,7 @@ public class KNXGatewayIPDriver {
 
 			try {
 				GroupAddress dst;
-				dst = new GroupAddress(addr.replace('-', '/'));
+				dst = new GroupAddress(addr);
 				pc.write(dst, value, ProcessCommunicationBase.SCALING);
 				return true;
 			} catch (KNXFormatException e) {
@@ -219,7 +219,7 @@ public class KNXGatewayIPDriver {
 		synchronized (pc) {
 
 			try {
-				GroupAddress dst = new GroupAddress(addr.replace('-', '/'));
+				GroupAddress dst = new GroupAddress(addr);
 				return pc.readBool(dst);
 			} catch (KNXFormatException e) {
 				log.e(e.getMessage());
@@ -245,7 +245,7 @@ public class KNXGatewayIPDriver {
 		synchronized (pc) {
 
 			try {
-				GroupAddress dst = new GroupAddress(addr.replace('-', '/'));
+				GroupAddress dst = new GroupAddress(addr);
 				return pc.readUnsigned(dst, ProcessCommunicator.SCALING);
 			} catch (KNXFormatException e) {
 				log.e(e.getMessage());
@@ -270,7 +270,7 @@ public class KNXGatewayIPDriver {
 		synchronized (pc) {
 
 			try {
-				GroupAddress dst = new GroupAddress(addr.replace('-', '/'));
+				GroupAddress dst = new GroupAddress(addr);
 				return pc.readFloat(dst, false);
 			} catch (KNXFormatException e) {
 				log.e(e.getMessage());

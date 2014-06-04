@@ -30,7 +30,7 @@ public class DatapointConnectivityServicePubSubWrapper {
 	 * Instantiates a new datapoint connectivity service rest wrapper.
 	 */
 	DatapointConnectivityServicePubSubWrapper() {
-		this.client = new BayeuxClient("http://sb-dev.tagus.ist.utl.pt:8000/faye",
+		this.client = new BayeuxClient("http://localhost:8000/faye",
 				LongPollingTransport.create(null));
 		client.handshake();
 		client.waitFor(1000, BayeuxClient.State.CONNECTED);

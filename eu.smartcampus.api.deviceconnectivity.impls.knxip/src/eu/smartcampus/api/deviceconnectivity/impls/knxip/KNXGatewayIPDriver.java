@@ -119,27 +119,33 @@ public class KNXGatewayIPDriver {
 	public void reconnect() {
 		if (isReconnecting)
 			return;
+		
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				int wait = 2000;
 
-		int wait = 2000;
-
-		isConnected = false;
-		stop();
-		while (!isConnected) {
-			try {
-				Thread.sleep(wait);
-				wait = wait * 2;
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				isConnected = false;
+				stop();
+				while (!isConnected) {
+					try {
+						Thread.sleep(wait);
+						wait = wait * 2;
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					log.i("Reconnecting to KNX Gateway...");
+					try {
+						start();
+					} catch (UnknownHostException e) {
+						log.e(e.getMessage());
+					}
+				}
+				isReconnecting = false;
 			}
-			log.i("Reconnecting to KNX Gateway...");
-			try {
-				start();
-			} catch (UnknownHostException e) {
-				log.e(e.getMessage());
-			}
-		}
-		isReconnecting = false;
+		}).start();		
 	}
 
 	/**
@@ -247,7 +253,7 @@ public class KNXGatewayIPDriver {
 				log.e(e.getMessage());
 				reconnect();
 			} catch (InterruptedException e) {
-				log.e(e.getMessage());
+				log.e("InterruptedException" + e.getMessage());
 			}
 		}
 		return Float.MIN_VALUE;

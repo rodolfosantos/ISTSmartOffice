@@ -3,8 +3,8 @@ package eu.smartcampus.api.deviceconnectivity.impls.knxip;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
-import eu.smartcampus.api.deviceconnectivity.Logger;
 
+import eu.smartcampus.api.deviceconnectivity.Logger;
 import tuwien.auto.calimero.GroupAddress;
 import tuwien.auto.calimero.exception.KNXException;
 import tuwien.auto.calimero.exception.KNXFormatException;
@@ -30,6 +30,7 @@ public class KNXGatewayIPDriver {
 	private KNXNetworkLink knxLink;
 	private ProcessCommunicator pc;
 	private boolean isConnected;
+	private boolean isReconnecting;
 
 	/**
 	 * Instantiates a new KNX gateway ip driver.
@@ -41,6 +42,7 @@ public class KNXGatewayIPDriver {
 		super();
 		this.remoteHost = KNXGatewayIPConfig.loadGatewayConfig();
 		this.isConnected = false;
+		this.isReconnecting = false;
 	}
 
 	public static KNXGatewayIPDriver getInstance() {
@@ -82,32 +84,14 @@ public class KNXGatewayIPDriver {
 			log.i("Connected to KNX-IP Gateway!");
 		} catch (KNXException e) {
 			log.e(e.getMessage());
+			e.printStackTrace();
 			isConnected = false;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			log.e(e.getMessage());
+			e.printStackTrace();
 			isConnected = false;
 		}
-
-		// new Thread(new Runnable() {
-
-		// @Override
-		// public void run() {
-		// try {
-		// knxLink = new KNXNetworkLinkIP(remoteHost, TPSettings.TP1);
-		// pc = new ProcessCommunicatorImpl(knxLink);
-		// isConnected = true;
-		// log.info("Connected to KNX-IP Gateway!");
-		// } catch (KNXException e) {
-		// log.info(e.getMessage());
-		// isConnected = false;
-		// } catch (InterruptedException e) {
-		// // TODO Auto-generated catch block
-		// log.info(e.getMessage());
-		// isConnected = false;
-		// }
-		// }
-		// }).start();
 
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 			public void run() {
@@ -132,6 +116,32 @@ public class KNXGatewayIPDriver {
 		log.i("KNX-IP connection closed.");
 	}
 
+	public void reconnect() {
+		if (isReconnecting)
+			return;
+
+		int wait = 2000;
+
+		isConnected = false;
+		stop();
+		while (!isConnected) {
+			try {
+				Thread.sleep(wait);
+				wait = wait * 2;
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			log.i("Reconnecting to KNX Gateway...");
+			try {
+				start();
+			} catch (UnknownHostException e) {
+				log.e(e.getMessage());
+			}
+		}
+		isReconnecting = false;
+	}
+
 	/**
 	 * Write a boolean value to KNX datapoint.
 	 * 
@@ -139,22 +149,29 @@ public class KNXGatewayIPDriver {
 	 *            the datapoint address
 	 * @param value
 	 *            the value
-	 * @throws KNXTimeoutException
-	 *             the KNX timeout exception
-	 * @throws KNXLinkClosedException
-	 *             the KNX link closed exception
-	 * @throws KNXFormatException
-	 *             the KNX format exception
 	 */
-	public void writeBool(String addr, boolean value)
-			throws KNXTimeoutException, KNXLinkClosedException,
-			KNXFormatException {
+	public boolean writeBool(String addr, boolean value) {
 		synchronized (pc) {
 			addr = addr.replace('-', '/');
 
-			GroupAddress dst = new GroupAddress(addr);
-			pc.write(dst, value);
+			GroupAddress dst;
+			try {
+				dst = new GroupAddress(addr);
+				pc.write(dst, value);
+				return true;
+			} catch (KNXFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (KNXTimeoutException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (KNXLinkClosedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
+		return false;
 	}
 
 	/**
@@ -164,15 +181,25 @@ public class KNXGatewayIPDriver {
 	 *            the address
 	 * @param value
 	 *            the int value between 0 and 100
-	 * @throws KNXException
-	 *             the KNX exception
 	 */
-	public void writeScalar(String addr, int value) throws KNXException {
+	public boolean writeScalar(String addr, int value) {
 		// TODO verificar se aceita float
 		synchronized (pc) {
-			GroupAddress dst = new GroupAddress(addr.replace('-', '/'));
-			pc.write(dst, value, ProcessCommunicationBase.SCALING);
+
+			try {
+				GroupAddress dst;
+				dst = new GroupAddress(addr.replace('-', '/'));
+				pc.write(dst, value, ProcessCommunicationBase.SCALING);
+				return true;
+			} catch (KNXFormatException e) {
+				log.e(e.getMessage());
+			} catch (KNXException e) {
+				log.e(e.getMessage());
+				reconnect();
+			}
+
 		}
+		return false;
 	}
 
 	/**
@@ -181,17 +208,24 @@ public class KNXGatewayIPDriver {
 	 * @param addr
 	 *            the datapoint address
 	 * @return true, if successful
-	 * @throws KNXException
-	 *             the KNX exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
 	 */
-	public boolean readBoolean(String addr) throws KNXException,
-			InterruptedException {
+	public boolean readBoolean(String addr) {
 		synchronized (pc) {
-			GroupAddress dst = new GroupAddress(addr.replace('-', '/'));
-			return pc.readBool(dst);
+
+			try {
+				GroupAddress dst = new GroupAddress(addr.replace('-', '/'));
+				return pc.readBool(dst);
+			} catch (KNXFormatException e) {
+				log.e(e.getMessage());
+			} catch (KNXException e) {
+				log.e(e.getMessage());
+				reconnect();
+			} catch (InterruptedException e) {
+				log.e(e.getMessage());
+			}
+
 		}
+		return false;
 	}
 
 	/**
@@ -200,17 +234,23 @@ public class KNXGatewayIPDriver {
 	 * @param addr
 	 *            the datapoint address
 	 * @return the float
-	 * @throws KNXException
-	 *             the KNX exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
 	 */
-	public float readScalar(String addr) throws KNXException,
-			InterruptedException {
+	public float readScalar(String addr) {
 		synchronized (pc) {
-			GroupAddress dst = new GroupAddress(addr.replace('-', '/'));
-			return pc.readUnsigned(dst, ProcessCommunicator.SCALING);
+
+			try {
+				GroupAddress dst = new GroupAddress(addr.replace('-', '/'));
+				return pc.readUnsigned(dst, ProcessCommunicator.SCALING);
+			} catch (KNXFormatException e) {
+				log.e(e.getMessage());
+			} catch (KNXException e) {
+				log.e(e.getMessage());
+				reconnect();
+			} catch (InterruptedException e) {
+				log.e(e.getMessage());
+			}
 		}
+		return Float.MIN_VALUE;
 	}
 
 	/**
@@ -219,17 +259,24 @@ public class KNXGatewayIPDriver {
 	 * @param addr
 	 *            the datapoint address
 	 * @return the float
-	 * @throws KNXException
-	 *             the KNX exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
 	 */
-	public float readFloat(String addr) throws KNXException,
-			InterruptedException {
+	public float readFloat(String addr) {
 		synchronized (pc) {
-			GroupAddress dst = new GroupAddress(addr.replace('-', '/'));
-			return pc.readFloat(dst, false);
+
+			try {
+				GroupAddress dst = new GroupAddress(addr.replace('-', '/'));
+				return pc.readFloat(dst, false);
+			} catch (KNXFormatException e) {
+				log.e(e.getMessage());
+			} catch (KNXException e) {
+				log.e(e.getMessage());
+				reconnect();
+			} catch (InterruptedException e) {
+				log.e(e.getMessage());
+			}
+
 		}
+		return Float.MIN_VALUE;
 	}
 
 }

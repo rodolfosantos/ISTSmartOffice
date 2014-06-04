@@ -10,26 +10,41 @@ import eu.smartcampus.api.deviceconnectivity.Logger;
 import eu.smartcampus.api.deviceconnectivity.osgi.registries.DeviceConnectivityServiceRegistry;
 
 public final class Activator implements BundleActivator {
-	static private Logger log = Logger.getLogger(Activator.class.getName());  
-	
+	static private Logger log = Logger.getLogger(Activator.class.getName());
+
 	@Override
 	public void start(final BundleContext context) throws Exception {
-		
+
 		new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				// Connect to KNX gateway
+				try {
+					KNXGatewayIPDriver.getInstance().start();
+				} catch (UnknownHostException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				boolean connected = KNXGatewayIPDriver.getInstance()
+						.isConnected();
+
+				while (!connected) {
 					try {
 						KNXGatewayIPDriver.getInstance().start();
+						connected = KNXGatewayIPDriver.getInstance()
+								.isConnected();
+						Thread.sleep(10000);
 					} catch (UnknownHostException e) {
-						log.i(e.getMessage());
-						try {
-							stop(context);
-						} catch (Exception e1) {}
-						return;
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 
+				}
 
 				if (KNXGatewayIPDriver.getInstance().isConnected()) {
 					log.i("Connected to KNX Gateway!");

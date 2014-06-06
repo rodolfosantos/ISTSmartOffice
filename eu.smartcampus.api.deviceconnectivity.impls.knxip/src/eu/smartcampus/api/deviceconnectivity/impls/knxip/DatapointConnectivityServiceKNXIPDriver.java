@@ -1,14 +1,22 @@
 package eu.smartcampus.api.deviceconnectivity.impls.knxip;
 
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import tuwien.auto.calimero.DetachEvent;
+import tuwien.auto.calimero.GroupAddress;
+import tuwien.auto.calimero.process.ProcessEvent;
+import tuwien.auto.calimero.process.ProcessListener;
 import eu.smartcampus.api.deviceconnectivity.DatapointAddress;
 import eu.smartcampus.api.deviceconnectivity.DatapointMetadata;
 import eu.smartcampus.api.deviceconnectivity.DatapointMetadata.AccessType;
+import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService.ErrorType;
 import eu.smartcampus.api.deviceconnectivity.DatapointReading;
 import eu.smartcampus.api.deviceconnectivity.DatapointValue;
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
@@ -37,7 +45,9 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 	/**
 	 * The datapoints.
 	 */
-	private Map<DatapointAddress, DatapointMetadata> datapoints;
+	private Map<DatapointAddress, DatapointMetadata> datapointsMetadata;
+	private Map<DatapointAddress, DatapointReading> datapointsStatus;
+	private List<DatapointAddress> uptadingDatapoint;
 
 	private IHistoryDataStorageService storageService;
 
@@ -46,19 +56,111 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 	 * 
 	 * @param driver
 	 *            the driver
-	 * @param datapoints
+	 * @param datapointsMetadata
 	 *            the datapoints
 	 */
 	public DatapointConnectivityServiceKNXIPDriver() {
 		super();
+		this.datapointsMetadata = KNXServiceConfig.loadDatapointsConfigs();
+		this.datapointsStatus = new HashMap<DatapointAddress, DatapointReading>();
+		this.uptadingDatapoint = new ArrayList<DatapointAddress>();
+		this.listeners = new HashSet<DatapointListener>();
+
 		this.driver = new KNXGatewayIPDriver("172.20.70.147");
 		try {
 			this.driver.start();
 		} catch (UnknownHostException e) {
 			driver.reconnectGateway();
 		}
-		this.datapoints = KNXServiceConfig.loadDatapointsConfigs();
-		this.listeners = new HashSet<DatapointListener>();
+
+		updateDatapointStatus();
+		driver.addProcessEventListener(new ProcessListener() {
+
+			@Override
+			public void groupWrite(ProcessEvent arg0) {
+				final DatapointAddress datapointAddress = new DatapointAddress(
+						arg0.getDestination().toString());
+
+				// update value
+				new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						log.i("KNX Event: " + datapointAddress);
+
+						if (!datapointsMetadata.keySet().contains(
+								datapointAddress))
+							return;
+
+						if (!(datapointsMetadata.get(datapointAddress)
+								.getAccessType() == AccessType.READ_ONLY))
+							return;
+
+						if (uptadingDatapoint.contains(datapointAddress)) {
+							uptadingDatapoint.remove(datapointAddress);
+							return;
+						}
+
+						uptadingDatapoint.add(datapointAddress);
+						requestDatapointRead(datapointAddress,
+								new ReadCallback() {
+
+									@Override
+									public void onReadCompleted(
+											DatapointAddress address,
+											DatapointReading[] readings,
+											int requestId) {
+										datapointsStatus.put(datapointAddress,
+												readings[0]);
+										log.i("KNX Update: "
+												+ address + "="
+												+ readings[0].getValue());
+									}
+
+									@Override
+									public void onReadAborted(
+											DatapointAddress address,
+											ErrorType reason, int requestId) {
+									}
+								});
+					}
+				}).start();
+			}
+
+			@Override
+			public void detached(DetachEvent arg0) {
+			}
+		});
+	}
+
+	private void updateDatapointStatus() {
+		Iterator<DatapointAddress> it = datapointsMetadata.keySet().iterator();
+		while (it.hasNext()) {
+			final DatapointAddress datapointAddress = (DatapointAddress) it
+					.next();
+			DatapointMetadata m = datapointsMetadata.get(datapointAddress);
+			if (DatapointMetadata.AccessType.READ_ONLY == m.getAccessType()) {
+				requestDatapointRead(datapointAddress, new ReadCallback() {
+
+					@Override
+					public void onReadCompleted(DatapointAddress address,
+							DatapointReading[] readings, int requestId) {
+						datapointsStatus.put(datapointAddress, readings[0]);
+						log.i("KNX Update: "
+								+ address + "="
+								+ readings[0].getValue());
+
+					}
+
+					@Override
+					public void onReadAborted(DatapointAddress address,
+							ErrorType reason, int requestId) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+			}
+		}
 	}
 
 	@Override
@@ -68,9 +170,10 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 	@Override
 	public DatapointAddress[] getAllDatapoints() {
-		DatapointAddress[] result = new DatapointAddress[datapoints.size()];
+		DatapointAddress[] result = new DatapointAddress[datapointsMetadata
+				.size()];
 
-		Iterator<DatapointAddress> it = datapoints.keySet().iterator();
+		Iterator<DatapointAddress> it = datapointsMetadata.keySet().iterator();
 		int i = 0;
 		while (it.hasNext()) {
 			DatapointAddress datapointAddress = (DatapointAddress) it.next();
@@ -108,7 +211,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 	@Override
 	public DatapointMetadata getDatapointMetadata(DatapointAddress address) {
-		return this.datapoints.get(address);
+		return this.datapointsMetadata.get(address);
 	}
 
 	@Override
@@ -126,7 +229,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 		switch (m.getDatatype()) {
 		case INTEGER:
 			// Test scale type (0-100)
-			if (m.getDisplayMax() <= 100 && m.getDisplayMin() > 0) {		
+			if (m.getDisplayMax() <= 100 && m.getDisplayMin() > 0) {
 				try {
 					float val = driver.readPercentage(addr);
 					String value = val + "";
@@ -134,12 +237,14 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 							new DatapointValue(value));
 					readCallback.onReadCompleted(address,
 							new DatapointReading[] { reading }, 0);
+					notifyDatapointUpdate(address,
+							new DatapointReading[] { reading });
 				} catch (Exception e) {
 					readCallback.onReadAborted(address,
 							ErrorType.DEVICE_CONNECTION_ERROR, 0);
 					return 0;
 				}
-				
+
 			} else {
 				try {
 					float val = driver.read2Bytes(addr);
@@ -148,6 +253,8 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 							new DatapointValue(value));
 					readCallback.onReadCompleted(address,
 							new DatapointReading[] { reading }, 0);
+					notifyDatapointUpdate(address,
+							new DatapointReading[] { reading });
 				} catch (Exception e) {
 					readCallback.onReadAborted(address,
 							ErrorType.DEVICE_CONNECTION_ERROR, 0);
@@ -156,19 +263,21 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			}
 			break;
 		case BOOLEAN:
-			
+
 			try {
 				boolean value = driver.readSwitch(addr);
-				DatapointReading reading = new DatapointReading(new DatapointValue(
-						value));
+				DatapointReading reading = new DatapointReading(
+						new DatapointValue(value));
 				readCallback.onReadCompleted(address,
 						new DatapointReading[] { reading }, 0);
+				notifyDatapointUpdate(address,
+						new DatapointReading[] { reading });
 			} catch (Exception e) {
 				readCallback.onReadAborted(address,
 						ErrorType.DEVICE_CONNECTION_ERROR, 0);
-				return 0;				
+				return 0;
 			}
-			
+
 			break;
 		case STRING:// TODO not used yet
 			readCallback.onReadAborted(address,
@@ -218,13 +327,13 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 				driver.writePercentage(addr, values[0].getIntValue());
 				writeCallback.onWriteCompleted(address,
 						WritingConfirmationLevel.DEVICE_ACTION_TAKEN, 0);
-				notifyDatapointUpdate(address,
+				notifyDatapointUpdate(
+						address,
 						new DatapointReading[] { new DatapointReading(values[0]) });
 			} catch (Exception e) {
 				writeCallback.onWriteAborted(address,
 						ErrorType.DEVICE_CONNECTION_ERROR, 0);
 			}
-			
 
 			break;
 		case BOOLEAN:
@@ -232,7 +341,8 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 				driver.writeSwitch(addr, values[0].getBooleanValue());
 				writeCallback.onWriteCompleted(address,
 						WritingConfirmationLevel.DEVICE_ACTION_TAKEN, 0);
-				notifyDatapointUpdate(address,
+				notifyDatapointUpdate(
+						address,
 						new DatapointReading[] { new DatapointReading(values[0]) });
 			} catch (Exception e) {
 				writeCallback.onWriteAborted(address,
@@ -245,7 +355,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 			break;
 		}
-		
+
 		return 0;
 	}
 

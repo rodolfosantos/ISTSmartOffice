@@ -21,8 +21,11 @@ import eu.smartcampus.api.deviceconnectivity.DatapointReading;
 import eu.smartcampus.api.deviceconnectivity.DatapointValue;
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
 import eu.smartcampus.api.deviceconnectivity.Logger;
+import eu.smartcampus.api.historydatastorage.HistoryDataStorageServiceImpl;
 import eu.smartcampus.api.historydatastorage.HistoryValue;
 import eu.smartcampus.api.historydatastorage.IHistoryDataStorageService;
+import eu.smartcampus.api.historydatastorage.osgi.registries.HistoryDataStorageServiceRegistry;
+import eu.smartcampus.api.osgi.registries.IServiceRegistry.ServiceRegistryListener;
 
 /**
  * The Class DatapointConnectivityServiceKNXIPDriver.
@@ -72,6 +75,43 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 		} catch (UnknownHostException e) {
 			driver.reconnectGateway();
 		}
+		
+		this.storageService = HistoryDataStorageServiceRegistry.getInstance()
+				.getService(HistoryDataStorageServiceImpl.class.getName());
+
+		if (this.storageService != null)
+			updateDatapointStatus();
+		else {
+			HistoryDataStorageServiceRegistry.getInstance().addServiceListener(
+					new ServiceRegistryListener() {
+						@Override
+						public void serviceRemoved(String serviceName) {
+							// TODO Auto-generated method stub
+
+						}
+
+						@Override
+						public void serviceModified(String serviceName) {
+							// TODO Auto-generated method stub
+
+						}
+
+						@Override
+						public void serviceAdded(String serviceName) {
+							if (serviceName
+									.equals(HistoryDataStorageServiceImpl.class
+											.getName())) {
+								storageService = HistoryDataStorageServiceRegistry
+										.getInstance()
+										.getService(
+												HistoryDataStorageServiceImpl.class
+														.getName());
+								updateDatapointStatus();
+							}
+
+						}
+					});
+		}
 
 		updateDatapointStatus();
 		driver.addProcessEventListener(new ProcessListener() {
@@ -115,6 +155,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 										log.i("KNX Update: "
 												+ address + "="
 												+ readings[0].getValue());
+										storageService.addValue(datapointAddress.getAddress(), readings[0].getTimestamp(), readings[0].getValue().toString());
 									}
 
 									@Override

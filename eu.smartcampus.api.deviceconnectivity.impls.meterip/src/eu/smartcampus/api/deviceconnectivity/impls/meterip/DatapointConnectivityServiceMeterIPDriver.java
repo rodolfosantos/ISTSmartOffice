@@ -37,8 +37,8 @@ import eu.smartcampus.api.historydatastorage.HistoryDataStorageServiceImpl;
 import eu.smartcampus.api.historydatastorage.HistoryValue;
 import eu.smartcampus.api.historydatastorage.IHistoryDataStorageService;
 import eu.smartcampus.api.historydatastorage.osgi.registries.HistoryDataStorageServiceRegistry;
-import eu.smartcampus.api.logger.registries.Logger;
-import eu.smartcampus.api.logger.registries.LoggerService;
+import eu.smartcampus.api.logger.Logger;
+import eu.smartcampus.api.logger.LoggerService;
 import eu.smartcampus.api.osgi.registries.IServiceRegistry.ServiceRegistryListener;
 
 /**

@@ -1,4 +1,4 @@
-package eu.smartcampus.api.logger.registries;
+package eu.smartcampus.api.logger;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -13,9 +13,13 @@ public class Logger {
 	private String className;
 	private LogService log;
 	private Queue<String> temporaryInfoQueue;
+	private Queue<String> temporaryDebugQueue;
+	private Queue<String> temporaryErrorQueue;
 
 	public Logger(String className) {
 		this.temporaryInfoQueue = new LinkedList<String>();
+		this.temporaryDebugQueue = new LinkedList<String>();
+		this.temporaryErrorQueue = new LinkedList<String>();
 		this.className = className;
 	}
 
@@ -39,9 +43,9 @@ public class Logger {
 		String message = "[ERROR:" + dateInfo + " @ " + className + "]: " + msg;
 		System.err.println(message);
 		if (log == null)
-			temporaryInfoQueue.add(message);
+			temporaryErrorQueue.add(message);
 		else
-			log.log(LogService.LOG_INFO, message);
+			log.log(LogService.LOG_ERROR, message);
 	}
 
 	public void d(String msg) {
@@ -51,7 +55,7 @@ public class Logger {
 		String message = "[DEBUG:" + dateInfo + " @ " + className + "]: " + msg;
 		System.out.println(message);
 		if (log == null)
-			temporaryInfoQueue.add(message);
+			temporaryDebugQueue.add(message);
 		else
 			log.log(LogService.LOG_INFO, message);
 	}
@@ -60,6 +64,15 @@ public class Logger {
 		this.log = logger;
 		for (String s : temporaryInfoQueue)
 			log.log(LogService.LOG_INFO, s);
+		temporaryInfoQueue.clear();
+		
+		for (String s : temporaryDebugQueue)
+			log.log(LogService.LOG_INFO, s);
+		temporaryDebugQueue.clear();
+		
+		for (String s : temporaryErrorQueue)
+			log.log(LogService.LOG_ERROR, s);
+		temporaryErrorQueue.clear();
 	}
 
 }

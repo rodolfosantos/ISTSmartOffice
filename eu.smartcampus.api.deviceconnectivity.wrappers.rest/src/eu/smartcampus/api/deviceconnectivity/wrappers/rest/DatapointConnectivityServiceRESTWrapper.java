@@ -6,8 +6,8 @@ import org.restlet.routing.Router;
 
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
 import eu.smartcampus.api.deviceconnectivity.wrappers.rest.impl.DatapointConnectivityServiceResources;
-import eu.smartcampus.api.logger.registries.Logger;
-import eu.smartcampus.api.logger.registries.LoggerService;
+import eu.smartcampus.api.logger.Logger;
+import eu.smartcampus.api.logger.LoggerService;
 
 /**
  * The Class DatapointConnectivityServiceRESTWrapper.

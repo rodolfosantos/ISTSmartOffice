@@ -22,8 +22,8 @@ import eu.smartcampus.api.historydatastorage.HistoryDataStorageServiceImpl;
 import eu.smartcampus.api.historydatastorage.HistoryValue;
 import eu.smartcampus.api.historydatastorage.IHistoryDataStorageService;
 import eu.smartcampus.api.historydatastorage.osgi.registries.HistoryDataStorageServiceRegistry;
-import eu.smartcampus.api.logger.registries.Logger;
-import eu.smartcampus.api.logger.registries.LoggerService;
+import eu.smartcampus.api.logger.Logger;
+import eu.smartcampus.api.logger.LoggerService;
 import eu.smartcampus.api.osgi.registries.IServiceRegistry.ServiceRegistryListener;
 
 /**
@@ -125,7 +125,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 					@Override
 					public void run() {
-						log.i("KNX Event: " + datapointAddress);
+						log.d("KNX Event: " + datapointAddress);
 
 						if (!datapointsMetadata.keySet().contains(
 								datapointAddress))
@@ -151,7 +151,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 											int requestId) {
 										datapointsStatus.put(datapointAddress,
 												readings[0]);
-										log.i("KNX Update: "
+										log.d("KNX Update: "
 												+ address + "="
 												+ readings[0].getValue());
 										storageService.addValue(datapointAddress.getAddress(), readings[0].getTimestamp(), readings[0].getValue().toString());
@@ -186,7 +186,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 					public void onReadCompleted(DatapointAddress address,
 							DatapointReading[] readings, int requestId) {
 						datapointsStatus.put(datapointAddress, readings[0]);
-						log.i("KNX Update: "
+						log.d("KNX Update: "
 								+ address + "="
 								+ readings[0].getValue());
 

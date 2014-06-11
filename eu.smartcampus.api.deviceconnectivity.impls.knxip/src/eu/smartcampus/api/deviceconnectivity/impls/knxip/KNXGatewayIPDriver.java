@@ -24,8 +24,8 @@ import tuwien.auto.calimero.process.ProcessCommunicator;
 import tuwien.auto.calimero.process.ProcessCommunicatorImpl;
 import tuwien.auto.calimero.process.ProcessEvent;
 import tuwien.auto.calimero.process.ProcessListener;
-import eu.smartcampus.api.logger.registries.Logger;
-import eu.smartcampus.api.logger.registries.LoggerService;
+import eu.smartcampus.api.logger.Logger;
+import eu.smartcampus.api.logger.LoggerService;
 
 /**
  * The Class KNXGatewayIPDriver is responsible for KNX datapoints communication

@@ -1,4 +1,4 @@
-package eu.smartcampus.api.logger.registries;
+package eu.smartcampus.api.logger;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -30,10 +30,6 @@ public class LoggerService {
 		Logger l = new Logger(className);
 		logInstances.add(l);
 		return l;
-	}
-
-	public String getImplementationName() {
-		return LoggerService.class.getName();
 	}
 
 }

@@ -26,8 +26,8 @@ import com.serotonin.modbus4j.msg.WriteRegisterResponse;
 import com.serotonin.modbus4j.msg.WriteRegistersRequest;
 import com.serotonin.modbus4j.msg.WriteRegistersResponse;
 
-import eu.smartcampus.api.logger.registries.Logger;
-import eu.smartcampus.api.logger.registries.LoggerService;
+import eu.smartcampus.api.logger.Logger;
+import eu.smartcampus.api.logger.LoggerService;
 
 
 /**

@@ -23,8 +23,8 @@
 					<instructions>
 						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
 						<Bundle-Version>${project.version}</Bundle-Version>
-						<Export-Package>eu.smartcampus.api.logger.registries</Export-Package>
-						<Bundle-Activator>eu.smartcampus.api.logger.trackers.Activator</Bundle-Activator>
+						<Export-Package>eu.smartcampus.api.logger</Export-Package>
+						<Bundle-Activator>eu.smartcampus.api.logger.Activator</Bundle-Activator>
 					</instructions>
 				</configuration>
 			</plugin>

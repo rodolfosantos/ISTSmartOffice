@@ -8,8 +8,8 @@ import org.osgi.framework.BundleContext;
 
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
 import eu.smartcampus.api.deviceconnectivity.osgi.registries.DeviceConnectivityServiceRegistry;
-import eu.smartcampus.api.logger.registries.Logger;
-import eu.smartcampus.api.logger.registries.LoggerService;
+import eu.smartcampus.api.logger.Logger;
+import eu.smartcampus.api.logger.LoggerService;
 import eu.smartcampus.api.osgi.registries.IServiceRegistry.ServiceRegistryListener;
 
 public final class Activator implements BundleActivator {

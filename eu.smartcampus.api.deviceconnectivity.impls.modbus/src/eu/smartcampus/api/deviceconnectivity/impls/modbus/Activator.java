@@ -6,8 +6,8 @@ import org.osgi.framework.BundleContext;
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
 import eu.smartcampus.api.deviceconnectivity.impls.modbus.master.ModbusMasterLib;
 import eu.smartcampus.api.deviceconnectivity.osgi.registries.DeviceConnectivityServiceRegistry;
-import eu.smartcampus.api.logger.registries.Logger;
-import eu.smartcampus.api.logger.registries.LoggerService;
+import eu.smartcampus.api.logger.Logger;
+import eu.smartcampus.api.logger.LoggerService;
 
 public final class Activator implements BundleActivator {
 	static private Logger log = LoggerService.getInstance().getLogger(Activator.class.getName());  

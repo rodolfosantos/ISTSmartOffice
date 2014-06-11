@@ -1,5 +1,17 @@
 #!/bin/bash
+
+rm -r ISTSmartOffice
+
+#download source code
+git clone https://github.com/rodolfosantos/ISTSmartOffice.git
+cd ISTSmartOffice
+
 git checkout origin/master
+
+#download apache felix
+wget https://dl.dropboxusercontent.com/u/14813041/felix/felix-framework-4.4.0.zip
+unzip felix-framework-4.4.0.zip
+
 
 mvn clean
 #install
@@ -14,3 +26,6 @@ cd felix-framework-4.4.0
 
 #run apache felix
 java -jar bin/felix.jar 
+
+
+

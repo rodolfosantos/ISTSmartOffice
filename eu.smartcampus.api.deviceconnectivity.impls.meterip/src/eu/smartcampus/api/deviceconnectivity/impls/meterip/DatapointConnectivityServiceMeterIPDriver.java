@@ -31,7 +31,6 @@ import org.json.simple.parser.ParseException;
 import eu.smartcampus.api.deviceconnectivity.DatapointAddress;
 import eu.smartcampus.api.deviceconnectivity.DatapointMetadata;
 import eu.smartcampus.api.deviceconnectivity.DatapointReading;
-import eu.smartcampus.api.deviceconnectivity.DatapointValue;
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
 import eu.smartcampus.api.historydatastorage.HistoryDataStorageServiceImpl;
 import eu.smartcampus.api.historydatastorage.HistoryValue;
@@ -132,7 +131,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 							MeterMeasure value = getNewMeasure(addr
 									.getAddress());
 							DatapointReading reading = new DatapointReading(
-									new DatapointValue(value.getTotalPower()
+									new String(value.getTotalPower()
 											+ ""));
 							//notify update
 							notifyDatapointUpdate(addr, new DatapointReading[]{reading});
@@ -370,7 +369,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 					.getCurrentSamplingInterval()) {
 				readCallback.onReadCompleted(address,
 						new DatapointReading[] { new DatapointReading(
-								new DatapointValue(lastReading.getValue())) },
+								new String(lastReading.getValue())) },
 						0);
 				return 0;
 			}
@@ -378,7 +377,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 
 		try {
 			MeterMeasure value = getNewMeasure(address.getAddress());
-			DatapointReading reading = new DatapointReading(new DatapointValue(
+			DatapointReading reading = new DatapointReading(new String(
 					value.getTotalPower() + ""));
 			// store reading
 			storageService.addValue(address.getAddress(), reading.getTimestamp(),
@@ -410,7 +409,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 		DatapointReading[] result = new DatapointReading[readings.length];
 
 		for (int i = 0; i < result.length; i++) {
-			result[i] = new DatapointReading(new DatapointValue(
+			result[i] = new DatapointReading(new String(
 					readings[i].getValue()), readings[i].getTimestamp());
 		}
 
@@ -421,7 +420,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 
 	@Override
 	public int requestDatapointWrite(DatapointAddress address,
-			DatapointValue[] values, WriteCallback writeCallback) {
+			String[] values, WriteCallback writeCallback) {
 		writeCallback.onWriteAborted(address,
 				ErrorType.UNSUPORTED_DATAPOINT_OPERATION, 0);
 		return 0;

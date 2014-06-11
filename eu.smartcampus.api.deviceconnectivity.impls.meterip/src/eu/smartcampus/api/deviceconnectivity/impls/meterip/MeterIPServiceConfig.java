@@ -72,7 +72,7 @@ public class MeterIPServiceConfig {
 		// meters datapoints
 		MetadataBuilder meterMetadata = new DatapointMetadata.MetadataBuilder();
 		meterMetadata.setAccessType(AccessType.READ_ONLY);
-		meterMetadata.setDatatype(Datatype.STRING);
+		meterMetadata.setDatatype(Datatype.BYTE_2);
 		meterMetadata.setCurrentSamplingInterval(7000);
 
 		Map<DatapointAddress, DatapointMetadata> meterDatapoints = new HashMap<DatapointAddress, DatapointMetadata>();

@@ -12,24 +12,13 @@ public class DatapointMetadata {
      * String for everything else.
      */
     public static enum Datatype {
-        /**
-         * An integer data type. Integers can represent also decimal formats. Datapoints
-         * that have decimal values are encoded by scale.
-         */
-        INTEGER,
-        
-        /**
-         * An boolean data type. Booleans can represent only two states, true or
-         * false
-         * 
-         */
-        BOOLEAN,
-
-        /**
-         * String datatypes are proxies to represent any other information.
-         */
-        STRING
+    	PERCENTAGE, // value between 0 and 100
+        SWITCH, // on(1) off(0) value 
+        BYTE_1, // 1 byte value
+        BYTE_2, // 2 byte value
+        // add more
     };
+    
 
     /**
      * Distinguishes the type of the operations that can be performed on this datapoint.

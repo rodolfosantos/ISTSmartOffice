@@ -8,7 +8,7 @@ import java.util.Date;
 public class DatapointReading implements Comparable<DatapointReading> {
 
     /** The value. */
-    private final DatapointValue value;
+    private final String value;
 
     /** The timestamp. */
     private final long timestamp;
@@ -19,7 +19,7 @@ public class DatapointReading implements Comparable<DatapointReading> {
      * @param value the datapoint value
      * @param timestamp the timestamp when it was read
      */
-    public DatapointReading(DatapointValue value, long timestamp) {
+    public DatapointReading(String value, long timestamp) {
         this.value = value;
         this.timestamp = timestamp;
     }
@@ -29,7 +29,7 @@ public class DatapointReading implements Comparable<DatapointReading> {
      *
      * @param value the datapoint value
      */
-    public DatapointReading(DatapointValue value) {
+    public DatapointReading(String value) {
         this(value, new Date().getTime());
     }
 
@@ -38,7 +38,7 @@ public class DatapointReading implements Comparable<DatapointReading> {
      *
      * @return the value read
      */
-    public DatapointValue getValue() {
+    public String getValue() {
         return value;
     }
 

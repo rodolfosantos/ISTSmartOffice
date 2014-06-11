@@ -11,7 +11,6 @@ import eu.smartcampus.api.deviceconnectivity.DatapointMetadata.AccessType;
 import eu.smartcampus.api.deviceconnectivity.DatapointMetadata.Datatype;
 import eu.smartcampus.api.deviceconnectivity.DatapointMetadata.MetadataBuilder;
 import eu.smartcampus.api.deviceconnectivity.DatapointReading;
-import eu.smartcampus.api.deviceconnectivity.DatapointValue;
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
 import eu.smartcampus.api.logger.Logger;
 import eu.smartcampus.api.logger.LoggerService;
@@ -64,7 +63,7 @@ public class DatapointConnectivityServiceLifxDriver implements
 		if (allDevices.containsKey(address.getAddress())) {
 			IBulb bulb = allDevices.get(address.getAddress());
 			m.setAccessType(AccessType.READ_WRITE);
-			m.setDatatype(Datatype.STRING);
+			m.setDatatype(Datatype.BYTE_2);
 			m.setDescription(bulb.getName());
 			return m.build();
 			
@@ -96,7 +95,7 @@ public class DatapointConnectivityServiceLifxDriver implements
 			res += " - Dim:" + Utils.wordToHexString(bulb.getDim());
 			res += " - Power:" + Utils.wordToHexString(bulb.getPower());
 
-			DatapointReading r = new DatapointReading(new DatapointValue(res));
+			DatapointReading r = new DatapointReading(new String(res));
 			readCallback.onReadCompleted(address, new DatapointReading[] { r },
 					0);
 		} else {
@@ -115,11 +114,11 @@ public class DatapointConnectivityServiceLifxDriver implements
 
 	@Override
 	public int requestDatapointWrite(DatapointAddress address,
-			DatapointValue[] values, WriteCallback writeCallback) {
+			String[] values, WriteCallback writeCallback) {
 
 		if (values.length == 1) {
-			DatapointValue value = values[0];
-			if (value.getStringValue().equals("true")) {
+			String value = values[0];
+			if (value.equals("true")) {
 				gateway.switchOn(address.getAddress());
 				writeCallback.onWriteCompleted(address,
 						WritingConfirmationLevel.DEVICE_ACTION_TAKEN, 0);
@@ -129,9 +128,9 @@ public class DatapointConnectivityServiceLifxDriver implements
 						WritingConfirmationLevel.DEVICE_ACTION_TAKEN, 0);
 			}
 		} else if (values.length == 3) {
-			gateway.setColor(address.getAddress(), values[0].getStringValue(),
-					Integer.parseInt(values[1].getStringValue()),
-					values[2].getStringValue());
+			gateway.setColor(address.getAddress(), values[0],
+					Integer.parseInt(values[1]),
+					values[2]);
 			writeCallback.onWriteCompleted(address,
 					WritingConfirmationLevel.DEVICE_ACTION_TAKEN, 0);
 		}

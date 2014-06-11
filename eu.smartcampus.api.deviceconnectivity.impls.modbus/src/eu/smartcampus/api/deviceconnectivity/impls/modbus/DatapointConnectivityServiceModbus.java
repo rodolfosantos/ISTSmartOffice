@@ -1,14 +1,5 @@
 package eu.smartcampus.api.deviceconnectivity.impls.modbus;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.X509Certificate;
-import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -19,27 +10,14 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
 import eu.smartcampus.api.deviceconnectivity.DatapointAddress;
 import eu.smartcampus.api.deviceconnectivity.DatapointMetadata;
 import eu.smartcampus.api.deviceconnectivity.DatapointReading;
-import eu.smartcampus.api.deviceconnectivity.DatapointValue;
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
 import eu.smartcampus.api.historydatastorage.HistoryDataStorageServiceImpl;
 import eu.smartcampus.api.historydatastorage.HistoryValue;
 import eu.smartcampus.api.historydatastorage.IHistoryDataStorageService;
 import eu.smartcampus.api.historydatastorage.osgi.registries.HistoryDataStorageServiceRegistry;
-import eu.smartcampus.api.osgi.registries.IServiceRegistry.ServiceRegistryListener;
 
 /**
  * The Class DatapointConnectivityServiceModbus
@@ -129,7 +107,7 @@ public class DatapointConnectivityServiceModbus implements
 					public void run() {
 
 						DatapointReading reading = new DatapointReading(
-								new DatapointValue(0));
+								new String(0+""));
 						// store reading
 						storageService.addValue(addr.getAddress(), reading
 								.getTimestamp(), reading.getValue().toString());
@@ -207,13 +185,13 @@ public class DatapointConnectivityServiceModbus implements
 					.getCurrentSamplingInterval()) {
 				readCallback.onReadCompleted(address,
 						new DatapointReading[] { new DatapointReading(
-								new DatapointValue(lastReading.getValue())) },
+								new String(lastReading.getValue())) },
 						0);
 				return 0;
 			}
 		}
 
-		DatapointReading reading = new DatapointReading(new DatapointValue(0));
+		DatapointReading reading = new DatapointReading(0+"");
 		// store reading
 		storageService.addValue(address.getAddress(), 0, 0 + "");
 
@@ -233,7 +211,7 @@ public class DatapointConnectivityServiceModbus implements
 		DatapointReading[] result = new DatapointReading[readings.length];
 
 		for (int i = 0; i < result.length; i++) {
-			result[i] = new DatapointReading(new DatapointValue(
+			result[i] = new DatapointReading(new String(
 					readings[i].getValue()), readings[i].getTimestamp());
 		}
 
@@ -244,7 +222,7 @@ public class DatapointConnectivityServiceModbus implements
 
 	@Override
 	public int requestDatapointWrite(DatapointAddress address,
-			DatapointValue[] values, WriteCallback writeCallback) {
+			String[] values, WriteCallback writeCallback) {
 		writeCallback.onWriteAborted(address,
 				ErrorType.UNSUPORTED_DATAPOINT_OPERATION, 0);
 		return 0;

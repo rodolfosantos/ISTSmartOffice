@@ -14,7 +14,6 @@ import java.util.Set;
 import eu.smartcampus.api.deviceconnectivity.DatapointAddress;
 import eu.smartcampus.api.deviceconnectivity.DatapointMetadata;
 import eu.smartcampus.api.deviceconnectivity.DatapointReading;
-import eu.smartcampus.api.deviceconnectivity.DatapointValue;
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
 import eu.smartcampus.api.logger.Logger;
 import eu.smartcampus.api.logger.LoggerService;
@@ -209,7 +208,7 @@ public class DatapointConnectivityServiceAdapter implements
 	}
 
 	public int requestDatapointWrite(DatapointAddress address,
-			DatapointValue[] values, WriteCallback writeCallback) {
+			String[] values, WriteCallback writeCallback) {
 		IDatapointConnectivityService d = getDriver(address);
 		if (d == null) {
 			writeCallback.onWriteAborted(address,

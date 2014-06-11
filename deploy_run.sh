@@ -1,7 +1,6 @@
 #!/bin/bash
 
-#remove previews folder
-#sudo rm -r smartcampusapi
+rm -r smartcampusapi
 
 #download source code
 git clone https://github.com/it4energy/smartcampusapi.git
@@ -10,10 +9,10 @@ cd smartcampusapi
 git checkout origin/master
 
 #download apache felix
-wget http://mirrors.fe.up.pt/pub/apache//felix/org.apache.felix.main.distribution-4.4.0.zip
-unzip org.apache.felix.main.distribution-4.4.0.zip
+wget https://dl.dropboxusercontent.com/u/14813041/felix/felix-framework-4.4.0.zip
+unzip felix-framework-4.4.0.zip
 
-#clean
+
 mvn clean
 #install
 mvn install
@@ -26,6 +25,7 @@ find . -iname *.jar -exec cp {} felix-framework-4.4.0/bundle/ \;
 cd felix-framework-4.4.0
 
 #run apache felix
-java -Dgosh.args=--nointeractive -jar bin/felix.jar > log.txt &
+java -jar bin/felix.jar 
+
 
 

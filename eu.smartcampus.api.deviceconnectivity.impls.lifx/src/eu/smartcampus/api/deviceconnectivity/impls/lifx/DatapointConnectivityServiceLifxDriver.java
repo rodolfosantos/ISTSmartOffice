@@ -2,7 +2,6 @@ package eu.smartcampus.api.deviceconnectivity.impls.lifx;
 
 import java.util.Iterator;
 import java.util.Map;
-import eu.smartcampus.api.deviceconnectivity.Logger;
 
 import jlifx.bulb.IBulb;
 import jlifx.commandline.Utils;
@@ -14,11 +13,13 @@ import eu.smartcampus.api.deviceconnectivity.DatapointMetadata.MetadataBuilder;
 import eu.smartcampus.api.deviceconnectivity.DatapointReading;
 import eu.smartcampus.api.deviceconnectivity.DatapointValue;
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
+import eu.smartcampus.api.logger.registries.Logger;
+import eu.smartcampus.api.logger.registries.LoggerService;
 
 public class DatapointConnectivityServiceLifxDriver implements
 		IDatapointConnectivityService {
 	
-	static private Logger log = Logger.getLogger(DatapointConnectivityServiceLifxDriver.class.getName());  
+	static private Logger log = LoggerService.getInstance().getLogger(DatapointConnectivityServiceLifxDriver.class.getName());  
 
 	private LifxGateway gateway;
 

@@ -1,19 +1,16 @@
 package eu.smartcampus.api.deviceconnectivity.impls.modbus;
 
-import eu.smartcampus.api.deviceconnectivity.Logger;
-
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
 import eu.smartcampus.api.deviceconnectivity.impls.modbus.master.ModbusMasterLib;
 import eu.smartcampus.api.deviceconnectivity.osgi.registries.DeviceConnectivityServiceRegistry;
-import eu.smartcampus.api.historydatastorage.HistoryDataStorageServiceImpl;
-import eu.smartcampus.api.historydatastorage.osgi.registries.HistoryDataStorageServiceRegistry;
-import eu.smartcampus.api.osgi.registries.IServiceRegistry.ServiceRegistryListener;
+import eu.smartcampus.api.logger.registries.Logger;
+import eu.smartcampus.api.logger.registries.LoggerService;
 
 public final class Activator implements BundleActivator {
-	static private Logger log = Logger.getLogger(Activator.class.getName());  
+	static private Logger log = LoggerService.getInstance().getLogger(Activator.class.getName());  
 
 	@Override
 	public void start(BundleContext context) throws Exception {

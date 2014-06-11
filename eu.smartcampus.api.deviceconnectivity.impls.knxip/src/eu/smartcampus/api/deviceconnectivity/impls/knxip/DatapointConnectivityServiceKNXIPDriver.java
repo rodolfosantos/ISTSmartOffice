@@ -10,21 +10,20 @@ import java.util.Map;
 import java.util.Set;
 
 import tuwien.auto.calimero.DetachEvent;
-import tuwien.auto.calimero.GroupAddress;
 import tuwien.auto.calimero.process.ProcessEvent;
 import tuwien.auto.calimero.process.ProcessListener;
 import eu.smartcampus.api.deviceconnectivity.DatapointAddress;
 import eu.smartcampus.api.deviceconnectivity.DatapointMetadata;
 import eu.smartcampus.api.deviceconnectivity.DatapointMetadata.AccessType;
-import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService.ErrorType;
 import eu.smartcampus.api.deviceconnectivity.DatapointReading;
 import eu.smartcampus.api.deviceconnectivity.DatapointValue;
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
-import eu.smartcampus.api.deviceconnectivity.Logger;
 import eu.smartcampus.api.historydatastorage.HistoryDataStorageServiceImpl;
 import eu.smartcampus.api.historydatastorage.HistoryValue;
 import eu.smartcampus.api.historydatastorage.IHistoryDataStorageService;
 import eu.smartcampus.api.historydatastorage.osgi.registries.HistoryDataStorageServiceRegistry;
+import eu.smartcampus.api.logger.registries.Logger;
+import eu.smartcampus.api.logger.registries.LoggerService;
 import eu.smartcampus.api.osgi.registries.IServiceRegistry.ServiceRegistryListener;
 
 /**
@@ -32,7 +31,7 @@ import eu.smartcampus.api.osgi.registries.IServiceRegistry.ServiceRegistryListen
  */
 public class DatapointConnectivityServiceKNXIPDriver implements
 		IDatapointConnectivityService {
-	static private Logger log = Logger
+	static private Logger log = LoggerService
 			.getLogger(DatapointConnectivityServiceKNXIPDriver.class.getName());
 
 	/**

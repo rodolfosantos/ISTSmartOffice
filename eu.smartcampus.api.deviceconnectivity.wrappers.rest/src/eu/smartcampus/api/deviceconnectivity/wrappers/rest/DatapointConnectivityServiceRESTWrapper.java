@@ -1,20 +1,20 @@
 package eu.smartcampus.api.deviceconnectivity.wrappers.rest;
 
-import eu.smartcampus.api.deviceconnectivity.Logger;
-
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.routing.Router;
 
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
 import eu.smartcampus.api.deviceconnectivity.wrappers.rest.impl.DatapointConnectivityServiceResources;
+import eu.smartcampus.api.logger.registries.Logger;
+import eu.smartcampus.api.logger.registries.LoggerService;
 
 /**
  * The Class DatapointConnectivityServiceRESTWrapper.
  */
 public class DatapointConnectivityServiceRESTWrapper extends Application {
 	
-	static private Logger log = Logger.getLogger(DatapointConnectivityServiceRESTWrapper.class.getName());  
+	static private Logger log = LoggerService.getInstance().getLogger(DatapointConnectivityServiceRESTWrapper.class.getName());  
 
 	/** The service implementation. */
 	private static IDatapointConnectivityService serviceImplementation;

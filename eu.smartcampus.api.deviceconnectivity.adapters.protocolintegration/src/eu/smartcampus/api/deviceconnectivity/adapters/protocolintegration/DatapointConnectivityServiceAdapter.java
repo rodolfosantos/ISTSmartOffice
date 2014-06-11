@@ -11,19 +11,20 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import eu.smartcampus.api.deviceconnectivity.Logger;
 import eu.smartcampus.api.deviceconnectivity.DatapointAddress;
 import eu.smartcampus.api.deviceconnectivity.DatapointMetadata;
 import eu.smartcampus.api.deviceconnectivity.DatapointReading;
 import eu.smartcampus.api.deviceconnectivity.DatapointValue;
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
+import eu.smartcampus.api.logger.registries.Logger;
+import eu.smartcampus.api.logger.registries.LoggerService;
 
 /**
  * The Class DatapointConnectivityServiceAdapter.
  */
 public class DatapointConnectivityServiceAdapter implements
 		IDatapointConnectivityService {
-	static private Logger log = Logger.getLogger(DatapointConnectivityServiceAdapter.class.getName());  
+	static private Logger log = LoggerService.getInstance().getLogger(DatapointConnectivityServiceAdapter.class.getName());  
 
 	/**
 	 * The datapoints drivers mapping.

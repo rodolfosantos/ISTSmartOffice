@@ -1,7 +1,5 @@
 package eu.smartcampus.api.deviceconnectivity.wrappers.rest;
 
-import eu.smartcampus.api.deviceconnectivity.Logger;
-
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.restlet.Component;
@@ -9,10 +7,12 @@ import org.restlet.data.Protocol;
 
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
 import eu.smartcampus.api.deviceconnectivity.osgi.registries.DeviceConnectivityServiceRegistry;
+import eu.smartcampus.api.logger.registries.Logger;
+import eu.smartcampus.api.logger.registries.LoggerService;
 import eu.smartcampus.api.osgi.registries.IServiceRegistry.ServiceRegistryListener;
 
 public final class Activator implements BundleActivator {
-	static private Logger log = Logger.getLogger(Activator.class.getName());  
+	static private Logger log = LoggerService.getInstance().getLogger(Activator.class.getName());  
 
 	private static final int SERVER_PORT = 8182;
 	private static final String PATH_TEMPLATE = "/deviceconnectivityapi";

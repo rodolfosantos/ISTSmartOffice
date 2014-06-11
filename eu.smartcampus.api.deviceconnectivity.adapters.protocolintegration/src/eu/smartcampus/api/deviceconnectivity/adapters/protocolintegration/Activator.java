@@ -2,26 +2,26 @@ package eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration;
 
 import java.util.HashMap;
 import java.util.Map;
-import eu.smartcampus.api.deviceconnectivity.Logger;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
 import eu.smartcampus.api.deviceconnectivity.osgi.registries.DeviceConnectivityServiceRegistry;
+import eu.smartcampus.api.logger.registries.Logger;
+import eu.smartcampus.api.logger.registries.LoggerService;
 import eu.smartcampus.api.osgi.registries.IServiceRegistry.ServiceRegistryListener;
 
 public final class Activator implements BundleActivator {
-	
-	static private Logger log = Logger.getLogger(Activator.class.getName());  
+
+	static private Logger log = LoggerService.getInstance().getLogger(Activator.class
+			.getName());
 
 	IDatapointConnectivityService serviceAdapterImpl = null;
 	Map<String, IDatapointConnectivityService> discoveredServices = new HashMap<String, IDatapointConnectivityService>();
 
 	@Override
 	public void start(BundleContext context) throws Exception {
-		
-		
 
 		DeviceConnectivityServiceRegistry.getInstance().addServiceListener(
 				new ServiceRegistryListener() {

@@ -1,7 +1,5 @@
 package eu.smartcampus.api.deviceconnectivity.impls.modbus.master;
 
-import eu.smartcampus.api.deviceconnectivity.Logger;
-
 import com.serotonin.modbus4j.ModbusFactory;
 import com.serotonin.modbus4j.ModbusMaster;
 import com.serotonin.modbus4j.base.ModbusUtils;
@@ -28,13 +26,16 @@ import com.serotonin.modbus4j.msg.WriteRegisterResponse;
 import com.serotonin.modbus4j.msg.WriteRegistersRequest;
 import com.serotonin.modbus4j.msg.WriteRegistersResponse;
 
+import eu.smartcampus.api.logger.registries.Logger;
+import eu.smartcampus.api.logger.registries.LoggerService;
+
 
 /**
  * The Class ModbusMasterEmulator.
  */
 public class ModbusMasterLib {
 	
-	static private Logger log = Logger.getLogger(ModbusMasterLib.class.getName());  
+	static private Logger log = LoggerService.getInstance().getLogger(ModbusMasterLib.class.getName());  
 
     /** The timeout. */
     private final int timeout = 2000;

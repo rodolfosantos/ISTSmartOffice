@@ -24,7 +24,8 @@ import tuwien.auto.calimero.process.ProcessCommunicator;
 import tuwien.auto.calimero.process.ProcessCommunicatorImpl;
 import tuwien.auto.calimero.process.ProcessEvent;
 import tuwien.auto.calimero.process.ProcessListener;
-import eu.smartcampus.api.deviceconnectivity.Logger;
+import eu.smartcampus.api.logger.registries.Logger;
+import eu.smartcampus.api.logger.registries.LoggerService;
 
 /**
  * The Class KNXGatewayIPDriver is responsible for KNX datapoints communication
@@ -32,7 +33,7 @@ import eu.smartcampus.api.deviceconnectivity.Logger;
  */
 public class KNXGatewayIPDriver {
 
-	static private Logger log = Logger.getLogger(KNXGatewayIPDriver.class
+	static private Logger log = LoggerService.getInstance().getLogger(KNXGatewayIPDriver.class
 			.getName());
 
 	private String remoteHost;

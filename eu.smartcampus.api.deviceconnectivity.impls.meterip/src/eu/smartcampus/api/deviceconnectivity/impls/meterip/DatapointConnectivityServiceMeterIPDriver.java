@@ -16,7 +16,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
-import eu.smartcampus.api.deviceconnectivity.Logger;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -38,6 +37,8 @@ import eu.smartcampus.api.historydatastorage.HistoryDataStorageServiceImpl;
 import eu.smartcampus.api.historydatastorage.HistoryValue;
 import eu.smartcampus.api.historydatastorage.IHistoryDataStorageService;
 import eu.smartcampus.api.historydatastorage.osgi.registries.HistoryDataStorageServiceRegistry;
+import eu.smartcampus.api.logger.registries.Logger;
+import eu.smartcampus.api.logger.registries.LoggerService;
 import eu.smartcampus.api.osgi.registries.IServiceRegistry.ServiceRegistryListener;
 
 /**
@@ -45,7 +46,7 @@ import eu.smartcampus.api.osgi.registries.IServiceRegistry.ServiceRegistryListen
  */
 public class DatapointConnectivityServiceMeterIPDriver implements
 		IDatapointConnectivityService {
-	static private Logger log = Logger.getLogger(DatapointConnectivityServiceMeterIPDriver.class.getName());  
+	static private Logger log = LoggerService.getInstance().getLogger(DatapointConnectivityServiceMeterIPDriver.class.getName());  
 
 	private String username;
 	private String password;

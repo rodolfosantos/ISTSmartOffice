@@ -2,7 +2,6 @@ package eu.smartcampus.api.deviceconnectivity.wrappers.pubsub;
 
 import java.util.HashMap;
 import java.util.Map;
-import eu.smartcampus.api.deviceconnectivity.Logger;
 
 import org.cometd.bayeux.client.ClientSessionChannel;
 import org.cometd.client.BayeuxClient;
@@ -14,12 +13,14 @@ import eu.smartcampus.api.deviceconnectivity.DatapointReading;
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService.DatapointListener;
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService.ErrorType;
+import eu.smartcampus.api.logger.registries.Logger;
+import eu.smartcampus.api.logger.registries.LoggerService;
 
 /**
  * The Class DatapointConnectivityServicePubSubWrapper.
  */
 public class DatapointConnectivityServicePubSubWrapper {
-	static private Logger log = Logger.getLogger(DatapointConnectivityServicePubSubWrapper.class.getName());  
+	static private Logger log = LoggerService.getInstance().getLogger(DatapointConnectivityServicePubSubWrapper.class.getName());  
 
 	/** The service implementation. */
 	private IDatapointConnectivityService serviceImplementation;

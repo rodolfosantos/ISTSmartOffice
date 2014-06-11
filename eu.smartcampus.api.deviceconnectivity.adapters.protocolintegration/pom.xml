@@ -55,6 +55,12 @@
 			<groupId>eu.smartcampus.api</groupId>
 			<artifactId>eu.smartcampus.api.deviceconnectivity</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+			
+		</dependency>
+		<dependency>
+			<groupId>eu.smartcampus.api</groupId>
+			<artifactId>eu.smartcampus.api.logger</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>

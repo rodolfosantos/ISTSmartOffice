@@ -1,16 +1,16 @@
 package eu.smartcampus.api.deviceconnectivity.wrappers.pubsub;
 
-import eu.smartcampus.api.deviceconnectivity.Logger;
-
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
 import eu.smartcampus.api.deviceconnectivity.IDatapointConnectivityService;
 import eu.smartcampus.api.deviceconnectivity.osgi.registries.DeviceConnectivityServiceRegistry;
+import eu.smartcampus.api.logger.registries.Logger;
+import eu.smartcampus.api.logger.registries.LoggerService;
 import eu.smartcampus.api.osgi.registries.IServiceRegistry.ServiceRegistryListener;
 
 public final class Activator implements BundleActivator {
-	static private Logger log = Logger.getLogger(Activator.class.getName());  
+	static private Logger log = LoggerService.getInstance().getLogger(Activator.class.getName());  
 
 	@Override
 	public void start(BundleContext arg0) throws Exception {

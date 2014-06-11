@@ -141,7 +141,8 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 							storageService.addValue(addr.getAddress(), reading
 									.getTimestamp(), reading.getValue()
 									.toString());
-						} catch (MalformedURLException e) {
+						} catch (Exception e) {
+							log.e(e.getMessage());
 						}
 
 					}

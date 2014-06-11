@@ -99,7 +99,7 @@ public class MeterIPServiceConfig {
 		meterMetadata.setDescription("R119");
 		meterDatapoints.put(a6, meterMetadata.build());
 		meterMetadata.setDescription("Lab1-58");
-		meterDatapoints.put(a7, meterMetadata.build());
+		//meterDatapoints.put(a7, meterMetadata.build());
 		meterMetadata.setDescription("UTA_A4");
 		meterDatapoints.put(a8, meterMetadata.build());
 		meterMetadata.setDescription("new A4");

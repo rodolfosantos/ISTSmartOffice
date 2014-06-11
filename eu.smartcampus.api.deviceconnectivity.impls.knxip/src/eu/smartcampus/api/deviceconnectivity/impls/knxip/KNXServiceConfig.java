@@ -187,7 +187,32 @@ public class KNXServiceConfig {
 		knxMetadata15.setAccessType(AccessType.READ_ONLY);
 		knxMetadata15.setDatatype(Datatype.BYTE_2);
 		DatapointAddress d15 = new DatapointAddress("0/4/3");// energy lab temp
+		
+		//HVAC
+		MetadataBuilder knxMetadata16 = new DatapointMetadata.MetadataBuilder();
+		knxMetadata16.setDescription("HVAC ON/OFF");
+		knxMetadata16.setAccessType(AccessType.WRITE_ONLY);
+		knxMetadata16.setDatatype(Datatype.SWITCH);
+		DatapointAddress d16 = new DatapointAddress("1/0/0");
+		
+		MetadataBuilder knxMetadata17 = new DatapointMetadata.MetadataBuilder();
+		knxMetadata17.setDescription("HVAC MODE");
+		knxMetadata17.setAccessType(AccessType.WRITE_ONLY);
+		knxMetadata17.setDatatype(Datatype.SWITCH);
+		DatapointAddress d17 = new DatapointAddress("1/0/1");
 
+		MetadataBuilder knxMetadata18 = new DatapointMetadata.MetadataBuilder();
+		knxMetadata18.setDescription("HVAC ON/OFF Status");
+		knxMetadata18.setAccessType(AccessType.READ_ONLY);
+		knxMetadata18.setDatatype(Datatype.SWITCH);
+		DatapointAddress d18 = new DatapointAddress("1/0/8");
+		
+		MetadataBuilder knxMetadata19 = new DatapointMetadata.MetadataBuilder();
+		knxMetadata19.setDescription("HVAC MODE Status");
+		knxMetadata19.setAccessType(AccessType.READ_ONLY);
+		knxMetadata19.setDatatype(Datatype.SWITCH);
+		DatapointAddress d19 = new DatapointAddress("1/0/9");
+		
 		knxDatapoints.put(d1, knxMetadata1.build());
 		knxDatapoints.put(d2, knxMetadata2.build());
 		knxDatapoints.put(d3, knxMetadata3.build());
@@ -203,6 +228,10 @@ public class KNXServiceConfig {
 		knxDatapoints.put(d13, knxMetadata13.build());
 		knxDatapoints.put(d14, knxMetadata14.build());
 		knxDatapoints.put(d15, knxMetadata15.build());
+		knxDatapoints.put(d16, knxMetadata16.build());
+		knxDatapoints.put(d17, knxMetadata17.build());
+		knxDatapoints.put(d18, knxMetadata18.build());
+		knxDatapoints.put(d19, knxMetadata19.build());
 
 //		// ================================================================
 //		// EnergyLab Plugs

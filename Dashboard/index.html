@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <!-- Always force latest IE rendering engine or request Chrome Frame -->
+        <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+        <title>IST SmartOffice</title>
+
+        <link href="stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+        <link href="stylesheets/bootstrap-slider.css" media="screen" rel="stylesheet" type="text/css" />
+        <link href="stylesheets/bootstrap-switch.css" media="screen" rel="stylesheet" type="text/css" />
+
+        <!--[if lt IE 9]>
+<script src="javascripts/html5shiv.js" type="text/javascript"></script><script src="javascripts/excanvas.js" type="text/javascript"></script><script src="javascripts/iefix.js" type="text/javascript"></script><link href="stylesheets/iefix.css" media="screen" rel="stylesheet" type="text/css" /><![endif]-->
+
+        <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0">
+    </head>
+
+    <body>
+
+        <div id="modal" class="black-box modal hide fade">
+            <div class="modal-header tab-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <span>Some modal title</span>
+            </div>
+            <div class="modal-body separator">
+                <h4>Text in a modal</h4>
+                <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem.</p>
+            </div>
+            <div class="modal-footer">
+                <div class="inner-well">
+                    <a class="button mini rounded light-gray" data-dismiss="modal">Close</a>
+                    <a class="button mini rounded blue">Save changes</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-gallery" class="black-box modal modal-gallery hide fade">
+            <div class="modal-header tab-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <span class="modal-title"></span>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image"></div>
+            </div>
+            <div class="modal-footer">
+                <div class="pull-left">
+                    You can also change the images
+                    <br/>by scrolling the mouse wheel!
+                </div>
+                <div class="pull-right">
+                    <a class="button blue modal-next">Next
+                        <i class="icon-arrow-right icon-white"></i>
+                    </a>
+                    <a class="button gray modal-prev">
+                        <i class="icon-arrow-left icon-white"></i>Previous</a>
+                    <a class="button green modal-play modal-slideshow" data-slideshow="5000">
+                        <i class="icon-play icon-white"></i>Slideshow</a>
+                    <a class="button black" target="_blank">
+                        <i class="icon-download"></i>Download</a>
+                </div>
+            </div>
+        </div>
+        <nav id="primary" class="main-nav">
+            <ul>
+
+                <li class="active">
+                    <a href="#page1">
+                        <i class="icon-dashboard"></i>Dashboard
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="#page2">
+                        <i class="icon-list-alt"></i>Office Control
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="#page3">
+                        <i class="icon-time"></i>Scheduling
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="#page4">
+                        <i class="icon-tasks"></i>Scenarios
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="#page5">
+                        <i class="icon-warning-sign"></i>Alarms
+                    </a>
+                </li>
+
+
+
+
+
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-share-alt"></i>More
+                        <span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="welcome.html">
+                                <i class="icon-warning-sign"></i>Exit
+                            </a>
+                        </li>
+
+
+                       <!-- <li class="divider"></li>
+                        <li>
+                            <a href="../login/login.html">
+                                <i class="icon-off"></i>Log out (login page)
+                            </a>
+                        </li>-->
+                    </ul>
+                </li>
+
+            </ul>
+        </nav>
+
+        <section id="main">
+            <div class="top-nav">
+                <div class="container-fluid">
+                    <div class="row-fluid search-button-bar-container">
+                        <div class="span12">
+                            <ul class="breadcrumb">
+                                <li>
+                                    <a href="#page1">
+                                        <i class="icon-home"></i>Home</a>
+                                </li>
+                                <li class="active">
+                                    <a>placeholder</a>
+                                </li>
+                            </ul>
+                            <a class="search-button-trigger" href="#">
+                                <i class="icon-search"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row-fluid search-bar-nav">
+                        <div class="span12">
+                            <form>
+                                <input type="text" class="search" placeholder="Search...">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+
+
+                <div class="row-fluid page1">
+
+
+                    <div class="span6">
+
+
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div class="box">
+                                    <div class="tab-header">
+                                        <span class ="chartName">Power Consumption</span>   
+                                        <span class="pull-right">
+                                            <span class="options">
+                                                <div class="btn-group">
+                                                    <a class="dropdown-toggle" data-toggle="dropdown">
+                                                        <i class="icon-caret-down"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu black-box-dropdown dropdown-left chartselection">
+                                                        <li>
+                                                            <a class="meter0">D14</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="meter1">A4</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="meter2">R117</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="meter3">Lab1-58</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="meter4">Library</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="meter5">D16</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="meter6">R119</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="meter7">UTA_A4</a>
+                                                        </li>                                                
+                                                    </ul>
+                                                </div>
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div class="padded">
+                                        <div id="powerconsumption" style="width: 100%; height: 250px;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="box">
+                                    <div class="tab-header">
+                                        Total Power Consumption
+                                    </div>
+                                    <div class="padded">
+                                        <div id="powerconsumptionall" style="width: 100%; height: 250px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <table class="table table-striped table-bordered box">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">Energy costs</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Today</td>
+                                            <td>
+                                                <strong>€78.56</strong>&nbsp;(46.7 kWh)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Daily Average</td>
+                                            <td>
+                                                <strong>€65.56</strong>&nbsp;(36.7 kWh)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Today Estimation</td>
+                                            <td>
+                                                <strong>€78.56</strong>&nbsp;(86.7 kWh)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="span6">
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div class="tabbable black-box" style="margin-bottom: 18px;">
+
+                                    <div class="tab-header">
+                                        Weather Station
+                                    </div>
+
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab1" data-toggle="tab">
+                                                <i class="icon-home"></i>Indoor</a>
+                                        </li>
+                                        <li class="">
+                                            <a href="#tab2" data-toggle="tab">
+                                                <i class="icon-globe"></i>Outdoor</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+
+                                        <div class="tab-pane active" id="tab1">
+                                            <div class="separator">
+                                                <div class="inner-well">
+                                                    Temperature
+                                                    <div id="indoor1" style="width: 100%; height: 200px;"></div>
+                                                </div>
+                                                <div class="inner-well">
+                                                    CO2
+                                                    <div id="indoor2" style="width: 100%; height: 200px;"></div>
+                                                </div>
+                                                <div class="inner-well">
+                                                    Light intensity
+                                                    <div id="indoor3" style="width: 100%; height: 200px;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane" id="tab2">
+                                            <div class="separator">
+                                                <div class="inner-well">
+                                                    Temperature
+                                                    <div id="outdoor1" style="width: 100%; height: 100px;"></div>
+                                                </div>
+
+                                                <div class="inner-well">
+                                                    Humidity
+                                                    <div id="outdoor2" style="width: 100%; height: 100px;"></div>
+                                                </div>
+
+                                                <div class="inner-well">
+                                                    Wind Speed
+                                                    <div id="outdoor3" style="width: 100%; height: 100px;"></div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="row-fluid page2 hide">
+                    <div class="span6">
+                        <div class="box">
+                            <div class="tab-header">
+                                Lighting Control
+                                <span class="pull-right">
+                                    <span class="options">
+                                        <a href="#"><i class="icon-cog"></i></a>
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="padded">
+
+
+                                <div>
+                                    <span style="margin-bottom: 10px; margin-right: 25px; display: inline-block;">
+                                        <input type="checkbox" name="my-checkbox" class="onoffall">
+                                    </span>
+                                    <span style="margin-bottom: 10px; margin-right: 20px; display: inline-block;">
+                                        <input class="ex1 onoffallslider" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="0"/>
+                                    </span>
+                                    <p>All Lights</p>
+                                </div>
+
+                                <div>
+                                    <span style="margin-bottom: 10px; margin-right: 25px; display: inline-block;">
+                                        <input type="checkbox" name="my-checkbox">
+                                    </span>
+                                    <span style="margin-bottom: 10px; margin-right: 20px; display: inline-block;">
+                                        <input class="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="0"/>
+                                    </span>
+                                    <p>Blackboard Lights</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a class="button large">
+                            <i class="icon-unlock opendoor"></i>
+                            <span>Open Door</span>
+                        </a>
+
+
+                    </div>
+
+                    <div class="span6">
+                        <div class="box">
+                            <div class="tab-header">
+                                Blinds Control
+                                <span class="pull-right">
+                                    <span class="options">
+                                        <a href="#"><i class="icon-cog"></i></a>
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="padded">
+
+                                <div>
+                                    <span style="margin-bottom: 10px; margin-right: 20px; display: inline-block;">
+                                        <input class="ex1 blindallslider" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="0"/>
+                                    </span>
+                                    <p>All Blinds</p>
+                                </div>
+
+                                <div>
+                                    <span style="margin-bottom: 10px; margin-right: 20px; display: inline-block;">
+                                        <input class="ex1 blind1slider" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="0"/>
+                                    </span>
+                                    <p>Blind 1</p>
+                                </div>
+
+                                <div>
+                                    <span style="margin-bottom: 10px; margin-right: 20px; display: inline-block;">
+                                        <input class="ex1 blind2slider" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="0"/>
+                                    </span>
+                                    <p>Blind 2</p>
+                                </div>
+
+                                <div>
+                                    <span style="margin-bottom: 10px; margin-right: 20px; display: inline-block;">
+                                        <input class="ex1 blind3slider" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="0"/>
+                                    </span>
+                                    <p>Blind 3</p>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                        
+                        <div class="box">
+                            <div class="tab-header">
+                                HVAC Control
+                                <span class="pull-right">
+                                    <span class="options">
+                                        <a href="#"><i class="icon-cog"></i></a>
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="padded">
+
+                                <div>
+                                    <span style="margin-bottom: 10px; margin-right: 25px; display: inline-block;">
+                                        <input type="checkbox" name="my-checkbox" class="onoffhvac">
+                                    </span>
+                                    <p>HVAC ON/OFF</p>
+                                </div>
+                                <div>
+                                    <span style="margin-bottom: 10px; margin-right: 25px; display: inline-block;">
+                                        <input type="checkbox" name="my-checkbox" class="modehvac">
+                                    </span>
+                                    <p>Mode</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box">
+                            <div class="tab-header">
+                                Plugs Control
+                                <span class="pull-right">
+                                    <span class="options">
+                                        <a href="#"><i class="icon-cog"></i></a>
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="padded">
+
+                                <span style="margin-bottom: 10px; display: inline-block;">
+                                    <a class="button door">A button</a>
+                                </span>
+
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+                <div class="row-fluid page3 hide">
+                    Content 3...
+                </div>
+
+                <div class="row-fluid page4 hide">
+                    Content 4...
+                </div>
+
+                <div class="row-fluid page5 hide">
+                    Content 5...
+                </div>
+
+
+
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="footer">
+                            <img src="logo_h.png" alt="Smiley face" height="125" width="125">
+                            <div>2014 &copy; IST SmartOffice</div>
+                            <div>
+                                <a href="http://rodolfosantos.com/">Rodolfo Santos, nº 76590</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <script type="text/html" id="template-notification">
+            <div class="notification animated fadeInLeftMiddle fast{{ item.itemClass }}">
+                <div class="left">
+                    <div style="background-image: url({{ item.imagePath }})" class="{{ item.imageClass }}"></div>
+                </div>
+                <div class="right">
+                    <div class="inner">{{ item.text }}</div>
+                    <div class="time">{{ item.time }}</div>
+                </div>
+
+                <i class="icon-remove-sign hide"></i>
+            </div>
+        </script>
+        <script type="text/html" id="template-notifications">
+            <div class="container">
+                <div class="row" id="notifications-wrapper">
+                    <div id="notifications" class="{{ bootstrapPositionClass }} notifications animated">
+                        <div id="dismiss-all" class="dismiss-all button blue">Dismiss all</div>
+                        <div id="content">
+                            <div id="notes"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+
+        <script src="javascripts/application.js" type="text/javascript"></script>
+        <script src="javascripts/docs.js" type="text/javascript"></script>
+        <script src="javascripts/docs_charts.js" type="text/javascript"></script>
+        <script src="javascripts/documentation.js" type="text/javascript"></script>
+        <script src="javascripts/prettify.js" type="text/javascript"></script>
+        <script src="javascripts/bootstrap-slider.js" type="text/javascript"></script>
+        <script src="javascripts/bootstrap-switch.js" type="text/javascript"></script>
+
+        <script type="text/javascript" src="javascripts/canvasjs.min.js"></script>
+        
+        <script type="text/javascript" src="http://sb-dev.tagus.ist.utl.pt:8000/faye/client.js"></script>
+
+        <script type="text/javascript" src="javascripts/datapointConnectivityServiceAPI.js"></script>
+
+
+
+        <link href="stylesheets/prettify.css" media="screen" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            prettyPrint()
+        </script>
+
+        <script type="text/javascript">
+            $(function(){
+                /*Notifications.push({
+            imagePath: "images/avatar.png",
+            text: "<p><b>Welcome to the Plastique theme!</b></p><div>Be sure to check out all the features!</div>",
+            autoDismiss: 10
+        });*/
+            });
+        </script>
+
+        <script type="text/javascript">
+
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-35778683-1']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+
+        </script>
+
+
+
+        <script src="javascripts/app/controlManager.js" type="text/javascript"></script>
+        <script src="javascripts/app/dashboardManager.js" type="text/javascript"></script>
+        <script src="javascripts/app/main.js" type="text/javascript"></script>
+
+
+
+    </body>
+
+</html>
+
+<!-- Localized -->

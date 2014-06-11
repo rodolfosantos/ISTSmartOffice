@@ -1,0 +1,12 @@
+{
+  "name": "IST SmartOffice Dashboard",
+  "main": "index.html",  
+  "description": "Rodolfo Santos, 76590 - MSc Thesis",
+  "window": {
+    "title": "IST SmartOffice - Dashboard",
+    "icon": "ist_logo.png",
+	"width" 	: 1180,
+	"height"	: 700,
+	"toolbar"	: false
+  }
+}

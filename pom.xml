@@ -42,6 +42,9 @@
 		<module>ist.smartoffice.dataaccess.dataquerying</module>
 		<module>ist.smartoffice.dataaccess.dataaquisition</module>
 		<module>ist.smartoffice.dataaccess.historydata</module>
+		<module>ist.smartoffice.autonmactuation.alarmsevents</module>
+		<module>ist.smartoffice.autonmactuation.scenarios</module>
+		<module>ist.smartoffice.autonmactuation.scheduling</module>
 		<!--<module>ist.smartoffice.datapointconnectivity.impls.modbus</module>
 		<module>ist.smartoffice.datapointconnectivity.impls.lifx</module>-->
 		<module>ist.smartoffice.datapointconnectivity.wrappers.rest</module>

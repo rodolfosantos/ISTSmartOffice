@@ -1,0 +1,66 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<repositories>
+		<repository>
+			<id>maven-restlet</id>
+			<name>Public online Restlet repository</name>
+			<url>http://maven.restlet.org</url>
+		</repository>
+	</repositories>
+
+	<parent>
+		<relativePath>../pom.xml</relativePath>
+		<groupId>ist.smartoffice</groupId>
+		<artifactId>ist.smartoffice</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>ist.smartoffice.deviceconnectivity.adapters.protocolintegration</artifactId>
+	<packaging>bundle</packaging>
+
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+						<Bundle-Version>${project.version}</Bundle-Version>
+						<Bundle-Activator>ist.smartoffice.deviceconnectivity.adapters.protocolintegration.Activator</Bundle-Activator>
+						<Export-Package>ist.smartoffice.deviceconnectivity.adapters.protocolintegration</Export-Package>
+					</instructions>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+	<name>ist.smartoffice.deviceconnectivity.adapters.protocolintegration</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>ist.smartoffice</groupId>
+			<artifactId>ist.smartoffice.deviceconnectivity</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			
+		</dependency>
+		<dependency>
+			<groupId>ist.smartoffice</groupId>
+			<artifactId>ist.smartoffice.logger</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+</project>

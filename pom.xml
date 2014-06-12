@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>eu.smartcampus.api</groupId>
-	<artifactId>eu.smartcampus.api</artifactId>
+	<groupId>ist.smartoffice</groupId>
+	<artifactId>ist.smartoffice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<properties>
@@ -32,17 +32,17 @@
 	</repositories>
 
 	<modules>
-		<module>eu.smartcampus.api.deviceconnectivity</module>
-		<module>eu.smartcampus.api.osgi</module>
-		<module>eu.smartcampus.api.logger</module>
-		<module>eu.smartcampus.api.deviceconnectivity.adapters.protocolintegration</module>
-		<module>eu.smartcampus.api.deviceconnectivity.impls.knxip</module>
-		<module>eu.smartcampus.api.deviceconnectivity.impls.meterip</module>
-		<module>eu.smartcampus.api.deviceconnectivity.impls.modbus</module>
-		<module>eu.smartcampus.api.deviceconnectivity.impls.lifx</module>
-		<module>eu.smartcampus.api.deviceconnectivity.wrappers.rest</module>
-		<module>eu.smartcampus.api.deviceconnectivity.wrappers.pubsub</module>
-		<module>eu.smartcampus.api.historydatastorage</module>
+		<module>ist.smartoffice.deviceconnectivity</module>
+		<module>ist.smartoffice.osgi</module>
+		<module>ist.smartoffice.logger</module>
+		<module>ist.smartoffice.deviceconnectivity.adapters.protocolintegration</module>
+		<module>ist.smartoffice.deviceconnectivity.impls.knxip</module>
+		<module>ist.smartoffice.deviceconnectivity.impls.meterip</module>
+		<module>ist.smartoffice.deviceconnectivity.impls.modbus</module>
+		<module>ist.smartoffice.deviceconnectivity.impls.lifx</module>
+		<module>ist.smartoffice.deviceconnectivity.wrappers.rest</module>
+		<module>ist.smartoffice.deviceconnectivity.wrappers.pubsub</module>
+		<module>ist.smartoffice.historydatastorage</module>
 	</modules>
 
 	<profiles>
@@ -129,5 +129,5 @@
 			<version>1.4.0</version>
 		</dependency>
 	</dependencies>
-	<name>eu.smartcampus.api</name>
+	<name>ist.smartoffice</name>
 </project>

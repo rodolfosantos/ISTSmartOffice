@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ist.smartoffice
+Bundle-SymbolicName: ist.smartoffice
+Bundle-Version: 1.0.0.alpha
+Export-Package: ist.smartoffice.osgi.registries

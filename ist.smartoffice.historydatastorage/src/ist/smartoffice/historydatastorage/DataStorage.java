@@ -69,6 +69,7 @@ public class DataStorage {
 	 * @param classType the class type
 	 * @return the object
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static Object fromJsonFile(String filename, Class classType) {
 		Gson gson = new Gson();
 		try {

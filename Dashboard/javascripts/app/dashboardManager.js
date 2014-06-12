@@ -239,7 +239,7 @@ function plotSensorData(chartSelector, datapointAddress, units){
     // get the first set of dataPoints (last hour)
     var nowTS = new Date().getTime();
 
-    api.requestDatapointWindowRead(datapointAddress, nowTS - 3600000/3, nowTS , function(data){updateChart(data['readings'])});
+    api.requestDatapointWindowRead(datapointAddress, nowTS - 3600000, nowTS , function(data){updateChart(data['readings'])});
     charts.push(chart);
 
     var subscription = faye.subscribe('/datapoints/'+datapointAddress, function(data) {

@@ -7,7 +7,7 @@ import org.osgi.service.log.LogService;
 
 public class LoggerService {
 
-	private static Set<Logger> logInstances;
+	private Set<Logger> logInstances;
 	private static LoggerService instance;
 
 	private LoggerService() {

@@ -8,8 +8,7 @@ import org.osgi.framework.BundleContext;
 
 public final class Activator implements BundleActivator {
 
-	private static final String SERVICE_NAME = Activator.class
-			.getName();//TODO
+	private static final String SERVICE_NAME = SchedulingService.class.getName();
 
 	static private Logger log = LoggerService.getInstance().getLogger(
 			Activator.class.getName());

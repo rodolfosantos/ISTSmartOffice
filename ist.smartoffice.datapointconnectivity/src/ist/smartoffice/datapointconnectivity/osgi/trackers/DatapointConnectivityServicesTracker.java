@@ -7,7 +7,6 @@ import org.osgi.util.tracker.ServiceTracker;
 import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService;
 import ist.smartoffice.datapointconnectivity.osgi.registries.DatapointConnectivityServiceRegistry;
 
-@SuppressWarnings("rawtypes")
 public class DatapointConnectivityServicesTracker extends ServiceTracker {
 
 	/** The service registry. */
@@ -22,7 +21,6 @@ public class DatapointConnectivityServicesTracker extends ServiceTracker {
 	 * @param registry
 	 *            The application object to notify about service changes.
 	 **/
-	@SuppressWarnings("unchecked")
 	public DatapointConnectivityServicesTracker(BundleContext context) {
 		super(context, IDatapointConnectivityService.class.getName(), null);
 	}

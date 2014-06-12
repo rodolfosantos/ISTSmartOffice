@@ -7,7 +7,6 @@ import org.osgi.util.tracker.ServiceTracker;
 import ist.smartoffice.historydatastorage.IHistoryDataStorageService;
 import ist.smartoffice.historydatastorage.osgi.registries.HistoryDataStorageServiceRegistry;
 
-@SuppressWarnings("rawtypes")
 public class HistoryDataStorageServicesTracker extends ServiceTracker {
 
 	/** The service registry. */
@@ -22,7 +21,6 @@ public class HistoryDataStorageServicesTracker extends ServiceTracker {
 	 * @param registry
 	 *            The application object to notify about service changes.
 	 **/
-	@SuppressWarnings("unchecked")
 	public HistoryDataStorageServicesTracker(BundleContext context) {
 		super(context, IHistoryDataStorageService.class.getName(), null);
 	}

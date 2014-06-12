@@ -5,19 +5,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
-import ist.smartoffice.datapointconnectivity.DatapointAddress;
-import ist.smartoffice.datapointconnectivity.DatapointMetadata;
-import ist.smartoffice.datapointconnectivity.DatapointMetadata.AccessType;
-import ist.smartoffice.datapointconnectivity.DatapointMetadata.Datatype;
-import ist.smartoffice.datapointconnectivity.DatapointMetadata.MetadataBuilder;
 
 public class KNXGatewayIPConfig {
 
@@ -31,7 +21,6 @@ public class KNXGatewayIPConfig {
 	 */
 	public static String loadGatewayConfig() {
 		// load datapoins from json file
-		@SuppressWarnings("unchecked")
 		String config = (String) KNXGatewayIPConfig
 				.fromJsonFile(CONFIG_FILENAME,
 						new TypeToken<String>() {

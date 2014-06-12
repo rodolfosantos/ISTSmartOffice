@@ -35,9 +35,9 @@
 		<module>ist.smartoffice.datapointconnectivity</module>
 		<module>ist.smartoffice.osgi</module>
 		<module>ist.smartoffice.logger</module>
-		<module>ist.smartoffice.datapointconnectivity.adapters.protocolintegration</module>
-		<module>ist.smartoffice.datapointconnectivity.impls.knxip</module>
-		<module>ist.smartoffice.datapointconnectivity.impls.meterip</module>
+		<module>ist.smartoffice.deviceconnectivity.protocolintegration</module>
+		<module>ist.smartoffice.deviceconnectivity.knxip</module>
+		<module>ist.smartoffice.deviceconnectivity.meterip</module>
 		<!--<module>ist.smartoffice.datapointconnectivity.impls.modbus</module>
 		<module>ist.smartoffice.datapointconnectivity.impls.lifx</module>-->
 		<module>ist.smartoffice.datapointconnectivity.wrappers.rest</module>

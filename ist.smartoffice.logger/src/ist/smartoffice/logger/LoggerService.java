@@ -26,7 +26,7 @@ public class LoggerService {
 		}
 	}
 
-	public static Logger getLogger(String className) {
+	public Logger getLogger(String className) {
 		Logger l = new Logger(className);
 		logInstances.add(l);
 		return l;

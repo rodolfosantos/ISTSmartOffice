@@ -38,6 +38,10 @@
 		<module>ist.smartoffice.deviceconnectivity.protocolintegration</module>
 		<module>ist.smartoffice.deviceconnectivity.knxip</module>
 		<module>ist.smartoffice.deviceconnectivity.meterip</module>
+		<module>ist.smartoffice.dataaccess.remotesensingactuation</module>
+		<module>ist.smartoffice.dataaccess.dataquerying</module>
+		<module>ist.smartoffice.dataaccess.dataaquisition</module>
+		<module>ist.smartoffice.dataaccess.historydata</module>
 		<!--<module>ist.smartoffice.datapointconnectivity.impls.modbus</module>
 		<module>ist.smartoffice.datapointconnectivity.impls.lifx</module>-->
 		<module>ist.smartoffice.datapointconnectivity.wrappers.rest</module>

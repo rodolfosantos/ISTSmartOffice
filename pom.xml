@@ -32,16 +32,16 @@
 	</repositories>
 
 	<modules>
-		<module>ist.smartoffice.deviceconnectivity</module>
+		<module>ist.smartoffice.datapointconnectivity</module>
 		<module>ist.smartoffice.osgi</module>
 		<module>ist.smartoffice.logger</module>
-		<module>ist.smartoffice.deviceconnectivity.adapters.protocolintegration</module>
-		<module>ist.smartoffice.deviceconnectivity.impls.knxip</module>
-		<module>ist.smartoffice.deviceconnectivity.impls.meterip</module>
-		<module>ist.smartoffice.deviceconnectivity.impls.modbus</module>
-		<module>ist.smartoffice.deviceconnectivity.impls.lifx</module>
-		<module>ist.smartoffice.deviceconnectivity.wrappers.rest</module>
-		<module>ist.smartoffice.deviceconnectivity.wrappers.pubsub</module>
+		<module>ist.smartoffice.datapointconnectivity.adapters.protocolintegration</module>
+		<module>ist.smartoffice.datapointconnectivity.impls.knxip</module>
+		<module>ist.smartoffice.datapointconnectivity.impls.meterip</module>
+		<!--<module>ist.smartoffice.datapointconnectivity.impls.modbus</module>
+		<module>ist.smartoffice.datapointconnectivity.impls.lifx</module>-->
+		<module>ist.smartoffice.datapointconnectivity.wrappers.rest</module>
+		<module>ist.smartoffice.datapointconnectivity.wrappers.pubsub</module>
 		<module>ist.smartoffice.historydatastorage</module>
 	</modules>
 

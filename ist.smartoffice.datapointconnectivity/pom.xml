@@ -1,0 +1,45 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>ist.smartoffice.datapointconnectivity</artifactId>
+
+	<parent>
+		<relativePath>../pom.xml</relativePath>
+		<groupId>ist.smartoffice</groupId>
+		<artifactId>ist.smartoffice</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<packaging>bundle</packaging>
+
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-SymbolicName>${project.artifactId};singleton:=true</Bundle-SymbolicName>
+						<Bundle-Version>${project.version}</Bundle-Version>
+						<Export-Package>ist.smartoffice.datapointconnectivity,ist.smartoffice.datapointconnectivity.osgi.registries,ist.smartoffice.datapointconnectivity.osgi.trackers</Export-Package>
+						<Bundle-Activator>ist.smartoffice.datapointconnectivity.osgi.trackers.Activator</Bundle-Activator>
+					</instructions>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+	<name>ist.smartoffice.datapointconnectivity</name>
+	<dependencies>
+		<dependency>
+			<groupId>ist.smartoffice</groupId>
+			<artifactId>ist.smartoffice.osgi</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+</project>

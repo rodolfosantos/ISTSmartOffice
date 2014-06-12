@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ist.smartoffice
+Bundle-SymbolicName: ist.smartoffice;singleton:=true
+Bundle-Version: 1.0.0.alpha
+Export-Package: ist.smartoffice.datapointconnectivity,
+ ist.smartoffice.datapointconnectivity.osgi.registries,
+ ist.smartoffice.datapointconnectivity.osgi.trackers
+Bundle-Activator: ist.smartoffice.datapointconnectivity.osgi.trackers.Activator
+Import-Package: ist.smartoffice.osgi.registries;version="0.0.1.SNAPSHOT"

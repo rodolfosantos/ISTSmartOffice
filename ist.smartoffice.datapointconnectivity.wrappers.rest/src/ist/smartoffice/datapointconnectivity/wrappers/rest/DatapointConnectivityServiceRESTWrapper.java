@@ -1,5 +1,10 @@
 package ist.smartoffice.datapointconnectivity.wrappers.rest;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.routing.Router;
@@ -13,14 +18,14 @@ import ist.smartoffice.logger.LoggerService;
  * The Class DatapointConnectivityServiceRESTWrapper.
  */
 public class DatapointConnectivityServiceRESTWrapper extends Application {
-	
-	static private Logger log = LoggerService.getInstance().getLogger(DatapointConnectivityServiceRESTWrapper.class.getName());  
 
-	/** The service implementation. */
-	private static IDatapointConnectivityService serviceImplementation;
+	static private Logger log = LoggerService.getInstance().getLogger(
+			DatapointConnectivityServiceRESTWrapper.class.getName());
 
 	/** The singleton instance. */
 	private static DatapointConnectivityServiceRESTWrapper singletonInstance = new DatapointConnectivityServiceRESTWrapper();
+
+	private static Map<String, IDatapointConnectivityService> serviceImplementations = new HashMap<String, IDatapointConnectivityService>();
 
 	/**
 	 * Instantiates a new datapoint connectivity service rest wrapper.
@@ -35,9 +40,19 @@ public class DatapointConnectivityServiceRESTWrapper extends Application {
 	 * @param serviceImplementation
 	 *            the new service implementation
 	 */
-	public void setServiceImplementation(
+	public void setServiceImplementation(String path,
 			IDatapointConnectivityService serviceImplementation) {
-		DatapointConnectivityServiceRESTWrapper.serviceImplementation = serviceImplementation;
+		serviceImplementations.put(path, serviceImplementation);
+	}
+	
+	/**
+	 * Remove the service implementation.
+	 * 
+	 * @param serviceImplementation
+	 *            the  service implementation
+	 */
+	public void removeServiceImplementation(String path) {
+		serviceImplementations.remove(path);
 	}
 
 	/**
@@ -45,8 +60,21 @@ public class DatapointConnectivityServiceRESTWrapper extends Application {
 	 * 
 	 * @return the service implementation
 	 */
-	public IDatapointConnectivityService getServiceImplementation() {
-		return serviceImplementation;
+	public IDatapointConnectivityService getServiceImplementation(String path) {
+		Iterator<Entry<String, IDatapointConnectivityService>> it = serviceImplementations
+				.entrySet().iterator();
+
+		while (it.hasNext()) {
+			Map.Entry<String, IDatapointConnectivityService> entry = (Map.Entry<String, IDatapointConnectivityService>) it
+					.next();
+
+			if (path.contains(entry.getKey())) {
+				return entry.getValue();
+			}
+
+		}
+		return null;
+
 	}
 
 	/**

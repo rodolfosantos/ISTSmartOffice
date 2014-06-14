@@ -14,8 +14,7 @@ import ist.smartoffice.osgi.registries.IServiceRegistry.ServiceRegistryListener;
 
 public final class Activator implements BundleActivator {
 
-	private static final String SERVICE_NAME = IDatapointConnectivityService.class
-			.getName();
+	private static final String SERVICE_NAME = DatapointConnectivityServiceAdapter.class.getName();
 
 	static private Logger log = LoggerService.getInstance().getLogger(
 			Activator.class.getName());
@@ -25,6 +24,7 @@ public final class Activator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext context) throws Exception {
+		System.out.println("ServiceNAME:"+SERVICE_NAME);
 
 		String[] currServices = DatapointConnectivityServiceRegistry
 				.getInstance().getRegisteredServicesNames();

@@ -101,7 +101,7 @@ public class DatapointConnectivityServiceResources {
 			ReadCallback readCallback = new ReadCallback();
 			DatapointConnectivityServiceRESTWrapper
 					.getInstance()
-					.getServiceImplementation()
+					.getServiceImplementation(getRequest().getRootRef().toString())
 					.requestDatapointWindowRead(address, startTimestamp,
 							finishTimestamp, readCallback);
 			DatapointReading[] readings = readCallback.getReadings();
@@ -166,7 +166,7 @@ public class DatapointConnectivityServiceResources {
 			DatapointMetadata metadata = null;
 			try {
 				metadata = DatapointConnectivityServiceRESTWrapper
-						.getInstance().getServiceImplementation()
+						.getInstance().getServiceImplementation(getRequest().getRootRef().toString())
 						.getDatapointMetadata(address);
 
 			} catch (OperationFailedException e) {
@@ -228,7 +228,7 @@ public class DatapointConnectivityServiceResources {
 		public JSONObject doGet() {
 			JSONObject result = new JSONObject();
 			DatapointAddress[] allDatapoints = DatapointConnectivityServiceRESTWrapper
-					.getInstance().getServiceImplementation()
+					.getInstance().getServiceImplementation(getRequest().getRootRef().toString())
 					.getAllDatapoints();
 			JSONArray array = new JSONArray();
 			for (DatapointAddress datapointAddress : allDatapoints) {
@@ -281,7 +281,7 @@ public class DatapointConnectivityServiceResources {
 			ReadCallback readCallback = new ReadCallback();
 			DatapointConnectivityServiceRESTWrapper
 					.getInstance()
-					.getServiceImplementation()
+					.getServiceImplementation(getRequest().getRootRef().toString())
 					.requestDatapointRead(new DatapointAddress(address),
 							readCallback);
 			DatapointReading reading = readCallback.getReading();
@@ -332,7 +332,7 @@ public class DatapointConnectivityServiceResources {
 	
 				WriteCallback writeCallback = new WriteCallback();
 				DatapointConnectivityServiceRESTWrapper.getInstance()
-						.getServiceImplementation()
+						.getServiceImplementation(getRequest().getRootRef().toString())
 						.requestDatapointWrite(addr, values, writeCallback);
 				boolean success = writeCallback.isWritten();
 				if (!success) {
@@ -379,7 +379,7 @@ public class DatapointConnectivityServiceResources {
 
 				WriteCallback writeCallback = new WriteCallback();
 				DatapointConnectivityServiceRESTWrapper.getInstance()
-						.getServiceImplementation()
+						.getServiceImplementation(getRequest().getRootRef().toString())
 						.requestDatapointWrite(addr, values, writeCallback);
 				boolean success = writeCallback.isWritten();
 				if (!success) {

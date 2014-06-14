@@ -1,9 +1,7 @@
 package ist.smartoffice.datapointconnectivity.wrappers.rest;
 
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
-import org.restlet.Component;
-import org.restlet.data.Protocol;
+import java.util.HashMap;
+import java.util.Map;
 
 import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService;
 import ist.smartoffice.datapointconnectivity.osgi.registries.DatapointConnectivityServiceRegistry;
@@ -11,15 +9,35 @@ import ist.smartoffice.logger.Logger;
 import ist.smartoffice.logger.LoggerService;
 import ist.smartoffice.osgi.registries.IServiceRegistry.ServiceRegistryListener;
 
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+import org.restlet.Component;
+import org.restlet.data.Protocol;
+
 public final class Activator implements BundleActivator {
-	static private Logger log = LoggerService.getInstance().getLogger(Activator.class.getName());  
+	static private Logger log = LoggerService.getInstance().getLogger(
+			Activator.class.getName());
 
 	private static final int SERVER_PORT = 8182;
-	private static final String PATH_TEMPLATE = "/deviceconnectivityapi";
+	// private static final String PATH_TEMPLATE = "/deviceconnectivityapi";
+
+	private static final Map<String, String> paths = new HashMap<String, String>() {
+		private static final long serialVersionUID = 1L;
+		{
+			put("ist.smartoffice.deviceconnectivity.protocolintegration.DatapointConnectivityServiceAdapter",
+					"/deviceconnectivityapi");
+			//put("service1", "/deviceconnectivityapii");
+		}
+	};
+
 	private Component component;
 
 	@Override
 	public void start(BundleContext context) throws Exception {
+
+		System.out
+				.println(context
+						.getProperty("ist.smartoffice.datapointconnectivity.wrappers.rest.port"));
 
 		/**
 		 * TODO: Add a way to set the port and the implementation to use through
@@ -28,14 +46,15 @@ public final class Activator implements BundleActivator {
 		// start Restlet component
 		serverStart(SERVER_PORT);
 
-		// try discover service
-		IDatapointConnectivityService serviceImplementation = DatapointConnectivityServiceRegistry
-				.getInstance().getService(
-						IDatapointConnectivityService.class.getName());
+		for (String serviceName : paths.keySet()) {
+			// try discover services
+			IDatapointConnectivityService serviceImplementation = DatapointConnectivityServiceRegistry
+					.getInstance().getService(serviceName);
 
-		// try attach implementation
-		if (serviceImplementation != null) {
-			serverAttach(PATH_TEMPLATE, serviceImplementation);
+			// try attach implementation
+			if (serviceImplementation != null) {
+				serverAttach(paths.get(serviceName), serviceImplementation);
+			}
 		}
 
 		// add service listener
@@ -44,48 +63,38 @@ public final class Activator implements BundleActivator {
 
 					@Override
 					public void serviceRemoved(String serviceName) {
-						if (serviceName
-								.equals(IDatapointConnectivityService.class
-										.getName())) {
-							serverDettach();
-						}
+						log.i("Wrapper - Service Rem  " + serviceName);
+						if (paths.containsKey(serviceName))
+							serverDettach(paths.get(serviceName));
 					}
 
 					@Override
 					public void serviceModified(String serviceName) {
-						log.i("Wrapper- Service Modif  "
-								+ serviceName);
-						if (serviceName
-								.equals(IDatapointConnectivityService.class
-										.getName())) {
+						log.i("Wrapper - Service Modif  " + serviceName);
+						if (paths.containsKey(serviceName)) {
 							IDatapointConnectivityService serviceImplementation = DatapointConnectivityServiceRegistry
-									.getInstance().getService(
-											IDatapointConnectivityService.class
-													.getName());
-							DatapointConnectivityServiceRESTWrapper
-									.getInstance().setServiceImplementation(
-											serviceImplementation);
+									.getInstance().getService(serviceName);
+
+							// attach implementation
+							if (serviceImplementation != null) {
+								serverAttach(paths.get(serviceName),
+										serviceImplementation);
+							}
 						}
 					}
 
 					@Override
 					public void serviceAdded(String serviceName) {
-						log.i("Wrapper- Service Added  "
-								+ serviceName);
+						log.i("Wrapper - Service Added  " + serviceName);
 						// Bound an implementation to the REST adapter
-						if (serviceName
-								.equals(IDatapointConnectivityService.class
-										.getName())) {
+						if (paths.containsKey(serviceName)) {
 							IDatapointConnectivityService serviceImplementation = DatapointConnectivityServiceRegistry
-									.getInstance().getService(
-											IDatapointConnectivityService.class
-													.getName());
+									.getInstance().getService(serviceName);
 
-							try {
-								serverAttach(PATH_TEMPLATE,
+							// attach implementation
+							if (serviceImplementation != null) {
+								serverAttach(paths.get(serviceName),
 										serviceImplementation);
-							} catch (Exception e) {
-								System.err.println(e.getMessage());
 							}
 						}
 					}
@@ -114,17 +123,16 @@ public final class Activator implements BundleActivator {
 	private void serverAttach(String pathTemplate,
 			IDatapointConnectivityService serviceImplementation) {
 		DatapointConnectivityServiceRESTWrapper.getInstance()
-				.setServiceImplementation(serviceImplementation);
+				.setServiceImplementation(pathTemplate, serviceImplementation);
 
 		// Attach device api application
 		component.getDefaultHost().attach(pathTemplate,
 				DatapointConnectivityServiceRESTWrapper.getInstance());
 	}
 
-	private void serverDettach() {
-		// Detach device api application
-		component.getDefaultHost().detach(
-				DatapointConnectivityServiceRESTWrapper.getInstance());
+	private void serverDettach(String path) {
+		DatapointConnectivityServiceRESTWrapper.getInstance()
+				.removeServiceImplementation(path);
 	}
 
 }

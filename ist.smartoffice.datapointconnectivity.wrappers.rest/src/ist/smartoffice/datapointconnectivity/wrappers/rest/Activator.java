@@ -18,33 +18,40 @@ public final class Activator implements BundleActivator {
 	static private Logger log = LoggerService.getInstance().getLogger(
 			Activator.class.getName());
 
-	private static final int SERVER_PORT = 8182;
-	// private static final String PATH_TEMPLATE = "/deviceconnectivityapi";
-
 	private static final Map<String, String> paths = new HashMap<String, String>() {
 		private static final long serialVersionUID = 1L;
 		{
 			put("ist.smartoffice.deviceconnectivity.protocolintegration.DatapointConnectivityServiceAdapter",
 					"/deviceconnectivityapi");
+			
 			//put("service1", "/deviceconnectivityapii");
 		}
 	};
 
 	private Component component;
+	
+	private int serverPort;
 
 	@Override
 	public void start(BundleContext context) throws Exception {
 
-		System.out
-				.println(context
-						.getProperty("ist.smartoffice.datapointconnectivity.wrappers.rest.port"));
+		String serverPort = context
+				.getProperty("ist.smartoffice.datapointconnectivity.wrappers.rest.port"); 
+		if(serverPort == null){
+			log.e("Using default port (8182). Set \"ist.smartoffice.datapointconnectivity.wrappers.rest.port\" property.");
+			this.serverPort = 8182;
+		}
+		else{
+			this.serverPort = Integer.parseInt(serverPort);
+		}
+		
 
 		/**
 		 * TODO: Add a way to set the port and the implementation to use through
 		 * some configuration file, GUI, or so.
 		 */
 		// start Restlet component
-		serverStart(SERVER_PORT);
+		serverStart(this.serverPort);
 
 		for (String serviceName : paths.keySet()) {
 			// try discover services

@@ -1,5 +1,8 @@
 package ist.smartoffice.datapointconnectivity.wrappers.pubsub;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
@@ -10,78 +13,78 @@ import ist.smartoffice.logger.LoggerService;
 import ist.smartoffice.osgi.registries.IServiceRegistry.ServiceRegistryListener;
 
 public final class Activator implements BundleActivator {
-	static private Logger log = LoggerService.getInstance().getLogger(Activator.class.getName());  
+	static private Logger log = LoggerService.getInstance().getLogger(
+			Activator.class.getName());
+	
+	private static final Map<String, String> paths = new HashMap<String, String>() {
+		private static final long serialVersionUID = 1L;
+		{
+			put("ist.smartoffice.deviceconnectivity.protocolintegration.DatapointConnectivityServiceAdapter",
+					"/deviceconnectivityapi");
+		}
+	};
 
 	@Override
-	public void start(BundleContext arg0) throws Exception {
-		// TODO Auto-generated method stub
-		log.i("PUBSUUUUB!!");
-		
-		final DatapointConnectivityServicePubSubWrapper pubsubwrapper = new DatapointConnectivityServicePubSubWrapper();
-		
-		
-		IDatapointConnectivityService serviceImplementation = DatapointConnectivityServiceRegistry
-				.getInstance().getService(
-						IDatapointConnectivityService.class.getName());
-		
-		
-
-		// try attach implementation
-		if (serviceImplementation != null) {
-			pubsubwrapper.setServiceImplementation(serviceImplementation);
+	public void start(BundleContext context) throws Exception {
+		String serverAddr = context
+				.getProperty("ist.smartoffice.datapointconnectivity.wrappers.pubsub.server");
+		if(serverAddr == null){
+			log.e("Missing \"ist.smartoffice.datapointconnectivity.wrappers.rest.port\" property.");
+			context.getBundle().stop();
+			return;
 		}
+		
+		DatapointConnectivityServicePubSubWrapper.getInstance().connect(serverAddr);
+		
+		for (String serviceName : paths.keySet()) {
+			// try discover services
+			IDatapointConnectivityService serviceImplementation = DatapointConnectivityServiceRegistry
+					.getInstance().getService(serviceName);
 
+			// try attach implementation
+			if (serviceImplementation != null) {
+				DatapointConnectivityServicePubSubWrapper.getInstance().addServiceImplementation(paths.get(serviceName), serviceImplementation);
+			}
+		}
+		
 		// add service listener
 		DatapointConnectivityServiceRegistry.getInstance().addServiceListener(
 				new ServiceRegistryListener() {
 
 					@Override
 					public void serviceRemoved(String serviceName) {
-						//Stop
 					}
 
 					@Override
 					public void serviceModified(String serviceName) {
-						log.i("Wrapper- Service Modif  "
-								+ serviceName);
-						if (serviceName
-								.equals(IDatapointConnectivityService.class
-										.getName())) {
-							IDatapointConnectivityService serviceImplementation = DatapointConnectivityServiceRegistry
-									.getInstance().getService(
-											IDatapointConnectivityService.class
-													.getName());
-							//TODO
+						log.i("Wrapper - Service Modif  " + serviceName);
+						// try discover services
+						IDatapointConnectivityService serviceImplementation = DatapointConnectivityServiceRegistry
+								.getInstance().getService(serviceName);
+
+						// try attach implementation
+						if (serviceImplementation != null) {
+							DatapointConnectivityServicePubSubWrapper.getInstance().addServiceImplementation(paths.get(serviceName), serviceImplementation);
 						}
 					}
 
 					@Override
 					public void serviceAdded(String serviceName) {
-						log.i("Wrapper- Service Added  "
-								+ serviceName);
-						// Bound an implementation to the REST adapter
-						if (serviceName
-								.equals(IDatapointConnectivityService.class
-										.getName())) {
-							IDatapointConnectivityService serviceImplementation = DatapointConnectivityServiceRegistry
-									.getInstance().getService(
-											IDatapointConnectivityService.class
-													.getName());
+						log.i("Wrapper - Service Added  " + serviceName);
+						IDatapointConnectivityService serviceImplementation = DatapointConnectivityServiceRegistry
+								.getInstance().getService(serviceName);
 
-							pubsubwrapper.setServiceImplementation(serviceImplementation);
+						if (serviceImplementation != null) {
+							DatapointConnectivityServicePubSubWrapper.getInstance().addServiceImplementation(paths.get(serviceName), serviceImplementation);
 						}
 					}
 				});
-		
-		
+
 	}
 
 	@Override
-	public void stop(BundleContext arg0) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void stop(BundleContext context) throws Exception {
+		DatapointConnectivityServicePubSubWrapper.getInstance().disconnect();
 	}
-
-
 
 }

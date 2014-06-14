@@ -284,14 +284,22 @@ public class DatapointConnectivityServiceResources {
 					.getServiceImplementation(getRequest().getRootRef().toString())
 					.requestDatapointRead(new DatapointAddress(address),
 							readCallback);
-			DatapointReading reading = readCallback.getReading();
-			if (reading == null) {
+			DatapointReading[] readings = readCallback.getReadings();
+			if (readings == null) {
 				return provideErrorResponse(readCallback.getErrorReason(),
 						"An error occurred", "Try again later.");
 			}
 			try {
-				result.put("value", reading.getValue());
-				result.put("timestamp", reading.getTimestamp());
+				
+				JSONArray readingsArray = new JSONArray();
+				for (DatapointReading reading : readings) {
+					JSONObject tmp = new JSONObject();
+					tmp.put("value", reading.getValue());
+					tmp.put("timestamp", reading.getTimestamp());
+					readingsArray.put(tmp);
+				}
+
+				result.put("reading", readingsArray);
 				return result;
 			} catch (JSONException e) {
 				getResponse().setStatus(Status.SERVER_ERROR_INTERNAL);

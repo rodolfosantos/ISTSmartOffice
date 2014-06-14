@@ -43,7 +43,7 @@ public class ReadCallback implements IDatapointConnectivityService.ReadCallback 
 	 * 
 	 * @return the reading
 	 */
-	public DatapointReading getReading() {
+	public DatapointReading getFirstReading() {
 		try {
 			semaphore.acquire();
 

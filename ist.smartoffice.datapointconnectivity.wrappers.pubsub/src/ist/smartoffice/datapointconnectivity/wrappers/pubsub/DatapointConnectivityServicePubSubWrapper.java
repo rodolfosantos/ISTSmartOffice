@@ -14,6 +14,7 @@ import java.util.Map;
 import org.cometd.bayeux.client.ClientSessionChannel;
 import org.cometd.client.BayeuxClient;
 import org.cometd.client.transport.LongPollingTransport;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
@@ -30,26 +31,25 @@ public class DatapointConnectivityServicePubSubWrapper {
 	private BayeuxClient client;
 	private Map<DatapointAddress, ClientSessionChannel> clientChannels;
 
-
 	/**
 	 * Instantiates a new datapoint connectivity service rest wrapper.
 	 */
-	private DatapointConnectivityServicePubSubWrapper() {}
+	private DatapointConnectivityServicePubSubWrapper() {
+	}
 
 	public static DatapointConnectivityServicePubSubWrapper getInstance() {
 		if (instance == null)
 			instance = new DatapointConnectivityServicePubSubWrapper();
 		return instance;
 	}
-	
-	public void connect(String addr){
-		this.client = new BayeuxClient(addr,
-				LongPollingTransport.create(null));
+
+	public void connect(String addr) {
+		this.client = new BayeuxClient(addr, LongPollingTransport.create(null));
 		client.handshake();
 		client.waitFor(1000, BayeuxClient.State.CONNECTED);
 	}
-	
-	public void disconnect(){
+
+	public void disconnect() {
 		this.client.disconnect();
 	}
 
@@ -63,16 +63,22 @@ public class DatapointConnectivityServicePubSubWrapper {
 	private void addDatapointsListener() {
 		serviceImplementation.addDatapointListener(new DatapointListener() {
 
-			@SuppressWarnings("unchecked")
+		
 			@Override
 			public void onDatapointUpdate(DatapointAddress address,
 					DatapointReading[] values) {
-				// log.info("WRAPPER update" + values[0]);
-				DatapointReading reading = values[0];
-				JSONObject result = new JSONObject();
-				result.put("value", reading.getValue());
-				result.put("timestamp", reading.getTimestamp());
 
+				JSONObject result = new JSONObject();
+
+				JSONArray readingsArray = new JSONArray();
+				for (DatapointReading reading : values) {
+					JSONObject tmp = new JSONObject();
+					tmp.put("value", reading.getValue());
+					tmp.put("timestamp", reading.getTimestamp());
+					readingsArray.add(tmp);
+				}
+
+				result.put("reading", readingsArray);
 				clientChannels.get(address).publish(result.toJSONString());
 			}
 

@@ -1,5 +1,13 @@
 package ist.smartoffice.deviceconnectivity.knxip;
 
+import ist.smartoffice.datapointconnectivity.DatapointAddress;
+import ist.smartoffice.datapointconnectivity.DatapointMetadata;
+import ist.smartoffice.datapointconnectivity.DatapointMetadata.AccessType;
+import ist.smartoffice.datapointconnectivity.DatapointReading;
+import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService;
+import ist.smartoffice.logger.Logger;
+import ist.smartoffice.logger.LoggerService;
+
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,18 +20,6 @@ import java.util.Set;
 import tuwien.auto.calimero.DetachEvent;
 import tuwien.auto.calimero.process.ProcessEvent;
 import tuwien.auto.calimero.process.ProcessListener;
-import ist.smartoffice.datapointconnectivity.DatapointAddress;
-import ist.smartoffice.datapointconnectivity.DatapointMetadata;
-import ist.smartoffice.datapointconnectivity.DatapointMetadata.AccessType;
-import ist.smartoffice.datapointconnectivity.DatapointReading;
-import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService;
-import ist.smartoffice.historydatastorage.HistoryDataStorageService;
-import ist.smartoffice.historydatastorage.HistoryValue;
-import ist.smartoffice.historydatastorage.IHistoryDataStorageService;
-import ist.smartoffice.historydatastorage.osgi.registries.HistoryDataStorageServiceRegistry;
-import ist.smartoffice.logger.Logger;
-import ist.smartoffice.logger.LoggerService;
-import ist.smartoffice.osgi.registries.IServiceRegistry.ServiceRegistryListener;
 
 /**
  * The Class DatapointConnectivityServiceKNXIPDriver.
@@ -50,8 +46,6 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 	private Map<DatapointAddress, DatapointReading> datapointsStatus;
 	private List<DatapointAddress> uptadingDatapoint;
 
-	private IHistoryDataStorageService storageService;
-
 	/**
 	 * Instantiates a new datapoint connectivity service knxip driver.
 	 * 
@@ -74,44 +68,8 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			driver.reconnectGateway();
 		}
 
-		this.storageService = HistoryDataStorageServiceRegistry.getInstance()
-				.getService(HistoryDataStorageService.class.getName());
-
-		if (this.storageService != null)
-			updateDatapointStatus();
-		else {
-			HistoryDataStorageServiceRegistry.getInstance().addServiceListener(
-					new ServiceRegistryListener() {
-						@Override
-						public void serviceRemoved(String serviceName) {
-							// TODO Auto-generated method stub
-
-						}
-
-						@Override
-						public void serviceModified(String serviceName) {
-							// TODO Auto-generated method stub
-
-						}
-
-						@Override
-						public void serviceAdded(String serviceName) {
-							if (serviceName
-									.equals(HistoryDataStorageService.class
-											.getName())) {
-								storageService = HistoryDataStorageServiceRegistry
-										.getInstance()
-										.getService(
-												HistoryDataStorageService.class
-														.getName());
-								updateDatapointStatus();
-							}
-
-						}
-					});
-		}
-
 		updateDatapointStatus();
+
 		driver.addProcessEventListener(new ProcessListener() {
 
 			@Override
@@ -152,11 +110,9 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 												readings[0]);
 										log.d("KNX Update: " + address + "="
 												+ readings[0].getValue());
-										storageService.addValue(
-												datapointAddress.getAddress(),
-												readings[0].getTimestamp(),
-												readings[0].getValue()
-														.toString());
+
+										notifyDatapointUpdate(datapointAddress,
+												readings);
 									}
 
 									@Override
@@ -196,8 +152,8 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 					@Override
 					public void onReadAborted(DatapointAddress address,
 							ErrorType reason, int requestId) {
-						// TODO Auto-generated method stub
-
+						notifyDatapointError(datapointAddress,
+								ErrorType.DEVICE_NOT_RESPONDING);
 					}
 				});
 			}
@@ -326,19 +282,8 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 	@Override
 	public int requestDatapointWindowRead(DatapointAddress address,
 			long startTimestamp, long finishTimestamp, ReadCallback readCallback) {
-
-		HistoryValue[] readings = storageService.getValuesTimeWindow(
-				address.getAddress(), startTimestamp, finishTimestamp);
-
-		DatapointReading[] result = new DatapointReading[readings.length];
-
-		for (int i = 0; i < result.length; i++) {
-			result[i] = new DatapointReading(readings[i].getValue(),
-					readings[i].getTimestamp());
-		}
-
-		readCallback.onReadCompleted(address, result, 0);
-
+		readCallback.onReadAborted(address,
+				ErrorType.UNSUPORTED_DATAPOINT_OPERATION, 0);
 		return 0;
 	}
 
@@ -347,8 +292,6 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			WriteCallback writeCallback) {
 		DatapointMetadata m = getDatapointMetadata(address);
 		String addr = address.getAddress();
-
-		System.out.println(values[0]);
 
 		if (m.getAccessType() == AccessType.READ_ONLY) {
 			writeCallback.onWriteAborted(address,

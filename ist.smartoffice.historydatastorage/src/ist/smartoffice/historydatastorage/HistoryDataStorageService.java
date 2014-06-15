@@ -1,5 +1,12 @@
 package ist.smartoffice.historydatastorage;
 
+import ist.smartoffice.datapointconnectivity.DatapointAddress;
+import ist.smartoffice.datapointconnectivity.DatapointMetadata;
+import ist.smartoffice.datapointconnectivity.DatapointMetadata.AccessType;
+import ist.smartoffice.datapointconnectivity.DatapointMetadata.MetadataBuilder;
+import ist.smartoffice.datapointconnectivity.DatapointReading;
+import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -7,17 +14,19 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.google.gson.reflect.TypeToken;
 
-public class HistoryDataStorageService implements
-		IHistoryDataStorageService {
+public class HistoryDataStorageService implements IDatapointConnectivityService {
 
-	final String DB_FILE = "HistoryDataDB.json";
+	
 
 	private Map<String, List<HistoryValue>> readingsHistory;
+	private String db_filename;
 
-	public HistoryDataStorageService() {
+	public HistoryDataStorageService(String db_filename) {
+		this.db_filename = db_filename;
 		readingsHistory = new HashMap<String, List<HistoryValue>>();
 		loadFromDisk();
 		if (readingsHistory == null)
@@ -26,7 +35,7 @@ public class HistoryDataStorageService implements
 
 	private void saveOnDisk() {
 		synchronized (readingsHistory) {
-			DataFileStorage.toJsonFile(DB_FILE, readingsHistory);
+			DataFileStorage.toJsonFile(db_filename, readingsHistory);
 		}
 	}
 
@@ -34,7 +43,7 @@ public class HistoryDataStorageService implements
 	private void loadFromDisk() {
 		synchronized (readingsHistory) {
 			readingsHistory = (Map<String, List<HistoryValue>>) DataFileStorage
-					.fromJsonFile(DB_FILE,
+					.fromJsonFile(db_filename,
 							new TypeToken<Map<String, List<HistoryValue>>>() {
 							}.getType());
 		}
@@ -43,38 +52,65 @@ public class HistoryDataStorageService implements
 
 	@Override
 	public String getImplementationName() {
-		return "HistoryDataStorageServiceImpl";
+		return "HistoryDataStorageService";
 	}
 
 	@Override
-	public void addValue(String address, long timestamp, String value) {
-		synchronized (readingsHistory) {
-			if (!readingsHistory.containsKey(address)) {
-				readingsHistory.put(address, new LinkedList<HistoryValue>());
-			}
-			readingsHistory.get(address)
-					.add(new HistoryValue(timestamp, value));
+	public DatapointAddress[] getAllDatapoints() {
+		Set<String> addresses = readingsHistory.keySet();
+		return (DatapointAddress[]) addresses.toArray();
+	}
 
-			saveOnDisk();
+	@Override
+	public DatapointMetadata getDatapointMetadata(DatapointAddress address)
+			throws OperationFailedException {
+		MetadataBuilder m = new DatapointMetadata.MetadataBuilder();
+		m.setAccessType(AccessType.READ_WRITE);
+		return m.build();
+	}
+
+	@Override
+	public void removeDatapointListener(DatapointListener listener) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void addDatapointListener(DatapointListener listener) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public int requestDatapointRead(DatapointAddress address,
+			ReadCallback readCallback) {
+
+		if (!readingsHistory.containsKey(address)) {
+			readCallback.onReadAborted(address, ErrorType.DATAPOINT_NOT_FOUND,
+					0);
+			return 0;
 		}
-
-	}
-
-	@Override
-	public HistoryValue getLastValue(String address) {
-		if (!readingsHistory.containsKey(address))
-			return null;
 
 		List<HistoryValue> datapointReadings = readingsHistory.get(address);
 		Collections.sort(datapointReadings);
-		return datapointReadings.get(datapointReadings.size() - 1);
+		HistoryValue result = datapointReadings
+				.get(datapointReadings.size() - 1);
+		readCallback.onReadCompleted(address,
+				new DatapointReading[] { new DatapointReading(
+						result.getValue(), result.getTimestamp()) }, 0);
+
+		return 0;
 	}
 
 	@Override
-	public HistoryValue[] getValuesTimeWindow(String address,
-			long startTimestamp, long finishTimestamp) {
-		if (!readingsHistory.containsKey(address))
-			return null;
+	public int requestDatapointWindowRead(DatapointAddress address,
+			long startTimestamp, long finishTimestamp, ReadCallback readCallback) {
+
+		if (!readingsHistory.containsKey(address)) {
+			readCallback.onReadAborted(address, ErrorType.DATAPOINT_NOT_FOUND,
+					0);
+			return 0;
+		}
 
 		List<HistoryValue> result = new ArrayList<HistoryValue>();
 		synchronized (readingsHistory) {
@@ -94,12 +130,37 @@ public class HistoryDataStorageService implements
 				}
 
 			}
-			HistoryValue[] res = new HistoryValue[result.size()];
+
+			DatapointReading[] res = new DatapointReading[result.size()];
 			for (int i = 0; i < res.length; i++) {
-				res[i] = result.get(i);
+				HistoryValue historyVal = result.get(i);
+				res[i] = new DatapointReading(historyVal.getValue(),
+						historyVal.getTimestamp());
 			}
-			return res;
+			readCallback.onReadCompleted(address, res, 0);
 		}
 
+		return 0;
+
+	}
+
+	@Override
+	public int requestDatapointWrite(DatapointAddress address, String[] values,
+			WriteCallback writeCallback) {
+		synchronized (readingsHistory) {
+			if (!readingsHistory.containsKey(address)) {
+				readingsHistory.put(address.getAddress(),
+						new LinkedList<HistoryValue>());
+			}
+
+			List<HistoryValue> devHistory = readingsHistory.get(address);
+			for (String val : values) {
+				devHistory.add(new HistoryValue(val));
+			}
+			saveOnDisk();
+			writeCallback.onWriteCompleted(address,
+					WritingConfirmationLevel.DEVICE_ACTION_TAKEN, 0);
+		}
+		return 0;
 	}
 }

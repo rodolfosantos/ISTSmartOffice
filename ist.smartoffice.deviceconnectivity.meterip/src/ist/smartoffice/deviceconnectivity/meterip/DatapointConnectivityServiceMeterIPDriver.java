@@ -1,5 +1,12 @@
 package ist.smartoffice.deviceconnectivity.meterip;
 
+import ist.smartoffice.datapointconnectivity.DatapointAddress;
+import ist.smartoffice.datapointconnectivity.DatapointMetadata;
+import ist.smartoffice.datapointconnectivity.DatapointReading;
+import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService;
+import ist.smartoffice.logger.Logger;
+import ist.smartoffice.logger.LoggerService;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
@@ -8,7 +15,6 @@ import java.net.URLConnection;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -28,29 +34,17 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import ist.smartoffice.datapointconnectivity.DatapointAddress;
-import ist.smartoffice.datapointconnectivity.DatapointMetadata;
-import ist.smartoffice.datapointconnectivity.DatapointReading;
-import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService;
-import ist.smartoffice.historydatastorage.HistoryDataStorageService;
-import ist.smartoffice.historydatastorage.HistoryValue;
-import ist.smartoffice.historydatastorage.IHistoryDataStorageService;
-import ist.smartoffice.historydatastorage.osgi.registries.HistoryDataStorageServiceRegistry;
-import ist.smartoffice.logger.Logger;
-import ist.smartoffice.logger.LoggerService;
-import ist.smartoffice.osgi.registries.IServiceRegistry.ServiceRegistryListener;
-
 /**
  * The Class DatapointConnectivityServiceMeterIPDriver
  */
 public class DatapointConnectivityServiceMeterIPDriver implements
 		IDatapointConnectivityService {
-	static private Logger log = LoggerService.getInstance().getLogger(DatapointConnectivityServiceMeterIPDriver.class.getName());  
+	static private Logger log = LoggerService.getInstance().getLogger(
+			DatapointConnectivityServiceMeterIPDriver.class.getName());
 
 	private String username;
 	private String password;
 	private Map<DatapointAddress, DatapointMetadata> datapoints;
-	private IHistoryDataStorageService storageService;
 
 	/**
 	 * The listeners set
@@ -72,42 +66,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 		this.password = "root";
 		this.datapoints = MeterIPServiceConfig.loadDatapointsConfigs();
 		this.listeners = new HashSet<DatapointListener>();
-		this.storageService = HistoryDataStorageServiceRegistry.getInstance()
-				.getService(HistoryDataStorageService.class.getName());
-
-		if (this.storageService != null)
-			startPollingJob();
-		else {
-			HistoryDataStorageServiceRegistry.getInstance().addServiceListener(
-					new ServiceRegistryListener() {
-						@Override
-						public void serviceRemoved(String serviceName) {
-							// TODO Auto-generated method stub
-
-						}
-
-						@Override
-						public void serviceModified(String serviceName) {
-							// TODO Auto-generated method stub
-
-						}
-
-						@Override
-						public void serviceAdded(String serviceName) {
-							if (serviceName
-									.equals(HistoryDataStorageService.class
-											.getName())) {
-								storageService = HistoryDataStorageServiceRegistry
-										.getInstance()
-										.getService(
-												HistoryDataStorageService.class
-														.getName());
-								startPollingJob();
-							}
-
-						}
-					});
-		}
+		startPollingJob();
 
 	}
 
@@ -131,17 +90,14 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 							MeterMeasure value = getNewMeasure(addr
 									.getAddress());
 							DatapointReading reading = new DatapointReading(
-									new String(value.getTotalPower()
-											+ ""));
-							//notify update
-							notifyDatapointUpdate(addr, new DatapointReading[]{reading});
+									new String(value.getTotalPower() + ""));
+							// notify update
+							notifyDatapointUpdate(addr,
+									new DatapointReading[] { reading });
 
-							
-							// store reading
-							storageService.addValue(addr.getAddress(), reading
-									.getTimestamp(), reading.getValue()
-									.toString());
 						} catch (Exception e) {
+							notifyDatapointError(addr,
+									ErrorType.DEVICE_NOT_RESPONDING);
 							log.e(e.getMessage());
 						}
 
@@ -360,68 +316,34 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 	public int requestDatapointRead(DatapointAddress address,
 			ReadCallback readCallback) {
 
-		HistoryValue lastReading = storageService.getLastValue(address
-				.getAddress());
-
-		DatapointMetadata m = datapoints.get(address);
-
-		if (lastReading != null) {
-			if (new Date().getTime() - lastReading.getTimestamp() < m
-					.getCurrentSamplingInterval()) {
-				readCallback.onReadCompleted(address,
-						new DatapointReading[] { new DatapointReading(
-								new String(lastReading.getValue())) },
-						0);
-				return 0;
-			}
-		}
-
-		try {
+		try {	
 			MeterMeasure value = getNewMeasure(address.getAddress());
 			DatapointReading reading = new DatapointReading(new String(
 					value.getTotalPower() + ""));
-			// store reading
-			storageService.addValue(address.getAddress(), reading.getTimestamp(),
-					reading.getValue() + "");
 
 			readCallback.onReadCompleted(address,
 					new DatapointReading[] { reading }, 0);
+			notifyDatapointUpdate(address, new DatapointReading[] { reading });
 			return 0;
 		} catch (MalformedURLException e) {
 			readCallback.onReadAborted(address, ErrorType.DATAPOINT_NOT_FOUND,
 					0);
+			return 0;
 		}
 
-		return 0;
 	}
 
 	@Override
 	public int requestDatapointWindowRead(DatapointAddress address,
 			long startTimestamp, long finishTimestamp, ReadCallback readCallback) {
-
-		HistoryValue[] readings = storageService.getValuesTimeWindow(
-				address.getAddress(), startTimestamp, finishTimestamp);
-		
-		if(readings == null){
-			readCallback.onReadAborted(address, ErrorType.SERVER_INTERNAL_ERROR, 0);
-			return 0;
-		}
-
-		DatapointReading[] result = new DatapointReading[readings.length];
-
-		for (int i = 0; i < result.length; i++) {
-			result[i] = new DatapointReading(new String(
-					readings[i].getValue()), readings[i].getTimestamp());
-		}
-
-		readCallback.onReadCompleted(address, result, 0);
-
-		return 0;
+		readCallback.onReadAborted(address,
+				ErrorType.UNSUPORTED_DATAPOINT_OPERATION, 0);
+		return 0;		
 	}
 
 	@Override
-	public int requestDatapointWrite(DatapointAddress address,
-			String[] values, WriteCallback writeCallback) {
+	public int requestDatapointWrite(DatapointAddress address, String[] values,
+			WriteCallback writeCallback) {
 		writeCallback.onWriteAborted(address,
 				ErrorType.UNSUPORTED_DATAPOINT_OPERATION, 0);
 		return 0;
@@ -580,6 +502,5 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 	public String getImplementationName() {
 		return "meter";
 	}
-
 
 }

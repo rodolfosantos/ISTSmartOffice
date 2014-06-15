@@ -6,6 +6,14 @@ import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService;
 
 public class HistoryDataService implements IDatapointConnectivityService {
 
+	IDatapointConnectivityService serviceImpl;
+	
+
+	public HistoryDataService(IDatapointConnectivityService serviceImpl) {
+		super();
+		this.serviceImpl = serviceImpl;
+	}
+
 	@Override
 	public String getImplementationName() {
 		return HistoryDataService.class.getName();

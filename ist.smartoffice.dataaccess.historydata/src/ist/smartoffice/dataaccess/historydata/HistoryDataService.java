@@ -21,48 +21,43 @@ public class HistoryDataService implements IDatapointConnectivityService {
 
 	@Override
 	public void addDatapointListener(DatapointListener listener) {
-		// TODO Auto-generated method stub
+		serviceImpl.addDatapointListener(listener);
 		
 	}
 
 	@Override
 	public DatapointAddress[] getAllDatapoints() {
-		// TODO Auto-generated method stub
-		return null;
+		return serviceImpl.getAllDatapoints();
 	}
 
 	@Override
 	public DatapointMetadata getDatapointMetadata(DatapointAddress address)
 			throws OperationFailedException {
-		// TODO Auto-generated method stub
-		return null;
+		return serviceImpl.getDatapointMetadata(address);
 	}
 
 	@Override
 	public void removeDatapointListener(DatapointListener listener) {
-		// TODO Auto-generated method stub
+		serviceImpl.removeDatapointListener(listener);
 		
 	}
 
 	@Override
 	public int requestDatapointRead(DatapointAddress address,
 			ReadCallback readCallback) {
-		// TODO Auto-generated method stub
-		return 0;
+		return serviceImpl.requestDatapointRead(address, readCallback);
 	}
 
 	@Override
 	public int requestDatapointWindowRead(DatapointAddress address,
 			long startTimestamp, long finishTimestamp, ReadCallback readCallback) {
-		// TODO Auto-generated method stub
-		return 0;
+		return serviceImpl.requestDatapointWindowRead(address, startTimestamp, finishTimestamp, readCallback);
 	}
 
 	@Override
 	public int requestDatapointWrite(DatapointAddress address, String[] values,
 			WriteCallback writeCallback) {
-		// TODO Auto-generated method stub
-		return 0;
+		return serviceImpl.requestDatapointWrite(address, values, writeCallback);
 	}
 
 }

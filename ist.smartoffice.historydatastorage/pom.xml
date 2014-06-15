@@ -23,8 +23,7 @@
 					<instructions>
 						<Bundle-SymbolicName>${project.artifactId};singleton:=true</Bundle-SymbolicName>
 						<Bundle-Version>${project.version}</Bundle-Version>
-						<Export-Package>ist.smartoffice.historydatastorage,ist.smartoffice.historydatastorage.osgi.registries,ist.smartoffice.historydatastorage.osgi.trackers</Export-Package>
-						<Bundle-Activator>ist.smartoffice.historydatastorage.osgi.trackers.Activator</Bundle-Activator>
+						<Bundle-Activator>ist.smartoffice.historydatastorage.Activator</Bundle-Activator>
 					</instructions>
 				</configuration>
 			</plugin>

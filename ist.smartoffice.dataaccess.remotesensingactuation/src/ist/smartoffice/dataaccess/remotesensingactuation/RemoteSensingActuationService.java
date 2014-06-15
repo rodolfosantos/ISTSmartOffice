@@ -2,7 +2,10 @@ package ist.smartoffice.dataaccess.remotesensingactuation;
 
 import ist.smartoffice.datapointconnectivity.DatapointAddress;
 import ist.smartoffice.datapointconnectivity.DatapointMetadata;
+import ist.smartoffice.datapointconnectivity.DatapointReading;
 import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService;
+import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService.ErrorType;
+import ist.smartoffice.datapointconnectivity.osgi.registries.DatapointConnectivityServiceRegistry;
 
 public class RemoteSensingActuationService implements
 		IDatapointConnectivityService {
@@ -50,9 +53,37 @@ public class RemoteSensingActuationService implements
 
 	@Override
 	public int requestDatapointWindowRead(DatapointAddress address,
-			long startTimestamp, long finishTimestamp, ReadCallback readCallback) {
+			final long startTimestamp, final long finishTimestamp,
+			final ReadCallback readCallback) {
+
+		ReadCallback callback = new ReadCallback() {
+
+			@Override
+			public void onReadCompleted(DatapointAddress address,
+					DatapointReading[] readings, int requestId) {
+				readCallback.onReadCompleted(address, readings, requestId);
+
+			}
+
+			@Override
+			public void onReadAborted(DatapointAddress address,
+					ErrorType reason, int requestId) {
+				IDatapointConnectivityService historyService = DatapointConnectivityServiceRegistry
+						.getInstance()
+						.getService(
+								"ist.smartoffice.historydatastorage.HistoryDataService");
+				if(historyService == null){
+					readCallback.onReadAborted(address, reason, requestId);
+				}
+				else{
+					historyService.requestDatapointWindowRead(address, startTimestamp, finishTimestamp, readCallback);
+				}
+
+			}
+		};
+
 		return protocolIntegrationImpl.requestDatapointWindowRead(address,
-				startTimestamp, finishTimestamp, readCallback);
+				startTimestamp, finishTimestamp, callback);
 	}
 
 	@Override

@@ -109,7 +109,8 @@ public final class Activator implements BundleActivator {
 					}
 				});
 
-		log.i("inserted service listener");
+		log.i("inserted service listener!!!!!!!!!!!!!!!!!!!!!!!");
+		System.err.println("STARTEEEEEEEEEEEEEEEEEEEED!!!!");
 
 	}
 

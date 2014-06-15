@@ -98,6 +98,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 						} catch (Exception e) {
 							notifyDatapointError(addr,
 									ErrorType.DEVICE_NOT_RESPONDING);
+							e.printStackTrace();
 							log.e(e.getMessage());
 						}
 

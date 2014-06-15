@@ -106,7 +106,7 @@ public class HistoryDataStorageService implements IDatapointConnectivityService 
 	public int requestDatapointWindowRead(DatapointAddress address,
 			long startTimestamp, long finishTimestamp, ReadCallback readCallback) {
 
-		if (!readingsHistory.containsKey(address)) {
+		if (!readingsHistory.containsKey(address.getAddress())) {
 			readCallback.onReadAborted(address, ErrorType.DATAPOINT_NOT_FOUND,
 					0);
 			return 0;
@@ -114,7 +114,7 @@ public class HistoryDataStorageService implements IDatapointConnectivityService 
 
 		List<HistoryValue> result = new ArrayList<HistoryValue>();
 		synchronized (readingsHistory) {
-			List<HistoryValue> datapointReadings = readingsHistory.get(address);
+			List<HistoryValue> datapointReadings = readingsHistory.get(address.getAddress());
 			Collections.sort(datapointReadings);
 
 			Iterator<HistoryValue> it = datapointReadings.iterator();
@@ -148,12 +148,12 @@ public class HistoryDataStorageService implements IDatapointConnectivityService 
 	public int requestDatapointWrite(DatapointAddress address, String[] values,
 			WriteCallback writeCallback) {
 		synchronized (readingsHistory) {
-			if (!readingsHistory.containsKey(address)) {
+			if (!readingsHistory.containsKey(address.getAddress())) {
 				readingsHistory.put(address.getAddress(),
 						new LinkedList<HistoryValue>());
 			}
 
-			List<HistoryValue> devHistory = readingsHistory.get(address);
+			List<HistoryValue> devHistory = readingsHistory.get(address.getAddress());
 			for (String val : values) {
 				devHistory.add(new HistoryValue(val));
 			}

@@ -54,8 +54,10 @@ public final class Activator implements BundleActivator {
 			@Override
 			public void serviceAdded(String serviceName) {
 				if(serviceName.equals(USED_SERVICE_NAME)){
-					serviceImpl = null;
-					DatapointConnectivityServiceRegistry.getInstance().removeService(PROVIDED_SERVICE_NAME);
+					System.err.println("Service Added!!");
+					IDatapointConnectivityService serviceDepencendy = DatapointConnectivityServiceRegistry.getInstance().getService(USED_SERVICE_NAME);
+					serviceImpl = new HistoryDataService(serviceDepencendy);
+					DatapointConnectivityServiceRegistry.getInstance().addService(PROVIDED_SERVICE_NAME, serviceImpl);
 				}
 				
 			}

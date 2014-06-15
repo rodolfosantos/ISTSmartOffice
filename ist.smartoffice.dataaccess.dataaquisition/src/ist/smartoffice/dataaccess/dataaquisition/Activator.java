@@ -8,21 +8,23 @@ import org.osgi.framework.BundleContext;
 
 public final class Activator implements BundleActivator {
 
-	private static final String SERVICE_NAME = Activator.class
-			.getName();//TODO
-
 	static private Logger log = LoggerService.getInstance().getLogger(
 			Activator.class.getName());
 
+	private Thread dataAquisitonThread;
 
 	@Override
 	public void start(BundleContext context) throws Exception {
-
+		String remoteSensingServiceName = "ist.smartoffice.dataaccess.remotesensingactuation.RemoteSensingActuationService";
+		String historyDataServiceName = "ist.smartoffice.historydatastorage.HistoryDataService";
+		dataAquisitonThread = new Thread(new DataAquisitionWorker(
+				remoteSensingServiceName, historyDataServiceName));
+		dataAquisitonThread.start();
 	}
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
-
+		dataAquisitonThread.join();
 	}
 
 }

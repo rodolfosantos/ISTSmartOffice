@@ -74,10 +74,8 @@ public class RemoteSensingActuationService implements
 								"ist.smartoffice.dataaccess.historydata.HistoryDataStorageService");
 				if(historyService == null){
 					readCallback.onReadAborted(origAddress, reason, requestId);
-					System.err.println(" NAO EXISTE");
 				}
 				else{
-					System.err.println("EXISTE");
 					historyService.requestDatapointWindowRead(origAddress, startTimestamp, finishTimestamp, readCallback);
 				}
 

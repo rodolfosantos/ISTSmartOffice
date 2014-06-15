@@ -20,9 +20,9 @@ public final class Activator implements BundleActivator {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		String db_filename = context
-				.getProperty("ist.smartoffice.historydatastorage.db_filename");
+				.getProperty("ist.smartoffice.dataaccess.historydata.db_filename");
 		if (db_filename == null) {
-			log.e("Using default DB Filename (HistoryDataDB.json) . Please set \"ist.smartoffice.historydatastorage.db_filename\" property.");
+			log.e("Using default DB Filename (HistoryDataDB.json) . Please set \"ist.smartoffice.dataaccess.historydata.db_filename\" property.");
 			db_filename = "HistoryDataDB.json";
 		}
 

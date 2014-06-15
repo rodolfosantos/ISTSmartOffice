@@ -10,14 +10,14 @@ import java.util.Map;
 
 import com.google.gson.reflect.TypeToken;
 
-public class HistoryDataStorageServiceImpl implements
+public class HistoryDataStorageService implements
 		IHistoryDataStorageService {
 
 	final String DB_FILE = "HistoryDataDB.json";
 
 	private Map<String, List<HistoryValue>> readingsHistory;
 
-	public HistoryDataStorageServiceImpl() {
+	public HistoryDataStorageService() {
 		readingsHistory = new HashMap<String, List<HistoryValue>>();
 		loadFromDisk();
 		if (readingsHistory == null)
@@ -26,14 +26,14 @@ public class HistoryDataStorageServiceImpl implements
 
 	private void saveOnDisk() {
 		synchronized (readingsHistory) {
-			DataStorage.toJsonFile(DB_FILE, readingsHistory);
+			DataFileStorage.toJsonFile(DB_FILE, readingsHistory);
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	private void loadFromDisk() {
 		synchronized (readingsHistory) {
-			readingsHistory = (Map<String, List<HistoryValue>>) DataStorage
+			readingsHistory = (Map<String, List<HistoryValue>>) DataFileStorage
 					.fromJsonFile(DB_FILE,
 							new TypeToken<Map<String, List<HistoryValue>>>() {
 							}.getType());

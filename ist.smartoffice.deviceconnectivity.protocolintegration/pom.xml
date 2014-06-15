@@ -55,7 +55,6 @@
 			<groupId>ist.smartoffice</groupId>
 			<artifactId>ist.smartoffice.datapointconnectivity</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-			
 		</dependency>
 		<dependency>
 			<groupId>ist.smartoffice</groupId>

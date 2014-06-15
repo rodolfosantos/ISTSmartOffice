@@ -32,7 +32,7 @@ import ist.smartoffice.datapointconnectivity.DatapointAddress;
 import ist.smartoffice.datapointconnectivity.DatapointMetadata;
 import ist.smartoffice.datapointconnectivity.DatapointReading;
 import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService;
-import ist.smartoffice.historydatastorage.HistoryDataStorageServiceImpl;
+import ist.smartoffice.historydatastorage.HistoryDataStorageService;
 import ist.smartoffice.historydatastorage.HistoryValue;
 import ist.smartoffice.historydatastorage.IHistoryDataStorageService;
 import ist.smartoffice.historydatastorage.osgi.registries.HistoryDataStorageServiceRegistry;
@@ -73,7 +73,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 		this.datapoints = MeterIPServiceConfig.loadDatapointsConfigs();
 		this.listeners = new HashSet<DatapointListener>();
 		this.storageService = HistoryDataStorageServiceRegistry.getInstance()
-				.getService(HistoryDataStorageServiceImpl.class.getName());
+				.getService(HistoryDataStorageService.class.getName());
 
 		if (this.storageService != null)
 			startPollingJob();
@@ -95,12 +95,12 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 						@Override
 						public void serviceAdded(String serviceName) {
 							if (serviceName
-									.equals(HistoryDataStorageServiceImpl.class
+									.equals(HistoryDataStorageService.class
 											.getName())) {
 								storageService = HistoryDataStorageServiceRegistry
 										.getInstance()
 										.getService(
-												HistoryDataStorageServiceImpl.class
+												HistoryDataStorageService.class
 														.getName());
 								startPollingJob();
 							}

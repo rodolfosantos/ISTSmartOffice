@@ -55,14 +55,14 @@ public class RemoteSensingActuationService implements
 	public int requestDatapointWindowRead(DatapointAddress address,
 			final long startTimestamp, final long finishTimestamp,
 			final ReadCallback readCallback) {
+		
+		final DatapointAddress origAddress = address;
 
-		ReadCallback callback = new ReadCallback() {
-
+		ReadCallback newCallback = new ReadCallback() {
 			@Override
 			public void onReadCompleted(DatapointAddress address,
 					DatapointReading[] readings, int requestId) {
 				readCallback.onReadCompleted(address, readings, requestId);
-
 			}
 
 			@Override
@@ -71,19 +71,21 @@ public class RemoteSensingActuationService implements
 				IDatapointConnectivityService historyService = DatapointConnectivityServiceRegistry
 						.getInstance()
 						.getService(
-								"ist.smartoffice.historydatastorage.HistoryDataService");
+								"ist.smartoffice.dataaccess.historydata.HistoryDataStorageService");
 				if(historyService == null){
-					readCallback.onReadAborted(address, reason, requestId);
+					readCallback.onReadAborted(origAddress, reason, requestId);
+					System.err.println(" NAO EXISTE");
 				}
 				else{
-					historyService.requestDatapointWindowRead(address, startTimestamp, finishTimestamp, readCallback);
+					System.err.println("EXISTE");
+					historyService.requestDatapointWindowRead(origAddress, startTimestamp, finishTimestamp, readCallback);
 				}
 
 			}
 		};
 
 		return protocolIntegrationImpl.requestDatapointWindowRead(address,
-				startTimestamp, finishTimestamp, callback);
+				startTimestamp, finishTimestamp, newCallback);
 	}
 
 	@Override

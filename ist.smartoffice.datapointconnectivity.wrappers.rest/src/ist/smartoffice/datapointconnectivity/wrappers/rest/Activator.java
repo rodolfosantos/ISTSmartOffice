@@ -63,6 +63,7 @@ public final class Activator implements BundleActivator {
 			// try attach implementation
 			if (serviceImplementation != null) {
 				serverAttach(paths.get(serviceName), serviceImplementation);
+				log.i("REST Wrapper - Service Added:" + serviceName);
 			}
 		}
 
@@ -72,15 +73,18 @@ public final class Activator implements BundleActivator {
 
 					@Override
 					public void serviceRemoved(String serviceName) {
-						log.i("Wrapper - Service Rem  " + serviceName);
-						if (paths.containsKey(serviceName))
+						
+						if (paths.containsKey(serviceName)){
+							log.i("REST Wrapper - Service Removed:" + serviceName);
 							serverDettach(paths.get(serviceName));
+						}
+							
 					}
 
 					@Override
 					public void serviceModified(String serviceName) {
-						log.i("Wrapper - Service Modif  " + serviceName);
 						if (paths.containsKey(serviceName)) {
+							log.i("REST Wrapper - Service Modified:" + serviceName);
 							IDatapointConnectivityService serviceImplementation = DatapointConnectivityServiceRegistry
 									.getInstance().getService(serviceName);
 
@@ -94,9 +98,9 @@ public final class Activator implements BundleActivator {
 
 					@Override
 					public void serviceAdded(String serviceName) {
-						log.i("Wrapper - Service Added  " + serviceName);
 						// Bound an implementation to the REST adapter
 						if (paths.containsKey(serviceName)) {
+							log.i("REST Wrapper - Service Added:" + serviceName);
 							IDatapointConnectivityService serviceImplementation = DatapointConnectivityServiceRegistry
 									.getInstance().getService(serviceName);
 
@@ -109,9 +113,7 @@ public final class Activator implements BundleActivator {
 					}
 				});
 
-		log.i("inserted service listener!!!!!!!!!!!!!!!!!!!!!!!");
-		System.err.println("STARTEEEEEEEEEEEEEEEEEEEED!!!!");
-
+		log.d("REST Wrapper Started!");
 	}
 
 	@Override

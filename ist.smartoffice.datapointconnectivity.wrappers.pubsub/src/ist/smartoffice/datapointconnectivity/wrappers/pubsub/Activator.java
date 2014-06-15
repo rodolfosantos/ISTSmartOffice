@@ -47,6 +47,7 @@ public final class Activator implements BundleActivator {
 				DatapointConnectivityServicePubSubWrapper.getInstance()
 						.addServiceImplementation(paths.get(serviceName),
 								serviceImplementation);
+				log.i("PubSub Wrapper - Service Added:" + serviceName);
 			}
 		}
 
@@ -60,9 +61,9 @@ public final class Activator implements BundleActivator {
 
 					@Override
 					public void serviceModified(String serviceName) {
-						log.i("Wrapper - Service Modif  " + serviceName);
 						// try discover services
 						if (paths.containsKey(serviceName)) {
+							log.i("PubSub Wrapper - Service Modified:" + serviceName);
 							IDatapointConnectivityService serviceImplementation = DatapointConnectivityServiceRegistry
 									.getInstance().getService(serviceName);
 
@@ -79,8 +80,8 @@ public final class Activator implements BundleActivator {
 
 					@Override
 					public void serviceAdded(String serviceName) {
-						log.i("Wrapper - Service Added  " + serviceName);
 						if (paths.containsKey(serviceName)) {
+							log.i("PubSub Wrapper - Service Added:" + serviceName);
 							IDatapointConnectivityService serviceImplementation = DatapointConnectivityServiceRegistry
 									.getInstance().getService(serviceName);
 

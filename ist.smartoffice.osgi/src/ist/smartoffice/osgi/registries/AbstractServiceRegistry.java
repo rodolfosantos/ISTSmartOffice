@@ -18,7 +18,7 @@ public abstract class AbstractServiceRegistry<T> implements IServiceRegistry<T> 
 
 	/** The service factories by name. */
 	private Map<String, T> servicesByName = new HashMap<String, T>();
-	
+
 	/** The service listeners. */
 	private List<ServiceRegistryListener> serviceListeners = new ArrayList<ServiceRegistryListener>();
 
@@ -54,6 +54,7 @@ public abstract class AbstractServiceRegistry<T> implements IServiceRegistry<T> 
 	 *            the service name
 	 */
 	protected final void notifyServiceAdded(String serviceName) {
+		System.err.println("ServiceAdded: " + serviceName);
 		for (ServiceRegistryListener l : serviceListeners)
 			l.serviceAdded(serviceName);
 	}
@@ -65,6 +66,7 @@ public abstract class AbstractServiceRegistry<T> implements IServiceRegistry<T> 
 	 *            the service name
 	 */
 	protected final void notifyServiceModified(String serviceName) {
+		System.err.println("ServiceModified: " + serviceName);
 		for (ServiceRegistryListener l : serviceListeners)
 			l.serviceModified(serviceName);
 	}
@@ -76,6 +78,7 @@ public abstract class AbstractServiceRegistry<T> implements IServiceRegistry<T> 
 	 *            the service name
 	 */
 	protected final void notifyServiceRemoved(String serviceName) {
+		System.err.println("ServiceRemoved: " + serviceName);
 		for (ServiceRegistryListener l : serviceListeners)
 			l.serviceRemoved(serviceName);
 	}
@@ -130,6 +133,7 @@ public abstract class AbstractServiceRegistry<T> implements IServiceRegistry<T> 
 	@Override
 	public final String[] getRegisteredServicesNames() {
 		Set<String> driverNames = servicesByName.keySet();
+		System.out.println("SERICEEEE:"+driverNames);
 		String[] names = new String[driverNames.size()];
 		int i = 0;
 		for (String d : driverNames)

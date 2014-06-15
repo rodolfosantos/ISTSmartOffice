@@ -14,7 +14,8 @@ import ist.smartoffice.osgi.registries.IServiceRegistry.ServiceRegistryListener;
 
 public final class Activator implements BundleActivator {
 
-	private static final String SERVICE_NAME = DatapointConnectivityServiceAdapter.class.getName();
+	private static final String SERVICE_NAME = DatapointConnectivityServiceAdapter.class
+			.getName();
 
 	static private Logger log = LoggerService.getInstance().getLogger(
 			Activator.class.getName());
@@ -24,16 +25,17 @@ public final class Activator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext context) throws Exception {
-		System.out.println("ServiceNAME:"+SERVICE_NAME);
+		System.out.println("ServiceNAME:" + SERVICE_NAME);
 
 		String[] currServices = DatapointConnectivityServiceRegistry
 				.getInstance().getRegisteredServicesNames();
 
 		for (String s : currServices) {
-			if (!s.contains("ist.smartoffice.deviceconnectivity.")
-					|| s.equals(SERVICE_NAME))
-				break;
-			addServiceImplementation(s);
+			System.out.println("currServices:" + s);
+			if (s.contains("ist.smartoffice.deviceconnectivity.")
+					&& !s.equals(SERVICE_NAME)) {
+				addServiceImplementation(s);
+			}
 		}
 
 		DatapointConnectivityServiceRegistry.getInstance().addServiceListener(
@@ -41,30 +43,32 @@ public final class Activator implements BundleActivator {
 
 					@Override
 					public void serviceRemoved(String serviceName) {
-						if (!serviceName
+						if (serviceName
 								.contains("ist.smartoffice.deviceconnectivity.")
-								|| serviceName.equals(SERVICE_NAME))
-							return;
+								&& !serviceName.equals(SERVICE_NAME)) {
+							log.i("Service removed: " + serviceName);
+							removeServiceImplementation(serviceName);
+						}
 
-						log.i("Service removed: " + serviceName);
-						removeServiceImplementation(serviceName);
 					}
 
 					@Override
 					public void serviceModified(String serviceName) {
-						log.i("Service modified: " + serviceName);
-						// do notting
+						if (serviceName
+								.contains("ist.smartoffice.deviceconnectivity.")
+								&& !serviceName.equals(SERVICE_NAME)) {
+							addServiceImplementation(serviceName);
+						}
 					}
 
 					@Override
 					public void serviceAdded(String serviceName) {
-						if (!serviceName
-								.contains("ist.smartoffice.deviceconnectivity")
-								|| serviceName.equals(SERVICE_NAME))
-							return;
-
-						log.i("Service added: " + serviceName);
-						addServiceImplementation(serviceName);
+						if (serviceName
+								.contains("ist.smartoffice.deviceconnectivity.")
+								&& !serviceName.equals(SERVICE_NAME)) {
+							log.i("Service added: " + serviceName);
+							addServiceImplementation(serviceName);
+						}
 					}
 				});
 	}
@@ -75,6 +79,7 @@ public final class Activator implements BundleActivator {
 	}
 
 	private void addServiceImplementation(String serviceName) {
+		System.out.println("ServiceADDING:" + serviceName);
 		IDatapointConnectivityService newServiceImpl = DatapointConnectivityServiceRegistry
 				.getInstance().getService(serviceName);
 		discoveredServices.put(serviceName, newServiceImpl);
@@ -94,6 +99,7 @@ public final class Activator implements BundleActivator {
 	}
 
 	private void removeServiceImplementation(String serviceName) {
+		System.out.println("ServiceREM:" + serviceName);
 		discoveredServices.remove(serviceName);
 
 		serviceAdapterImpl = new DatapointConnectivityServiceAdapter(

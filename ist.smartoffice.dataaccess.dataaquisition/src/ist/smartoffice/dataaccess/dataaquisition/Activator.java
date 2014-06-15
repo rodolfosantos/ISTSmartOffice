@@ -16,7 +16,7 @@ public final class Activator implements BundleActivator {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		String remoteSensingServiceName = "ist.smartoffice.dataaccess.remotesensingactuation.RemoteSensingActuationService";
-		String historyDataServiceName = "ist.smartoffice.historydatastorage.HistoryDataService";
+		String historyDataServiceName = "ist.smartoffice.dataaccess.historydata.HistoryDataStorageService";
 		dataAquisitonThread = new Thread(new DataAquisitionWorker(
 				remoteSensingServiceName, historyDataServiceName));
 		dataAquisitonThread.start();

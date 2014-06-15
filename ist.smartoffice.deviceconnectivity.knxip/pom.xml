@@ -63,11 +63,6 @@
 			<version>2.2.0</version>
 		</dependency>
 		<dependency>
-			<groupId>ist.smartoffice</groupId>
-			<artifactId>ist.smartoffice.historydatastorage</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.3.2</version>
@@ -76,6 +71,11 @@
 			<groupId>ist.smartoffice</groupId>
 			<artifactId>ist.smartoffice.logger</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>1.7.1</version>
 		</dependency>
 	</dependencies>
 </project>

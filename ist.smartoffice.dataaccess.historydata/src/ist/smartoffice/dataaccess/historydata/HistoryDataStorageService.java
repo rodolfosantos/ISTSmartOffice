@@ -1,4 +1,4 @@
-package ist.smartoffice.historydatastorage;
+package ist.smartoffice.dataaccess.historydata;
 
 import ist.smartoffice.datapointconnectivity.DatapointAddress;
 import ist.smartoffice.datapointconnectivity.DatapointMetadata;
@@ -106,6 +106,8 @@ public class HistoryDataStorageService implements IDatapointConnectivityService 
 	public int requestDatapointWindowRead(DatapointAddress address,
 			long startTimestamp, long finishTimestamp, ReadCallback readCallback) {
 
+		System.out.println(readingsHistory.keySet());
+		System.out.println(address.getAddress());
 		if (!readingsHistory.containsKey(address.getAddress())) {
 			readCallback.onReadAborted(address, ErrorType.DATAPOINT_NOT_FOUND,
 					0);

@@ -1,4 +1,4 @@
-package ist.smartoffice.historydatastorage;
+package ist.smartoffice.dataaccess.historydata;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

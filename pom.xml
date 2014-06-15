@@ -49,7 +49,6 @@
 		<module>ist.smartoffice.datapointconnectivity.impls.lifx</module>-->
 		<module>ist.smartoffice.datapointconnectivity.wrappers.rest</module>
 		<module>ist.smartoffice.datapointconnectivity.wrappers.pubsub</module>
-		<module>ist.smartoffice.historydatastorage</module>
 	</modules>
 
 	<profiles>

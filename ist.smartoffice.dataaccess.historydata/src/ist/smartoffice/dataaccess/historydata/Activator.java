@@ -33,6 +33,7 @@ public final class Activator implements BundleActivator {
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
+		DatapointConnectivityServiceRegistry.getInstance().removeService(PROVIDED_SERVICE_NAME);
 		serviceImpl = null;
 	}
 

@@ -62,6 +62,11 @@
 			<version>1.1</version>
 		</dependency>
 		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>1.7.1</version>
+		</dependency>
+		<dependency>
 			<groupId>ist.smartoffice</groupId>
 			<artifactId>ist.smartoffice.logger</artifactId>
 			<version>0.0.1-SNAPSHOT</version>

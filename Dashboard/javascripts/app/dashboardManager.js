@@ -89,7 +89,7 @@ function plotRealTimeEnergyConsumption(chartSelector, datapointAddress, historyW
     charts.push(chart);
     $(".chartName").text("Power Consumption | " + api.getDatapointMetadataSync(datapointAddress).description);    
 
-    var subscription = faye.subscribe('/datapoints/'+datapointAddress, function(data) {
+    var subscription = faye.subscribe('/remoteactuation/datapoints/'+datapointAddress, function(data) {
         updateChart([$.parseJSON(data)])
         //console.log(data);
     });

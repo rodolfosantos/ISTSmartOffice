@@ -15,6 +15,15 @@ public class RemoteSensingActuationService implements
 	public RemoteSensingActuationService(
 			IDatapointConnectivityService protocolIntegrationImpl) {
 		this.protocolIntegrationImpl = protocolIntegrationImpl;
+		
+		if(protocolIntegrationImpl == null){
+			System.err.println("e NULL");
+		}
+			
+		else{
+			
+			System.err.println("nao é NULL");
+		}
 	}
 
 	@Override

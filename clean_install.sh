@@ -1,8 +1,5 @@
 #!/bin/bash
 
-#clean
-mvn clean
-
 #install
 mvn install
 #generate bundles dependencies

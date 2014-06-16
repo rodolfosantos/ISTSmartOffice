@@ -82,7 +82,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 					@Override
 					public void run() {
-						log.d("KNX Event: " + datapointAddress);
+						//log.d("KNX Event: " + datapointAddress);
 
 						if (!datapointsMetadata.keySet().contains(
 								datapointAddress))
@@ -162,6 +162,9 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 	@Override
 	public void addDatapointListener(DatapointListener listener) {
+		if(listener == null)
+			listeners.clear();
+		System.out.println("knxAdd "+listener);
 		listeners.add(listener);
 	}
 
@@ -181,6 +184,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 	@Override
 	public void removeDatapointListener(DatapointListener listener) {
+		System.out.println("knxRem "+listener);
 		listeners.remove(listener);
 	}
 

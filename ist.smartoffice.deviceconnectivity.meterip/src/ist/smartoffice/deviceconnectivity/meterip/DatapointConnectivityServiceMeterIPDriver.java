@@ -87,21 +87,23 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 					public void run() {
 
 						try {
-							MeterMeasure value = getNewMeasure(addr
-									.getAddress());
+							MeterMeasure value;
+
+							value = getNewMeasure(addr.getAddress());
+
 							DatapointReading reading = new DatapointReading(
 									new String(value.getTotalPower() + ""));
 							// notify update
 							notifyDatapointUpdate(addr,
 									new DatapointReading[] { reading });
 
-						} catch (Exception e) {
+						} catch (MalformedURLException e) {
 							notifyDatapointError(addr,
 									ErrorType.DEVICE_NOT_RESPONDING);
 							e.printStackTrace();
 							log.e(e.getMessage());
-						}
 
+						}
 					}
 				}, 1000, interval);
 			}
@@ -265,6 +267,10 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 
 	@Override
 	public void addDatapointListener(DatapointListener listener) {
+		if (listener == null)
+			listeners.clear();
+
+		System.out.println("metAdd " + listener);
 		listeners.add(listener);
 	}
 
@@ -288,6 +294,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 
 	@Override
 	public void removeDatapointListener(DatapointListener listener) {
+		System.out.println("metRem " + listener);
 		listeners.remove(listener);
 
 	}
@@ -317,7 +324,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 	public int requestDatapointRead(DatapointAddress address,
 			ReadCallback readCallback) {
 
-		try {	
+		try {
 			MeterMeasure value = getNewMeasure(address.getAddress());
 			DatapointReading reading = new DatapointReading(new String(
 					value.getTotalPower() + ""));
@@ -339,7 +346,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 			long startTimestamp, long finishTimestamp, ReadCallback readCallback) {
 		readCallback.onReadAborted(address,
 				ErrorType.UNSUPORTED_DATAPOINT_OPERATION, 0);
-		return 0;		
+		return 0;
 	}
 
 	@Override

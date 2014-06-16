@@ -12,10 +12,11 @@ import ist.smartoffice.osgi.registries.IServiceRegistry.ServiceRegistryListener;
 
 public class DataAquisitionWorker implements Runnable {
 
-	String remoteSensingServiceName;
-	String historyDataServiceName;
-	IDatapointConnectivityService remoteSensingService;
-	IDatapointConnectivityService historyDataService;
+	private String remoteSensingServiceName;
+	private String historyDataServiceName;
+	private IDatapointConnectivityService remoteSensingService;
+	private IDatapointConnectivityService historyDataService;
+	private DatapointListener listener;
 
 	// TODO store temporary values if history service isn't available
 
@@ -24,6 +25,7 @@ public class DataAquisitionWorker implements Runnable {
 		super();
 		this.remoteSensingServiceName = remoteSensingServiceName;
 		this.historyDataServiceName = historyDataServiceName;
+		this.listener = remoteSensingDatapointListener();
 	}
 
 	@Override
@@ -36,8 +38,8 @@ public class DataAquisitionWorker implements Runnable {
 				.getService(historyDataServiceName);
 
 		if (remoteSensingService != null) {
-			remoteSensingService
-					.addDatapointListener(remoteSensingDatapointListener());
+			System.err.println("ADD SERVICE1!");
+			remoteSensingService.addDatapointListener(listener);
 		} else {
 			DatapointConnectivityServiceRegistry.getInstance()
 					.addServiceListener(new ServiceRegistryListener() {
@@ -65,11 +67,19 @@ public class DataAquisitionWorker implements Runnable {
 						@Override
 						public void serviceAdded(String serviceName) {
 							if (serviceName.equals(remoteSensingServiceName)) {
+//								if (remoteSensingService == null) {
+//									remoteSensingService
+//											.removeDatapointListener(listener);
+//									remoteSensingService
+//											.addDatapointListener(listener);
+//								}
+
 								remoteSensingService = DatapointConnectivityServiceRegistry
 										.getInstance().getService(
 												remoteSensingServiceName);
-								remoteSensingService
-										.addDatapointListener(remoteSensingDatapointListener());
+								System.err.println("ADD SERVICE2!");
+								remoteSensingService.addDatapointListener(listener);
+
 							}
 
 						}
@@ -83,6 +93,8 @@ public class DataAquisitionWorker implements Runnable {
 			@Override
 			public void onDatapointUpdate(DatapointAddress address,
 					DatapointReading[] values) {
+
+				System.out.println(values[0]);
 
 				String[] wValues = new String[values.length];
 				for (int i = 0; i < wValues.length; i++) {

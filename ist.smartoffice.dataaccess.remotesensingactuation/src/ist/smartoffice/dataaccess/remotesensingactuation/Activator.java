@@ -44,36 +44,18 @@ public final class Activator implements BundleActivator {
 					public void serviceModified(String serviceName) {
 						if (serviceName.equals(USE_SERVICE_NAME)) {
 
-							serviceImpl = new RemoteSensingActuationService(
-									DatapointConnectivityServiceRegistry
-											.getInstance().getService(
-													USE_SERVICE_NAME));
-							
-							if (serviceImpl != null) {
-								DatapointConnectivityServiceRegistry.getInstance().removeService(PROVIDE_SERVICE_NAME);
-								DatapointConnectivityServiceRegistry.getInstance().addService(
-										PROVIDE_SERVICE_NAME,
-										new RemoteSensingActuationService(serviceImpl));
-							}
 						}
 					}
 
 					@Override
 					public void serviceAdded(String serviceName) {
 						if (serviceName.equals(USE_SERVICE_NAME)) {
-							serviceImpl = new RemoteSensingActuationService(
-									DatapointConnectivityServiceRegistry
-											.getInstance().getService(
-													USE_SERVICE_NAME));
-
-							if (serviceImpl != null) {
-								DatapointConnectivityServiceRegistry
-										.getInstance()
-										.addService(
-												PROVIDE_SERVICE_NAME,
-												new RemoteSensingActuationService(
-														serviceImpl));
-							}
+							serviceImpl = DatapointConnectivityServiceRegistry.getInstance()
+									.getService(USE_SERVICE_NAME);
+							
+							DatapointConnectivityServiceRegistry.getInstance().addService(
+									PROVIDE_SERVICE_NAME,
+									new RemoteSensingActuationService(serviceImpl));
 						}
 					}
 				});

@@ -5,7 +5,8 @@ The DatapointConnectivityServiceAPI.js for Javascript allows you to easily invok
 
 */
 
-function DatapointConnectivityService(remoteAddress, remotePort){
+function DatapointConnectivityService(serviceName, remoteAddress, remotePort){
+    this.serviceName = serviceName;
     this.remoteAddress = remoteAddress;
     this.remotePort = remotePort;
 }
@@ -13,7 +14,7 @@ function DatapointConnectivityService(remoteAddress, remotePort){
 DatapointConnectivityService.prototype.getAllDatapoints = function(callback){
     $.ajax({
         type: "GET",
-        url: "http://" + this.remoteAddress +":"+this.remotePort+ "/deviceconnectivityapi/datapoints",
+        url: "http://" + this.remoteAddress +":"+this.remotePort+ "/"+this.serviceName+"/datapoints",
         dataType: "json",
         success: callback,
         failure: callback
@@ -23,7 +24,7 @@ DatapointConnectivityService.prototype.getAllDatapoints = function(callback){
 DatapointConnectivityService.prototype.getDatapointMetadata = function(address, callback){
     $.ajax({
         type: "GET",
-        url: "http://" + this.remoteAddress +":"+this.remotePort+ "/deviceconnectivityapi/datapoints/"+ address +"/metadata",
+        url: "http://" + this.remoteAddress +":"+this.remotePort+ "/"+this.serviceName+"/datapoints/"+ address +"/metadata",
         dataType: "json",
         success: callback,
         failure: callback
@@ -33,7 +34,7 @@ DatapointConnectivityService.prototype.getDatapointMetadata = function(address, 
 DatapointConnectivityService.prototype.requestDatapointRead = function(address, callback){
     $.ajax({
         type: "GET",
-        url: "http://" + this.remoteAddress +":"+this.remotePort+ "/deviceconnectivityapi/datapoints/"+ address,
+        url: "http://" + this.remoteAddress +":"+this.remotePort+ "/"+this.serviceName+"/datapoints/"+ address,
         dataType: "json",
         success: callback,
         failure: callback
@@ -43,7 +44,7 @@ DatapointConnectivityService.prototype.requestDatapointRead = function(address, 
 DatapointConnectivityService.prototype.requestDatapointWindowRead = function(address, startTimestamp, finishTimestamp, callback){
     $.ajax({
         type: "GET",
-        url: "http://" + this.remoteAddress +":"+this.remotePort+ "/deviceconnectivityapi/datapoints/"+ address + "/" + startTimestamp + "/" + finishTimestamp,
+        url: "http://" + this.remoteAddress +":"+this.remotePort+ "/"+this.serviceName+"/datapoints/"+ address + "/" + startTimestamp + "/" + finishTimestamp,
         dataType: "json",
         success: callback,
         failure: callback
@@ -54,7 +55,7 @@ DatapointConnectivityService.prototype.requestDatapointWrite = function(address,
     $.ajax({
         type: "PUT",
         data: JSON.stringify(values),
-        url: "http://" + this.remoteAddress +":"+this.remotePort+ "/deviceconnectivityapi/datapoints/"+ address,
+        url: "http://" + this.remoteAddress +":"+this.remotePort+ "/"+this.serviceName+"/datapoints/"+ address,
         dataType: "application/json",
         success: callback,
         failure: callback
@@ -66,7 +67,7 @@ DatapointConnectivityService.prototype.requestDatapointWrite = function(address,
 DatapointConnectivityService.prototype.getAllDatapointsSync = function(){
     return $.ajax({
         type: "GET",
-        url: "http://" + this.remoteAddress +":"+this.remotePort+ "/deviceconnectivityapi/datapoints",
+        url: "http://" + this.remoteAddress +":"+this.remotePort+ "/"+this.serviceName+"/datapoints",
         dataType: "json",
         async: false
     }).responseText;
@@ -75,7 +76,7 @@ DatapointConnectivityService.prototype.getAllDatapointsSync = function(){
 DatapointConnectivityService.prototype.getAllDatapointsSync = function(){
     return $.ajax({
         type: "GET",
-        url: "http://" + this.remoteAddress +":"+this.remotePort+ "/deviceconnectivityapi/datapoints",
+        url: "http://" + this.remoteAddress +":"+this.remotePort+ "/"+this.serviceName+"/datapoints",
         dataType: "json",
         async: false
     }).responseText;
@@ -84,7 +85,7 @@ DatapointConnectivityService.prototype.getAllDatapointsSync = function(){
 DatapointConnectivityService.prototype.getDatapointMetadataSync = function(address){
     return $.parseJSON($.ajax({
         type: "GET",
-        url: "http://" + this.remoteAddress +":"+this.remotePort+ "/deviceconnectivityapi/datapoints/"+ address +"/metadata",
+        url: "http://" + this.remoteAddress +":"+this.remotePort+ "/"+this.serviceName+"/datapoints/"+ address +"/metadata",
         dataType: "json",
         async: false
     }).responseText);
@@ -93,7 +94,7 @@ DatapointConnectivityService.prototype.getDatapointMetadataSync = function(addre
 DatapointConnectivityService.prototype.requestDatapointReadSync = function(address){
     return $.parseJSON($.ajax({
         type: "GET",
-        url: "http://" + this.remoteAddress +":"+this.remotePort+ "/deviceconnectivityapi/datapoints/"+ address,
+        url: "http://" + this.remoteAddress +":"+this.remotePort+ "/"+this.serviceName+"/datapoints/"+ address,
         dataType: "json",
         async: false
     }).responseText);
@@ -102,7 +103,7 @@ DatapointConnectivityService.prototype.requestDatapointReadSync = function(addre
 DatapointConnectivityService.prototype.requestDatapointWindowReadSync = function(address, startTimestamp, finishTimestamp){
     return $.parseJSON($.ajax({
         type: "GET",
-        url: "http://" + this.remoteAddress +":"+this.remotePort+ "/deviceconnectivityapi/datapoints/"+ address + "/" + startTimestamp + "/" + finishTimestamp,
+        url: "http://" + this.remoteAddress +":"+this.remotePort+ "/"+this.serviceName+"/datapoints/"+ address + "/" + startTimestamp + "/" + finishTimestamp,
         dataType: "json",
         async: false
     }).responseText);
@@ -113,7 +114,7 @@ DatapointConnectivityService.prototype.requestDatapointWriteSync = function(addr
     return $.parseJSON($.ajax({
         type: "PUT",
         data: JSON.stringify(values),
-        url: "http://" + this.remoteAddress +":"+this.remotePort+ "/deviceconnectivityapi/datapoints/"+ address,
+        url: "http://" + this.remoteAddress +":"+this.remotePort+ "/"+this.serviceName+"/datapoints/"+ address,
         dataType: "application/json",
         async: false
     }).responseText);

@@ -22,15 +22,15 @@ public class HistoryDataStorageService implements IDatapointConnectivityService 
 
 	
 
-	private Map<String, List<HistoryValue>> readingsHistory;
+	private Map<String, List<DatapointValue>> readingsHistory;
 	private String db_filename;
 
 	public HistoryDataStorageService(String db_filename) {
 		this.db_filename = db_filename;
-		readingsHistory = new HashMap<String, List<HistoryValue>>();
+		readingsHistory = new HashMap<String, List<DatapointValue>>();
 		loadFromDisk();
 		if (readingsHistory == null)
-			readingsHistory = new HashMap<String, List<HistoryValue>>();
+			readingsHistory = new HashMap<String, List<DatapointValue>>();
 	}
 
 	private void saveOnDisk() {
@@ -42,9 +42,9 @@ public class HistoryDataStorageService implements IDatapointConnectivityService 
 	@SuppressWarnings("unchecked")
 	private void loadFromDisk() {
 		synchronized (readingsHistory) {
-			readingsHistory = (Map<String, List<HistoryValue>>) DataFileStorage
+			readingsHistory = (Map<String, List<DatapointValue>>) DataFileStorage
 					.fromJsonFile(db_filename,
-							new TypeToken<Map<String, List<HistoryValue>>>() {
+							new TypeToken<Map<String, List<DatapointValue>>>() {
 							}.getType());
 		}
 
@@ -91,9 +91,9 @@ public class HistoryDataStorageService implements IDatapointConnectivityService 
 			return 0;
 		}
 
-		List<HistoryValue> datapointReadings = readingsHistory.get(address);
+		List<DatapointValue> datapointReadings = readingsHistory.get(address);
 		Collections.sort(datapointReadings);
-		HistoryValue result = datapointReadings
+		DatapointValue result = datapointReadings
 				.get(datapointReadings.size() - 1);
 		readCallback.onReadCompleted(address,
 				new DatapointValue[] { new DatapointValue(
@@ -114,14 +114,14 @@ public class HistoryDataStorageService implements IDatapointConnectivityService 
 			return 0;
 		}
 
-		List<HistoryValue> result = new ArrayList<HistoryValue>();
+		List<DatapointValue> result = new ArrayList<DatapointValue>();
 		synchronized (readingsHistory) {
-			List<HistoryValue> datapointReadings = readingsHistory.get(address.getAddress());
+			List<DatapointValue> datapointReadings = readingsHistory.get(address.getAddress());
 			Collections.sort(datapointReadings);
 
-			Iterator<HistoryValue> it = datapointReadings.iterator();
+			Iterator<DatapointValue> it = datapointReadings.iterator();
 			while (it.hasNext()) {
-				HistoryValue datapointReading = it.next();
+				DatapointValue datapointReading = it.next();
 				if (datapointReading.getTimestamp() < startTimestamp) {
 					continue;
 				} else if (datapointReading.getTimestamp() >= startTimestamp
@@ -135,7 +135,7 @@ public class HistoryDataStorageService implements IDatapointConnectivityService 
 
 			DatapointValue[] res = new DatapointValue[result.size()];
 			for (int i = 0; i < res.length; i++) {
-				HistoryValue historyVal = result.get(i);
+				DatapointValue historyVal = result.get(i);
 				res[i] = new DatapointValue(historyVal.getValue(),
 						historyVal.getTimestamp());
 			}
@@ -152,12 +152,12 @@ public class HistoryDataStorageService implements IDatapointConnectivityService 
 		synchronized (readingsHistory) {
 			if (!readingsHistory.containsKey(address.getAddress())) {
 				readingsHistory.put(address.getAddress(),
-						new LinkedList<HistoryValue>());
+						new LinkedList<DatapointValue>());
 			}
 
-			List<HistoryValue> devHistory = readingsHistory.get(address.getAddress());
+			List<DatapointValue> devHistory = readingsHistory.get(address.getAddress());
 			for (DatapointValue val : values) {
-				devHistory.add(new HistoryValue(val.getTimestamp(), val.getValue()));
+				devHistory.add(val);
 			}
 			saveOnDisk();
 			writeCallback.onWriteCompleted(address,

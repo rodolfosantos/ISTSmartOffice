@@ -90,8 +90,8 @@ function plotRealTimeEnergyConsumption(chartSelector, datapointAddress, historyW
     $(".chartName").text("Power Consumption | " + api.getDatapointMetadataSync(datapointAddress).description);    
 
     var subscription = faye.subscribe('/remoteactuation/datapoints/'+datapointAddress, function(data) {
-        updateChart([$.parseJSON(data)])
-        //console.log(data);
+        updateChart($.parseJSON(data).reading)
+        console.log(data);
     });
 }
 
@@ -153,9 +153,9 @@ function plotAllConsumptions(addresses){
     };
     
     var subscribeUpdates = function (address, index){
-        var subscription = faye.subscribe('/datapoints/'+address, function(data) {
-            updateDatapoint(index, $.parseJSON(data));
-            //console.log(data);
+        var subscription = faye.subscribe('/remoteactuation/datapoints/'+address, function(data) {
+            updateDatapoint(index, $.parseJSON(data).reading[0]);
+            console.log(data);
         });
     }
 
@@ -242,9 +242,9 @@ function plotSensorData(chartSelector, datapointAddress, units){
     api.requestDatapointWindowRead(datapointAddress, nowTS - 3600000, nowTS , function(data){updateChart(data['readings'])});
     charts.push(chart);
 
-    var subscription = faye.subscribe('/datapoints/'+datapointAddress, function(data) {
-        updateChart([$.parseJSON(data)])
-        //console.log(data);
+    var subscription = faye.subscribe('/remoteactuation/datapoints/'+datapointAddress, function(data) {
+        updateChart([$.parseJSON(data).reading])
+        console.log(data);
     });
 
 }

@@ -3,9 +3,9 @@ package ist.smartoffice.datapointconnectivity;
 import java.util.Date;
 
 /**
- * A datapoint value reading with a timestamp.
+ * A datapoint value with a timestamp.
  */
-public class DatapointReading implements Comparable<DatapointReading> {
+public class DatapointValue implements Comparable<DatapointValue> {
 
     /** The value. */
     private final String value;
@@ -14,12 +14,12 @@ public class DatapointReading implements Comparable<DatapointReading> {
     private final long timestamp;
 
     /**
-     * Constructs a new datapoint reading.
+     * Constructs a new datapoint value.
      *
      * @param value the datapoint value
      * @param timestamp the timestamp when it was read
      */
-    public DatapointReading(String value, long timestamp) {
+    public DatapointValue(String value, long timestamp) {
         this.value = value;
         this.timestamp = timestamp;
     }
@@ -29,30 +29,30 @@ public class DatapointReading implements Comparable<DatapointReading> {
      *
      * @param value the datapoint value
      */
-    public DatapointReading(String value) {
+    public DatapointValue(String value) {
         this(value, new Date().getTime());
     }
 
     /**
      * Gets the datapoint value.
      *
-     * @return the value read
+     * @return the value
      */
     public String getValue() {
         return value;
     }
 
     /**
-     * Gets the timestamp of the datapoint reading
+     * Gets the timestamp of the datapoint value
      *
-     * @return the timestamp of the reading
+     * @return the timestamp 
      */
     public long getTimestamp() {
         return timestamp;
     }
 
 	@Override
-	public int compareTo(DatapointReading other) {
+	public int compareTo(DatapointValue other) {
 		Long thisLong = new Long(timestamp);
 		Long otherLong =  new Long(other.getTimestamp());
 		return thisLong.compareTo(otherLong);

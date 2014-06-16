@@ -13,7 +13,7 @@ import org.restlet.resource.ServerResource;
 
 import ist.smartoffice.datapointconnectivity.DatapointAddress;
 import ist.smartoffice.datapointconnectivity.DatapointMetadata;
-import ist.smartoffice.datapointconnectivity.DatapointReading;
+import ist.smartoffice.datapointconnectivity.DatapointValue;
 import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService;
 import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService.OperationFailedException;
 import ist.smartoffice.datapointconnectivity.wrappers.rest.DatapointConnectivityServiceRESTWrapper;
@@ -104,7 +104,7 @@ public class DatapointConnectivityServiceResources {
 					.getServiceImplementation(getRequest().getRootRef().toString())
 					.requestDatapointWindowRead(address, startTimestamp,
 							finishTimestamp, readCallback);
-			DatapointReading[] readings = readCallback.getReadings();
+			DatapointValue[] readings = readCallback.getReadings();
 
 			if (readings == null) {
 				return provideErrorResponse(readCallback.getErrorReason(),
@@ -116,7 +116,7 @@ public class DatapointConnectivityServiceResources {
 			 */
 			try {
 				JSONArray readingsArray = new JSONArray();
-				for (DatapointReading reading : readings) {
+				for (DatapointValue reading : readings) {
 					JSONObject tmp = new JSONObject();
 					tmp.put("value", reading.getValue());
 					tmp.put("timestamp", reading.getTimestamp());
@@ -284,7 +284,7 @@ public class DatapointConnectivityServiceResources {
 					.getServiceImplementation(getRequest().getRootRef().toString())
 					.requestDatapointRead(new DatapointAddress(address),
 							readCallback);
-			DatapointReading[] readings = readCallback.getReadings();
+			DatapointValue[] readings = readCallback.getReadings();
 			if (readings == null) {
 				return provideErrorResponse(readCallback.getErrorReason(),
 						"An error occurred", "Try again later.");
@@ -292,7 +292,7 @@ public class DatapointConnectivityServiceResources {
 			try {
 				
 				JSONArray readingsArray = new JSONArray();
-				for (DatapointReading reading : readings) {
+				for (DatapointValue reading : readings) {
 					JSONObject tmp = new JSONObject();
 					tmp.put("value", reading.getValue());
 					tmp.put("timestamp", reading.getTimestamp());

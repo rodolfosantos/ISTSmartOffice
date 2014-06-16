@@ -2,7 +2,7 @@ package ist.smartoffice.deviceconnectivity.protocolintegration;
 
 import ist.smartoffice.datapointconnectivity.DatapointAddress;
 import ist.smartoffice.datapointconnectivity.DatapointMetadata;
-import ist.smartoffice.datapointconnectivity.DatapointReading;
+import ist.smartoffice.datapointconnectivity.DatapointValue;
 import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService;
 import ist.smartoffice.datapointconnectivity.osgi.registries.DatapointConnectivityServiceRegistry;
 import ist.smartoffice.logger.Logger;
@@ -12,7 +12,6 @@ import ist.smartoffice.osgi.registries.IServiceRegistry.ServiceRegistryListener;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -25,7 +24,8 @@ import java.util.Set;
  */
 public class DatapointConnectivityServiceAdapter implements
 		IDatapointConnectivityService {
-	static private Logger log = LoggerService.getInstance().getLogger(DatapointConnectivityServiceAdapter.class.getName());  
+	static private Logger log = LoggerService.getInstance().getLogger(
+			DatapointConnectivityServiceAdapter.class.getName());
 
 	/**
 	 * The datapoints drivers mapping.
@@ -54,13 +54,13 @@ public class DatapointConnectivityServiceAdapter implements
 	public DatapointConnectivityServiceAdapter() {
 		super();
 		this.listeners = new HashSet<IDatapointConnectivityService.DatapointListener>();
-		
+
 		this.datapointsDriversMap = new HashMap<DatapointAddress, IDatapointConnectivityService>();
 		this.datapointsDriversAddressMap = new HashMap<DatapointAddress, DatapointAddress>();
 		this.datapointsDriversReverseAddressMap = new HashMap<DatapointAddress, DatapointAddress>();
-		
+
 		this.drivers = new HashSet<IDatapointConnectivityService>();
-		
+
 		String[] currServices = DatapointConnectivityServiceRegistry
 				.getInstance().getRegisteredServicesNames();
 
@@ -71,37 +71,41 @@ public class DatapointConnectivityServiceAdapter implements
 				addServiceImplementation(serviceName);
 			}
 		}
-		
-		DatapointConnectivityServiceRegistry.getInstance().addServiceListener(new ServiceRegistryListener() {
-			
-			@Override
-			public void serviceRemoved(String serviceName) {
-				// TODO Auto-generated method stub
-				System.err.println("TODO");
-			}
-			
-			@Override
-			public void serviceModified(String serviceName) {
-				// TODO Auto-generated method stub
-				System.err.println("TODO");				
-			}
-			
-			@Override
-			public void serviceAdded(String serviceName) {
-				if (serviceName.contains("ist.smartoffice.deviceconnectivity.")
-						&& !serviceName.equals(Activator.PROVIDED_SERVICE_NAME)) {
-					addServiceImplementation(serviceName);
-				}
-				
-			}
-		});
-	
+
+		DatapointConnectivityServiceRegistry.getInstance().addServiceListener(
+				new ServiceRegistryListener() {
+
+					@Override
+					public void serviceRemoved(String serviceName) {
+						// TODO Auto-generated method stub
+						System.err.println("TODO");
+					}
+
+					@Override
+					public void serviceModified(String serviceName) {
+						// TODO Auto-generated method stub
+						System.err.println("TODO");
+					}
+
+					@Override
+					public void serviceAdded(String serviceName) {
+						if (serviceName
+								.contains("ist.smartoffice.deviceconnectivity.")
+								&& !serviceName
+										.equals(Activator.PROVIDED_SERVICE_NAME)) {
+							addServiceImplementation(serviceName);
+						}
+
+					}
+				});
+
 	}
 
 	private void addServiceImplementation(String s) {
-		IDatapointConnectivityService driver = DatapointConnectivityServiceRegistry.getInstance().getService(s);
+		IDatapointConnectivityService driver = DatapointConnectivityServiceRegistry
+				.getInstance().getService(s);
 		drivers.add(driver);
-		
+
 		DatapointAddress[] allDatapoints = driver.getAllDatapoints();
 		int i = 0;
 		for (DatapointAddress datapointAddress : allDatapoints) {
@@ -113,53 +117,78 @@ public class DatapointConnectivityServiceAdapter implements
 					new DatapointAddress(newAddr));
 			datapointsDriversAddressMap.put(new DatapointAddress(newAddr),
 					datapointAddress);
-			
+
 			i++;
 		}
-		
-		//add event listener	
+
+		// add event listener
 		driver.addDatapointListener(new DatapointListener() {
-			
+
 			@Override
 			public void onDatapointUpdate(DatapointAddress address,
-					DatapointReading[] values) {
-				notifyDatapointUpdate(datapointsDriversReverseAddressMap.get(address), values);
-				
+					DatapointValue[] values) {
+				notifyDatapointUpdate(
+						datapointsDriversReverseAddressMap.get(address), values);
+
 			}
-			
+
 			@Override
-			public void onDatapointError(DatapointAddress address, ErrorType error) {
-				notifyDatapointError(datapointsDriversReverseAddressMap.get(address), error);					
+			public void onDatapointError(DatapointAddress address,
+					ErrorType error) {
+				notifyDatapointError(
+						datapointsDriversReverseAddressMap.get(address), error);
 			}
-		});	
-		
+
+			@Override
+			public void onDatapointAddressListChanged(DatapointAddress[] address) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		DatapointAddress[] addrList = new DatapointAddress[datapointsDriversAddressMap
+				.size()];
+
+		int j = 0;
+		for (DatapointAddress a : datapointsDriversAddressMap.keySet()) {
+			addrList[j++] = a;
+		}
+
+		notifyDatapointAddressListChanged(addrList);
 		debugAddressList2File();
 	}
 
 	private void debugAddressList2File() {
 		ArrayList<String> resultList = new ArrayList<String>();
-		
-		Iterator<DatapointAddress> it = datapointsDriversAddressMap.keySet().iterator();
+
+		Iterator<DatapointAddress> it = datapointsDriversAddressMap.keySet()
+				.iterator();
 		while (it.hasNext()) {
 			DatapointAddress datapointAddress = (DatapointAddress) it.next();
-			String otherAddr = datapointsDriversAddressMap.get(datapointAddress).getAddress();
+			String otherAddr = datapointsDriversAddressMap
+					.get(datapointAddress).getAddress();
 			try {
-				String description = this.getDatapointMetadata(datapointAddress).getDescription();
-				String access = this.getDatapointMetadata(datapointAddress).getAccessType().name();
-				resultList.add(datapointAddress.getAddress()+";"+otherAddr+";"+description+";"+access);
+				String description = this
+						.getDatapointMetadata(datapointAddress)
+						.getDescription();
+				String access = this.getDatapointMetadata(datapointAddress)
+						.getAccessType().name();
+				resultList.add(datapointAddress.getAddress() + ";" + otherAddr
+						+ ";" + description + ";" + access);
 			} catch (OperationFailedException e) {
-				resultList.add(datapointAddress.getAddress()+";"+otherAddr+";");
+				resultList.add(datapointAddress.getAddress() + ";" + otherAddr
+						+ ";");
 			}
 		}
-		
+
 		Collections.sort(resultList);
 		String result = "";
 		Iterator<String> it2 = resultList.iterator();
 		while (it2.hasNext()) {
 			String string = (String) it2.next();
-			result+=string + "\n";
+			result += string + "\n";
 		}
-		
+
 		try {
 			FileWriter writer = new FileWriter("AddressMapping.txt");
 			writer.write(result);
@@ -168,10 +197,8 @@ public class DatapointConnectivityServiceAdapter implements
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 		}
-		
+
 	}
-
-
 
 	public void addDatapointListener(DatapointListener listener) {
 		listeners.add(listener);
@@ -233,8 +260,8 @@ public class DatapointConnectivityServiceAdapter implements
 				readCallback);
 	}
 
-	public int requestDatapointWrite(DatapointAddress address,
-			String[] values, WriteCallback writeCallback) {
+	public int requestDatapointWrite(DatapointAddress address, String[] values,
+			WriteCallback writeCallback) {
 		IDatapointConnectivityService d = getDriver(address);
 		if (d == null) {
 			writeCallback.onWriteAborted(address,
@@ -262,7 +289,7 @@ public class DatapointConnectivityServiceAdapter implements
 	public String getImplementationName() {
 		return this.getClass().getName();
 	}
-	
+
 	private void notifyDatapointError(DatapointAddress address, ErrorType error) {
 		synchronized (listeners) {
 			Iterator<DatapointListener> it = listeners.iterator();
@@ -274,12 +301,22 @@ public class DatapointConnectivityServiceAdapter implements
 	}
 
 	private void notifyDatapointUpdate(DatapointAddress address,
-			DatapointReading[] values) {
+			DatapointValue[] values) {
 		synchronized (listeners) {
 			Iterator<DatapointListener> it = listeners.iterator();
 			while (it.hasNext()) {
 				DatapointListener listener = it.next();
 				listener.onDatapointUpdate(address, values);
+			}
+		}
+	}
+
+	private void notifyDatapointAddressListChanged(DatapointAddress[] addresses) {
+		synchronized (listeners) {
+			Iterator<DatapointListener> it = listeners.iterator();
+			while (it.hasNext()) {
+				DatapointListener listener = it.next();
+				listener.onDatapointAddressListChanged(addresses);
 			}
 		}
 	}

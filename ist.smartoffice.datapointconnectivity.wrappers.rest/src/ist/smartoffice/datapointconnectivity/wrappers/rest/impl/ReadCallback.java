@@ -3,7 +3,7 @@ package ist.smartoffice.datapointconnectivity.wrappers.rest.impl;
 import java.util.concurrent.Semaphore;
 
 import ist.smartoffice.datapointconnectivity.DatapointAddress;
-import ist.smartoffice.datapointconnectivity.DatapointReading;
+import ist.smartoffice.datapointconnectivity.DatapointValue;
 import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService;
 import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService.ErrorType;
 
@@ -19,7 +19,7 @@ public class ReadCallback implements IDatapointConnectivityService.ReadCallback 
 	/**
 	 * The resulting reading.
 	 */
-	private DatapointReading[] reading = null;
+	private DatapointValue[] reading = null;
 
 	/** The error reason. */
 	private ErrorType errorReason = null;
@@ -33,7 +33,7 @@ public class ReadCallback implements IDatapointConnectivityService.ReadCallback 
 	}
 
 	public void onReadCompleted(DatapointAddress address,
-			DatapointReading[] readings, int requestId) {
+			DatapointValue[] readings, int requestId) {
 		semaphore.release();
 		this.reading = readings;
 	}
@@ -43,7 +43,7 @@ public class ReadCallback implements IDatapointConnectivityService.ReadCallback 
 	 * 
 	 * @return the reading
 	 */
-	public DatapointReading getFirstReading() {
+	public DatapointValue getFirstReading() {
 		try {
 			semaphore.acquire();
 
@@ -61,7 +61,7 @@ public class ReadCallback implements IDatapointConnectivityService.ReadCallback 
 	 * 
 	 * @return the readings
 	 */
-	public DatapointReading[] getReadings() {
+	public DatapointValue[] getReadings() {
 		try {
 			semaphore.acquire();
 			return reading;

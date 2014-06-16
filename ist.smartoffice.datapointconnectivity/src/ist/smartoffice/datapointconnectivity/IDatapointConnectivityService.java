@@ -37,7 +37,7 @@ public interface IDatapointConnectivityService {
 		 *            the latest reading values
 		 */
 		void onDatapointUpdate(DatapointAddress address,
-				DatapointReading[] values);
+				DatapointValue[] values);
 
 		/**
 		 * Invoked when a datapoint error occurs.
@@ -48,6 +48,8 @@ public interface IDatapointConnectivityService {
 		 *            the error code
 		 */
 		void onDatapointError(DatapointAddress address, ErrorType error);
+		
+		void onDatapointAddressListChanged(DatapointAddress[] address);
 	}
 
 	/**
@@ -148,7 +150,7 @@ public interface IDatapointConnectivityService {
 		 *            the request id
 		 */
 		void onReadCompleted(DatapointAddress address,
-				DatapointReading[] readings, int requestId);
+				DatapointValue[] readings, int requestId);
 	}
 
 	/**

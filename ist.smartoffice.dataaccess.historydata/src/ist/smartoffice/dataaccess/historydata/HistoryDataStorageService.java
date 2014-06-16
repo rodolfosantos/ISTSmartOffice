@@ -4,7 +4,7 @@ import ist.smartoffice.datapointconnectivity.DatapointAddress;
 import ist.smartoffice.datapointconnectivity.DatapointMetadata;
 import ist.smartoffice.datapointconnectivity.DatapointMetadata.AccessType;
 import ist.smartoffice.datapointconnectivity.DatapointMetadata.MetadataBuilder;
-import ist.smartoffice.datapointconnectivity.DatapointReading;
+import ist.smartoffice.datapointconnectivity.DatapointValue;
 import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService;
 
 import java.util.ArrayList;
@@ -96,7 +96,7 @@ public class HistoryDataStorageService implements IDatapointConnectivityService 
 		HistoryValue result = datapointReadings
 				.get(datapointReadings.size() - 1);
 		readCallback.onReadCompleted(address,
-				new DatapointReading[] { new DatapointReading(
+				new DatapointValue[] { new DatapointValue(
 						result.getValue(), result.getTimestamp()) }, 0);
 
 		return 0;
@@ -133,10 +133,10 @@ public class HistoryDataStorageService implements IDatapointConnectivityService 
 
 			}
 
-			DatapointReading[] res = new DatapointReading[result.size()];
+			DatapointValue[] res = new DatapointValue[result.size()];
 			for (int i = 0; i < res.length; i++) {
 				HistoryValue historyVal = result.get(i);
-				res[i] = new DatapointReading(historyVal.getValue(),
+				res[i] = new DatapointValue(historyVal.getValue(),
 						historyVal.getTimestamp());
 			}
 			readCallback.onReadCompleted(address, res, 0);

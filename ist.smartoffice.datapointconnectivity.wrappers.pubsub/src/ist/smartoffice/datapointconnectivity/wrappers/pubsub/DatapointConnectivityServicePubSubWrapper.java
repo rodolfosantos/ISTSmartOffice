@@ -1,7 +1,7 @@
 package ist.smartoffice.datapointconnectivity.wrappers.pubsub;
 
 import ist.smartoffice.datapointconnectivity.DatapointAddress;
-import ist.smartoffice.datapointconnectivity.DatapointReading;
+import ist.smartoffice.datapointconnectivity.DatapointValue;
 import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService;
 import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService.DatapointListener;
 import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService.ErrorType;
@@ -29,7 +29,6 @@ public class DatapointConnectivityServicePubSubWrapper {
 	/** The service implementation. */
 	private IDatapointConnectivityService serviceImplementation;
 	private BayeuxClient client;
-	private Map<DatapointAddress, ClientSessionChannel> clientChannels;
 
 	/**
 	 * Instantiates a new datapoint connectivity service rest wrapper.
@@ -56,22 +55,21 @@ public class DatapointConnectivityServicePubSubWrapper {
 	public void addServiceImplementation(String path,
 			IDatapointConnectivityService serviceImplementation) {
 		this.serviceImplementation = serviceImplementation;
-		createDatapointChannels(path);
-		addDatapointsListener();
+		addDatapointsListener(path);
 	}
 
-	private void addDatapointsListener() {
+	private void addDatapointsListener(final String path) {
 		serviceImplementation.addDatapointListener(new DatapointListener() {
 
 		
 			@Override
 			public void onDatapointUpdate(DatapointAddress address,
-					DatapointReading[] values) {
+					DatapointValue[] values) {
 
 				JSONObject result = new JSONObject();
 
 				JSONArray readingsArray = new JSONArray();
-				for (DatapointReading reading : values) {
+				for (DatapointValue reading : values) {
 					JSONObject tmp = new JSONObject();
 					tmp.put("value", reading.getValue());
 					tmp.put("timestamp", reading.getTimestamp());
@@ -79,28 +77,34 @@ public class DatapointConnectivityServicePubSubWrapper {
 				}
 
 				result.put("reading", readingsArray);
-				clientChannels.get(address).publish(result.toJSONString());
+				String channelName = path + "/datapoints/"
+						+ address.getAddress();
+				
+				System.err.println(channelName);
+				System.err.println(result.toJSONString());
+				client.getChannel(channelName).publish(result.toJSONString());
 			}
 
 			@Override
 			public void onDatapointError(DatapointAddress address,
 					ErrorType error) {
-				// TODO
+				
+			}
 
+			@Override
+			public void onDatapointAddressListChanged(DatapointAddress[] address) {
+				JSONObject result = new JSONObject();
+				JSONArray readingsArray = new JSONArray();
+				for (DatapointAddress reading : address) {
+					readingsArray.add(reading.getAddress());
+				}
+				result.put("addresses", readingsArray);
+				
+				String channelName = path + "/datapoints";
+				client.getChannel(channelName).publish(result.toJSONString());
 			}
 		});
 	}
 
-	private void createDatapointChannels(String path) {
-		clientChannels = new HashMap<DatapointAddress, ClientSessionChannel>();
-		DatapointAddress[] dps = serviceImplementation.getAllDatapoints();
-
-		for (DatapointAddress datapointAddress : dps) {
-			clientChannels.put(
-					datapointAddress,
-					client.getChannel(path + "/datapoints/"
-							+ datapointAddress.getAddress()));
-		}
-	}
 
 }

@@ -2,7 +2,7 @@ package ist.smartoffice.deviceconnectivity.meterip;
 
 import ist.smartoffice.datapointconnectivity.DatapointAddress;
 import ist.smartoffice.datapointconnectivity.DatapointMetadata;
-import ist.smartoffice.datapointconnectivity.DatapointReading;
+import ist.smartoffice.datapointconnectivity.DatapointValue;
 import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService;
 import ist.smartoffice.logger.Logger;
 import ist.smartoffice.logger.LoggerService;
@@ -91,11 +91,11 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 
 							value = getNewMeasure(addr.getAddress());
 
-							DatapointReading reading = new DatapointReading(
+							DatapointValue reading = new DatapointValue(
 									new String(value.getTotalPower() + ""));
 							// notify update
 							notifyDatapointUpdate(addr,
-									new DatapointReading[] { reading });
+									new DatapointValue[] { reading });
 
 						} catch (MalformedURLException e) {
 							notifyDatapointError(addr,
@@ -310,7 +310,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 	}
 
 	private void notifyDatapointUpdate(DatapointAddress address,
-			DatapointReading[] values) {
+			DatapointValue[] values) {
 		synchronized (listeners) {
 			Iterator<DatapointListener> it = listeners.iterator();
 			while (it.hasNext()) {
@@ -326,12 +326,12 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 
 		try {
 			MeterMeasure value = getNewMeasure(address.getAddress());
-			DatapointReading reading = new DatapointReading(new String(
+			DatapointValue reading = new DatapointValue(new String(
 					value.getTotalPower() + ""));
 
 			readCallback.onReadCompleted(address,
-					new DatapointReading[] { reading }, 0);
-			notifyDatapointUpdate(address, new DatapointReading[] { reading });
+					new DatapointValue[] { reading }, 0);
+			notifyDatapointUpdate(address, new DatapointValue[] { reading });
 			return 0;
 		} catch (MalformedURLException e) {
 			readCallback.onReadAborted(address, ErrorType.DATAPOINT_NOT_FOUND,

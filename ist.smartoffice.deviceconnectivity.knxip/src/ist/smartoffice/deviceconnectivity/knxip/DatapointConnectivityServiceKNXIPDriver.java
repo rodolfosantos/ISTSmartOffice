@@ -3,7 +3,7 @@ package ist.smartoffice.deviceconnectivity.knxip;
 import ist.smartoffice.datapointconnectivity.DatapointAddress;
 import ist.smartoffice.datapointconnectivity.DatapointMetadata;
 import ist.smartoffice.datapointconnectivity.DatapointMetadata.AccessType;
-import ist.smartoffice.datapointconnectivity.DatapointReading;
+import ist.smartoffice.datapointconnectivity.DatapointValue;
 import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService;
 import ist.smartoffice.logger.Logger;
 import ist.smartoffice.logger.LoggerService;
@@ -43,7 +43,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 	 * The datapoints.
 	 */
 	private Map<DatapointAddress, DatapointMetadata> datapointsMetadata;
-	private Map<DatapointAddress, DatapointReading> datapointsStatus;
+	private Map<DatapointAddress, DatapointValue> datapointsStatus;
 	private List<DatapointAddress> uptadingDatapoint;
 
 	/**
@@ -57,7 +57,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 	public DatapointConnectivityServiceKNXIPDriver() {
 		super();
 		this.datapointsMetadata = KNXServiceConfig.loadDatapointsConfigs();
-		this.datapointsStatus = new HashMap<DatapointAddress, DatapointReading>();
+		this.datapointsStatus = new HashMap<DatapointAddress, DatapointValue>();
 		this.uptadingDatapoint = new ArrayList<DatapointAddress>();
 		this.listeners = new HashSet<DatapointListener>();
 
@@ -104,7 +104,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 									@Override
 									public void onReadCompleted(
 											DatapointAddress address,
-											DatapointReading[] readings,
+											DatapointValue[] readings,
 											int requestId) {
 										datapointsStatus.put(datapointAddress,
 												readings[0]);
@@ -142,7 +142,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 					@Override
 					public void onReadCompleted(DatapointAddress address,
-							DatapointReading[] readings, int requestId) {
+							DatapointValue[] readings, int requestId) {
 						datapointsStatus.put(datapointAddress, readings[0]);
 						log.d("KNX Update: " + address + "="
 								+ readings[0].getValue());
@@ -200,7 +200,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 	}
 
 	private void notifyDatapointUpdate(DatapointAddress address,
-			DatapointReading[] values) {
+			DatapointValue[] values) {
 		synchronized (listeners) {
 			Iterator<DatapointListener> it = listeners.iterator();
 			while (it.hasNext()) {
@@ -235,11 +235,11 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			try {
 				float val = driver.read2Bytes(addr);
 				String value = val + "";
-				DatapointReading reading = new DatapointReading(value);
+				DatapointValue reading = new DatapointValue(value);
 				readCallback.onReadCompleted(address,
-						new DatapointReading[] { reading }, 0);
+						new DatapointValue[] { reading }, 0);
 				notifyDatapointUpdate(address,
-						new DatapointReading[] { reading });
+						new DatapointValue[] { reading });
 			} catch (Exception e) {
 				readCallback.onReadAborted(address,
 						ErrorType.DEVICE_CONNECTION_ERROR, 0);
@@ -250,11 +250,11 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			try {
 				float val = driver.readPercentage(addr);
 				String value = val + "";
-				DatapointReading reading = new DatapointReading(value);
+				DatapointValue reading = new DatapointValue(value);
 				readCallback.onReadCompleted(address,
-						new DatapointReading[] { reading }, 0);
+						new DatapointValue[] { reading }, 0);
 				notifyDatapointUpdate(address,
-						new DatapointReading[] { reading });
+						new DatapointValue[] { reading });
 			} catch (Exception e) {
 				readCallback.onReadAborted(address,
 						ErrorType.DEVICE_CONNECTION_ERROR, 0);
@@ -264,11 +264,11 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 		case SWITCH:
 			try {
 				boolean value = driver.readSwitch(addr);
-				DatapointReading reading = new DatapointReading(value + "");
+				DatapointValue reading = new DatapointValue(value + "");
 				readCallback.onReadCompleted(address,
-						new DatapointReading[] { reading }, 0);
+						new DatapointValue[] { reading }, 0);
 				notifyDatapointUpdate(address,
-						new DatapointReading[] { reading });
+						new DatapointValue[] { reading });
 			} catch (Exception e) {
 				readCallback.onReadAborted(address,
 						ErrorType.DEVICE_CONNECTION_ERROR, 0);
@@ -315,7 +315,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 						WritingConfirmationLevel.DEVICE_ACTION_TAKEN, 0);
 				notifyDatapointUpdate(
 						address,
-						new DatapointReading[] { new DatapointReading(values[0]) });
+						new DatapointValue[] { new DatapointValue(values[0]) });
 			} catch (Exception e) {
 				writeCallback.onWriteAborted(address,
 						ErrorType.DEVICE_CONNECTION_ERROR, 0);
@@ -329,7 +329,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 						WritingConfirmationLevel.DEVICE_ACTION_TAKEN, 0);
 				notifyDatapointUpdate(
 						address,
-						new DatapointReading[] { new DatapointReading(values[0]) });
+						new DatapointValue[] { new DatapointValue(values[0]) });
 			} catch (Exception e) {
 				writeCallback.onWriteAborted(address,
 						ErrorType.DEVICE_CONNECTION_ERROR, 0);

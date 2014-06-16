@@ -2,7 +2,7 @@ package ist.smartoffice.dataaccess.remotesensingactuation;
 
 import ist.smartoffice.datapointconnectivity.DatapointAddress;
 import ist.smartoffice.datapointconnectivity.DatapointMetadata;
-import ist.smartoffice.datapointconnectivity.DatapointReading;
+import ist.smartoffice.datapointconnectivity.DatapointValue;
 import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService;
 import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService.ErrorType;
 import ist.smartoffice.datapointconnectivity.osgi.registries.DatapointConnectivityServiceRegistry;
@@ -70,7 +70,7 @@ public class RemoteSensingActuationService implements
 		ReadCallback newCallback = new ReadCallback() {
 			@Override
 			public void onReadCompleted(DatapointAddress address,
-					DatapointReading[] readings, int requestId) {
+					DatapointValue[] readings, int requestId) {
 				readCallback.onReadCompleted(address, readings, requestId);
 			}
 

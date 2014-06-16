@@ -15,7 +15,7 @@ public abstract class AbstractDatapointConnectivityService implements
 	private final Set<DatapointListener> readListeners = new HashSet<DatapointListener>();
 
 	protected void notifyReadAcknowledge(DatapointAddress address,
-			DatapointReading readings, int requestId) {
+			DatapointValue readings, int requestId) {
 		// final DatapointListener l = readListeners.get(Integer
 		// .valueOf(clientKey));
 		// l.readAcknowledge(address, readings, requestId);

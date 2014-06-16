@@ -49,6 +49,6 @@ public abstract class AbstractDatapointConnectivityService implements
 
 	@Override
 	public abstract int requestDatapointWrite(DatapointAddress address,
-			String[] values, WriteCallback writeCallback);
+			DatapointValue[] values, WriteCallback writeCallback);
 
 }

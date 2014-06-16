@@ -96,7 +96,7 @@ public class RemoteSensingActuationService implements
 	}
 
 	@Override
-	public int requestDatapointWrite(DatapointAddress address, String[] values,
+	public int requestDatapointWrite(DatapointAddress address, DatapointValue[] values,
 			WriteCallback writeCallback) {
 		protocolIntegrationImpl.requestDatapointWrite(address, values,
 				writeCallback);

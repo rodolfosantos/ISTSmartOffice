@@ -350,7 +350,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 	}
 
 	@Override
-	public int requestDatapointWrite(DatapointAddress address, String[] values,
+	public int requestDatapointWrite(DatapointAddress address, DatapointValue[] values,
 			WriteCallback writeCallback) {
 		writeCallback.onWriteAborted(address,
 				ErrorType.UNSUPORTED_DATAPOINT_OPERATION, 0);

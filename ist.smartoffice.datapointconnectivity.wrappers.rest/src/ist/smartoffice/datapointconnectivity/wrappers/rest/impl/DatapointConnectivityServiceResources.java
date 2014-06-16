@@ -329,11 +329,11 @@ public class DatapointConnectivityServiceResources {
 						.toString();
 				DatapointAddress addr = new DatapointAddress(addrRESTParam);
 
-				String[] values = new String[valuesRESTParam
+				DatapointValue[] values = new DatapointValue[valuesRESTParam
 						.length()];
 
 				for (int i = 0; i < values.length; i++) {
-					values[i] = new String(
+					values[i] = new DatapointValue(
 							valuesRESTParam.getString(i));
 				}
 
@@ -357,52 +357,52 @@ public class DatapointConnectivityServiceResources {
 			}
 		}
 
-		@Options
-		public JSONObject doPost2(JsonRepresentation entity) {
-			JSONObject result = new JSONObject();
-
-			Form responseHeaders = (Form) getResponse().getAttributes().get(
-					"org.restlet.http.headers");
-			if (responseHeaders == null) {
-				responseHeaders = new Form();
-				getResponse().getAttributes().put("org.restlet.http.headers",
-						responseHeaders);
-			}
-			responseHeaders.add("Access-Control-Allow-Origin", "*");
-
-			try {
-				JSONObject requestbody = entity.getJsonObject();
-				JSONArray valuesRESTParam = requestbody.getJSONArray("values");
-				String addrRESTParam = getRequest().getAttributes().get("addr")
-						.toString();
-				DatapointAddress addr = new DatapointAddress(addrRESTParam);
-
-				String[] values = new String[valuesRESTParam
-						.length()];
-				
-				for (int i = 0; i < values.length; i++) {
-					values[i] = new String(
-							valuesRESTParam.getString(i));
-				}
-
-				WriteCallback writeCallback = new WriteCallback();
-				DatapointConnectivityServiceRESTWrapper.getInstance()
-						.getServiceImplementation(getRequest().getRootRef().toString())
-						.requestDatapointWrite(addr, values, writeCallback);
-				boolean success = writeCallback.isWritten();
-				if (!success) {
-					return provideErrorResponse(writeCallback.getErrorReason(),
-							"An error occurred", "Try again later.");
-				}
-				result.put("operationstatus", "success");
-				return result;
-			} catch (JSONException e1) {
-				e1.printStackTrace();
-				getResponse().setStatus(Status.SERVER_ERROR_INTERNAL);
-				return result;
-
-			}
-		}
+//		@Options
+//		public JSONObject doPost2(JsonRepresentation entity) {
+//			JSONObject result = new JSONObject();
+//
+//			Form responseHeaders = (Form) getResponse().getAttributes().get(
+//					"org.restlet.http.headers");
+//			if (responseHeaders == null) {
+//				responseHeaders = new Form();
+//				getResponse().getAttributes().put("org.restlet.http.headers",
+//						responseHeaders);
+//			}
+//			responseHeaders.add("Access-Control-Allow-Origin", "*");
+//
+//			try {
+//				JSONObject requestbody = entity.getJsonObject();
+//				JSONArray valuesRESTParam = requestbody.getJSONArray("values");
+//				String addrRESTParam = getRequest().getAttributes().get("addr")
+//						.toString();
+//				DatapointAddress addr = new DatapointAddress(addrRESTParam);
+//
+//				String[] values = new String[valuesRESTParam
+//						.length()];
+//				
+//				for (int i = 0; i < values.length; i++) {
+//					values[i] = new String(
+//							valuesRESTParam.getString(i));
+//				}
+//
+//				WriteCallback writeCallback = new WriteCallback();
+//				DatapointConnectivityServiceRESTWrapper.getInstance()
+//						.getServiceImplementation(getRequest().getRootRef().toString())
+//						.requestDatapointWrite(addr, values, writeCallback);
+//				boolean success = writeCallback.isWritten();
+//				if (!success) {
+//					return provideErrorResponse(writeCallback.getErrorReason(),
+//							"An error occurred", "Try again later.");
+//				}
+//				result.put("operationstatus", "success");
+//				return result;
+//			} catch (JSONException e1) {
+//				e1.printStackTrace();
+//				getResponse().setStatus(Status.SERVER_ERROR_INTERNAL);
+//				return result;
+//
+//			}
+//		}
 	}
 
 }

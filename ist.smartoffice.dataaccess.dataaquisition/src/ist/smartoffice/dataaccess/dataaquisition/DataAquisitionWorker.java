@@ -133,10 +133,7 @@ public class DataAquisitionWorker implements Runnable {
 			DatapointValue[] values) {
 		System.out.println(values[0]);
 
-		String[] wValues = new String[values.length];
-		for (int i = 0; i < wValues.length; i++) {
-			wValues[i] = values[i].getValue();
-		}
+		
 
 		if (historyDataService == null) {
 			historyDataService = DatapointConnectivityServiceRegistry
@@ -147,7 +144,7 @@ public class DataAquisitionWorker implements Runnable {
 		if (historyDataService == null)
 			return;
 
-		historyDataService.requestDatapointWrite(address, wValues,
+		historyDataService.requestDatapointWrite(address, values,
 				new WriteCallback() {
 					@Override
 					public void onWriteAborted(DatapointAddress address,

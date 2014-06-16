@@ -328,7 +328,7 @@ public interface IDatapointConnectivityService {
 	 *         this request
 	 */
 	int requestDatapointWrite(DatapointAddress address,
-			String[] values, WriteCallback writeCallback);
+			DatapointValue[] values, WriteCallback writeCallback);
 
 	/**
 	 * The Class OperationFailedException.

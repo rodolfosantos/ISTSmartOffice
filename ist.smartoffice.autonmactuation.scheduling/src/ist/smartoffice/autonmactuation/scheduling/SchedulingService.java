@@ -2,6 +2,7 @@ package ist.smartoffice.autonmactuation.scheduling;
 
 import ist.smartoffice.datapointconnectivity.DatapointAddress;
 import ist.smartoffice.datapointconnectivity.DatapointMetadata;
+import ist.smartoffice.datapointconnectivity.DatapointValue;
 import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService;
 
 public class SchedulingService implements IDatapointConnectivityService {
@@ -51,7 +52,7 @@ public class SchedulingService implements IDatapointConnectivityService {
 	}
 
 	@Override
-	public int requestDatapointWrite(DatapointAddress address, String[] values,
+	public int requestDatapointWrite(DatapointAddress address, DatapointValue[] values,
 			WriteCallback writeCallback) {
 		// TODO Auto-generated method stub
 		return 0;

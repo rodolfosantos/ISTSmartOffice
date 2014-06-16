@@ -82,7 +82,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 					@Override
 					public void run() {
-						//log.d("KNX Event: " + datapointAddress);
+						// log.d("KNX Event: " + datapointAddress);
 
 						if (!datapointsMetadata.keySet().contains(
 								datapointAddress))
@@ -162,9 +162,9 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 	@Override
 	public void addDatapointListener(DatapointListener listener) {
-		if(listener == null)
+		if (listener == null)
 			listeners.clear();
-		System.out.println("knxAdd "+listener);
+		System.out.println("knxAdd " + listener);
 		listeners.add(listener);
 	}
 
@@ -184,7 +184,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 	@Override
 	public void removeDatapointListener(DatapointListener listener) {
-		System.out.println("knxRem "+listener);
+		System.out.println("knxRem " + listener);
 		listeners.remove(listener);
 	}
 
@@ -238,8 +238,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 				DatapointValue reading = new DatapointValue(value);
 				readCallback.onReadCompleted(address,
 						new DatapointValue[] { reading }, 0);
-				notifyDatapointUpdate(address,
-						new DatapointValue[] { reading });
+				notifyDatapointUpdate(address, new DatapointValue[] { reading });
 			} catch (Exception e) {
 				readCallback.onReadAborted(address,
 						ErrorType.DEVICE_CONNECTION_ERROR, 0);
@@ -253,8 +252,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 				DatapointValue reading = new DatapointValue(value);
 				readCallback.onReadCompleted(address,
 						new DatapointValue[] { reading }, 0);
-				notifyDatapointUpdate(address,
-						new DatapointValue[] { reading });
+				notifyDatapointUpdate(address, new DatapointValue[] { reading });
 			} catch (Exception e) {
 				readCallback.onReadAborted(address,
 						ErrorType.DEVICE_CONNECTION_ERROR, 0);
@@ -267,8 +265,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 				DatapointValue reading = new DatapointValue(value + "");
 				readCallback.onReadCompleted(address,
 						new DatapointValue[] { reading }, 0);
-				notifyDatapointUpdate(address,
-						new DatapointValue[] { reading });
+				notifyDatapointUpdate(address, new DatapointValue[] { reading });
 			} catch (Exception e) {
 				readCallback.onReadAborted(address,
 						ErrorType.DEVICE_CONNECTION_ERROR, 0);
@@ -292,8 +289,8 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 	}
 
 	@Override
-	public int requestDatapointWrite(DatapointAddress address, String[] values,
-			WriteCallback writeCallback) {
+	public int requestDatapointWrite(DatapointAddress address,
+			DatapointValue[] values, WriteCallback writeCallback) {
 		DatapointMetadata m = getDatapointMetadata(address);
 		String addr = address.getAddress();
 
@@ -310,12 +307,11 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 		case PERCENTAGE:
 			try {
-				driver.writePercentage(addr, Integer.parseInt(values[0]));
+				driver.writePercentage(addr,
+						Integer.parseInt(values[0].getValue()));
 				writeCallback.onWriteCompleted(address,
 						WritingConfirmationLevel.DEVICE_ACTION_TAKEN, 0);
-				notifyDatapointUpdate(
-						address,
-						new DatapointValue[] { new DatapointValue(values[0]) });
+				notifyDatapointUpdate(address, values);
 			} catch (Exception e) {
 				writeCallback.onWriteAborted(address,
 						ErrorType.DEVICE_CONNECTION_ERROR, 0);
@@ -324,12 +320,11 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			break;
 		case SWITCH:
 			try {
-				driver.writeSwitch(addr, Boolean.parseBoolean(values[0]));
+				driver.writeSwitch(addr,
+						Boolean.parseBoolean(values[0].getValue()));
 				writeCallback.onWriteCompleted(address,
 						WritingConfirmationLevel.DEVICE_ACTION_TAKEN, 0);
-				notifyDatapointUpdate(
-						address,
-						new DatapointValue[] { new DatapointValue(values[0]) });
+				notifyDatapointUpdate(address, values);
 			} catch (Exception e) {
 				writeCallback.onWriteAborted(address,
 						ErrorType.DEVICE_CONNECTION_ERROR, 0);

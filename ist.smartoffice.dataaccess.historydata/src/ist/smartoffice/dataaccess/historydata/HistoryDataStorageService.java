@@ -147,7 +147,7 @@ public class HistoryDataStorageService implements IDatapointConnectivityService 
 	}
 
 	@Override
-	public int requestDatapointWrite(DatapointAddress address, String[] values,
+	public int requestDatapointWrite(DatapointAddress address, DatapointValue[] values,
 			WriteCallback writeCallback) {
 		synchronized (readingsHistory) {
 			if (!readingsHistory.containsKey(address.getAddress())) {
@@ -156,8 +156,8 @@ public class HistoryDataStorageService implements IDatapointConnectivityService 
 			}
 
 			List<HistoryValue> devHistory = readingsHistory.get(address.getAddress());
-			for (String val : values) {
-				devHistory.add(new HistoryValue(val));
+			for (DatapointValue val : values) {
+				devHistory.add(new HistoryValue(val.getTimestamp(), val.getValue()));
 			}
 			saveOnDisk();
 			writeCallback.onWriteCompleted(address,

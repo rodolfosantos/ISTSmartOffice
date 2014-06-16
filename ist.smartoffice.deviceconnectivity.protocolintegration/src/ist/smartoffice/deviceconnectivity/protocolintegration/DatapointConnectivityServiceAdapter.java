@@ -260,7 +260,7 @@ public class DatapointConnectivityServiceAdapter implements
 				readCallback);
 	}
 
-	public int requestDatapointWrite(DatapointAddress address, String[] values,
+	public int requestDatapointWrite(DatapointAddress address, DatapointValue[] values,
 			WriteCallback writeCallback) {
 		IDatapointConnectivityService d = getDriver(address);
 		if (d == null) {

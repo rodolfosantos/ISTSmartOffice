@@ -32,8 +32,6 @@ public class DatapointConnectivityServiceAdapter implements
 	 */
 	private Map<DatapointAddress, IDatapointConnectivityService> datapointsDriversMap;
 
-	private Map<DatapointAddress, DatapointAddress> datapointsDriversAddressMap;
-	private Map<DatapointAddress, DatapointAddress> datapointsDriversReverseAddressMap;
 
 	/**
 	 * The datapoints drivers.
@@ -56,9 +54,6 @@ public class DatapointConnectivityServiceAdapter implements
 		this.listeners = new HashSet<IDatapointConnectivityService.DatapointListener>();
 
 		this.datapointsDriversMap = new HashMap<DatapointAddress, IDatapointConnectivityService>();
-		this.datapointsDriversAddressMap = new HashMap<DatapointAddress, DatapointAddress>();
-		this.datapointsDriversReverseAddressMap = new HashMap<DatapointAddress, DatapointAddress>();
-
 		this.drivers = new HashSet<IDatapointConnectivityService>();
 
 		String[] currServices = DatapointConnectivityServiceRegistry
@@ -113,10 +108,10 @@ public class DatapointConnectivityServiceAdapter implements
 			// Address translation
 			String newAddr = driver.getImplementationName() + i;
 			datapointsDriversMap.put(datapointAddress, driver);
-			datapointsDriversReverseAddressMap.put(datapointAddress,
-					new DatapointAddress(newAddr));
-			datapointsDriversAddressMap.put(new DatapointAddress(newAddr),
-					datapointAddress);
+//			datapointsDriversReverseAddressMap.put(datapointAddress,
+//					new DatapointAddress(newAddr));
+//			datapointsDriversAddressMap.put(new DatapointAddress(newAddr),
+//					datapointAddress);
 
 			i++;
 		}
@@ -128,7 +123,7 @@ public class DatapointConnectivityServiceAdapter implements
 			public void onDatapointUpdate(DatapointAddress address,
 					DatapointValue[] values) {
 				notifyDatapointUpdate(
-						datapointsDriversReverseAddressMap.get(address), values);
+						address, values);
 
 			}
 
@@ -136,7 +131,7 @@ public class DatapointConnectivityServiceAdapter implements
 			public void onDatapointError(DatapointAddress address,
 					ErrorType error) {
 				notifyDatapointError(
-						datapointsDriversReverseAddressMap.get(address), error);
+						address, error);
 			}
 
 			@Override
@@ -146,59 +141,58 @@ public class DatapointConnectivityServiceAdapter implements
 			}
 		});
 
-		DatapointAddress[] addrList = new DatapointAddress[datapointsDriversAddressMap
-				.size()];
+		DatapointAddress[] addrList = new DatapointAddress[datapointsDriversMap.size()];
 
 		int j = 0;
-		for (DatapointAddress a : datapointsDriversAddressMap.keySet()) {
+		for (DatapointAddress a : datapointsDriversMap.keySet()) {
 			addrList[j++] = a;
 		}
 
 		notifyDatapointAddressListChanged(addrList);
-		debugAddressList2File();
+		//debugAddressList2File();
 	}
 
-	private void debugAddressList2File() {
-		ArrayList<String> resultList = new ArrayList<String>();
-
-		Iterator<DatapointAddress> it = datapointsDriversAddressMap.keySet()
-				.iterator();
-		while (it.hasNext()) {
-			DatapointAddress datapointAddress = (DatapointAddress) it.next();
-			String otherAddr = datapointsDriversAddressMap
-					.get(datapointAddress).getAddress();
-			try {
-				String description = this
-						.getDatapointMetadata(datapointAddress)
-						.getDescription();
-				String access = this.getDatapointMetadata(datapointAddress)
-						.getAccessType().name();
-				resultList.add(datapointAddress.getAddress() + ";" + otherAddr
-						+ ";" + description + ";" + access);
-			} catch (OperationFailedException e) {
-				resultList.add(datapointAddress.getAddress() + ";" + otherAddr
-						+ ";");
-			}
-		}
-
-		Collections.sort(resultList);
-		String result = "";
-		Iterator<String> it2 = resultList.iterator();
-		while (it2.hasNext()) {
-			String string = (String) it2.next();
-			result += string + "\n";
-		}
-
-		try {
-			FileWriter writer = new FileWriter("AddressMapping.txt");
-			writer.write(result);
-			writer.close();
-
-		} catch (IOException e) {
-			System.err.println(e.getMessage());
-		}
-
-	}
+//	private void debugAddressList2File() {
+//		ArrayList<String> resultList = new ArrayList<String>();
+//
+//		Iterator<DatapointAddress> it = datapointsDriversAddressMap.keySet()
+//				.iterator();
+//		while (it.hasNext()) {
+//			DatapointAddress datapointAddress = (DatapointAddress) it.next();
+//			String otherAddr = datapointsDriversAddressMap
+//					.get(datapointAddress).getAddress();
+//			try {
+//				String description = this
+//						.getDatapointMetadata(datapointAddress)
+//						.getDescription();
+//				String access = this.getDatapointMetadata(datapointAddress)
+//						.getAccessType().name();
+//				resultList.add(datapointAddress.getAddress() + ";" + otherAddr
+//						+ ";" + description + ";" + access);
+//			} catch (OperationFailedException e) {
+//				resultList.add(datapointAddress.getAddress() + ";" + otherAddr
+//						+ ";");
+//			}
+//		}
+//
+//		Collections.sort(resultList);
+//		String result = "";
+//		Iterator<String> it2 = resultList.iterator();
+//		while (it2.hasNext()) {
+//			String string = (String) it2.next();
+//			result += string + "\n";
+//		}
+//
+//		try {
+//			FileWriter writer = new FileWriter("AddressMapping.txt");
+//			writer.write(result);
+//			writer.close();
+//
+//		} catch (IOException e) {
+//			System.err.println(e.getMessage());
+//		}
+//
+//	}
 
 	public void addDatapointListener(DatapointListener listener) {
 		listeners.add(listener);
@@ -211,20 +205,16 @@ public class DatapointConnectivityServiceAdapter implements
 	 *            the address
 	 * @return the driver
 	 */
-	private IDatapointConnectivityService getDriver(DatapointAddress address) {
-		return datapointsDriversMap.get(datapointsDriversAddressMap
-				.get(address));
+	private IDatapointConnectivityService getDriverImplementation(DatapointAddress address) {
+		return datapointsDriversMap.get(address);
 	}
 
-	private DatapointAddress getRealDatapointAddress(DatapointAddress address) {
-		return datapointsDriversAddressMap.get(address);
-	}
 
 	public DatapointAddress[] getAllDatapoints() {
-		DatapointAddress[] result = new DatapointAddress[datapointsDriversAddressMap
+		DatapointAddress[] result = new DatapointAddress[datapointsDriversMap
 				.size()];
 
-		Iterator<DatapointAddress> it = datapointsDriversAddressMap.keySet()
+		Iterator<DatapointAddress> it = datapointsDriversMap.keySet()
 				.iterator();
 		int i = 0;
 		while (it.hasNext()) {
@@ -236,11 +226,10 @@ public class DatapointConnectivityServiceAdapter implements
 
 	public DatapointMetadata getDatapointMetadata(DatapointAddress address)
 			throws OperationFailedException {
-		IDatapointConnectivityService d = getDriver(address);
+		IDatapointConnectivityService d = getDriverImplementation(address);
 		if (d == null)
 			throw new OperationFailedException(ErrorType.DATAPOINT_NOT_FOUND);
-		return getDriver(address).getDatapointMetadata(
-				getRealDatapointAddress(address));
+		return getDriverImplementation(address).getDatapointMetadata(address);
 
 	}
 
@@ -250,38 +239,38 @@ public class DatapointConnectivityServiceAdapter implements
 
 	public int requestDatapointRead(DatapointAddress address,
 			ReadCallback readCallback) {
-		IDatapointConnectivityService d = getDriver(address);
+		IDatapointConnectivityService d = getDriverImplementation(address);
 		if (d == null) {
 			readCallback.onReadAborted(address, ErrorType.DATAPOINT_NOT_FOUND,
 					0);
 			return 0;
 		}
-		return d.requestDatapointRead(getRealDatapointAddress(address),
+		return d.requestDatapointRead(address,
 				readCallback);
 	}
 
 	public int requestDatapointWrite(DatapointAddress address, DatapointValue[] values,
 			WriteCallback writeCallback) {
-		IDatapointConnectivityService d = getDriver(address);
+		IDatapointConnectivityService d = getDriverImplementation(address);
 		if (d == null) {
 			writeCallback.onWriteAborted(address,
 					ErrorType.DATAPOINT_NOT_FOUND, 0);
 			return 0;
 		}
-		return d.requestDatapointWrite(getRealDatapointAddress(address),
+		return d.requestDatapointWrite(address,
 				values, writeCallback);
 	}
 
 	@Override
 	public int requestDatapointWindowRead(DatapointAddress address,
 			long startTimestamp, long finishTimestamp, ReadCallback readCallback) {
-		IDatapointConnectivityService d = getDriver(address);
+		IDatapointConnectivityService d = getDriverImplementation(address);
 		if (d == null) {
 			readCallback.onReadAborted(address, ErrorType.DATAPOINT_NOT_FOUND,
 					0);
 			return 0;
 		}
-		return d.requestDatapointWindowRead(getRealDatapointAddress(address),
+		return d.requestDatapointWindowRead(address,
 				startTimestamp, finishTimestamp, readCallback);
 	}
 

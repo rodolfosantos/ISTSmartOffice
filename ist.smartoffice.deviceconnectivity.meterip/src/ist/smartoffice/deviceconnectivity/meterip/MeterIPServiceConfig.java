@@ -76,33 +76,42 @@ public class MeterIPServiceConfig {
 		meterMetadata.setCurrentSamplingInterval(7000);
 
 		Map<DatapointAddress, DatapointMetadata> meterDatapoints = new HashMap<DatapointAddress, DatapointMetadata>();
-		DatapointAddress a1 = new DatapointAddress("172.20.70.229");
-		DatapointAddress a2 = new DatapointAddress("172.20.70.231");
-		DatapointAddress a3 = new DatapointAddress("172.20.70.232");
-		DatapointAddress a4 = new DatapointAddress("172.20.70.238");
-		DatapointAddress a5 = new DatapointAddress("172.20.70.234");
-		DatapointAddress a6 = new DatapointAddress("172.20.70.235");
-		DatapointAddress a7 = new DatapointAddress("172.20.70.236");
-		DatapointAddress a8 = new DatapointAddress("172.20.70.237");
-		DatapointAddress a9 = new DatapointAddress("172.20.70.233");
+		DatapointAddress a1 = new DatapointAddress("meterd14");
+		DatapointAddress a2 = new DatapointAddress("metera4");
+		DatapointAddress a3 = new DatapointAddress("meterlib");
+		DatapointAddress a4 = new DatapointAddress("meterd16");
+		DatapointAddress a5 = new DatapointAddress("meterr117");
+		DatapointAddress a6 = new DatapointAddress("meterr119");
+		DatapointAddress a7 = new DatapointAddress("meterlab158");
+		DatapointAddress a8 = new DatapointAddress("meterutaa4");
+		DatapointAddress a9 = new DatapointAddress("meternewa4");
 
 		meterMetadata.setDescription("D14");
+		meterMetadata.setReadDatapointAddress("172.20.70.229");
 		meterDatapoints.put(a1, meterMetadata.build());
 		meterMetadata.setDescription("A4");
+		meterMetadata.setReadDatapointAddress("172.20.70.231");
 		meterDatapoints.put(a2, meterMetadata.build());
 		meterMetadata.setDescription("Library");
+		meterMetadata.setReadDatapointAddress("172.20.70.232");
 		meterDatapoints.put(a3, meterMetadata.build());
 		meterMetadata.setDescription("D16");
+		meterMetadata.setReadDatapointAddress("172.20.70.238");
 		meterDatapoints.put(a4, meterMetadata.build());
 		meterMetadata.setDescription("R117");
+		meterMetadata.setReadDatapointAddress("172.20.70.234");
 		meterDatapoints.put(a5, meterMetadata.build());
 		meterMetadata.setDescription("R119");
+		meterMetadata.setReadDatapointAddress("172.20.70.235");
 		meterDatapoints.put(a6, meterMetadata.build());
 		meterMetadata.setDescription("Lab1-58");
+		meterMetadata.setReadDatapointAddress("172.20.70.236");
 		//meterDatapoints.put(a7, meterMetadata.build());
 		meterMetadata.setDescription("UTA_A4");
+		meterMetadata.setReadDatapointAddress("172.20.70.237");
 		meterDatapoints.put(a8, meterMetadata.build());
 		meterMetadata.setDescription("new A4");
+		meterMetadata.setReadDatapointAddress("172.20.70.233");
 		meterDatapoints.put(a9, meterMetadata.build());
 
 		// store

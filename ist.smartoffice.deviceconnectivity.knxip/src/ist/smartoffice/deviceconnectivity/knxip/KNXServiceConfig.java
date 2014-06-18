@@ -83,27 +83,26 @@ public class KNXServiceConfig {
 		m.setWriteDatapointAddress("0/1/0");
 		knxDatapoints.put(new DatapointAddress("knxlight1"), m.build());
 		
-		//TODO rever enderecos leitura
-//		m.setDescription("EnergyLab Light Middle1");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.PERCENTAGE);
-//		m.setReadDatapointAddress("0/2/5");
-//		m.setWriteDatapointAddress("0/1/2");
-//		knxDatapoints.put(new DatapointAddress("knxlight2"), m.build());
-//		
-//		m.setDescription("EnergyLab Light Middle2");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.PERCENTAGE);
-//		m.setReadDatapointAddress("0/1/7");
-//		m.setWriteDatapointAddress("0/1/4");
-//		knxDatapoints.put(new DatapointAddress("knxlight3"), m.build());
-//
-//		m.setDescription("EnergyLab Light TV");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.PERCENTAGE);
-//		m.setReadDatapointAddress("0/1/9");
-//		m.setWriteDatapointAddress("0/1/6");
-//		knxDatapoints.put(new DatapointAddress("knxlight4"), m.build());
+		m.setDescription("EnergyLab Light Middle1");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/7/21");
+		m.setWriteDatapointAddress("0/1/2");
+		knxDatapoints.put(new DatapointAddress("knxlight2"), m.build());
+		
+		m.setDescription("EnergyLab Light Middle2");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/7/41");
+		m.setWriteDatapointAddress("0/1/4");
+		knxDatapoints.put(new DatapointAddress("knxlight3"), m.build());
+
+		m.setDescription("EnergyLab Light TV");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/7/61");
+		m.setWriteDatapointAddress("0/1/6");
+		knxDatapoints.put(new DatapointAddress("knxlight4"), m.build());
 		
 		m.setDescription("EnergyLab All Lights");
 		m.setAccessType(AccessType.WRITE_ONLY);

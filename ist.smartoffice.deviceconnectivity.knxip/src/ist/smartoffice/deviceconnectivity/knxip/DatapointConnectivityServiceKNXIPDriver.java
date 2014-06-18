@@ -82,7 +82,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 					@Override
 					public void run() {
-						// log.d("KNX Event: " + datapointAddress);
+						 log.d("KNX Event: " + datapointAddress);
 
 						if (!datapointsMetadata.keySet().contains(
 								datapointAddress))

@@ -66,7 +66,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 		this.password = "root";
 		this.datapoints = MeterIPServiceConfig.loadDatapointsConfigs();
 		this.listeners = new HashSet<DatapointListener>();
-		startPollingJob();
+		//startPollingJob();
 
 	}
 
@@ -88,8 +88,8 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 
 						try {
 							MeterMeasure value;
-
-							value = getNewMeasure(addr.getAddress());
+							DatapointMetadata m = getDatapointMetadata(addr);
+							value = getNewMeasure(m.getReadDatapointAddress());
 
 							DatapointValue reading = new DatapointValue(
 									new String(value.getTotalPower() + ""));
@@ -325,7 +325,8 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 			ReadCallback readCallback) {
 
 		try {
-			MeterMeasure value = getNewMeasure(address.getAddress());
+			DatapointMetadata m = getDatapointMetadata(address);
+			MeterMeasure value = getNewMeasure(m.getReadDatapointAddress());
 			DatapointValue reading = new DatapointValue(new String(
 					value.getTotalPower() + ""));
 

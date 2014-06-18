@@ -137,7 +137,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			final DatapointAddress datapointAddress = (DatapointAddress) it
 					.next();
 			DatapointMetadata m = datapointsMetadata.get(datapointAddress);
-			if (DatapointMetadata.AccessType.READ_ONLY == m.getAccessType()) {
+			if (DatapointMetadata.AccessType.WRITE_ONLY != m.getAccessType()) {
 				requestDatapointRead(datapointAddress, new ReadCallback() {
 
 					@Override
@@ -219,7 +219,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 	public int requestDatapointRead(DatapointAddress address,
 			ReadCallback readCallback) {
 		DatapointMetadata m = getDatapointMetadata(address);
-		String addr = address.getAddress();
+		String readAddr = m.getReadDatapointAddress();
 
 		if (m.getAccessType() == AccessType.WRITE_ONLY) {
 			readCallback.onReadAborted(address,
@@ -233,7 +233,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 		case BYTE_2:
 			try {
-				float val = driver.read2Bytes(addr);
+				float val = driver.read2Bytes(readAddr);
 				String value = val + "";
 				DatapointValue reading = new DatapointValue(value);
 				readCallback.onReadCompleted(address,
@@ -247,7 +247,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			break;
 		case PERCENTAGE:
 			try {
-				float val = driver.readPercentage(addr);
+				float val = driver.readPercentage(readAddr);
 				String value = val + "";
 				DatapointValue reading = new DatapointValue(value);
 				readCallback.onReadCompleted(address,
@@ -261,7 +261,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			break;
 		case SWITCH:
 			try {
-				boolean value = driver.readSwitch(addr);
+				boolean value = driver.readSwitch(readAddr);
 				DatapointValue reading = new DatapointValue(value + "");
 				readCallback.onReadCompleted(address,
 						new DatapointValue[] { reading }, 0);
@@ -292,7 +292,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 	public int requestDatapointWrite(DatapointAddress address,
 			DatapointValue[] values, WriteCallback writeCallback) {
 		DatapointMetadata m = getDatapointMetadata(address);
-		String addr = address.getAddress();
+		String writeAddr = m.getWriteDatapointAddress();
 
 		if (m.getAccessType() == AccessType.READ_ONLY) {
 			writeCallback.onWriteAborted(address,
@@ -307,7 +307,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 		case PERCENTAGE:
 			try {
-				driver.writePercentage(addr,
+				driver.writePercentage(writeAddr,
 						Integer.parseInt(values[0].getValue()));
 				writeCallback.onWriteCompleted(address,
 						WritingConfirmationLevel.DEVICE_ACTION_TAKEN, 0);
@@ -320,7 +320,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			break;
 		case SWITCH:
 			try {
-				driver.writeSwitch(addr,
+				driver.writeSwitch(writeAddr,
 						Boolean.parseBoolean(values[0].getValue()));
 				writeCallback.onWriteCompleted(address,
 						WritingConfirmationLevel.DEVICE_ACTION_TAKEN, 0);

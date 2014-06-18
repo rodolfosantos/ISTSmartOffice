@@ -42,7 +42,7 @@ public class DataAquisitionWorker implements Runnable {
 				.getService(historyDataServiceName);
 
 		if (remoteSensingService != null) {
-			//System.err.println("ADD SERVICE1!");
+			System.err.println("ADD SERVICE1!");
 			remoteSensingService.addDatapointListener(listener);
 			retrieveAllDatapointStatus(remoteSensingService);
 		}
@@ -83,7 +83,7 @@ public class DataAquisitionWorker implements Runnable {
 							remoteSensingService = DatapointConnectivityServiceRegistry
 									.getInstance().getService(
 											remoteSensingServiceName);
-							//System.err.println("ADD SERVICE2!");
+							System.err.println("ADD SERVICE2!");
 							remoteSensingService.addDatapointListener(listener);
 							retrieveAllDatapointStatus(remoteSensingService);
 						}
@@ -100,7 +100,7 @@ public class DataAquisitionWorker implements Runnable {
 				DatapointMetadata m = remoteSensingService
 						.getDatapointMetadata(address);
 				if (m.getAccessType() != AccessType.WRITE_ONLY) {
-					//System.err.println("READ" + address);
+					System.err.println("READ" + address);
 					remoteSensingService.requestDatapointRead(address,
 							new ReadCallback() {
 								@Override
@@ -131,7 +131,7 @@ public class DataAquisitionWorker implements Runnable {
 
 	private void writeHistoryData(DatapointAddress address,
 			DatapointValue[] values) {
-		//System.out.println(values[0]);
+		System.out.println(values[0]);
 
 		
 

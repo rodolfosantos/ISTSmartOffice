@@ -158,19 +158,27 @@ public class KNXServiceConfig {
 		m.setWriteDatapointAddress(null);
 		knxDatapoints.put(new DatapointAddress("knxsensorco"), m.build());
 		
-//		m.setDescription("EnergyLab Humidity");
-//		m.setAccessType(AccessType.READ_ONLY);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress(null);
-//		m.setWriteDatapointAddress("0/4/1");
-//		knxDatapoints.put(new DatapointAddress("knxsensorhum"), m.build());
+		m.setDescription("EnergyLab Humidity");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress(null);
+		m.setWriteDatapointAddress("0/4/1");
+		knxDatapoints.put(new DatapointAddress("knxsensorhum"), m.build());
+		
+		m.setDescription("EnergyLab Temperature");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/4/3");
+		m.setWriteDatapointAddress(null);
+		knxDatapoints.put(new DatapointAddress("knxsensortemp"), m.build());
 		
 		m.setDescription("EnergyLab Temperature Door");
 		m.setAccessType(AccessType.READ_ONLY);
 		m.setDatatype(Datatype.BYTE_2);
 		m.setReadDatapointAddress("0/4/5");
 		m.setWriteDatapointAddress(null);
-		knxDatapoints.put(new DatapointAddress("knxsensortemp"), m.build());
+		knxDatapoints.put(new DatapointAddress("knxsensortempd"), m.build());
+		
 		
 		m.setDescription("EnergyLab Lux");
 		m.setAccessType(AccessType.READ_ONLY);

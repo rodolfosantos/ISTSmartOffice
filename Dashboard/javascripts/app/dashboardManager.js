@@ -22,12 +22,12 @@ $(".chartselection > li > a").bind('click', function(){
 function loadDashboardPage(){
     if(!loaded1){
         //load
-        plotRealTimeEnergyConsumption("powerconsumption", "meter2", 3600000/4);
-        plotAllConsumptions(["meter0", "meter1", "meter2", "meter3", "meter4", "meter5", "meter6", "meter7" ]);
+        plotRealTimeEnergyConsumption("powerconsumption", "meterlib", 3600000/4);
+        plotAllConsumptions(["meterr117","meterr119","meterlib", "metera4", "meternewa4","meterd14","meterd16", "meterutaa4"]);
 
-        plotSensorData("indoor1", "knx14", "ºC");
-        plotSensorData("indoor2", "knx13", "ppm");
-        plotSensorData("indoor3", "knx12", "Lux");        
+        plotSensorData("indoor1", "knxsensortemp", "ºC");
+        plotSensorData("indoor2", "knxsensorco", "ppm");
+        plotSensorData("indoor3", "knxsensorlux", "Lux");        
         loaded1 = true;
     }
     else{
@@ -216,14 +216,19 @@ function plotSensorData(chartSelector, datapointAddress, units){
     var dataLength = 50; // number of dataPoints visible at any point
     var updateChart = function (readings) {
         for (var j = 0; j < readings.length; j++) {	
-            var ts = parseFloat(readings[j]['timestamp']);
-            var value = parseFloat(readings[j]['value']);
+            var ts = parseFloat(readings[j].timestamp);
+            var value = parseFloat(readings[j].value);
+            console.log(readings[j]);
+            console.log(ts);
+            console.log(value);
             dps.push({
                 x: ts,
                 y: value
             });
         };
 
+        console.log(dps);
+        
         if (dps.length > dataLength)
         {
             dps.shift();				
@@ -239,12 +244,13 @@ function plotSensorData(chartSelector, datapointAddress, units){
     // get the first set of dataPoints (last hour)
     var nowTS = new Date().getTime();
 
-    api.requestDatapointWindowRead(datapointAddress, nowTS - 3600000, nowTS , function(data){updateChart(data['readings'])});
+    api.requestDatapointWindowRead(datapointAddress, nowTS - 3600000, nowTS , function(data){updateChart(data.readings)});
     charts.push(chart);
 
     var subscription = faye.subscribe('/remoteactuation/datapoints/'+datapointAddress, function(data) {
-        updateChart([$.parseJSON(data).reading])
         console.log(data);
+        updateChart($.parseJSON(data).reading)
+        
     });
 
 }

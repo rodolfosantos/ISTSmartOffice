@@ -19,7 +19,7 @@ public final class Activator implements BundleActivator {
 		String historyDataServiceName = "ist.smartoffice.dataaccess.historydata.HistoryDataStorageService";
 		dataAquisitonThread = new Thread(new DataAquisitionWorker(
 				remoteSensingServiceName, historyDataServiceName));
-		//dataAquisitonThread.start();
+		dataAquisitonThread.start();
 	}
 
 	@Override

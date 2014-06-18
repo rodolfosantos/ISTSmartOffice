@@ -66,7 +66,7 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 		this.password = "root";
 		this.datapoints = MeterIPServiceConfig.loadDatapointsConfigs();
 		this.listeners = new HashSet<DatapointListener>();
-		//startPollingJob();
+		startPollingJob();
 
 	}
 

@@ -15,6 +15,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import tuwien.auto.calimero.DetachEvent;
@@ -74,22 +75,30 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 			@Override
 			public void groupWrite(ProcessEvent arg0) {
-				final DatapointAddress datapointAddress = new DatapointAddress(
-						arg0.getDestination().toString());
+				final String knxAddress = arg0.getDestination().toString();
+				log.d("KNX  GW Event: " + knxAddress);
 
 				// update value
 				new Thread(new Runnable() {
 
 					@Override
 					public void run() {
-						 log.d("KNX Event: " + datapointAddress);
+						
+						final DatapointAddress datapointAddress = getMasterAddress(knxAddress);
+						
+						if (datapointAddress == null){
+							return;
+						}
+							
+						
+						log.d("KNX Event: " + datapointAddress);
 
 						if (!datapointsMetadata.keySet().contains(
 								datapointAddress))
 							return;
 
-						if (!(datapointsMetadata.get(datapointAddress)
-								.getAccessType() == AccessType.READ_ONLY))
+						if ((datapointsMetadata.get(datapointAddress)
+								.getAccessType() == AccessType.WRITE_ONLY))
 							return;
 
 						if (uptadingDatapoint.contains(datapointAddress)) {
@@ -111,8 +120,8 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 										log.d("KNX Update: " + address + "="
 												+ readings[0].getValue());
 
-										notifyDatapointUpdate(datapointAddress,
-												readings);
+										//notifyDatapointUpdate(datapointAddress,
+										//		readings);
 									}
 
 									@Override
@@ -125,11 +134,26 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 				}).start();
 			}
 
+			private DatapointAddress getMasterAddress(String knxAddress) {
+				for(Entry<DatapointAddress, DatapointMetadata> e : datapointsMetadata.entrySet()){
+					DatapointMetadata m = e.getValue();
+					String readAddr = m.getReadDatapointAddress();
+					if(readAddr == null)
+						continue;
+					
+					if(m.getReadDatapointAddress().equals(knxAddress))
+						return e.getKey();
+				}
+				return null;
+			}
+
 			@Override
 			public void detached(DetachEvent arg0) {
 			}
 		});
 	}
+
+
 
 	private void updateDatapointStatus() {
 		Iterator<DatapointAddress> it = datapointsMetadata.keySet().iterator();

@@ -22,10 +22,10 @@ function assingEventHandlers(){
 
 
     $(".opendoor").click(function() {
-        api.requestDatapointWrite("knx1", {"values" : [true]}, null);
+        api.requestDatapointWrite("knxdoor", {"values" : [true]}, null);
     });
-    faye.subscribe('/datapoints/knx1', function(data) {
-        value = $.parseJSON(data).value;
+    faye.subscribe('/remoteactuation/datapoints/knxdoor', function(data) {
+        value = $.parseJSON(data).reading[0].value;
         if(value){
             Notifications.push({
                 imagePath: "images/avatar.png",
@@ -39,31 +39,31 @@ function assingEventHandlers(){
     //lights
     $(".onoffall").bind('switchChange.bootstrapSwitch', function(event, state) {
         if(state) {
-            setDataPointValue("knx6", 100, null);  
+            setDataPointValue("knxlightall", 100, null);  
             $(".onoffallslider").slider('setValue', 100);
         }
         else{
-            setDataPointValue("knx6", 0, null);
+            setDataPointValue("knxlightall", 0, null);
             $(".onoffallslider").slider('setValue', 0);
         }
     });
 
     $(".onoffallslider").bind('slideStop', function(event) {
-        setDataPointValue("knx6", event.value, null);
+        setDataPointValue("knxlightall", event.value, null);
         if(event.value >0 )
             $(".onoffall").bootstrapSwitch('state', true, true);
         else
             $(".onoffall").bootstrapSwitch('state', false, true);       
     });
 
-    var lvalue = parseInt(api.requestDatapointReadSync('knx3').value);
+    var lvalue = parseInt(api.requestDatapointReadSync('knxlight1').reading[0].value);
     $(".onoffallslider").slider('setValue', lvalue);
     if(lvalue >0 )
         $(".onoffall").bootstrapSwitch('state', true, true);
     else
         $(".onoffall").bootstrapSwitch('state', false, true);  
-    faye.subscribe('/datapoints/knx3', function(data) {
-        value = $.parseJSON(data).value;
+    faye.subscribe('/remoteactuation/datapoints/knx3', function(data) {
+        value = $.parseJSON(data).reading[0].value;
         if(value >0 )
             $(".onoffall").bootstrapSwitch('state', true, true);
         else
@@ -75,7 +75,7 @@ function assingEventHandlers(){
 
     // ================================================================
     $(".blindallslider").bind('slideStop', function(event) {
-        setDataPointValue("knx4", event.value, null);
+        setDataPointValue("knxblindall", event.value, null);
         //$(".blind1slider").slider('setValue', event.value);
         //$(".blind2slider").slider('setValue', event.value);
         //$(".blind3slider").slider('setValue', event.value);
@@ -84,33 +84,33 @@ function assingEventHandlers(){
 
     // blind 1
     $(".blind1slider").bind('slideStop', function(event) {
-        setDataPointValue("knx7", event.value, null);
+        setDataPointValue("knxblind1", event.value, null);
     });
-    $(".blind1slider").slider('setValue', parseInt(api.requestDatapointReadSync('knx5').value));
-    faye.subscribe('/datapoints/knx5', function(data) {
-        value = $.parseJSON(data).value;
+    $(".blind1slider").slider('setValue', parseInt(api.requestDatapointReadSync('knxblind1').reading[0].value));
+    faye.subscribe('/remoteactuation/datapoints/knxblind1', function(data) {
+        value = $.parseJSON(data).reading[0].value;
         //alert(value);
         $(".blind1slider").slider('setValue', Number(value));
     });
 
     // blind 2
     $(".blind2slider").bind('slideStop', function(event) {
-        setDataPointValue("knx8", event.value, null);
+        setDataPointValue("knxblind2", event.value, null);
     });
-    $(".blind2slider").slider('setValue', parseInt(api.requestDatapointReadSync('knx10').value));
-    faye.subscribe('/datapoints/knx10', function(data) {
-        value = $.parseJSON(data).value;
+    $(".blind2slider").slider('setValue', parseInt(api.requestDatapointReadSync('knxblind2').reading[0].value));
+    faye.subscribe('/remoteactuation/datapoints/knxblind2', function(data) {
+        value = $.parseJSON(data).reading[0].value;
         //alert(value);
         $(".blind2slider").slider('setValue', Number(value));
     });
 
     // blind 3
     $(".blind3slider").bind('slideStop', function(event) {
-        setDataPointValue("knx9", event.value, null);
+        setDataPointValue("knxblind3", event.value, null);
     });
-    $(".blind3slider").slider('setValue', parseInt(api.requestDatapointReadSync('knx11').value));
-    faye.subscribe('/datapoints/knx11', function(data) {
-        value = $.parseJSON(data).value;
+    $(".blind3slider").slider('setValue', parseInt(api.requestDatapointReadSync('knxblind3').reading[0].value));
+    faye.subscribe('/remoteactuation/datapoints/knxblind3', function(data) {
+        value = $.parseJSON(data).reading[0].value;
         //alert(value);
         $(".blind3slider").slider('setValue', Number(value));
     });
@@ -119,11 +119,11 @@ function assingEventHandlers(){
     //hvac
     $(".onoffhvac").bind('switchChange.bootstrapSwitch', function(event, state) {
 
-        setDataPointValue("knx15", state, null);  
+        setDataPointValue("knxhvac", state, null);  
 
     });
-    faye.subscribe('/datapoints/knx17', function(data) {
-        value = $.parseJSON(data).value;
+    faye.subscribe('/remoteactuation/datapoints/knxhvac', function(data) {
+        value = $.parseJSON(data).reading[0].value;
         var isTrueSet = (value === 'true');
         $(".onoffhvac").bootstrapSwitch('state', isTrueSet, true);
     });
@@ -133,10 +133,10 @@ function assingEventHandlers(){
     $(".modehvac").bootstrapSwitch('onText', 'Hot', true);
     $(".modehvac").bootstrapSwitch('offText', 'Cold', true);
     $(".modehvac").bind('switchChange.bootstrapSwitch', function(event, state) {
-        setDataPointValue("knx16", state, null);  
+        setDataPointValue("knxhvacmode", state, null);  
     });
-    faye.subscribe('/datapoints/knx18', function(data) {
-        value = $.parseJSON(data).value;
+    faye.subscribe('/remoteactuation/datapoints/knxhvacmode', function(data) {
+        value = $.parseJSON(data).reading[0].value;
         var isTrueSet = (value === 'true');
         $(".modehvac").bootstrapSwitch('state', isTrueSet, true);
     });

@@ -35,7 +35,7 @@ public class HistoryDataStorageService implements IDatapointConnectivityService 
 
 	private void saveOnDisk() {
 		synchronized (readingsHistory) {
-			DataFileStorage.toJsonFile(db_filename, readingsHistory);
+			DataFileStorage.toJsonFile(db_filename+"1", readingsHistory);
 		}
 	}
 

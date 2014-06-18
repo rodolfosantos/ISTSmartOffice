@@ -80,8 +80,7 @@ public class DatapointConnectivityServicePubSubWrapper {
 				String channelName = path + "/datapoints/"
 						+ address.getAddress();
 				
-				System.err.println(channelName);
-				System.err.println(result.toJSONString());
+				log.d(channelName);
 				client.getChannel(channelName).publish(result.toJSONString());
 			}
 

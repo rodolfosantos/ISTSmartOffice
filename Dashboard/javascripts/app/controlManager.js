@@ -121,57 +121,23 @@ function setupBlind(elementClassSlider, datapoint){
     });
 }
 
-
-
-function assingEventHandlers(){
-
-
-    setupDoor('.opendoor', 'knxdoor');
-    setupAllLamps('.onoffall', '.onoffallslider', 'knxlightall');
-    setupLamp('.onoff1', '.onoff1slider', 'knxlight1');
-    setupLamp('.onoff2', '.onoff2slider', 'knxlight2');
-    setupLamp('.onoff3', '.onoff3slider', 'knxlight3');
-    setupLamp('.onoff4', '.onoff4slider', 'knxlight4');
-    
-    setupAllBlinds('.blindallslider', 'knxblindall');
-    setupBlind('.blind1slider', 'knxblind1');
-    setupBlind('.blind2slider', 'knxblind2');
-    setupBlind('.blind3slider', 'knxblind3');
-
-    
-    // ================================================================
-    //hvac
-    $(".onoffhvac").bind('switchChange.bootstrapSwitch', function(event, state) {
-
-        setDataPointValue("knxhvac", state, null);  
-
+function setupHvacSwitch(elementClass, datapoint){
+    $(elementClass).bind('switchChange.bootstrapSwitch', function(event, state) {
+        setDataPointValue(datapoint, state, null);  
     });
-    faye.subscribe('/remoteactuation/datapoints/knxhvac', function(data) {
+    
+    var value = api.requestDatapointReadSync(datapoint).reading[0].value;
+    var isTrueSet = (value === 'true');
+    $(elementClass).bootstrapSwitch('state', isTrueSet, true);
+    
+    faye.subscribe('/remoteactuation/datapoints/'+datapoint, function(data) {
         value = $.parseJSON(data).reading[0].value;
         var isTrueSet = (value === 'true');
-        $(".onoffhvac").bootstrapSwitch('state', isTrueSet, true);
+        $(elementClass).bootstrapSwitch('state', isTrueSet, true);
     });
-
-
-    //mode
-    $(".modehvac").bootstrapSwitch('onText', 'Hot', true);
-    $(".modehvac").bootstrapSwitch('offText', 'Cold', true);
-    $(".modehvac").bind('switchChange.bootstrapSwitch', function(event, state) {
-        setDataPointValue("knxhvacmode", state, null);  
-    });
-    faye.subscribe('/remoteactuation/datapoints/knxhvacmode', function(data) {
-        value = $.parseJSON(data).reading[0].value;
-        var isTrueSet = (value === 'true');
-        $(".modehvac").bootstrapSwitch('state', isTrueSet, true);
-    });
-
-
-
-
-
-
-
 }
+
+
 
 function setDataPointValue(datapoint, value, callback){
     api.requestDatapointWrite(datapoint, {"values" : [value+""]}, null);
@@ -186,6 +152,29 @@ function renderSwitchButtons(){
             return 'Current value: ' + value;
         }
     });
+}
+
+
+function assingEventHandlers(){
+
+    setupDoor('.opendoor', 'knxdoor');
+    setupAllLamps('.onoffall', '.onoffallslider', 'knxlightall');
+    setupLamp('.onoff1', '.onoff1slider', 'knxlight1');
+    setupLamp('.onoff2', '.onoff2slider', 'knxlight2');
+    setupLamp('.onoff3', '.onoff3slider', 'knxlight3');
+    setupLamp('.onoff4', '.onoff4slider', 'knxlight4');
+    
+    setupAllBlinds('.blindallslider', 'knxblindall');
+    setupBlind('.blind1slider', 'knxblind1');
+    setupBlind('.blind2slider', 'knxblind2');
+    setupBlind('.blind3slider', 'knxblind3');
+    
+    setupHvacSwitch('.onoffhvac', 'knxhvac');
+    
+    $(".modehvac").bootstrapSwitch('onText', 'Hot', true);
+    $(".modehvac").bootstrapSwitch('offText', 'Cold', true);
+    setupHvacSwitch('.modehvac', 'knxhvacmode');
+
 }
 
 

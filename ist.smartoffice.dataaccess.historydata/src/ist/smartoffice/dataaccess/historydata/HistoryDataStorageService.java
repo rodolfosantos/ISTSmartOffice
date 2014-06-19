@@ -58,7 +58,12 @@ public class HistoryDataStorageService implements IDatapointConnectivityService 
 	@Override
 	public DatapointAddress[] getAllDatapoints() {
 		Set<String> addresses = readingsHistory.keySet();
-		return (DatapointAddress[]) addresses.toArray();
+		DatapointAddress[] result = new DatapointAddress[addresses.size()];
+		int i=0;
+		for(String s : addresses)
+			result[i++] = new DatapointAddress(s);		
+		
+		return result;
 	}
 
 	@Override
@@ -85,14 +90,15 @@ public class HistoryDataStorageService implements IDatapointConnectivityService 
 	public int requestDatapointRead(DatapointAddress address,
 			ReadCallback readCallback) {
 
-		if (!readingsHistory.containsKey(address)) {
+		if (!readingsHistory.containsKey(address.getAddress())) {
 			readCallback.onReadAborted(address, ErrorType.DATAPOINT_NOT_FOUND,
 					0);
 			return 0;
 		}
 
-		List<DatapointValue> datapointReadings = readingsHistory.get(address);
+		List<DatapointValue> datapointReadings = readingsHistory.get(address.getAddress());
 		Collections.sort(datapointReadings);
+		
 		DatapointValue result = datapointReadings
 				.get(datapointReadings.size() - 1);
 		readCallback.onReadCompleted(address,

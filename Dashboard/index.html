@@ -113,12 +113,12 @@
                         </li>
 
 
-                       <!-- <li class="divider"></li>
-                        <li>
-                            <a href="../login/login.html">
-                                <i class="icon-off"></i>Log out (login page)
-                            </a>
-                        </li>-->
+                        <!-- <li class="divider"></li>
+<li>
+<a href="../login/login.html">
+<i class="icon-off"></i>Log out (login page)
+</a>
+</li>-->
                     </ul>
                 </li>
 
@@ -344,7 +344,7 @@
                                     </span>
                                     <p>All Lights</p>
                                 </div>
-                                
+
                                 <div>
                                     <span style="margin-bottom: 10px; margin-right: 25px; display: inline-block;">
                                         <input type="checkbox" name="my-checkbox" class="onoff1">
@@ -354,7 +354,7 @@
                                     </span>
                                     <p>Lights Blackboard</p>
                                 </div>
-                                
+
                                 <div>
                                     <span style="margin-bottom: 10px; margin-right: 25px; display: inline-block;">
                                         <input type="checkbox" name="my-checkbox" class="onoff2">
@@ -364,7 +364,7 @@
                                     </span>
                                     <p>Lights Middle 1</p>
                                 </div>
-                                
+
                                 <div>
                                     <span style="margin-bottom: 10px; margin-right: 25px; display: inline-block;">
                                         <input type="checkbox" name="my-checkbox" class="onoff3">
@@ -374,7 +374,7 @@
                                     </span>
                                     <p>Lights Middle2</p>
                                 </div>
-                                
+
                                 <div>
                                     <span style="margin-bottom: 10px; margin-right: 25px; display: inline-block;">
                                         <input type="checkbox" name="my-checkbox" class="onoff4">
@@ -385,7 +385,7 @@
                                     <p>Lights TV</p>
                                 </div>
 
-                                
+
                             </div>
                         </div>
 
@@ -441,7 +441,7 @@
 
                             </div>
                         </div>
-                        
+
                         <div class="box">
                             <div class="tab-header">
                                 HVAC Control
@@ -469,24 +469,24 @@
                         </div>
 
                         <!--<div class="box">
-                            <div class="tab-header">
-                                Plugs Control
-                                <span class="pull-right">
-                                    <span class="options">
-                                        <a href="#"><i class="icon-cog"></i></a>
-                                    </span>
-                                </span>
-                            </div>
-                            <div class="padded">
+<div class="tab-header">
+Plugs Control
+<span class="pull-right">
+<span class="options">
+<a href="#"><i class="icon-cog"></i></a>
+</span>
+</span>
+</div>
+<div class="padded">
 
-                                <span style="margin-bottom: 10px; display: inline-block;">
-                                    <a class="button door">A button</a>
-                                </span>
+<span style="margin-bottom: 10px; display: inline-block;">
+<a class="button door">A button</a>
+</span>
 
 
 
-                            </div>
-                        </div>-->
+</div>
+</div>-->
 
 
                     </div>
@@ -498,7 +498,30 @@
                 </div>
 
                 <div class="row-fluid page4 hide">
-                    Content 4...
+                    <div class="span6">
+                        <div class="nav-menu box">
+                            <ul class="nav nav-list scenarioslist">
+                                <li class="nav-header">Dynamic Scenarios</li>
+                                <li><a>null</a></li>
+                                <li class="nav-header">Static Scenarios</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="span6">
+
+
+                        <div class="note">Create a new scenario from current building state</div>
+                        <div class="append-transparent">
+                            <input class="input-transparent newscenarioname" id="appendedInput2" size="16" type="text"><button class="add-on button addscenario">OK</button>
+                        </div>
+
+                    </div>
+
+
+
+
+
                 </div>
 
                 <div class="row-fluid page5 hide">
@@ -557,7 +580,7 @@
         <script src="javascripts/bootstrap-switch.js" type="text/javascript"></script>
 
         <script type="text/javascript" src="javascripts/canvasjs.min.js"></script>
-        
+
         <script type="text/javascript" src="http://sb-dev.tagus.ist.utl.pt:8000/faye/client.js"></script>
 
         <script type="text/javascript" src="javascripts/datapointConnectivityServiceAPI.js"></script>
@@ -597,6 +620,7 @@
 
         <script src="javascripts/app/controlManager.js" type="text/javascript"></script>
         <script src="javascripts/app/dashboardManager.js" type="text/javascript"></script>
+        <script src="javascripts/app/scenariosManager.js" type="text/javascript"></script>
         <script src="javascripts/app/main.js" type="text/javascript"></script>
 
 

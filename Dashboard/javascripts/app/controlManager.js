@@ -17,14 +17,12 @@ $(pageID).bind('isVisible', function(){
 });
 
 
+function setupDoor(elementClass, datapoint){
 
-function assingEventHandlers(){
-
-
-    $(".opendoor").click(function() {
-        api.requestDatapointWrite("knxdoor", {"values" : [true]}, null);
+    $(elementClass).click(function() {
+        api.requestDatapointWrite(datapoint, {"values" : ['true']}, null);
     });
-    faye.subscribe('/remoteactuation/datapoints/knxdoor', function(data) {
+    faye.subscribe('/remoteactuation/datapoints/'+datapoint, function(data) {
         value = $.parseJSON(data).reading[0].value;
         if(value){
             Notifications.push({
@@ -34,87 +32,113 @@ function assingEventHandlers(){
             });
         }
     });
+}
 
-
+function setupAllLamps(elementClassSwitch, elementClassSlider, datapoint){
+    
     //lights
-    $(".onoffall").bind('switchChange.bootstrapSwitch', function(event, state) {
-        if(state) {
-            setDataPointValue("knxlightall", 100, null);  
-            $(".onoffallslider").slider('setValue', 100);
-        }
-        else{
-            setDataPointValue("knxlightall", 0, null);
-            $(".onoffallslider").slider('setValue', 0);
-        }
+    $(elementClassSwitch).bind('switchChange.bootstrapSwitch', function(event, state) {
+        if(state)
+            setDataPointValue(datapoint, 100, null);  
+        else
+            setDataPointValue(datapoint, 0, null);
     });
 
-    $(".onoffallslider").bind('slideStop', function(event) {
-        setDataPointValue("knxlightall", event.value, null);
-        if(event.value >0 )
-            $(".onoffall").bootstrapSwitch('state', true, true);
-        else
-            $(".onoffall").bootstrapSwitch('state', false, true);       
+    $(elementClassSlider).bind('slideStop', function(event) {
+        setDataPointValue(datapoint, event.value, null);
     });
 
     var lvalue = parseInt(api.requestDatapointReadSync('knxlight1').reading[0].value);
-    $(".onoffallslider").slider('setValue', lvalue);
+    $(elementClassSlider).slider('setValue', lvalue);
     if(lvalue >0 )
-        $(".onoffall").bootstrapSwitch('state', true, true);
+        $(elementClassSwitch).bootstrapSwitch('state', true, true);
     else
-        $(".onoffall").bootstrapSwitch('state', false, true);  
-    faye.subscribe('/remoteactuation/datapoints/knx3', function(data) {
+        $(elementClassSwitch).bootstrapSwitch('state', false, true);  
+    
+    
+    faye.subscribe('/remoteactuation/datapoints/'+datapoint, function(data) {
         value = $.parseJSON(data).reading[0].value;
+        $(elementClassSlider).slider('setValue', Number(value));
         if(value >0 )
-            $(".onoffall").bootstrapSwitch('state', true, true);
+            $(elementClassSwitch).bootstrapSwitch('state', true, true);
         else
-            $(".onoffall").bootstrapSwitch('state', false, true); 
-        $(".onoffallslider").slider('setValue', Number(value));
+            $(elementClassSwitch).bootstrapSwitch('state', false, true); 
     });
+}
 
-
-
-    // ================================================================
-    $(".blindallslider").bind('slideStop', function(event) {
-        setDataPointValue("knxblindall", event.value, null);
-        //$(".blind1slider").slider('setValue', event.value);
-        //$(".blind2slider").slider('setValue', event.value);
-        //$(".blind3slider").slider('setValue', event.value);
+function setupLamp(elementClassSwitch, elementClassSlider, datapoint){
+    $(elementClassSwitch).bind('switchChange.bootstrapSwitch', function(event, state) {
+        if(state)
+            setDataPointValue(datapoint, 100, null);  
+        else
+            setDataPointValue(datapoint, 0, null);
     });
-
-
-    // blind 1
-    $(".blind1slider").bind('slideStop', function(event) {
-        setDataPointValue("knxblind1", event.value, null);
+    
+    $(elementClassSlider).bind('slideStop', function(event) {
+        setDataPointValue(datapoint, event.value, null);
     });
-    $(".blind1slider").slider('setValue', parseInt(api.requestDatapointReadSync('knxblind1').reading[0].value));
-    faye.subscribe('/remoteactuation/datapoints/knxblind1', function(data) {
+    
+    var lvalue = parseInt(api.requestDatapointReadSync(datapoint).reading[0].value);
+    $(elementClassSlider).slider('setValue', lvalue);
+    if(lvalue >0 )
+        $(elementClassSwitch).bootstrapSwitch('state', true, true);
+    else
+        $(elementClassSwitch).bootstrapSwitch('state', false, true); 
+    
+    faye.subscribe('/remoteactuation/datapoints/'+datapoint, function(data) {
         value = $.parseJSON(data).reading[0].value;
-        //alert(value);
-        $(".blind1slider").slider('setValue', Number(value));
+        $(elementClassSlider).slider('setValue', Number(value));
+        if(value >0 )
+            $(elementClassSwitch).bootstrapSwitch('state', true, true);
+        else
+            $(elementClassSwitch).bootstrapSwitch('state', false, true); 
     });
+    
+}
 
-    // blind 2
-    $(".blind2slider").bind('slideStop', function(event) {
-        setDataPointValue("knxblind2", event.value, null);
+
+
+
+function setupAllBlinds(elementClassSlider, datapoint){
+    $(elementClassSlider).bind('slideStop', function(event) {
+        setDataPointValue(datapoint, event.value, null);
     });
-    $(".blind2slider").slider('setValue', parseInt(api.requestDatapointReadSync('knxblind2').reading[0].value));
-    faye.subscribe('/remoteactuation/datapoints/knxblind2', function(data) {
+    faye.subscribe('/remoteactuation/datapoints/'+datapoint, function(data) {
         value = $.parseJSON(data).reading[0].value;
-        //alert(value);
-        $(".blind2slider").slider('setValue', Number(value));
-    });
+        $(elementClassSlider).slider('setValue', Number(value));
+    });   
+}
 
-    // blind 3
-    $(".blind3slider").bind('slideStop', function(event) {
-        setDataPointValue("knxblind3", event.value, null);
+function setupBlind(elementClassSlider, datapoint){
+    $(elementClassSlider).bind('slideStop', function(event) {
+        setDataPointValue(datapoint, event.value, null);
     });
-    $(".blind3slider").slider('setValue', parseInt(api.requestDatapointReadSync('knxblind3').reading[0].value));
-    faye.subscribe('/remoteactuation/datapoints/knxblind3', function(data) {
+    
+    $(elementClassSlider).slider('setValue', parseInt(api.requestDatapointReadSync(datapoint).reading[0].value));
+    faye.subscribe('/remoteactuation/datapoints/'+datapoint, function(data) {
         value = $.parseJSON(data).reading[0].value;
-        //alert(value);
-        $(".blind3slider").slider('setValue', Number(value));
+        $(elementClassSlider).slider('setValue', Number(value));
     });
+}
 
+
+
+function assingEventHandlers(){
+
+
+    setupDoor('.opendoor', 'knxdoor');
+    setupAllLamps('.onoffall', '.onoffallslider', 'knxlightall');
+    setupLamp('.onoff1', '.onoff1slider', 'knxlight1');
+    setupLamp('.onoff2', '.onoff2slider', 'knxlight2');
+    setupLamp('.onoff3', '.onoff3slider', 'knxlight3');
+    setupLamp('.onoff4', '.onoff4slider', 'knxlight4');
+    
+    setupAllBlinds('.blindallslider', 'knxblindall');
+    setupBlind('.blind1slider', 'knxblind1');
+    setupBlind('.blind2slider', 'knxblind2');
+    setupBlind('.blind3slider', 'knxblind3');
+
+    
     // ================================================================
     //hvac
     $(".onoffhvac").bind('switchChange.bootstrapSwitch', function(event, state) {

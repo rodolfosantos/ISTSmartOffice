@@ -83,14 +83,13 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 					@Override
 					public void run() {
-						
+
 						final DatapointAddress datapointAddress = getMasterAddress(knxAddress);
-						
-						if (datapointAddress == null){
+
+						if (datapointAddress == null) {
 							return;
 						}
-							
-						
+
 						log.d("KNX Event: " + datapointAddress);
 
 						if (!datapointsMetadata.keySet().contains(
@@ -120,8 +119,8 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 										log.d("KNX Update: " + address + "="
 												+ readings[0].getValue());
 
-										//notifyDatapointUpdate(datapointAddress,
-										//		readings);
+										// notifyDatapointUpdate(datapointAddress,
+										// readings);
 									}
 
 									@Override
@@ -135,13 +134,14 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			}
 
 			private DatapointAddress getMasterAddress(String knxAddress) {
-				for(Entry<DatapointAddress, DatapointMetadata> e : datapointsMetadata.entrySet()){
+				for (Entry<DatapointAddress, DatapointMetadata> e : datapointsMetadata
+						.entrySet()) {
 					DatapointMetadata m = e.getValue();
 					String readAddr = m.getReadDatapointAddress();
-					if(readAddr == null)
+					if (readAddr == null)
 						continue;
-					
-					if(m.getReadDatapointAddress().equals(knxAddress))
+
+					if (m.getReadDatapointAddress().equals(knxAddress))
 						return e.getKey();
 				}
 				return null;
@@ -152,8 +152,6 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			}
 		});
 	}
-
-
 
 	private void updateDatapointStatus() {
 		Iterator<DatapointAddress> it = datapointsMetadata.keySet().iterator();
@@ -317,6 +315,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			DatapointValue[] values, WriteCallback writeCallback) {
 		DatapointMetadata m = getDatapointMetadata(address);
 		String writeAddr = m.getWriteDatapointAddress();
+		System.err.println("escrita! "+address + writeAddr);
 
 		if (m.getAccessType() == AccessType.READ_ONLY) {
 			writeCallback.onWriteAborted(address,
@@ -327,7 +326,9 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 		switch (m.getDatatype()) {
 
 		case BYTE_1:// TODO
+			break;
 		case BYTE_2:// TODO
+			break;
 
 		case PERCENTAGE:
 			try {
@@ -344,6 +345,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			break;
 		case SWITCH:
 			try {
+				System.err.println("DOOR" + values[0].getValue());
 				driver.writeSwitch(writeAddr,
 						Boolean.parseBoolean(values[0].getValue()));
 				writeCallback.onWriteCompleted(address,

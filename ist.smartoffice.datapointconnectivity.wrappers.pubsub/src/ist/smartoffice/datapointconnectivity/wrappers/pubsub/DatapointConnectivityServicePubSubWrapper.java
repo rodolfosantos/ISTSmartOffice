@@ -46,6 +46,7 @@ public class DatapointConnectivityServicePubSubWrapper {
 		this.client = new BayeuxClient(addr, LongPollingTransport.create(null));
 		client.handshake();
 		client.waitFor(1000, BayeuxClient.State.CONNECTED);
+		log.i("Connected to Faye Server!");
 	}
 
 	public void disconnect() {

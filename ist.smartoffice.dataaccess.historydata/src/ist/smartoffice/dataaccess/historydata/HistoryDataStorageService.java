@@ -35,7 +35,7 @@ public class HistoryDataStorageService implements IDatapointConnectivityService 
 
 	private void saveOnDisk() {
 		synchronized (readingsHistory) {
-			DataFileStorage.toJsonFile(db_filename+"1", readingsHistory);
+			DataFileStorage.toJsonFile(db_filename, readingsHistory);
 		}
 	}
 
@@ -106,8 +106,6 @@ public class HistoryDataStorageService implements IDatapointConnectivityService 
 	public int requestDatapointWindowRead(DatapointAddress address,
 			long startTimestamp, long finishTimestamp, ReadCallback readCallback) {
 
-		System.out.println(readingsHistory.keySet());
-		System.out.println(address.getAddress());
 		if (!readingsHistory.containsKey(address.getAddress())) {
 			readCallback.onReadAborted(address, ErrorType.DATAPOINT_NOT_FOUND,
 					0);

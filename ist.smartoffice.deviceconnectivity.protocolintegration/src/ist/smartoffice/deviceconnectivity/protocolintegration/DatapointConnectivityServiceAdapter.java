@@ -9,10 +9,6 @@ import ist.smartoffice.logger.Logger;
 import ist.smartoffice.logger.LoggerService;
 import ist.smartoffice.osgi.registries.IServiceRegistry.ServiceRegistryListener;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;

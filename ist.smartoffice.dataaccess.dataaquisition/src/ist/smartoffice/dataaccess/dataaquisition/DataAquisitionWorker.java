@@ -132,16 +132,12 @@ public class DataAquisitionWorker implements Runnable {
 	private void writeHistoryData(DatapointAddress address,
 			DatapointValue[] values) {
 		
-		//System.out.println(values[0]);
-
-		
-
 		if (historyDataService == null) {
 			historyDataService = DatapointConnectivityServiceRegistry
 					.getInstance().getService(historyDataServiceName);
 		}
 
-		// TODO store temporary values
+		// TODO store temporary values if storage service is not available
 		if (historyDataService == null)
 			return;
 

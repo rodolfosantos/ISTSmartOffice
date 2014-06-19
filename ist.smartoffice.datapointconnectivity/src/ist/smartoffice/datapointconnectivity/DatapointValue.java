@@ -32,6 +32,11 @@ public class DatapointValue implements Comparable<DatapointValue> {
     public DatapointValue(String value) {
         this(value, new Date().getTime());
     }
+    
+
+    public DatapointValue() {
+        this("", 0);
+    }
 
     /**
      * Gets the datapoint value.

@@ -186,7 +186,6 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 	public void addDatapointListener(DatapointListener listener) {
 		if (listener == null)
 			listeners.clear();
-		System.out.println("knxAdd " + listener);
 		listeners.add(listener);
 	}
 
@@ -206,7 +205,6 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 	@Override
 	public void removeDatapointListener(DatapointListener listener) {
-		System.out.println("knxRem " + listener);
 		listeners.remove(listener);
 	}
 

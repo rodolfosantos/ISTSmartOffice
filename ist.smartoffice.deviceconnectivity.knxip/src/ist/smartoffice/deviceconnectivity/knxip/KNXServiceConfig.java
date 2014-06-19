@@ -43,7 +43,6 @@ public class KNXServiceConfig {
 
 		Map<DatapointAddress, DatapointMetadata> datapoints = new LinkedHashMap<DatapointAddress, DatapointMetadata>();
 
-		datapointSettings = null;//TODO delete
 		
 		if (datapointSettings != null) {
 			Iterator<Entry<String, DatapointMetadata>> it = datapointSettings

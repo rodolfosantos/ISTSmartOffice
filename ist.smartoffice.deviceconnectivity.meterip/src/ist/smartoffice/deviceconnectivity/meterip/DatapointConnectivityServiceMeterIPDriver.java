@@ -269,8 +269,6 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 	public void addDatapointListener(DatapointListener listener) {
 		if (listener == null)
 			listeners.clear();
-
-		System.out.println("metAdd " + listener);
 		listeners.add(listener);
 	}
 
@@ -294,7 +292,6 @@ public class DatapointConnectivityServiceMeterIPDriver implements
 
 	@Override
 	public void removeDatapointListener(DatapointListener listener) {
-		System.out.println("metRem " + listener);
 		listeners.remove(listener);
 
 	}

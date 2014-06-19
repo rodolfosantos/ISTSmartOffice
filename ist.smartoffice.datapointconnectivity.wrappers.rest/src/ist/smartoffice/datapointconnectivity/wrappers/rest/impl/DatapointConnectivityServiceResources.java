@@ -16,6 +16,8 @@ import ist.smartoffice.datapointconnectivity.DatapointMetadata;
 import ist.smartoffice.datapointconnectivity.DatapointValue;
 import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService;
 import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService.OperationFailedException;
+import ist.smartoffice.datapointconnectivity.ReadCallbackImpl;
+import ist.smartoffice.datapointconnectivity.WriteCallbackImpl;
 import ist.smartoffice.datapointconnectivity.wrappers.rest.DatapointConnectivityServiceRESTWrapper;
 
 /**
@@ -98,7 +100,7 @@ public class DatapointConnectivityServiceResources {
 			long startTimestamp = Long.valueOf(startRESTParam).longValue();
 			long finishTimestamp = Long.valueOf(finishRESTParam).longValue();
 
-			ReadCallback readCallback = new ReadCallback();
+			ReadCallbackImpl readCallback = new ReadCallbackImpl();
 			DatapointConnectivityServiceRESTWrapper
 					.getInstance()
 					.getServiceImplementation(getRequest().getRootRef().toString())
@@ -278,7 +280,7 @@ public class DatapointConnectivityServiceResources {
 					.toString();
 			JSONObject result = new JSONObject();
 
-			ReadCallback readCallback = new ReadCallback();
+			ReadCallbackImpl readCallback = new ReadCallbackImpl();
 			DatapointConnectivityServiceRESTWrapper
 					.getInstance()
 					.getServiceImplementation(getRequest().getRootRef().toString())
@@ -338,7 +340,7 @@ public class DatapointConnectivityServiceResources {
 				}
 
 	
-				WriteCallback writeCallback = new WriteCallback();
+				WriteCallbackImpl writeCallback = new WriteCallbackImpl();
 				DatapointConnectivityServiceRESTWrapper.getInstance()
 						.getServiceImplementation(getRequest().getRootRef().toString())
 						.requestDatapointWrite(addr, values, writeCallback);

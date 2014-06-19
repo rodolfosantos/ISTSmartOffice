@@ -29,6 +29,9 @@ public final class Activator implements BundleActivator {
 			put("ist.smartoffice.dataaccess.historydata.HistoryDataStorageService",
 					"/historydatastorage");
 			
+			put("ist.smartoffice.autonmactuation.scenarios.ScenariosService",
+					"/scenarios");
+			
 			//put("service1", "/deviceconnectivityapii");
 		}
 	};

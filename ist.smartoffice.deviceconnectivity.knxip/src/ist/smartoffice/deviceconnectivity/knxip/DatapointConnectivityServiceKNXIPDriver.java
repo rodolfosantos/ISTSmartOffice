@@ -313,7 +313,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			DatapointValue[] values, WriteCallback writeCallback) {
 		DatapointMetadata m = getDatapointMetadata(address);
 		String writeAddr = m.getWriteDatapointAddress();
-		System.err.println("escrita! "+address + writeAddr);
+		System.err.println("escrita! "+address + writeAddr + " "+values[0].getValue());
 
 		if (m.getAccessType() == AccessType.READ_ONLY) {
 			writeCallback.onWriteAborted(address,
@@ -330,12 +330,13 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 		case PERCENTAGE:
 			try {
-				driver.writePercentage(writeAddr,
-						Integer.parseInt(values[0].getValue()));
+				float f = Float.parseFloat(values[0].getValue());
+				driver.writePercentage(writeAddr, Math.round(f));
 				writeCallback.onWriteCompleted(address,
 						WritingConfirmationLevel.DEVICE_ACTION_TAKEN, 0);
 				notifyDatapointUpdate(address, values);
 			} catch (Exception e) {
+				e.printStackTrace();
 				writeCallback.onWriteAborted(address,
 						ErrorType.DEVICE_CONNECTION_ERROR, 0);
 			}

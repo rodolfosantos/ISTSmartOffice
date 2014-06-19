@@ -1,4 +1,4 @@
-package ist.smartoffice.datapointconnectivity.wrappers.rest.impl;
+package ist.smartoffice.datapointconnectivity;
 
 import java.util.concurrent.Semaphore;
 
@@ -11,7 +11,7 @@ import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService.Writi
 /**
  * The callback used by the REST wrapper to receive write requests.
  */
-public class WriteCallback
+public class WriteCallbackImpl
         implements IDatapointConnectivityService.WriteCallback {
     /**
      * Semaphore used to indicate when the write has arrived.

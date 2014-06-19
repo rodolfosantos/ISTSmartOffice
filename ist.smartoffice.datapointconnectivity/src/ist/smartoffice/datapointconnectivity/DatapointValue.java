@@ -62,4 +62,15 @@ public class DatapointValue implements Comparable<DatapointValue> {
 		Long otherLong =  new Long(other.getTimestamp());
 		return thisLong.compareTo(otherLong);
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "DatapointValue [value=" + value + ", timestamp=" + timestamp
+				+ "]";
+	}
+	
+	
 }

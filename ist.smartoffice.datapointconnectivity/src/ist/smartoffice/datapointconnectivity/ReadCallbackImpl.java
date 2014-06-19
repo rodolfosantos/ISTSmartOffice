@@ -1,4 +1,4 @@
-package ist.smartoffice.datapointconnectivity.wrappers.rest.impl;
+package ist.smartoffice.datapointconnectivity;
 
 import java.util.concurrent.Semaphore;
 
@@ -11,7 +11,7 @@ import ist.smartoffice.datapointconnectivity.IDatapointConnectivityService.Error
 /**
  * The callback used by the REST wrapper to receive read requests.
  */
-public class ReadCallback implements IDatapointConnectivityService.ReadCallback {
+public class ReadCallbackImpl implements IDatapointConnectivityService.ReadCallback {
 	/**
 	 * Semaphore used to indicate when the reading has arrived.
 	 */
@@ -27,7 +27,7 @@ public class ReadCallback implements IDatapointConnectivityService.ReadCallback 
 	/**
 	 * Instantiates a new read callback.
 	 */
-	public ReadCallback() {
+	public ReadCallbackImpl() {
 		super();
 		this.semaphore = new Semaphore(0);
 	}

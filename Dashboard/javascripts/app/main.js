@@ -20,9 +20,10 @@ $(window).load(function() {
 
 // Listen for initial load of home page.
 $(document).bind("ready", function (e, data) {
-    //api = new DatapointConnectivityService("remoteactuation", "sb-dev.tagus.ist.utl.pt", 8182);
-    api = new DatapointConnectivityService("remoteactuation", "localhost", 8182);
-    scenariosApi = new DatapointConnectivityService("scenarios", "localhost", 8182);
+    api = new DatapointConnectivityService("remoteactuation", "sb-dev.tagus.ist.utl.pt", 8182);
+    scenariosApi = new DatapointConnectivityService("scenarios", "sb-dev.tagus.ist.utl.pt", 8182);
+    //api = new DatapointConnectivityService("remoteactuation", "localhost", 8182);
+    //scenariosApi = new DatapointConnectivityService("scenarios", "localhost", 8182);
     
     faye = new Faye.Client('http://sb-dev.tagus.ist.utl.pt:8000/faye');
     

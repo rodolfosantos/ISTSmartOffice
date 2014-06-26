@@ -192,7 +192,7 @@ public class KNXGatewayIPDriver {
 				while (!isConnected) {
 					try {
 						Thread.sleep(wait);
-						wait = wait * 2;
+						wait = wait+100;
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

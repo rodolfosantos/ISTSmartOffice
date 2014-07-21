@@ -136,6 +136,8 @@ public class DatapointMetadata {
 	private String readAddress;
 
 	private String writeAddress;
+	
+	private String gatewayAddress;
 
     /**
      * The maximum valid value for a scale.
@@ -168,6 +170,7 @@ public class DatapointMetadata {
         private int readCacheSize;
 		private String readAddress;
 		private String writeAddress;
+		private String gatewayAddress;
 
         /**
          * Sets the description of the datapoint.
@@ -337,6 +340,7 @@ public class DatapointMetadata {
             final DatapointMetadata result = new DatapointMetadata();
             result.readAddress = readAddress;
             result.writeAddress = writeAddress;
+            result.gatewayAddress = gatewayAddress;
             result.accessType = accessType;
             result.description = description;
             result.units = units;
@@ -363,6 +367,11 @@ public class DatapointMetadata {
 
 		public void setWriteDatapointAddress(String writeAddress) {
 			this.writeAddress = writeAddress;
+			
+		}
+		
+		public void setGatewayAddress(String gatewayAddress) {
+			this.gatewayAddress = gatewayAddress;
 			
 		}
     }
@@ -545,5 +554,9 @@ public class DatapointMetadata {
 
 	public String getWriteDatapointAddress() {
 		return this.writeAddress;
+	}
+	
+	public String getGatewayAddress() {
+		return this.gatewayAddress;
 	}
 }

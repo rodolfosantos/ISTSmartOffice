@@ -31,9 +31,9 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			DatapointConnectivityServiceKNXIPDriver.class.getName());
 
 	/**
-	 * The driver.
+	 * The drivers.
 	 */
-	private KNXGatewayIPDriver driver;
+	private Map<String, KNXGatewayIPDriver> gateways;
 
 	/**
 	 * The listeners set
@@ -61,96 +61,120 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 		this.datapointsStatus = new HashMap<DatapointAddress, DatapointValue>();
 		this.uptadingDatapoint = new ArrayList<DatapointAddress>();
 		this.listeners = new HashSet<DatapointListener>();
+		this.gateways = new HashMap<String, KNXGatewayIPDriver>();
 
-		this.driver = new KNXGatewayIPDriver("172.20.70.241");
-		try {
-			this.driver.start();
-		} catch (UnknownHostException e) {
-			driver.reconnectGateway();
-		}
-
+		connectToKNXGateways(datapointsMetadata);
 		updateDatapointStatus();
 
-		driver.addProcessEventListener(new ProcessListener() {
+		for (final String gwAddr : this.gateways.keySet()) {
+			KNXGatewayIPDriver gw = this.gateways.get(gwAddr);
+			gw.addProcessEventListener(new ProcessListener() {
 
-			@Override
-			public void groupWrite(ProcessEvent arg0) {
-				final String knxAddress = arg0.getDestination().toString();
-				log.d("KNX  GW Event: " + knxAddress);
+				@Override
+				public void groupWrite(ProcessEvent arg0) {
+					final String knxAddress = arg0.getDestination().toString();
+					log.d("KNX  GW Event: " + gwAddr + ":" + knxAddress);
 
-				// update value
-				new Thread(new Runnable() {
+					// update value
+					new Thread(new Runnable() {
 
-					@Override
-					public void run() {
+						@Override
+						public void run() {
 
-						final DatapointAddress datapointAddress = getMasterAddress(knxAddress);
+							final DatapointAddress datapointAddress = getMasterAddress(knxAddress);
 
-						if (datapointAddress == null) {
-							return;
+							if (datapointAddress == null) {
+								return;
+							}
+
+							log.d("KNX Event: " + gwAddr + ":" + datapointAddress);
+
+							if (!datapointsMetadata.keySet().contains(
+									datapointAddress))
+								return;
+
+							if ((datapointsMetadata.get(datapointAddress)
+									.getAccessType() == AccessType.WRITE_ONLY))
+								return;
+
+							if (uptadingDatapoint.contains(datapointAddress)) {
+								uptadingDatapoint.remove(datapointAddress);
+								return;
+							}
+
+							uptadingDatapoint.add(datapointAddress);
+							requestDatapointRead(datapointAddress,
+									new ReadCallback() {
+
+										@Override
+										public void onReadCompleted(
+												DatapointAddress address,
+												DatapointValue[] readings,
+												int requestId) {
+											datapointsStatus.put(
+													datapointAddress,
+													readings[0]);
+											log.d("KNX Update: " + gwAddr + ":" + address
+													+ "="
+													+ readings[0].getValue());
+
+											// notifyDatapointUpdate(datapointAddress,
+											// readings);
+										}
+
+										@Override
+										public void onReadAborted(
+												DatapointAddress address,
+												ErrorType reason, int requestId) {
+										}
+									});
 						}
-
-						log.d("KNX Event: " + datapointAddress);
-
-						if (!datapointsMetadata.keySet().contains(
-								datapointAddress))
-							return;
-
-						if ((datapointsMetadata.get(datapointAddress)
-								.getAccessType() == AccessType.WRITE_ONLY))
-							return;
-
-						if (uptadingDatapoint.contains(datapointAddress)) {
-							uptadingDatapoint.remove(datapointAddress);
-							return;
-						}
-
-						uptadingDatapoint.add(datapointAddress);
-						requestDatapointRead(datapointAddress,
-								new ReadCallback() {
-
-									@Override
-									public void onReadCompleted(
-											DatapointAddress address,
-											DatapointValue[] readings,
-											int requestId) {
-										datapointsStatus.put(datapointAddress,
-												readings[0]);
-										log.d("KNX Update: " + address + "="
-												+ readings[0].getValue());
-
-										// notifyDatapointUpdate(datapointAddress,
-										// readings);
-									}
-
-									@Override
-									public void onReadAborted(
-											DatapointAddress address,
-											ErrorType reason, int requestId) {
-									}
-								});
-					}
-				}).start();
-			}
-
-			private DatapointAddress getMasterAddress(String knxAddress) {
-				for (Entry<DatapointAddress, DatapointMetadata> e : datapointsMetadata
-						.entrySet()) {
-					DatapointMetadata m = e.getValue();
-					String readAddr = m.getReadDatapointAddress();
-					if (readAddr == null)
-						continue;
-
-					if (m.getReadDatapointAddress().equals(knxAddress))
-						return e.getKey();
+					}).start();
 				}
-				return null;
+
+				private DatapointAddress getMasterAddress(String knxAddress) {
+					for (Entry<DatapointAddress, DatapointMetadata> e : datapointsMetadata
+							.entrySet()) {
+						DatapointMetadata m = e.getValue();
+						String readAddr = m.getReadDatapointAddress();
+						if (readAddr == null)
+							continue;
+
+						if (m.getReadDatapointAddress().equals(knxAddress))
+							return e.getKey();
+					}
+					return null;
+				}
+
+				@Override
+				public void detached(DetachEvent arg0) {
+				}
+			});
+		}
+
+	}
+
+	private void connectToKNXGateways(
+			Map<DatapointAddress, DatapointMetadata> datapointsMetadata) {
+
+		Iterator<DatapointAddress> it = datapointsMetadata.keySet().iterator();
+		while (it.hasNext()) {
+			DatapointAddress datapointAddress = (DatapointAddress) it.next();
+			DatapointMetadata m = datapointsMetadata.get(datapointAddress);
+			String gAddr = m.getGatewayAddress();
+
+			if (!gateways.containsKey(gAddr)) {
+				KNXGatewayIPDriver gw = new KNXGatewayIPDriver(gAddr);
+				try {
+					gw.start();
+				} catch (UnknownHostException e) {
+					gw.reconnectGateway();
+				}
+				gateways.put(gAddr, gw);
 			}
 
-			@Override
-			public void detached(DetachEvent arg0) {
-			}
-		});
+		}
+
 	}
 
 	private void updateDatapointStatus() {
@@ -240,6 +264,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			ReadCallback readCallback) {
 		DatapointMetadata m = getDatapointMetadata(address);
 		String readAddr = m.getReadDatapointAddress();
+		KNXGatewayIPDriver gw = gateways.get(m.getGatewayAddress());
 
 		if (m.getAccessType() == AccessType.WRITE_ONLY) {
 			readCallback.onReadAborted(address,
@@ -253,7 +278,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 		case BYTE_2:
 			try {
-				float val = driver.read2Bytes(readAddr);
+				float val = gw.read2Bytes(readAddr);
 				String value = val + "";
 				DatapointValue reading = new DatapointValue(value);
 				readCallback.onReadCompleted(address,
@@ -267,7 +292,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			break;
 		case PERCENTAGE:
 			try {
-				float val = driver.readPercentage(readAddr);
+				float val = gw.readPercentage(readAddr);
 				String value = val + "";
 				DatapointValue reading = new DatapointValue(value);
 				readCallback.onReadCompleted(address,
@@ -281,7 +306,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			break;
 		case SWITCH:
 			try {
-				boolean value = driver.readSwitch(readAddr);
+				boolean value = gw.readSwitch(readAddr);
 				DatapointValue reading = new DatapointValue(value + "");
 				readCallback.onReadCompleted(address,
 						new DatapointValue[] { reading }, 0);
@@ -313,7 +338,9 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			DatapointValue[] values, WriteCallback writeCallback) {
 		DatapointMetadata m = getDatapointMetadata(address);
 		String writeAddr = m.getWriteDatapointAddress();
-		System.err.println("escrita! "+address + writeAddr + " "+values[0].getValue());
+		KNXGatewayIPDriver gw = gateways.get(m.getGatewayAddress());
+		System.err.println("escrita! " + address + writeAddr + " "
+				+ values[0].getValue());
 
 		if (m.getAccessType() == AccessType.READ_ONLY) {
 			writeCallback.onWriteAborted(address,
@@ -331,7 +358,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 		case PERCENTAGE:
 			try {
 				float f = Float.parseFloat(values[0].getValue());
-				driver.writePercentage(writeAddr, Math.round(f));
+				gw.writePercentage(writeAddr, Math.round(f));
 				writeCallback.onWriteCompleted(address,
 						WritingConfirmationLevel.DEVICE_ACTION_TAKEN, 0);
 				notifyDatapointUpdate(address, values);
@@ -345,7 +372,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 		case SWITCH:
 			try {
 				System.err.println("DOOR" + values[0].getValue());
-				driver.writeSwitch(writeAddr,
+				gw.writeSwitch(writeAddr,
 						Boolean.parseBoolean(values[0].getValue()));
 				writeCallback.onWriteCompleted(address,
 						WritingConfirmationLevel.DEVICE_ACTION_TAKEN, 0);

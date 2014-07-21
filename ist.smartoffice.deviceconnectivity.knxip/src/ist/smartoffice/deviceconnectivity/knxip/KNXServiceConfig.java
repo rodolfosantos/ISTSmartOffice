@@ -79,152 +79,154 @@ public class KNXServiceConfig {
 
 		MetadataBuilder m = new DatapointMetadata.MetadataBuilder();
 
-//		// LAB 1.58
-//		// ================================================================
+		// LAB 1.58
+		// ================================================================
+		m.setGatewayAddress("172.20.70.147");
+		
 		m.setDescription("EnergyLab Light Blackboard");
 		m.setAccessType(AccessType.READ_WRITE);
 		m.setDatatype(Datatype.PERCENTAGE);
 		m.setReadDatapointAddress("0/7/1");
 		m.setWriteDatapointAddress("0/1/0");
-		m.setGatewayAddress("172.20.70.147");
 		knxDatapoints.put(new DatapointAddress("knxlight1"), m.build());
-//
-//		m.setDescription("EnergyLab Light Middle1");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.PERCENTAGE);
-//		m.setReadDatapointAddress("0/7/21");
-//		m.setWriteDatapointAddress("0/1/2");
-//		knxDatapoints.put(new DatapointAddress("knxlight2"), m.build());
-//
-//		m.setDescription("EnergyLab Light Middle2");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.PERCENTAGE);
-//		m.setReadDatapointAddress("0/7/41");
-//		m.setWriteDatapointAddress("0/1/4");
-//		knxDatapoints.put(new DatapointAddress("knxlight3"), m.build());
-//
-//		m.setDescription("EnergyLab Light TV");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.PERCENTAGE);
-//		m.setReadDatapointAddress("0/7/61");
-//		m.setWriteDatapointAddress("0/1/6");
-//		knxDatapoints.put(new DatapointAddress("knxlight4"), m.build());
-//
-//		m.setDescription("EnergyLab All Lights");
-//		m.setAccessType(AccessType.WRITE_ONLY);
-//		m.setDatatype(Datatype.PERCENTAGE);
-//		m.setReadDatapointAddress(null);
-//		m.setWriteDatapointAddress("0/1/8");
-//		knxDatapoints.put(new DatapointAddress("knxlightall"), m.build());
-//
-//		// ================================================================
-//		m.setDescription("EnergyLab Blind1");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.PERCENTAGE);
-//		m.setReadDatapointAddress("0/2/0");
-//		m.setWriteDatapointAddress("0/2/3");
-//		knxDatapoints.put(new DatapointAddress("knxblind1"), m.build());
-//
-//		m.setDescription("EnergyLab Blind2");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.PERCENTAGE);
-//		m.setReadDatapointAddress("0/2/13");
-//		m.setWriteDatapointAddress("0/2/6");
-//		knxDatapoints.put(new DatapointAddress("knxblind2"), m.build());
-//
-//		m.setDescription("EnergyLab Blind3");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.PERCENTAGE);
-//		m.setReadDatapointAddress("0/2/14");
-//		m.setWriteDatapointAddress("0/2/9");
-//		knxDatapoints.put(new DatapointAddress("knxblind3"), m.build());
-//
-//		m.setDescription("EnergyLab All Blinds");
-//		m.setAccessType(AccessType.WRITE_ONLY);
-//		m.setDatatype(Datatype.PERCENTAGE);
-//		m.setReadDatapointAddress(null);
-//		m.setWriteDatapointAddress("0/2/12");
-//		knxDatapoints.put(new DatapointAddress("knxblindall"), m.build());
-//
-//		// ================================================================
-//		m.setDescription("EnergyLab Door");
-//		m.setAccessType(AccessType.WRITE_ONLY);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress(null);
-//		m.setWriteDatapointAddress("0/3/0");
-//		knxDatapoints.put(new DatapointAddress("knxdoor"), m.build());
-//
-//		// ================================================================
-//
-//		m.setDescription("EnergyLab CO2");
-//		m.setAccessType(AccessType.READ_ONLY);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/4/0");
-//		m.setWriteDatapointAddress(null);
-//		knxDatapoints.put(new DatapointAddress("knxsensorco"), m.build());
-//
-//		m.setDescription("EnergyLab Humidity");
-//		m.setAccessType(AccessType.READ_ONLY);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress(null);
-//		m.setWriteDatapointAddress("0/4/1");
-//		knxDatapoints.put(new DatapointAddress("knxsensorhum"), m.build());
-//
-//		m.setDescription("EnergyLab Temperature");
-//		m.setAccessType(AccessType.READ_ONLY);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/4/3");
-//		m.setWriteDatapointAddress(null);
-//		knxDatapoints.put(new DatapointAddress("knxsensortemp"), m.build());
-//
-//		m.setDescription("EnergyLab Temperature Door");
-//		m.setAccessType(AccessType.READ_ONLY);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/4/5");
-//		m.setWriteDatapointAddress(null);
-//		knxDatapoints.put(new DatapointAddress("knxsensortempd"), m.build());
-//
-//		m.setDescription("EnergyLab Lux");
-//		m.setAccessType(AccessType.READ_ONLY);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/4/4");
-//		m.setWriteDatapointAddress(null);
-//		knxDatapoints.put(new DatapointAddress("knxsensorlux"), m.build());
-//
-//		// ================================================================
-//		m.setDescription("EnergyLab HVAC ONOFF");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("1/0/8");
-//		m.setWriteDatapointAddress("1/0/0");
-//		knxDatapoints.put(new DatapointAddress("knxhvac"), m.build());
-//
-//		m.setDescription("EnergyLab HVAC Mode");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("1/0/9");
-//		m.setWriteDatapointAddress("1/0/1");
-//		knxDatapoints.put(new DatapointAddress("knxhvacmode"), m.build());
+
+		m.setDescription("EnergyLab Light Middle1");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/7/21");
+		m.setWriteDatapointAddress("0/1/2");
+		knxDatapoints.put(new DatapointAddress("knxlight2"), m.build());
+
+		m.setDescription("EnergyLab Light Middle2");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/7/41");
+		m.setWriteDatapointAddress("0/1/4");
+		knxDatapoints.put(new DatapointAddress("knxlight3"), m.build());
+
+		m.setDescription("EnergyLab Light TV");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/7/61");
+		m.setWriteDatapointAddress("0/1/6");
+		knxDatapoints.put(new DatapointAddress("knxlight4"), m.build());
+
+		m.setDescription("EnergyLab All Lights");
+		m.setAccessType(AccessType.WRITE_ONLY);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress(null);
+		m.setWriteDatapointAddress("0/1/8");
+		knxDatapoints.put(new DatapointAddress("knxlightall"), m.build());
+
+		// ================================================================
+		m.setDescription("EnergyLab Blind1");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/2/0");
+		m.setWriteDatapointAddress("0/2/3");
+		knxDatapoints.put(new DatapointAddress("knxblind1"), m.build());
+
+		m.setDescription("EnergyLab Blind2");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/2/13");
+		m.setWriteDatapointAddress("0/2/6");
+		knxDatapoints.put(new DatapointAddress("knxblind2"), m.build());
+
+		m.setDescription("EnergyLab Blind3");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/2/14");
+		m.setWriteDatapointAddress("0/2/9");
+		knxDatapoints.put(new DatapointAddress("knxblind3"), m.build());
+
+		m.setDescription("EnergyLab All Blinds");
+		m.setAccessType(AccessType.WRITE_ONLY);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress(null);
+		m.setWriteDatapointAddress("0/2/12");
+		knxDatapoints.put(new DatapointAddress("knxblindall"), m.build());
+
+		// ================================================================
+		m.setDescription("EnergyLab Door");
+		m.setAccessType(AccessType.WRITE_ONLY);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress(null);
+		m.setWriteDatapointAddress("0/3/0");
+		knxDatapoints.put(new DatapointAddress("knxdoor"), m.build());
+
+		// ================================================================
+
+		m.setDescription("EnergyLab CO2");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/4/0");
+		m.setWriteDatapointAddress(null);
+		knxDatapoints.put(new DatapointAddress("knxsensorco"), m.build());
+
+		m.setDescription("EnergyLab Humidity");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress(null);
+		m.setWriteDatapointAddress("0/4/1");
+		knxDatapoints.put(new DatapointAddress("knxsensorhum"), m.build());
+
+		m.setDescription("EnergyLab Temperature");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/4/3");
+		m.setWriteDatapointAddress(null);
+		knxDatapoints.put(new DatapointAddress("knxsensortemp"), m.build());
+
+		m.setDescription("EnergyLab Temperature Door");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/4/5");
+		m.setWriteDatapointAddress(null);
+		knxDatapoints.put(new DatapointAddress("knxsensortempd"), m.build());
+
+		m.setDescription("EnergyLab Lux");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/4/4");
+		m.setWriteDatapointAddress(null);
+		knxDatapoints.put(new DatapointAddress("knxsensorlux"), m.build());
+
+		// ================================================================
+		m.setDescription("EnergyLab HVAC ONOFF");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("1/0/8");
+		m.setWriteDatapointAddress("1/0/0");
+		knxDatapoints.put(new DatapointAddress("knxhvac"), m.build());
+
+		m.setDescription("EnergyLab HVAC Mode");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("1/0/9");
+		m.setWriteDatapointAddress("1/0/1");
+		knxDatapoints.put(new DatapointAddress("knxhvacmode"), m.build());
 
 		
 		/* ================================================================ *
 		 * Nucleus 14 - (Consultar: 'Endereços de Grupo - MIT - IST.pdf')   *
 		 * ================================================================ */
+		
+		m.setGatewayAddress("172.20.70.241");
 
 		// ILUMINACAO GABINETES - BUS NUCLEO 14 
-//		m.setDescription("2-N14 - All Lights");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/0/1");
-//		m.setWriteDatapointAddress("0/0/1");
-//		knxDatapoints.put(new DatapointAddress("knx2n14alllights"), m.build());
+		m.setDescription("2-N14 - All Lights");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/0/1");
+		m.setWriteDatapointAddress("0/0/1");
+		//knxDatapoints.put(new DatapointAddress("knx2n14alllights"), m.build());
 
 		m.setDescription("2-N14.02 - Lights");
 		m.setAccessType(AccessType.READ_WRITE);
 		m.setDatatype(Datatype.SWITCH);
 		m.setReadDatapointAddress("0/0/2");
 		m.setWriteDatapointAddress("0/0/2");
-		m.setGatewayAddress("172.20.70.241");
 		knxDatapoints.put(new DatapointAddress("knx2n1402lights"), m.build());
 
 		m.setDescription("2-N14.04 - Lights");
@@ -232,109 +234,108 @@ public class KNXServiceConfig {
 		m.setDatatype(Datatype.SWITCH);
 		m.setReadDatapointAddress("0/0/3");
 		m.setWriteDatapointAddress("0/0/3");
-		m.setGatewayAddress("172.20.70.241");
 		knxDatapoints.put(new DatapointAddress("knx2n1404lights"), m.build());
 
-//		m.setDescription("2-N14.06 - Lights");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/0/4");
-//		m.setWriteDatapointAddress("0/0/4");
-//		knxDatapoints.put(new DatapointAddress("knx2n1406lights"), m.build());
-//
-//		m.setDescription("2-N14.08 - Lights");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/0/5");
-//		m.setWriteDatapointAddress("0/0/5");
-//		knxDatapoints.put(new DatapointAddress("knx2n1408lights"), m.build());
-//
-//		m.setDescription("2-N14.10 - Lights");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/0/6");
-//		m.setWriteDatapointAddress("0/0/6");
-//		knxDatapoints.put(new DatapointAddress("knx2n1410lights"), m.build());
-//
-//		m.setDescription("2-N14.12 - Lights");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/0/7");
-//		m.setWriteDatapointAddress("0/0/7");
-//		knxDatapoints.put(new DatapointAddress("knx2n1412lights"), m.build());
-//
-//		m.setDescription("2-N14.14 - Lights");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/0/8");
-//		m.setWriteDatapointAddress("0/0/8");
-//		knxDatapoints.put(new DatapointAddress("knx2n1414lights"), m.build());
-//
-//		m.setDescription("2-N14.16 - Lights");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/0/9");
-//		m.setWriteDatapointAddress("0/0/9");
-//		knxDatapoints.put(new DatapointAddress("knx2n1416lights"), m.build());
-//
-//		m.setDescription("2-N14.18 - Lights");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/0/10");
-//		m.setWriteDatapointAddress("0/0/10");
-//		knxDatapoints.put(new DatapointAddress("knx2n1418lights"), m.build());
-//
-//		m.setDescription("2-N14.20 - Lights");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/0/11");
-//		m.setWriteDatapointAddress("0/0/11");
-//		knxDatapoints.put(new DatapointAddress("knx2n1420lights"), m.build());
+		m.setDescription("2-N14.06 - Lights");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/0/4");
+		m.setWriteDatapointAddress("0/0/4");
+		knxDatapoints.put(new DatapointAddress("knx2n1406lights"), m.build());
 
-//		m.setDescription("2-N14.22 - Lights");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/0/12");
-//		m.setWriteDatapointAddress("0/0/12");
-//		knxDatapoints.put(new DatapointAddress("knx2n1422lights"), m.build());
+		m.setDescription("2-N14.08 - Lights");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/0/5");
+		m.setWriteDatapointAddress("0/0/5");
+		knxDatapoints.put(new DatapointAddress("knx2n1408lights"), m.build());
 
-//		m.setDescription("2-N14.24 - Lights");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/0/13");
-//		m.setWriteDatapointAddress("0/0/13");
-//		knxDatapoints.put(new DatapointAddress("knx2n1424lights"), m.build());
-//
-//		m.setDescription("2-N14.26 - Lights");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/0/14");
-//		m.setWriteDatapointAddress("0/0/14");
-//		knxDatapoints.put(new DatapointAddress("knx2n1426lights"), m.build());
-//
-//		m.setDescription("2-N14.28 - Lights");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/0/15");
-//		m.setWriteDatapointAddress("0/0/15");
-//		knxDatapoints.put(new DatapointAddress("knx2n1428lights"), m.build());
+		m.setDescription("2-N14.10 - Lights");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/0/6");
+		m.setWriteDatapointAddress("0/0/6");
+		knxDatapoints.put(new DatapointAddress("knx2n1410lights"), m.build());
 
-//		m.setDescription("2-N14.1.1E/2E - Lights Circuit");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/0/16");
-//		m.setWriteDatapointAddress("0/0/16");
-//		knxDatapoints.put(new DatapointAddress("knx2n1411e2elights"), m.build());
+		m.setDescription("2-N14.12 - Lights");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/0/7");
+		m.setWriteDatapointAddress("0/0/7");
+		knxDatapoints.put(new DatapointAddress("knx2n1412lights"), m.build());
+
+		m.setDescription("2-N14.14 - Lights");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/0/8");
+		m.setWriteDatapointAddress("0/0/8");
+		knxDatapoints.put(new DatapointAddress("knx2n1414lights"), m.build());
+
+		m.setDescription("2-N14.16 - Lights");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/0/9");
+		m.setWriteDatapointAddress("0/0/9");
+		knxDatapoints.put(new DatapointAddress("knx2n1416lights"), m.build());
+
+		m.setDescription("2-N14.18 - Lights");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/0/10");
+		m.setWriteDatapointAddress("0/0/10");
+		knxDatapoints.put(new DatapointAddress("knx2n1418lights"), m.build());
+
+		m.setDescription("2-N14.20 - Lights");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/0/11");
+		m.setWriteDatapointAddress("0/0/11");
+		knxDatapoints.put(new DatapointAddress("knx2n1420lights"), m.build());
+
+		m.setDescription("2-N14.22 - Lights");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/0/12");
+		m.setWriteDatapointAddress("0/0/12");
+		//knxDatapoints.put(new DatapointAddress("knx2n1422lights"), m.build());
+
+		m.setDescription("2-N14.24 - Lights");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/0/13");
+		m.setWriteDatapointAddress("0/0/13");
+		knxDatapoints.put(new DatapointAddress("knx2n1424lights"), m.build());
+
+		m.setDescription("2-N14.26 - Lights");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/0/14");
+		m.setWriteDatapointAddress("0/0/14");
+		knxDatapoints.put(new DatapointAddress("knx2n1426lights"), m.build());
+
+		m.setDescription("2-N14.28 - Lights");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/0/15");
+		m.setWriteDatapointAddress("0/0/15");
+		knxDatapoints.put(new DatapointAddress("knx2n1428lights"), m.build());
+
+		m.setDescription("2-N14.1.1E/2E - Lights Circuit");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/0/16");
+		m.setWriteDatapointAddress("0/0/16");
+		//knxDatapoints.put(new DatapointAddress("knx2n1411e2elights"), m.build());
 
 
 
 //		// HVAC - FUNCOES DE CONTROLO - BUS NUCLEO 14 
 //		m.setDescription("2-N14 - HVAC All Fan Step");
-//		m.setAccessType(AccessType.READ_WRITE);
+//		m.setAccessType(AccessType.WRITE_ONLY);
 //		m.setDatatype(Datatype.SWITCH);
 //		m.setReadDatapointAddress("0/1/0");
 //		m.setWriteDatapointAddress("0/1/0");
-//		knxDatapoints.put(new DatapointAddress("knx2n14hvacallfanstep"), m.build());
+//		//knxDatapoints.put(new DatapointAddress("knx2n14hvacallfanstep"), m.build());
 //
 //		m.setDescription("2-N14.02 - Fan Step");
 //		m.setAccessType(AccessType.READ_WRITE);
@@ -618,9 +619,9 @@ public class KNXServiceConfig {
 //		m.setReadDatapointAddress("0/1/40");
 //		m.setWriteDatapointAddress("0/1/40");
 //		knxDatapoints.put(new DatapointAddress("knx2n1402hvacmode"), m.build());
-//
-//
-//
+
+
+
 //		// HVAC - FUNCOES DE CONTROLO - BUS NUCLEO 14 
 //		m.setDescription("2-N14.04 - HVAC Mode");
 //		m.setAccessType(AccessType.READ_WRITE);
@@ -705,66 +706,66 @@ public class KNXServiceConfig {
 //		m.setReadDatapointAddress("0/1/52");
 //		m.setWriteDatapointAddress("0/1/52");
 //		knxDatapoints.put(new DatapointAddress("knx2n1428hvacmode"), m.build());
-//
-//
-//
-//		// ENERGIA e SENSORES GERAIS 
-//		m.setDescription("2-N14 - EnergyMeter - Circ. A - Hall Lights");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/2/0");
-//		m.setWriteDatapointAddress("0/2/0");
-//		knxDatapoints.put(new DatapointAddress("knx2n14energymetercircahalllights"), m.build());
-//
-//		m.setDescription("2-N14 - EnergyMeter - Circ. B - Hall Lights");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/2/1");
-//		m.setWriteDatapointAddress("0/2/1");
-//		knxDatapoints.put(new DatapointAddress("knx2n14energymetercircbhalllights"), m.build());
-//
-//		m.setDescription("2-N14 - EnergyMeter - Circ. C - HVAC Supply");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/2/2");
-//		m.setWriteDatapointAddress("0/2/2");
-//		knxDatapoints.put(new DatapointAddress("knx2n14energymetercircchvacsupply"), m.build());
-//
-//		m.setDescription("2-N14 - EnergyMeter - Circ. D - HVAC Supply");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/2/3");
-//		m.setWriteDatapointAddress("0/2/3");
-//		knxDatapoints.put(new DatapointAddress("knx2n14energymetercircdhvacsupply"), m.build());
-//
-//		m.setDescription("2-N14 - EnergyTimeCounter - Circ. A - Hall Lights");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/2/4");
-//		m.setWriteDatapointAddress("0/2/4");
-//		knxDatapoints.put(new DatapointAddress("knx2n14energytimecountercircahalllights"), m.build());
-//
-//		m.setDescription("2-N14 - EnergyTimeCounter - Circ. B - Hall Lights");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/2/5");
-//		m.setWriteDatapointAddress("0/2/5");
-//		knxDatapoints.put(new DatapointAddress("knx2n14energytimecountercircbhalllights"), m.build());
-//
-//		m.setDescription("2-N14 - EnergyTimeCounter - Circ. C - HVAC Supply");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/2/6");
-//		m.setWriteDatapointAddress("0/2/6");
-//		knxDatapoints.put(new DatapointAddress("knx2n14energytimecountercircchvacsupply"), m.build());
-//
-//		m.setDescription("2-N14 - EnergyTimeCounter - Circ. D - HVAC Supply");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/2/7");
-//		m.setWriteDatapointAddress("0/2/7");
-//		knxDatapoints.put(new DatapointAddress("knx2n14energytimecountercircdhvacsupply"), m.build());
-//
+
+
+
+		// ENERGIA e SENSORES GERAIS 
+		m.setDescription("2-N14 - EnergyMeter - Circ. A - Hall Lights");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/2/0");
+		m.setWriteDatapointAddress("0/2/0");
+		knxDatapoints.put(new DatapointAddress("knx2n14energymetercircahalllights"), m.build());
+
+		m.setDescription("2-N14 - EnergyMeter - Circ. B - Hall Lights");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/2/1");
+		m.setWriteDatapointAddress("0/2/1");
+		knxDatapoints.put(new DatapointAddress("knx2n14energymetercircbhalllights"), m.build());
+
+		m.setDescription("2-N14 - EnergyMeter - Circ. C - HVAC Supply");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/2/2");
+		m.setWriteDatapointAddress("0/2/2");
+		knxDatapoints.put(new DatapointAddress("knx2n14energymetercircchvacsupply"), m.build());
+
+		m.setDescription("2-N14 - EnergyMeter - Circ. D - HVAC Supply");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/2/3");
+		m.setWriteDatapointAddress("0/2/3");
+		knxDatapoints.put(new DatapointAddress("knx2n14energymetercircdhvacsupply"), m.build());
+
+		m.setDescription("2-N14 - EnergyTimeCounter - Circ. A - Hall Lights");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/2/4");
+		m.setWriteDatapointAddress("0/2/4");
+		knxDatapoints.put(new DatapointAddress("knx2n14energytimecountercircahalllights"), m.build());
+
+		m.setDescription("2-N14 - EnergyTimeCounter - Circ. B - Hall Lights");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/2/5");
+		m.setWriteDatapointAddress("0/2/5");
+		knxDatapoints.put(new DatapointAddress("knx2n14energytimecountercircbhalllights"), m.build());
+
+		m.setDescription("2-N14 - EnergyTimeCounter - Circ. C - HVAC Supply");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/2/6");
+		m.setWriteDatapointAddress("0/2/6");
+		knxDatapoints.put(new DatapointAddress("knx2n14energytimecountercircchvacsupply"), m.build());
+
+		m.setDescription("2-N14 - EnergyTimeCounter - Circ. D - HVAC Supply");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/2/7");
+		m.setWriteDatapointAddress("0/2/7");
+		knxDatapoints.put(new DatapointAddress("knx2n14energytimecountercircdhvacsupply"), m.build());
+
 //		m.setDescription("2-N14 - EnergyTimeReset - Circ. A - Hall Lights");
 //		m.setAccessType(AccessType.READ_WRITE);
 //		m.setDatatype(Datatype.SWITCH);
@@ -813,48 +814,48 @@ public class KNXServiceConfig {
 //		m.setReadDatapointAddress("0/2/14");
 //		m.setWriteDatapointAddress("0/2/14");
 //		knxDatapoints.put(new DatapointAddress("knx2n14statuscircchvacsupply"), m.build());
-//
-//
-//
-//		// ENERGIA e SENSORES GERAIS 
+
+
+
+		// ENERGIA e SENSORES GERAIS 
 //		m.setDescription("2-N14 - Status - Circ. D - HVAC Supply");
 //		m.setAccessType(AccessType.READ_WRITE);
 //		m.setDatatype(Datatype.SWITCH);
 //		m.setReadDatapointAddress("0/2/15");
 //		m.setWriteDatapointAddress("0/2/15");
 //		knxDatapoints.put(new DatapointAddress("knx2n14statuscircdhvacsupply"), m.build());
-//
-//		m.setDescription("2-N14 - Luminosity - Hall - North Sensor");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/2/16");
-//		m.setWriteDatapointAddress("0/2/16");
-//		knxDatapoints.put(new DatapointAddress("knx2n14luminosityhallnorthsensor"), m.build());
-//
-//		m.setDescription("2-N14 - Luminosity - Hall - Middle Sensor");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/2/17");
-//		m.setWriteDatapointAddress("0/2/17");
-//		knxDatapoints.put(new DatapointAddress("knx2n14luminosityhallmiddlesensor"), m.build());
-//
-//		m.setDescription("2-N14 - Luminosity - Hall - South Sensor");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/2/18");
-//		m.setWriteDatapointAddress("0/2/18");
-//		knxDatapoints.put(new DatapointAddress("knx2n14luminosityhallsouthsensor"), m.build());
-//
-//
-//
-//		// ESTADOS e TEMPERATURAS HVAC 
+
+		m.setDescription("2-N14 - Luminosity - Hall - North Sensor");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/2/16");
+		m.setWriteDatapointAddress("0/2/16");
+		knxDatapoints.put(new DatapointAddress("knx2n14luminosityhallnorthsensor"), m.build());
+
+		m.setDescription("2-N14 - Luminosity - Hall - Middle Sensor");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/2/17");
+		m.setWriteDatapointAddress("0/2/17");
+		knxDatapoints.put(new DatapointAddress("knx2n14luminosityhallmiddlesensor"), m.build());
+
+		m.setDescription("2-N14 - Luminosity - Hall - South Sensor");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/2/18");
+		m.setWriteDatapointAddress("0/2/18");
+		knxDatapoints.put(new DatapointAddress("knx2n14luminosityhallsouthsensor"), m.build());
+
+
+
+		// ESTADOS e TEMPERATURAS HVAC 
 //		m.setDescription("2-N14 - HVAC All States and Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
+//		m.setAccessType(AccessType.READ_ONLY);
 //		m.setDatatype(Datatype.SWITCH);
 //		m.setReadDatapointAddress("0/3/0");
 //		m.setWriteDatapointAddress("0/3/0");
 //		knxDatapoints.put(new DatapointAddress("knx2n14hvacallstatestemp"), m.build());
-//
+
 //		m.setDescription("2-N14.02 - HVAC Heating Status");
 //		m.setAccessType(AccessType.READ_WRITE);
 //		m.setDatatype(Datatype.SWITCH);
@@ -1332,80 +1333,82 @@ public class KNXServiceConfig {
 //		m.setReadDatapointAddress("0/3/67");
 //		m.setWriteDatapointAddress("0/3/67");
 //		knxDatapoints.put(new DatapointAddress("knx2n14allhvacsetpointtemp"), m.build());
-//
-//
-//
-//		// ESTACAO METEOROLOGICA - BUS Q.E. PISO 1 
-//		m.setDescription("2-N14 - Meteo - Luminosity - East Sensor");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/6/5");
-//		m.setWriteDatapointAddress("0/6/5");
-//		knxDatapoints.put(new DatapointAddress("knx2n14meteoluminosityeastsensor"), m.build());
-//
-//		m.setDescription("2-N14 - Meteo - Luminosity - South Sensor");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/6/6");
-//		m.setWriteDatapointAddress("0/6/6");
-//		knxDatapoints.put(new DatapointAddress("knx2n14meteoluminositysouthsensor"), m.build());
-//
-//		m.setDescription("2-N14 - Meteo - Luminosity - West Sensor");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/6/7");
-//		m.setWriteDatapointAddress("0/6/7");
-//		knxDatapoints.put(new DatapointAddress("knx2n14meteoluminositywestsensor"), m.build());
-//
-//		m.setDescription("2-N14 - Meteo - Crespuscular Sensor");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/6/8");
-//		m.setWriteDatapointAddress("0/6/8");
-//		knxDatapoints.put(new DatapointAddress("knx2n14meteocrespuscularsensor"), m.build());
-//
-//		m.setDescription("2-N14 - Meteo -Warn Interval Wind Speed");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/6/9");
-//		m.setWriteDatapointAddress("0/6/9");
-//		knxDatapoints.put(new DatapointAddress("knx2n14meteowarnintervalwindspeed"), m.build());
-//
-//		m.setDescription("2-N14 - Meteo - Wind Speed Sensor");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/6/10");
-//		m.setWriteDatapointAddress("0/6/10");
-//		knxDatapoints.put(new DatapointAddress("knx2n14meteowindspeedsensor"), m.build());
-//
-//		m.setDescription("2-N14 - Meteo - Outside Temp. Sensor");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/6/11");
-//		m.setWriteDatapointAddress("0/6/11");
-//		knxDatapoints.put(new DatapointAddress("knx2n14meteooutsidetempsensor"), m.build());
-//
+
+
+
+		// ESTACAO METEOROLOGICA - BUS Q.E. PISO 1 
+		m.setGatewayAddress("172.20.70.147");
+		
+		m.setDescription("2-N14 - Meteo - Luminosity - East Sensor");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/6/5");
+		m.setWriteDatapointAddress("0/6/5");
+		knxDatapoints.put(new DatapointAddress("knx2n14meteoluminosityeastsensor"), m.build());
+
+		m.setDescription("2-N14 - Meteo - Luminosity - South Sensor");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/6/6");
+		m.setWriteDatapointAddress("0/6/6");
+		knxDatapoints.put(new DatapointAddress("knx2n14meteoluminositysouthsensor"), m.build());
+
+		m.setDescription("2-N14 - Meteo - Luminosity - West Sensor");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/6/7");
+		m.setWriteDatapointAddress("0/6/7");
+		knxDatapoints.put(new DatapointAddress("knx2n14meteoluminositywestsensor"), m.build());
+
+		m.setDescription("2-N14 - Meteo - Crespuscular Sensor");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/6/8");
+		m.setWriteDatapointAddress("0/6/8");
+		knxDatapoints.put(new DatapointAddress("knx2n14meteocrespuscularsensor"), m.build());
+
+		m.setDescription("2-N14 - Meteo -Warn Interval Wind Speed");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/6/9");
+		m.setWriteDatapointAddress("0/6/9");
+		knxDatapoints.put(new DatapointAddress("knx2n14meteowarnintervalwindspeed"), m.build());
+
+		m.setDescription("2-N14 - Meteo - Wind Speed Sensor");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/6/10");
+		m.setWriteDatapointAddress("0/6/10");
+		knxDatapoints.put(new DatapointAddress("knx2n14meteowindspeedsensor"), m.build());
+
+		m.setDescription("2-N14 - Meteo - Outside Temp. Sensor");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/6/11");
+		m.setWriteDatapointAddress("0/6/11");
+		knxDatapoints.put(new DatapointAddress("knx2n14meteooutsidetempsensor"), m.build());
+
 //		m.setDescription("2-N14 - Meteo - Central Operational State");
-//		m.setAccessType(AccessType.READ_WRITE);
+//		m.setAccessType(AccessType.READ_ONLY);
 //		m.setDatatype(Datatype.SWITCH);
 //		m.setReadDatapointAddress("0/6/12");
 //		m.setWriteDatapointAddress("0/6/12");
 //		knxDatapoints.put(new DatapointAddress("knx2n14meteocentraloperationalstate"), m.build());
-//
-//		m.setDescription("2-N14 - Meteo - Rain Sensor");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/6/13");
-//		m.setWriteDatapointAddress("0/6/13");
-//		knxDatapoints.put(new DatapointAddress("knx2n14meteorainsensor"), m.build());
-//
+
+		m.setDescription("2-N14 - Meteo - Rain Sensor");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/6/13");
+		m.setWriteDatapointAddress("0/6/13");
+		knxDatapoints.put(new DatapointAddress("knx2n14meteorainsensor"), m.build());
+
 //		m.setDescription("2-N14 - Meteo - Rain Sensor Operational State");
 //		m.setAccessType(AccessType.READ_WRITE);
 //		m.setDatatype(Datatype.SWITCH);
 //		m.setReadDatapointAddress("0/6/14");
 //		m.setWriteDatapointAddress("0/6/14");
 //		knxDatapoints.put(new DatapointAddress("knx2n14meteorainsensoroperationalstate"), m.build());
-//
+
 //		m.setDescription("2-N14 - Meteo - Rain Sensor Resistence Op. State");
 //		m.setAccessType(AccessType.READ_WRITE);
 //		m.setDatatype(Datatype.SWITCH);
@@ -1415,56 +1418,56 @@ public class KNXServiceConfig {
 
 
 
-//		// ESTACAO METEOROLOGICA - BUS Q.E. PISO 1 
-//		m.setDescription("2-N14 - Meteo - Outside Temp. Sensor Precision");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/6/16");
-//		m.setWriteDatapointAddress("0/6/16");
-//		knxDatapoints.put(new DatapointAddress("knx2n14meteooutsidetempsensorprecision"), m.build());
-//
+		// ESTACAO METEOROLOGICA - BUS Q.E. PISO 1 
+		m.setDescription("2-N14 - Meteo - Outside Temp. Sensor Precision");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/6/16");
+		m.setWriteDatapointAddress("0/6/16");
+		knxDatapoints.put(new DatapointAddress("knx2n14meteooutsidetempsensorprecision"), m.build());
+
 //		m.setDescription("2-N14 - Meteo - Lim. Max. Temp Alarm Precision");
 //		m.setAccessType(AccessType.READ_WRITE);
 //		m.setDatatype(Datatype.SWITCH);
 //		m.setReadDatapointAddress("0/6/17");
 //		m.setWriteDatapointAddress("0/6/17");
 //		knxDatapoints.put(new DatapointAddress("knx2n14meteolimmaxtempalarmprecision"), m.build());
-//
+
 //		m.setDescription("2-N14 - Meteo - Lim. Min. Temp Alarm Precision");
 //		m.setAccessType(AccessType.READ_WRITE);
 //		m.setDatatype(Datatype.SWITCH);
 //		m.setReadDatapointAddress("0/6/18");
 //		m.setWriteDatapointAddress("0/6/18");
 //		knxDatapoints.put(new DatapointAddress("knx2n14meteolimmintempalarmprecision"), m.build());
-//
-//		m.setDescription("2-N14 - Meteo - Max. Temp Reached Precision");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/6/19");
-//		m.setWriteDatapointAddress("0/6/19");
-//		knxDatapoints.put(new DatapointAddress("knx2n14meteomaxtempreachedprecision"), m.build());
-//
-//		m.setDescription("2-N14 - Meteo - Min. Temp Reached Precision");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/6/20");
-//		m.setWriteDatapointAddress("0/6/20");
-//		knxDatapoints.put(new DatapointAddress("knx2n14meteomintempreachedprecision"), m.build());
-//
+
+		m.setDescription("2-N14 - Meteo - Max. Temp Reached Precision");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/6/19");
+		m.setWriteDatapointAddress("0/6/19");
+		knxDatapoints.put(new DatapointAddress("knx2n14meteomaxtempreachedprecision"), m.build());
+
+		m.setDescription("2-N14 - Meteo - Min. Temp Reached Precision");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/6/20");
+		m.setWriteDatapointAddress("0/6/20");
+		knxDatapoints.put(new DatapointAddress("knx2n14meteomintempreachedprecision"), m.build());
+
 //		m.setDescription("2-N14 - Meteo - Recorded Values Mem. Reset");
 //		m.setAccessType(AccessType.READ_WRITE);
 //		m.setDatatype(Datatype.SWITCH);
 //		m.setReadDatapointAddress("0/6/21");
 //		m.setWriteDatapointAddress("0/6/21");
 //		knxDatapoints.put(new DatapointAddress("knx2n14meteorecordedvaluesmemreset"), m.build());
-//
-//		m.setDescription("2-N14 - Meteo - Relative Hum. Sensor Precision");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/6/22");
-//		m.setWriteDatapointAddress("0/6/22");
-//		knxDatapoints.put(new DatapointAddress("knx2n14meteorelativehumsensorprecision"), m.build());
-//
+
+		m.setDescription("2-N14 - Meteo - Relative Hum. Sensor Precision");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/6/22");
+		m.setWriteDatapointAddress("0/6/22");
+		knxDatapoints.put(new DatapointAddress("knx2n14meteorelativehumsensorprecision"), m.build());
+
 //		m.setDescription("2-N14 - Meteo - Lim. Max Relat. Hum. Alarm Precision");
 //		m.setAccessType(AccessType.READ_WRITE);
 //		m.setDatatype(Datatype.SWITCH);
@@ -1478,51 +1481,51 @@ public class KNXServiceConfig {
 //		m.setReadDatapointAddress("0/6/24");
 //		m.setWriteDatapointAddress("0/6/24");
 //		knxDatapoints.put(new DatapointAddress("knx2n14meteolimminrelathumalarmprecision"), m.build());
-//
-//		m.setDescription("2-N14 - Meteo - Orvalho Point");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/6/25");
-//		m.setWriteDatapointAddress("0/6/25");
-//		knxDatapoints.put(new DatapointAddress("knx2n14meteoorvalhopoint"), m.build());
-//
+
+		m.setDescription("2-N14 - Meteo - Drew Point");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/6/25");
+		m.setWriteDatapointAddress("0/6/25");
+		knxDatapoints.put(new DatapointAddress("knx2n14meteodrewpoint"), m.build());
+
 //		m.setDescription("2-N14 - Meteo - Orvalho Point Sensor");
 //		m.setAccessType(AccessType.READ_WRITE);
 //		m.setDatatype(Datatype.SWITCH);
 //		m.setReadDatapointAddress("0/6/26");
 //		m.setWriteDatapointAddress("0/6/26");
 //		knxDatapoints.put(new DatapointAddress("knx2n14meteoorvalhopointsensor"), m.build());
-//
-//		m.setDescription("2-N14 - Meteo - Absolute Humidity");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/6/27");
-//		m.setWriteDatapointAddress("0/6/27");
-//		knxDatapoints.put(new DatapointAddress("knx2n14meteoabsolutehumidity"), m.build());
-//
-//		m.setDescription("2-N14 - Meteo - Exterior Entalpia");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/6/28");
-//		m.setWriteDatapointAddress("0/6/28");
-//		knxDatapoints.put(new DatapointAddress("knx2n14meteoexteriorentalpia"), m.build());
-//
-//		m.setDescription("2-N14 - Global Solar Radiation Sensor");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/6/29");
-//		m.setWriteDatapointAddress("0/6/29");
-//		knxDatapoints.put(new DatapointAddress("knx2n14globalsolarradiationsensor"), m.build());
-//
+
+		m.setDescription("2-N14 - Meteo - Absolute Humidity");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/6/27");
+		m.setWriteDatapointAddress("0/6/27");
+		knxDatapoints.put(new DatapointAddress("knx2n14meteoabsolutehumidity"), m.build());
+
+		m.setDescription("2-N14 - Meteo - Exterior Entalpia");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/6/28");
+		m.setWriteDatapointAddress("0/6/28");
+		knxDatapoints.put(new DatapointAddress("knx2n14meteoexteriorentalpia"), m.build());
+
+		m.setDescription("2-N14 - Global Solar Radiation Sensor");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/6/29");
+		m.setWriteDatapointAddress("0/6/29");
+		knxDatapoints.put(new DatapointAddress("knx2n14globalsolarradiationsensor"), m.build());
+
 //		m.setDescription("2-N14 - Global Radiation Max. Lim. Value");
-//		m.setAccessType(AccessType.READ_WRITE);
+//		m.setAccessType(AccessType.READ_ONLY);
 //		m.setDatatype(Datatype.SWITCH);
 //		m.setReadDatapointAddress("0/6/30");
 //		m.setWriteDatapointAddress("0/6/30");
 //		knxDatapoints.put(new DatapointAddress("knx2n14globalradiationmaxlimvalue"), m.build());
 //
 //		m.setDescription("2-N14 - Global Radiation Min. Lim. Value");
-//		m.setAccessType(AccessType.READ_WRITE);
+//		m.setAccessType(AccessType.READ_ONLY);
 //		m.setDatatype(Datatype.SWITCH);
 //		m.setReadDatapointAddress("0/6/31");
 //		m.setWriteDatapointAddress("0/6/31");

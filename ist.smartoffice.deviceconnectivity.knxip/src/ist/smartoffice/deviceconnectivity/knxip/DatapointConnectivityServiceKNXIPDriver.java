@@ -62,7 +62,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 		this.uptadingDatapoint = new ArrayList<DatapointAddress>();
 		this.listeners = new HashSet<DatapointListener>();
 
-		this.driver = new KNXGatewayIPDriver("172.20.70.147");
+		this.driver = new KNXGatewayIPDriver("172.20.70.241");
 		try {
 			this.driver.start();
 		} catch (UnknownHostException e) {

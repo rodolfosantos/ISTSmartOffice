@@ -23,6 +23,11 @@ public final class Activator implements BundleActivator {
 					"/deviceconnectivityapi");
 			put("ist.smartoffice.dataaccess.remotesensingactuation.RemoteSensingActuationService",
 					"/remoteactuation");
+			put("ist.smartoffice.autonmactuation.scenarios.ScenariosService",
+					"/scenarios");
+			
+			put("ist.smartoffice.dataaccess.dataquerying.DataQueryingService",
+					"/dataquerying");
 		}
 	};
 

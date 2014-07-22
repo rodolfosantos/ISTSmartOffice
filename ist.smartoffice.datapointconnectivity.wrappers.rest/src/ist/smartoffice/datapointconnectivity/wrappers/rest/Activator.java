@@ -32,6 +32,11 @@ public final class Activator implements BundleActivator {
 			put("ist.smartoffice.autonmactuation.scenarios.ScenariosService",
 					"/scenarios");
 			
+			put("ist.smartoffice.dataaccess.dataquerying.DataQueryingService",
+					"/dataquerying");
+			
+			
+			
 			//put("service1", "/deviceconnectivityapii");
 		}
 	};

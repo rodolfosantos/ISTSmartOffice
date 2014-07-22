@@ -137,6 +137,22 @@ function setupHvacSwitch(elementClass, datapoint){
     });
 }
 
+function setupLightSwitch(elementClass, datapoint){
+    $(elementClass).bind('switchChange.bootstrapSwitch', function(event, state) {
+        setDataPointValue(datapoint, state, null);  
+    });
+    
+    var value = 0;
+    var isTrueSet = (value === 'true');
+    $(elementClass).bootstrapSwitch('state', isTrueSet, true);
+    
+    faye.subscribe('/remoteactuation/datapoints/'+datapoint, function(data) {
+        value = $.parseJSON(data).reading[0].value;
+        var isTrueSet = (value === 'true');
+        $(elementClass).bootstrapSwitch('state', isTrueSet, true);
+    });
+}
+
 
 
 function setDataPointValue(datapoint, value, callback){
@@ -170,6 +186,8 @@ function assingEventHandlers(){
     setupBlind('.blind3slider', 'knx158blind3');
     
     setupHvacSwitch('.onoffhvac', 'knx158hvac');
+    
+    setupLightSwitch('.knx2n14alllights', 'knx2n14alllights');
     
     $(".modehvac").bootstrapSwitch('onText', 'Hot', true);
     $(".modehvac").bootstrapSwitch('offText', 'Cold', true);

@@ -74,35 +74,36 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 				public void groupWrite(ProcessEvent arg0) {
 					final String knxAddress = arg0.getDestination().toString();
 					log.d("KNX  GW Event: " + gwAddr + ":" + knxAddress);
+					
+					final DatapointAddress datapointAddress = getMasterAddress(knxAddress);
 
-					// update value
+					if (datapointAddress == null) {
+						return;
+					}
+
+					log.d("KNX Event: " + gwAddr + ":" + datapointAddress);
+
+					if (!datapointsMetadata.keySet().contains(
+							datapointAddress))
+						return;
+
+					if ((datapointsMetadata.get(datapointAddress)
+							.getAccessType() == AccessType.WRITE_ONLY))
+						return;
+
+					if (uptadingDatapoint.contains(datapointAddress)) {
+						//uptadingDatapoint.remove(datapointAddress);
+						return;
+					}
+					
+					uptadingDatapoint.add(datapointAddress);
+										// update value
 					new Thread(new Runnable() {
 
 						@Override
 						public void run() {
-
-							final DatapointAddress datapointAddress = getMasterAddress(knxAddress);
-
-							if (datapointAddress == null) {
-								return;
-							}
-
-							log.d("KNX Event: " + gwAddr + ":" + datapointAddress);
-
-							if (!datapointsMetadata.keySet().contains(
-									datapointAddress))
-								return;
-
-							if ((datapointsMetadata.get(datapointAddress)
-									.getAccessType() == AccessType.WRITE_ONLY))
-								return;
-
-							if (uptadingDatapoint.contains(datapointAddress)) {
-								uptadingDatapoint.remove(datapointAddress);
-								return;
-							}
-
-							uptadingDatapoint.add(datapointAddress);
+							
+							
 							requestDatapointRead(datapointAddress,
 									new ReadCallback() {
 
@@ -120,6 +121,24 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 											// notifyDatapointUpdate(datapointAddress,
 											// readings);
+											
+											new Thread(new Runnable() {
+												
+												@Override
+												public void run() {
+													// TODO Auto-generated method stub
+													try {
+														Thread.sleep(800);
+													} catch (InterruptedException e) {
+														// TODO Auto-generated catch block
+														e.printStackTrace();
+													}
+													uptadingDatapoint.remove(datapointAddress);
+												}
+											}).start();
+											
+											
+											
 										}
 
 										@Override

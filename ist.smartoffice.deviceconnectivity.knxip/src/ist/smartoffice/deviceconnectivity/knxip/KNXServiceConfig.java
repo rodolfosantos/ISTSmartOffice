@@ -216,11 +216,11 @@ public class KNXServiceConfig {
 
 		// ILUMINACAO GABINETES - BUS NUCLEO 14 
 		m.setDescription("2-N14 - All Lights");
-		m.setAccessType(AccessType.READ_WRITE);
+		m.setAccessType(AccessType.WRITE_ONLY);
 		m.setDatatype(Datatype.SWITCH);
 		m.setReadDatapointAddress("0/0/1");
 		m.setWriteDatapointAddress("0/0/1");
-		//knxDatapoints.put(new DatapointAddress("knx2n14alllights"), m.build());
+		knxDatapoints.put(new DatapointAddress("knx2n14alllights"), m.build());
 
 		m.setDescription("2-N14.02 - Lights");
 		m.setAccessType(AccessType.READ_WRITE);
@@ -297,7 +297,7 @@ public class KNXServiceConfig {
 		m.setDatatype(Datatype.SWITCH);
 		m.setReadDatapointAddress("0/0/12");
 		m.setWriteDatapointAddress("0/0/12");
-		//knxDatapoints.put(new DatapointAddress("knx2n1422lights"), m.build());
+		knxDatapoints.put(new DatapointAddress("knx2n1422lights"), m.build());
 
 		m.setDescription("2-N14.24 - Lights");
 		m.setAccessType(AccessType.READ_WRITE);
@@ -321,11 +321,11 @@ public class KNXServiceConfig {
 		knxDatapoints.put(new DatapointAddress("knx2n1428lights"), m.build());
 
 		m.setDescription("2-N14.1.1E/2E - Lights Circuit");
-		m.setAccessType(AccessType.READ_WRITE);
+		m.setAccessType(AccessType.WRITE_ONLY);
 		m.setDatatype(Datatype.SWITCH);
 		m.setReadDatapointAddress("0/0/16");
 		m.setWriteDatapointAddress("0/0/16");
-		//knxDatapoints.put(new DatapointAddress("knx2n1411e2elights"), m.build());
+		knxDatapoints.put(new DatapointAddress("knx2n1411e2elights"), m.build());
 
 
 
@@ -1337,6 +1337,7 @@ public class KNXServiceConfig {
 
 
 		// ESTACAO METEOROLOGICA - BUS Q.E. PISO 1 
+		
 		m.setGatewayAddress("172.20.70.147");
 		
 		m.setDescription("2-N14 - Meteo - Luminosity - East Sensor");

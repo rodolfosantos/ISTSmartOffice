@@ -81,42 +81,42 @@ public class KNXServiceConfig {
 
 		// LAB 1.58
 		// ================================================================
-		m.setGatewayAddress("172.20.70.147");
+		m.setGatewayAddress("172.20.70.209");
 		
 		m.setDescription("EnergyLab Light Blackboard");
 		m.setAccessType(AccessType.READ_WRITE);
 		m.setDatatype(Datatype.PERCENTAGE);
 		m.setReadDatapointAddress("0/7/1");
 		m.setWriteDatapointAddress("0/1/0");
-		knxDatapoints.put(new DatapointAddress("knxlight1"), m.build());
+		knxDatapoints.put(new DatapointAddress("knx158light1"), m.build());
 
 		m.setDescription("EnergyLab Light Middle1");
 		m.setAccessType(AccessType.READ_WRITE);
 		m.setDatatype(Datatype.PERCENTAGE);
 		m.setReadDatapointAddress("0/7/21");
 		m.setWriteDatapointAddress("0/1/2");
-		knxDatapoints.put(new DatapointAddress("knxlight2"), m.build());
+		knxDatapoints.put(new DatapointAddress("knx158light2"), m.build());
 
 		m.setDescription("EnergyLab Light Middle2");
 		m.setAccessType(AccessType.READ_WRITE);
 		m.setDatatype(Datatype.PERCENTAGE);
 		m.setReadDatapointAddress("0/7/41");
 		m.setWriteDatapointAddress("0/1/4");
-		knxDatapoints.put(new DatapointAddress("knxlight3"), m.build());
+		knxDatapoints.put(new DatapointAddress("knx158light3"), m.build());
 
 		m.setDescription("EnergyLab Light TV");
 		m.setAccessType(AccessType.READ_WRITE);
 		m.setDatatype(Datatype.PERCENTAGE);
 		m.setReadDatapointAddress("0/7/61");
 		m.setWriteDatapointAddress("0/1/6");
-		knxDatapoints.put(new DatapointAddress("knxlight4"), m.build());
+		knxDatapoints.put(new DatapointAddress("knx158light4"), m.build());
 
 		m.setDescription("EnergyLab All Lights");
 		m.setAccessType(AccessType.WRITE_ONLY);
 		m.setDatatype(Datatype.PERCENTAGE);
 		m.setReadDatapointAddress(null);
 		m.setWriteDatapointAddress("0/1/8");
-		knxDatapoints.put(new DatapointAddress("knxlightall"), m.build());
+		knxDatapoints.put(new DatapointAddress("knx158lightall"), m.build());
 
 		// ================================================================
 		m.setDescription("EnergyLab Blind1");
@@ -124,28 +124,28 @@ public class KNXServiceConfig {
 		m.setDatatype(Datatype.PERCENTAGE);
 		m.setReadDatapointAddress("0/2/0");
 		m.setWriteDatapointAddress("0/2/3");
-		knxDatapoints.put(new DatapointAddress("knxblind1"), m.build());
+		knxDatapoints.put(new DatapointAddress("knx158blind1"), m.build());
 
 		m.setDescription("EnergyLab Blind2");
 		m.setAccessType(AccessType.READ_WRITE);
 		m.setDatatype(Datatype.PERCENTAGE);
 		m.setReadDatapointAddress("0/2/13");
 		m.setWriteDatapointAddress("0/2/6");
-		knxDatapoints.put(new DatapointAddress("knxblind2"), m.build());
+		knxDatapoints.put(new DatapointAddress("knx158blind2"), m.build());
 
 		m.setDescription("EnergyLab Blind3");
 		m.setAccessType(AccessType.READ_WRITE);
 		m.setDatatype(Datatype.PERCENTAGE);
 		m.setReadDatapointAddress("0/2/14");
 		m.setWriteDatapointAddress("0/2/9");
-		knxDatapoints.put(new DatapointAddress("knxblind3"), m.build());
+		knxDatapoints.put(new DatapointAddress("knx158blind3"), m.build());
 
 		m.setDescription("EnergyLab All Blinds");
 		m.setAccessType(AccessType.WRITE_ONLY);
 		m.setDatatype(Datatype.PERCENTAGE);
 		m.setReadDatapointAddress(null);
 		m.setWriteDatapointAddress("0/2/12");
-		knxDatapoints.put(new DatapointAddress("knxblindall"), m.build());
+		knxDatapoints.put(new DatapointAddress("knx158blindall"), m.build());
 
 		// ================================================================
 		m.setDescription("EnergyLab Door");
@@ -153,7 +153,7 @@ public class KNXServiceConfig {
 		m.setDatatype(Datatype.SWITCH);
 		m.setReadDatapointAddress(null);
 		m.setWriteDatapointAddress("0/3/0");
-		knxDatapoints.put(new DatapointAddress("knxdoor"), m.build());
+		knxDatapoints.put(new DatapointAddress("knx158door"), m.build());
 
 		// ================================================================
 
@@ -162,35 +162,35 @@ public class KNXServiceConfig {
 		m.setDatatype(Datatype.BYTE_2);
 		m.setReadDatapointAddress("0/4/0");
 		m.setWriteDatapointAddress(null);
-		knxDatapoints.put(new DatapointAddress("knxsensorco"), m.build());
+		knxDatapoints.put(new DatapointAddress("knx158sensorco"), m.build());
 
 		m.setDescription("EnergyLab Humidity");
 		m.setAccessType(AccessType.READ_ONLY);
 		m.setDatatype(Datatype.BYTE_2);
 		m.setReadDatapointAddress(null);
 		m.setWriteDatapointAddress("0/4/1");
-		knxDatapoints.put(new DatapointAddress("knxsensorhum"), m.build());
+		knxDatapoints.put(new DatapointAddress("knx158sensorhum"), m.build());
 
 		m.setDescription("EnergyLab Temperature");
 		m.setAccessType(AccessType.READ_ONLY);
 		m.setDatatype(Datatype.BYTE_2);
 		m.setReadDatapointAddress("0/4/3");
 		m.setWriteDatapointAddress(null);
-		knxDatapoints.put(new DatapointAddress("knxsensortemp"), m.build());
+		knxDatapoints.put(new DatapointAddress("knx158sensortemp"), m.build());
 
 		m.setDescription("EnergyLab Temperature Door");
 		m.setAccessType(AccessType.READ_ONLY);
 		m.setDatatype(Datatype.BYTE_2);
 		m.setReadDatapointAddress("0/4/5");
 		m.setWriteDatapointAddress(null);
-		knxDatapoints.put(new DatapointAddress("knxsensortempd"), m.build());
+		knxDatapoints.put(new DatapointAddress("knx158sensortempd"), m.build());
 
 		m.setDescription("EnergyLab Lux");
 		m.setAccessType(AccessType.READ_ONLY);
 		m.setDatatype(Datatype.BYTE_2);
 		m.setReadDatapointAddress("0/4/4");
 		m.setWriteDatapointAddress(null);
-		knxDatapoints.put(new DatapointAddress("knxsensorlux"), m.build());
+		knxDatapoints.put(new DatapointAddress("knx158sensorlux"), m.build());
 
 		// ================================================================
 		m.setDescription("EnergyLab HVAC ONOFF");
@@ -198,14 +198,14 @@ public class KNXServiceConfig {
 		m.setDatatype(Datatype.SWITCH);
 		m.setReadDatapointAddress("1/0/8");
 		m.setWriteDatapointAddress("1/0/0");
-		knxDatapoints.put(new DatapointAddress("knxhvac"), m.build());
+		knxDatapoints.put(new DatapointAddress("knx158hvac"), m.build());
 
 		m.setDescription("EnergyLab HVAC Mode");
 		m.setAccessType(AccessType.READ_WRITE);
 		m.setDatatype(Datatype.SWITCH);
 		m.setReadDatapointAddress("1/0/9");
 		m.setWriteDatapointAddress("1/0/1");
-		knxDatapoints.put(new DatapointAddress("knxhvacmode"), m.build());
+		knxDatapoints.put(new DatapointAddress("knx158hvacmode"), m.build());
 
 		
 		/* ================================================================ *
@@ -1338,7 +1338,7 @@ public class KNXServiceConfig {
 
 		// ESTACAO METEOROLOGICA - BUS Q.E. PISO 1 
 		
-		m.setGatewayAddress("172.20.70.147");
+		m.setGatewayAddress("172.20.70.209");
 		
 		m.setDescription("2-N14 - Meteo - Luminosity - East Sensor");
 		m.setAccessType(AccessType.READ_ONLY);

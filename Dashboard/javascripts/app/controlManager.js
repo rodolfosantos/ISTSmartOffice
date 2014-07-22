@@ -48,7 +48,7 @@ function setupAllLamps(elementClassSwitch, elementClassSlider, datapoint){
         setDataPointValue(datapoint, event.value, null);
     });
 
-    var lvalue = parseInt(api.requestDatapointReadSync('knxlight1').reading[0].value);
+    var lvalue = parseInt(api.requestDatapointReadSync('knx158light1').reading[0].value);
     $(elementClassSlider).slider('setValue', lvalue);
     if(lvalue >0 )
         $(elementClassSwitch).bootstrapSwitch('state', true, true);
@@ -159,21 +159,21 @@ function assingEventHandlers(){
 
     setupDoor('.opendoor', 'knx158door');
     setupAllLamps('.onoffall', '.onoffallslider', 'knx158lightall');
-    setupLamp('.onoff1', '.onoff1slider', 'knxlight1');
-    setupLamp('.onoff2', '.onoff2slider', 'knxlight2');
-    setupLamp('.onoff3', '.onoff3slider', 'knxlight3');
-    setupLamp('.onoff4', '.onoff4slider', 'knxlight4');
+    setupLamp('.onoff1', '.onoff1slider', 'knx158light1');
+    setupLamp('.onoff2', '.onoff2slider', 'knx158light2');
+    setupLamp('.onoff3', '.onoff3slider', 'knx158light3');
+    setupLamp('.onoff4', '.onoff4slider', 'knx158light4');
     
-    setupAllBlinds('.blindallslider', 'knxblindall');
-    setupBlind('.blind1slider', 'knxblind1');
-    setupBlind('.blind2slider', 'knxblind2');
-    setupBlind('.blind3slider', 'knxblind3');
+    setupAllBlinds('.blindallslider', 'knx158blindall');
+    setupBlind('.blind1slider', 'knx158blind1');
+    setupBlind('.blind2slider', 'knx158blind2');
+    setupBlind('.blind3slider', 'knx158blind3');
     
-    setupHvacSwitch('.onoffhvac', 'knxhvac');
+    setupHvacSwitch('.onoffhvac', 'knx158hvac');
     
     $(".modehvac").bootstrapSwitch('onText', 'Hot', true);
     $(".modehvac").bootstrapSwitch('offText', 'Cold', true);
-    setupHvacSwitch('.modehvac', 'knxhvacmode');
+    setupHvacSwitch('.modehvac', 'knx158hvacmode');
 
 }
 

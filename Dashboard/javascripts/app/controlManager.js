@@ -157,8 +157,8 @@ function renderSwitchButtons(){
 
 function assingEventHandlers(){
 
-    setupDoor('.opendoor', 'knxdoor');
-    setupAllLamps('.onoffall', '.onoffallslider', 'knxlightall');
+    setupDoor('.opendoor', 'knx158door');
+    setupAllLamps('.onoffall', '.onoffallslider', 'knx158lightall');
     setupLamp('.onoff1', '.onoff1slider', 'knxlight1');
     setupLamp('.onoff2', '.onoff2slider', 'knxlight2');
     setupLamp('.onoff3', '.onoff3slider', 'knxlight3');

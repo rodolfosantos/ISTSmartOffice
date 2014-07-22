@@ -36,17 +36,10 @@ public class DataQueryingService implements IDatapointConnectivityService {
 			String dpAddr = query.split(" ")[3];
 			String qType = query.split(" ")[1];
 
-			switch (qType) {
-			case "max":
+			if (qType.equals("max")) {
 				queries.put(addr, new QueryMaxValue(dpAddr));
-				break;
-
-			case "avg":
+			} else if (qType.equals("avg")) {
 				queries.put(addr, new QueryAvgValue(dpAddr));
-				break;
-
-			default:
-				break;
 			}
 
 		}

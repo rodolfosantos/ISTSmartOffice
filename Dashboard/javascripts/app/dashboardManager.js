@@ -25,9 +25,9 @@ function loadDashboardPage(){
         plotRealTimeEnergyConsumption("powerconsumption", "meterlib", 3600000/4);
         plotAllConsumptions(["meterr117","meterr119","meterlib", "metera4", "meternewa4","meterd14","meterd16", "meterutaa4"]);
 
-        plotSensorData("indoor1", "knxsensortemp", "ºC");
-        plotSensorData("indoor2", "knxsensorco", "ppm");
-        plotSensorData("indoor3", "knxsensorlux", "Lux");        
+        plotSensorData("indoor1", "knx158sensortemp", "ºC");
+        plotSensorData("indoor2", "knx158sensorco", "ppm");
+        plotSensorData("indoor3", "knx158sensorlux", "Lux");        
         loaded1 = true;
     }
     else{

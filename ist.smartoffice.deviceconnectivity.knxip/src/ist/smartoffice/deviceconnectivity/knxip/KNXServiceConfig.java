@@ -329,383 +329,383 @@ public class KNXServiceConfig {
 
 
 
-//		// HVAC - FUNCOES DE CONTROLO - BUS NUCLEO 14 
-//		m.setDescription("2-N14 - HVAC All Fan Step");
-//		m.setAccessType(AccessType.WRITE_ONLY);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/0");
-//		m.setWriteDatapointAddress("0/1/0");
-//		//knxDatapoints.put(new DatapointAddress("knx2n14hvacallfanstep"), m.build());
-//
-//		m.setDescription("2-N14.02 - Fan Step");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/1");
-//		m.setWriteDatapointAddress("0/1/1");
-//		knxDatapoints.put(new DatapointAddress("knx2n1402fanstep"), m.build());
-//
-//		m.setDescription("2-N14.04 - Fan Step");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/2");
-//		m.setWriteDatapointAddress("0/1/2");
-//		knxDatapoints.put(new DatapointAddress("knx2n1404fanstep"), m.build());
-//
-//		m.setDescription("2-N14.06 - Fan Step");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/3");
-//		m.setWriteDatapointAddress("0/1/3");
-//		knxDatapoints.put(new DatapointAddress("knx2n1406fanstep"), m.build());
-//
-//		m.setDescription("2-N14.08 - Fan Step");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/4");
-//		m.setWriteDatapointAddress("0/1/4");
-//		knxDatapoints.put(new DatapointAddress("knx2n1408fanstep"), m.build());
-//
-//		m.setDescription("2-N14.10 - Fan Step");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/5");
-//		m.setWriteDatapointAddress("0/1/5");
-//		knxDatapoints.put(new DatapointAddress("knx2n1410fanstep"), m.build());
-//
-//		m.setDescription("2-N14.12 - Fan Step");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/6");
-//		m.setWriteDatapointAddress("0/1/6");
-//		knxDatapoints.put(new DatapointAddress("knx2n1412fanstep"), m.build());
-//
-//		m.setDescription("2-N14.14 - Fan Step");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/7");
-//		m.setWriteDatapointAddress("0/1/7");
-//		knxDatapoints.put(new DatapointAddress("knx2n1414fanstep"), m.build());
-//
-//		m.setDescription("2-N14.16 - Fan Step");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/8");
-//		m.setWriteDatapointAddress("0/1/8");
-//		knxDatapoints.put(new DatapointAddress("knx2n1416fanstep"), m.build());
-//
-//		m.setDescription("2-N14.18 - Fan Step");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/9");
-//		m.setWriteDatapointAddress("0/1/9");
-//		knxDatapoints.put(new DatapointAddress("knx2n1418fanstep"), m.build());
-//
-//		m.setDescription("2-N14.20 - Fan Step");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/10");
-//		m.setWriteDatapointAddress("0/1/10");
-//		knxDatapoints.put(new DatapointAddress("knx2n1420fanstep"), m.build());
-//
-//		m.setDescription("2-N14.24 - Fan Step");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/11");
-//		m.setWriteDatapointAddress("0/1/11");
-//		knxDatapoints.put(new DatapointAddress("knx2n1424fanstep"), m.build());
-//
-//		m.setDescription("2-N14.26 - Fan Step");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/12");
-//		m.setWriteDatapointAddress("0/1/12");
-//		knxDatapoints.put(new DatapointAddress("knx2n1426fanstep"), m.build());
-//
-//		m.setDescription("2-N14.28 - Fan Step");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/13");
-//		m.setWriteDatapointAddress("0/1/13");
-//		knxDatapoints.put(new DatapointAddress("knx2n1428fanstep"), m.build());
-//
-//		m.setDescription("2-N14.02 - Hot H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/14");
-//		m.setWriteDatapointAddress("0/1/14");
-//		knxDatapoints.put(new DatapointAddress("knx2n1402hoth2ovalve"), m.build());
-//
-//		m.setDescription("2-N14.04 - Hot H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/15");
-//		m.setWriteDatapointAddress("0/1/15");
-//		knxDatapoints.put(new DatapointAddress("knx2n1404hoth2ovalve"), m.build());
-//
-//		m.setDescription("2-N14.06 - Hot H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/16");
-//		m.setWriteDatapointAddress("0/1/16");
-//		knxDatapoints.put(new DatapointAddress("knx2n1406hoth2ovalve"), m.build());
-//
-//		m.setDescription("2-N14.08 - Hot H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/17");
-//		m.setWriteDatapointAddress("0/1/17");
-//		knxDatapoints.put(new DatapointAddress("knx2n1408hoth2ovalve"), m.build());
-//
-//		m.setDescription("2-N14.10 - Hot H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/18");
-//		m.setWriteDatapointAddress("0/1/18");
-//		knxDatapoints.put(new DatapointAddress("knx2n1410hoth2ovalve"), m.build());
-//
-//		m.setDescription("2-N14.12 - Hot H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/19");
-//		m.setWriteDatapointAddress("0/1/19");
-//		knxDatapoints.put(new DatapointAddress("knx2n1412hoth2ovalve"), m.build());
-//
-//		m.setDescription("2-N14.14 - Hot H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/20");
-//		m.setWriteDatapointAddress("0/1/20");
-//		knxDatapoints.put(new DatapointAddress("knx2n1414hoth2ovalve"), m.build());
-//
-//		m.setDescription("2-N14.16 - Hot H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/21");
-//		m.setWriteDatapointAddress("0/1/21");
-//		knxDatapoints.put(new DatapointAddress("knx2n1416hoth2ovalve"), m.build());
-//
-//		m.setDescription("2-N14.18 - Hot H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/22");
-//		m.setWriteDatapointAddress("0/1/22");
-//		knxDatapoints.put(new DatapointAddress("knx2n1418hoth2ovalve"), m.build());
-//
-//
-//
-//		// HVAC - FUNCOES DE CONTROLO - BUS NUCLEO 14 
-//		m.setDescription("2-N14.20 - Hot H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/23");
-//		m.setWriteDatapointAddress("0/1/23");
-//		knxDatapoints.put(new DatapointAddress("knx2n1420hoth2ovalve"), m.build());
-//
-//		m.setDescription("2-N14.24 - Hot H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/24");
-//		m.setWriteDatapointAddress("0/1/24");
-//		knxDatapoints.put(new DatapointAddress("knx2n1424hoth2ovalve"), m.build());
-//
-//		m.setDescription("2-N14.26 - Hot H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/25");
-//		m.setWriteDatapointAddress("0/1/25");
-//		knxDatapoints.put(new DatapointAddress("knx2n1426hoth2ovalve"), m.build());
-//
-//		m.setDescription("2-N14.28 - Hot H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/26");
-//		m.setWriteDatapointAddress("0/1/26");
-//		knxDatapoints.put(new DatapointAddress("knx2n1428hoth2ovalve"), m.build());
-//
-//		m.setDescription("2-N14.02 - Cold H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/27");
-//		m.setWriteDatapointAddress("0/1/27");
-//		knxDatapoints.put(new DatapointAddress("knx2n1402coldh2ovalve"), m.build());
-//
-//		m.setDescription("2-N14.04 - Cold H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/28");
-//		m.setWriteDatapointAddress("0/1/28");
-//		knxDatapoints.put(new DatapointAddress("knx2n1404coldh2ovalve"), m.build());
-//
-//		m.setDescription("2-N14.06 - Cold H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/29");
-//		m.setWriteDatapointAddress("0/1/29");
-//		knxDatapoints.put(new DatapointAddress("knx2n1406coldh2ovalve"), m.build());
-//
-//		m.setDescription("2-N14.08 - Cold H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/30");
-//		m.setWriteDatapointAddress("0/1/30");
-//		knxDatapoints.put(new DatapointAddress("knx2n1408coldh2ovalve"), m.build());
-//
-//		m.setDescription("2-N14.10 - Cold H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/31");
-//		m.setWriteDatapointAddress("0/1/31");
-//		knxDatapoints.put(new DatapointAddress("knx2n1410coldh2ovalve"), m.build());
-//
-//		m.setDescription("2-N14.12 - Cold H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/32");
-//		m.setWriteDatapointAddress("0/1/32");
-//		knxDatapoints.put(new DatapointAddress("knx2n1412coldh2ovalve"), m.build());
-//
-//		m.setDescription("2-N14.14 - Cold H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/33");
-//		m.setWriteDatapointAddress("0/1/33");
-//		knxDatapoints.put(new DatapointAddress("knx2n1414coldh2ovalve"), m.build());
-//
-//		m.setDescription("2-N14.16 - Cold H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/34");
-//		m.setWriteDatapointAddress("0/1/34");
-//		knxDatapoints.put(new DatapointAddress("knx2n1416coldh2ovalve"), m.build());
-//
-//		m.setDescription("2-N14.18 - Cold H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/35");
-//		m.setWriteDatapointAddress("0/1/35");
-//		knxDatapoints.put(new DatapointAddress("knx2n1418coldh2ovalve"), m.build());
-//
-//		m.setDescription("2-N14.20 - Cold H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/36");
-//		m.setWriteDatapointAddress("0/1/36");
-//		knxDatapoints.put(new DatapointAddress("knx2n1420coldh2ovalve"), m.build());
-//
-//		m.setDescription("2-N14.24 - Cold H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/37");
-//		m.setWriteDatapointAddress("0/1/37");
-//		knxDatapoints.put(new DatapointAddress("knx2n1424coldh2ovalve"), m.build());
-//
-//		m.setDescription("2-N14.26 - Cold H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/38");
-//		m.setWriteDatapointAddress("0/1/38");
-//		knxDatapoints.put(new DatapointAddress("knx2n1426coldh2ovalve"), m.build());
-//
-//		m.setDescription("2-N14.28 - Cold H2O Valve");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/39");
-//		m.setWriteDatapointAddress("0/1/39");
-//		knxDatapoints.put(new DatapointAddress("knx2n1428coldh2ovalve"), m.build());
-//
-//		m.setDescription("2-N14.02 - HVAC Mode");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/40");
-//		m.setWriteDatapointAddress("0/1/40");
-//		knxDatapoints.put(new DatapointAddress("knx2n1402hvacmode"), m.build());
+		// HVAC - FUNCOES DE CONTROLO - BUS NUCLEO 14 
+		m.setDescription("2-N14 - HVAC All Fan Step");
+		m.setAccessType(AccessType.WRITE_ONLY);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/1/0");
+		m.setWriteDatapointAddress("0/1/0");
+		//knxDatapoints.put(new DatapointAddress("knx2n14hvacallfanstep"), m.build());
+
+		m.setDescription("2-N14.02 - Fan Step");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/1");
+		m.setWriteDatapointAddress("0/1/1");
+		knxDatapoints.put(new DatapointAddress("knx2n1402fanstep"), m.build());
+
+		m.setDescription("2-N14.04 - Fan Step");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/2");
+		m.setWriteDatapointAddress("0/1/2");
+		knxDatapoints.put(new DatapointAddress("knx2n1404fanstep"), m.build());
+
+		m.setDescription("2-N14.06 - Fan Step");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/3");
+		m.setWriteDatapointAddress("0/1/3");
+		knxDatapoints.put(new DatapointAddress("knx2n1406fanstep"), m.build());
+
+		m.setDescription("2-N14.08 - Fan Step");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/4");
+		m.setWriteDatapointAddress("0/1/4");
+		knxDatapoints.put(new DatapointAddress("knx2n1408fanstep"), m.build());
+
+		m.setDescription("2-N14.10 - Fan Step");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/5");
+		m.setWriteDatapointAddress("0/1/5");
+		knxDatapoints.put(new DatapointAddress("knx2n1410fanstep"), m.build());
+
+		m.setDescription("2-N14.12 - Fan Step");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/6");
+		m.setWriteDatapointAddress("0/1/6");
+		knxDatapoints.put(new DatapointAddress("knx2n1412fanstep"), m.build());
+
+		m.setDescription("2-N14.14 - Fan Step");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/7");
+		m.setWriteDatapointAddress("0/1/7");
+		knxDatapoints.put(new DatapointAddress("knx2n1414fanstep"), m.build());
+
+		m.setDescription("2-N14.16 - Fan Step");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/8");
+		m.setWriteDatapointAddress("0/1/8");
+		knxDatapoints.put(new DatapointAddress("knx2n1416fanstep"), m.build());
+
+		m.setDescription("2-N14.18 - Fan Step");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/9");
+		m.setWriteDatapointAddress("0/1/9");
+		knxDatapoints.put(new DatapointAddress("knx2n1418fanstep"), m.build());
+
+		m.setDescription("2-N14.20 - Fan Step");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/10");
+		m.setWriteDatapointAddress("0/1/10");
+		knxDatapoints.put(new DatapointAddress("knx2n1420fanstep"), m.build());
+
+		m.setDescription("2-N14.24 - Fan Step");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/11");
+		m.setWriteDatapointAddress("0/1/11");
+		knxDatapoints.put(new DatapointAddress("knx2n1424fanstep"), m.build());
+
+		m.setDescription("2-N14.26 - Fan Step");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/12");
+		m.setWriteDatapointAddress("0/1/12");
+		knxDatapoints.put(new DatapointAddress("knx2n1426fanstep"), m.build());
+
+		m.setDescription("2-N14.28 - Fan Step");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/13");
+		m.setWriteDatapointAddress("0/1/13");
+		knxDatapoints.put(new DatapointAddress("knx2n1428fanstep"), m.build());
+
+		m.setDescription("2-N14.02 - Hot H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/14");
+		m.setWriteDatapointAddress("0/1/14");
+		knxDatapoints.put(new DatapointAddress("knx2n1402hoth2ovalve"), m.build());
+
+		m.setDescription("2-N14.04 - Hot H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/15");
+		m.setWriteDatapointAddress("0/1/15");
+		knxDatapoints.put(new DatapointAddress("knx2n1404hoth2ovalve"), m.build());
+
+		m.setDescription("2-N14.06 - Hot H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/16");
+		m.setWriteDatapointAddress("0/1/16");
+		knxDatapoints.put(new DatapointAddress("knx2n1406hoth2ovalve"), m.build());
+
+		m.setDescription("2-N14.08 - Hot H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/17");
+		m.setWriteDatapointAddress("0/1/17");
+		knxDatapoints.put(new DatapointAddress("knx2n1408hoth2ovalve"), m.build());
+
+		m.setDescription("2-N14.10 - Hot H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/18");
+		m.setWriteDatapointAddress("0/1/18");
+		knxDatapoints.put(new DatapointAddress("knx2n1410hoth2ovalve"), m.build());
+
+		m.setDescription("2-N14.12 - Hot H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/19");
+		m.setWriteDatapointAddress("0/1/19");
+		knxDatapoints.put(new DatapointAddress("knx2n1412hoth2ovalve"), m.build());
+
+		m.setDescription("2-N14.14 - Hot H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/20");
+		m.setWriteDatapointAddress("0/1/20");
+		knxDatapoints.put(new DatapointAddress("knx2n1414hoth2ovalve"), m.build());
+
+		m.setDescription("2-N14.16 - Hot H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/21");
+		m.setWriteDatapointAddress("0/1/21");
+		knxDatapoints.put(new DatapointAddress("knx2n1416hoth2ovalve"), m.build());
+
+		m.setDescription("2-N14.18 - Hot H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/22");
+		m.setWriteDatapointAddress("0/1/22");
+		knxDatapoints.put(new DatapointAddress("knx2n1418hoth2ovalve"), m.build());
 
 
 
-//		// HVAC - FUNCOES DE CONTROLO - BUS NUCLEO 14 
-//		m.setDescription("2-N14.04 - HVAC Mode");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/41");
-//		m.setWriteDatapointAddress("0/1/41");
-//		knxDatapoints.put(new DatapointAddress("knx2n1404hvacmode"), m.build());
-//
-//		m.setDescription("2-N14.06 - HVAC Mode");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/42");
-//		m.setWriteDatapointAddress("0/1/42");
-//		knxDatapoints.put(new DatapointAddress("knx2n1406hvacmode"), m.build());
-//
-//		m.setDescription("2-N14.08 - HVAC Mode");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/43");
-//		m.setWriteDatapointAddress("0/1/43");
-//		knxDatapoints.put(new DatapointAddress("knx2n1408hvacmode"), m.build());
-//
-//		m.setDescription("2-N14.10 - HVAC Mode");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/44");
-//		m.setWriteDatapointAddress("0/1/44");
-//		knxDatapoints.put(new DatapointAddress("knx2n1410hvacmode"), m.build());
-//
-//		m.setDescription("2-N14.12 - HVAC Mode");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/45");
-//		m.setWriteDatapointAddress("0/1/45");
-//		knxDatapoints.put(new DatapointAddress("knx2n1412hvacmode"), m.build());
-//
-//		m.setDescription("2-N14.14 - HVAC Mode");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/46");
-//		m.setWriteDatapointAddress("0/1/46");
-//		knxDatapoints.put(new DatapointAddress("knx2n1414hvacmode"), m.build());
-//
-//		m.setDescription("2-N14.16 - HVAC Mode");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/47");
-//		m.setWriteDatapointAddress("0/1/47");
-//		knxDatapoints.put(new DatapointAddress("knx2n1416hvacmode"), m.build());
-//
-//		m.setDescription("2-N14.18 - HVAC Mode");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/48");
-//		m.setWriteDatapointAddress("0/1/48");
-//		knxDatapoints.put(new DatapointAddress("knx2n1418hvacmode"), m.build());
-//
-//		m.setDescription("2-N14.20 - HVAC Mode");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/49");
-//		m.setWriteDatapointAddress("0/1/49");
-//		knxDatapoints.put(new DatapointAddress("knx2n1420hvacmode"), m.build());
-//
-//		m.setDescription("2-N14.24 - HVAC Mode");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/50");
-//		m.setWriteDatapointAddress("0/1/50");
-//		knxDatapoints.put(new DatapointAddress("knx2n1424hvacmode"), m.build());
-//
-//		m.setDescription("2-N14.26 - HVAC Mode");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/51");
-//		m.setWriteDatapointAddress("0/1/51");
-//		knxDatapoints.put(new DatapointAddress("knx2n1426hvacmode"), m.build());
-//
-//		m.setDescription("2-N14.28 - HVAC Mode");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/1/52");
-//		m.setWriteDatapointAddress("0/1/52");
-//		knxDatapoints.put(new DatapointAddress("knx2n1428hvacmode"), m.build());
+		// HVAC - FUNCOES DE CONTROLO - BUS NUCLEO 14 
+		m.setDescription("2-N14.20 - Hot H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/23");
+		m.setWriteDatapointAddress("0/1/23");
+		knxDatapoints.put(new DatapointAddress("knx2n1420hoth2ovalve"), m.build());
+
+		m.setDescription("2-N14.24 - Hot H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/24");
+		m.setWriteDatapointAddress("0/1/24");
+		knxDatapoints.put(new DatapointAddress("knx2n1424hoth2ovalve"), m.build());
+
+		m.setDescription("2-N14.26 - Hot H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/25");
+		m.setWriteDatapointAddress("0/1/25");
+		knxDatapoints.put(new DatapointAddress("knx2n1426hoth2ovalve"), m.build());
+
+		m.setDescription("2-N14.28 - Hot H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/26");
+		m.setWriteDatapointAddress("0/1/26");
+		knxDatapoints.put(new DatapointAddress("knx2n1428hoth2ovalve"), m.build());
+
+		m.setDescription("2-N14.02 - Cold H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/27");
+		m.setWriteDatapointAddress("0/1/27");
+		knxDatapoints.put(new DatapointAddress("knx2n1402coldh2ovalve"), m.build());
+
+		m.setDescription("2-N14.04 - Cold H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/28");
+		m.setWriteDatapointAddress("0/1/28");
+		knxDatapoints.put(new DatapointAddress("knx2n1404coldh2ovalve"), m.build());
+
+		m.setDescription("2-N14.06 - Cold H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/29");
+		m.setWriteDatapointAddress("0/1/29");
+		knxDatapoints.put(new DatapointAddress("knx2n1406coldh2ovalve"), m.build());
+
+		m.setDescription("2-N14.08 - Cold H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/30");
+		m.setWriteDatapointAddress("0/1/30");
+		knxDatapoints.put(new DatapointAddress("knx2n1408coldh2ovalve"), m.build());
+
+		m.setDescription("2-N14.10 - Cold H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/31");
+		m.setWriteDatapointAddress("0/1/31");
+		knxDatapoints.put(new DatapointAddress("knx2n1410coldh2ovalve"), m.build());
+
+		m.setDescription("2-N14.12 - Cold H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/32");
+		m.setWriteDatapointAddress("0/1/32");
+		knxDatapoints.put(new DatapointAddress("knx2n1412coldh2ovalve"), m.build());
+
+		m.setDescription("2-N14.14 - Cold H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/33");
+		m.setWriteDatapointAddress("0/1/33");
+		knxDatapoints.put(new DatapointAddress("knx2n1414coldh2ovalve"), m.build());
+
+		m.setDescription("2-N14.16 - Cold H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/34");
+		m.setWriteDatapointAddress("0/1/34");
+		knxDatapoints.put(new DatapointAddress("knx2n1416coldh2ovalve"), m.build());
+
+		m.setDescription("2-N14.18 - Cold H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/35");
+		m.setWriteDatapointAddress("0/1/35");
+		knxDatapoints.put(new DatapointAddress("knx2n1418coldh2ovalve"), m.build());
+
+		m.setDescription("2-N14.20 - Cold H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/36");
+		m.setWriteDatapointAddress("0/1/36");
+		knxDatapoints.put(new DatapointAddress("knx2n1420coldh2ovalve"), m.build());
+
+		m.setDescription("2-N14.24 - Cold H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/37");
+		m.setWriteDatapointAddress("0/1/37");
+		knxDatapoints.put(new DatapointAddress("knx2n1424coldh2ovalve"), m.build());
+
+		m.setDescription("2-N14.26 - Cold H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/38");
+		m.setWriteDatapointAddress("0/1/38");
+		knxDatapoints.put(new DatapointAddress("knx2n1426coldh2ovalve"), m.build());
+
+		m.setDescription("2-N14.28 - Cold H2O Valve");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.PERCENTAGE);
+		m.setReadDatapointAddress("0/1/39");
+		m.setWriteDatapointAddress("0/1/39");
+		knxDatapoints.put(new DatapointAddress("knx2n1428coldh2ovalve"), m.build());
+
+		
+		// HVAC - FUNCOES DE CONTROLO - BUS NUCLEO 14
+		m.setDescription("2-N14.02 - HVAC Mode");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/1/40");
+		m.setWriteDatapointAddress("0/1/40");
+		knxDatapoints.put(new DatapointAddress("knx2n1402hvacmode"), m.build());
+
+
+		m.setDescription("2-N14.04 - HVAC Mode");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/1/41");
+		m.setWriteDatapointAddress("0/1/41");
+		knxDatapoints.put(new DatapointAddress("knx2n1404hvacmode"), m.build());
+
+		m.setDescription("2-N14.06 - HVAC Mode");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/1/42");
+		m.setWriteDatapointAddress("0/1/42");
+		knxDatapoints.put(new DatapointAddress("knx2n1406hvacmode"), m.build());
+
+		m.setDescription("2-N14.08 - HVAC Mode");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/1/43");
+		m.setWriteDatapointAddress("0/1/43");
+		knxDatapoints.put(new DatapointAddress("knx2n1408hvacmode"), m.build());
+
+		m.setDescription("2-N14.10 - HVAC Mode");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/1/44");
+		m.setWriteDatapointAddress("0/1/44");
+		knxDatapoints.put(new DatapointAddress("knx2n1410hvacmode"), m.build());
+
+		m.setDescription("2-N14.12 - HVAC Mode");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/1/45");
+		m.setWriteDatapointAddress("0/1/45");
+		knxDatapoints.put(new DatapointAddress("knx2n1412hvacmode"), m.build());
+
+		m.setDescription("2-N14.14 - HVAC Mode");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/1/46");
+		m.setWriteDatapointAddress("0/1/46");
+		knxDatapoints.put(new DatapointAddress("knx2n1414hvacmode"), m.build());
+
+		m.setDescription("2-N14.16 - HVAC Mode");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/1/47");
+		m.setWriteDatapointAddress("0/1/47");
+		knxDatapoints.put(new DatapointAddress("knx2n1416hvacmode"), m.build());
+
+		m.setDescription("2-N14.18 - HVAC Mode");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/1/48");
+		m.setWriteDatapointAddress("0/1/48");
+		knxDatapoints.put(new DatapointAddress("knx2n1418hvacmode"), m.build());
+
+		m.setDescription("2-N14.20 - HVAC Mode");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/1/49");
+		m.setWriteDatapointAddress("0/1/49");
+		knxDatapoints.put(new DatapointAddress("knx2n1420hvacmode"), m.build());
+
+		m.setDescription("2-N14.24 - HVAC Mode");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/1/50");
+		m.setWriteDatapointAddress("0/1/50");
+		knxDatapoints.put(new DatapointAddress("knx2n1424hvacmode"), m.build());
+
+		m.setDescription("2-N14.26 - HVAC Mode");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/1/51");
+		m.setWriteDatapointAddress("0/1/51");
+		knxDatapoints.put(new DatapointAddress("knx2n1426hvacmode"), m.build());
+
+		m.setDescription("2-N14.28 - HVAC Mode");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/1/52");
+		m.setWriteDatapointAddress("0/1/52");
+		knxDatapoints.put(new DatapointAddress("knx2n1428hvacmode"), m.build());
 
 
 
@@ -1132,193 +1132,193 @@ public class KNXServiceConfig {
 //		m.setWriteDatapointAddress("0/3/39");
 //		knxDatapoints.put(new DatapointAddress("knx2n1428hvaccoolstatus"), m.build());
 //
-//		m.setDescription("2-N14.02 - HVAC Cooling Status");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/40");
-//		m.setWriteDatapointAddress("0/3/40");
-//		knxDatapoints.put(new DatapointAddress("knx2n1402hvaccoolstatus"), m.build());
-//
-//		m.setDescription("2-N14.04 - HVAC Cooling Status");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/41");
-//		m.setWriteDatapointAddress("0/3/41");
-//		knxDatapoints.put(new DatapointAddress("knx2n1404hvaccoolstatus"), m.build());
-//
-//		m.setDescription("2-N14.06 - HVAC Cooling Status");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/42");
-//		m.setWriteDatapointAddress("0/3/42");
-//		knxDatapoints.put(new DatapointAddress("knx2n1406hvaccoolstatus"), m.build());
-//
-//
-//
-//		// ESTADOS e TEMPERATURAS HVAC 
-//		m.setDescription("2-N14.08 - HVAC Current Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/43");
-//		m.setWriteDatapointAddress("0/3/43");
-//		knxDatapoints.put(new DatapointAddress("knx2n1408hvaccurrenttemp"), m.build());
-//
-//		m.setDescription("2-N14.10 - HVAC Current Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/44");
-//		m.setWriteDatapointAddress("0/3/44");
-//		knxDatapoints.put(new DatapointAddress("knx2n1410hvaccurrenttemp"), m.build());
-//
-//		m.setDescription("2-N14.12 - HVAC Current Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/45");
-//		m.setWriteDatapointAddress("0/3/45");
-//		knxDatapoints.put(new DatapointAddress("knx2n1412hvaccurrenttemp"), m.build());
-//
-//		m.setDescription("2-N14.14 - HVAC Current Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/46");
-//		m.setWriteDatapointAddress("0/3/46");
-//		knxDatapoints.put(new DatapointAddress("knx2n1414hvaccurrenttemp"), m.build());
-//
-//		m.setDescription("2-N14.16 - HVAC Current Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/47");
-//		m.setWriteDatapointAddress("0/3/47");
-//		knxDatapoints.put(new DatapointAddress("knx2n1416hvaccurrenttemp"), m.build());
-//
-//		m.setDescription("2-N14.18 - HVAC Current Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/48");
-//		m.setWriteDatapointAddress("0/3/48");
-//		knxDatapoints.put(new DatapointAddress("knx2n1418hvaccurrenttemp"), m.build());
-//
-//		m.setDescription("2-N14.20 - HVAC Current Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/49");
-//		m.setWriteDatapointAddress("0/3/49");
-//		knxDatapoints.put(new DatapointAddress("knx2n1420hvaccurrenttemp"), m.build());
-//
-//		m.setDescription("2-N14.24 - HVAC Current Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/50");
-//		m.setWriteDatapointAddress("0/3/50");
-//		knxDatapoints.put(new DatapointAddress("knx2n1424hvaccurrenttemp"), m.build());
-//
-//		m.setDescription("2-N14.26 - HVAC Current Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/51");
-//		m.setWriteDatapointAddress("0/3/51");
-//		knxDatapoints.put(new DatapointAddress("knx2n1426hvaccurrenttemp"), m.build());
-//
-//		m.setDescription("2-N14.28 - HVAC Current Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/52");
-//		m.setWriteDatapointAddress("0/3/52");
-//		knxDatapoints.put(new DatapointAddress("knx2n1428hvaccurrenttemp"), m.build());
-//
-//		m.setDescription("2-N14.02 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/53");
-//		m.setWriteDatapointAddress("0/3/53");
-//		knxDatapoints.put(new DatapointAddress("knx2n1402hvacsetpointtemp"), m.build());
-//
-//		m.setDescription("2-N14.04 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/54");
-//		m.setWriteDatapointAddress("0/3/54");
-//		knxDatapoints.put(new DatapointAddress("knx2n1404hvacsetpointtemp"), m.build());
-//
-//		m.setDescription("2-N14.06 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/55");
-//		m.setWriteDatapointAddress("0/3/55");
-//		knxDatapoints.put(new DatapointAddress("knx2n1406hvacsetpointtemp"), m.build());
-//
-//		m.setDescription("2-N14.08 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/56");
-//		m.setWriteDatapointAddress("0/3/56");
-//		knxDatapoints.put(new DatapointAddress("knx2n1408hvacsetpointtemp"), m.build());
-//
-//		m.setDescription("2-N14.10 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/57");
-//		m.setWriteDatapointAddress("0/3/57");
-//		knxDatapoints.put(new DatapointAddress("knx2n1410hvacsetpointtemp"), m.build());
-//
-//		m.setDescription("2-N14.12 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/58");
-//		m.setWriteDatapointAddress("0/3/58");
-//		knxDatapoints.put(new DatapointAddress("knx2n1412hvacsetpointtemp"), m.build());
-//
-//		m.setDescription("2-N14.14 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/59");
-//		m.setWriteDatapointAddress("0/3/59");
-//		knxDatapoints.put(new DatapointAddress("knx2n1414hvacsetpointtemp"), m.build());
-//
-//		m.setDescription("2-N14.16 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/60");
-//		m.setWriteDatapointAddress("0/3/60");
-//		knxDatapoints.put(new DatapointAddress("knx2n1416hvacsetpointtemp"), m.build());
-//
-//
-//
-//		// ESTADOS e TEMPERATURAS HVAC 
-//		m.setDescription("2-N14.18 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/61");
-//		m.setWriteDatapointAddress("0/3/61");
-//		knxDatapoints.put(new DatapointAddress("knx2n1418hvacsetpointtemp"), m.build());
-//
-//		m.setDescription("2-N14.20 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/62");
-//		m.setWriteDatapointAddress("0/3/62");
-//		knxDatapoints.put(new DatapointAddress("knx2n1420hvacsetpointtemp"), m.build());
-//
-//		m.setDescription("2-N14.24 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/63");
-//		m.setWriteDatapointAddress("0/3/63");
-//		knxDatapoints.put(new DatapointAddress("knx2n1424hvacsetpointtemp"), m.build());
-//
-//		m.setDescription("2-N14.26 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/64");
-//		m.setWriteDatapointAddress("0/3/64");
-//		knxDatapoints.put(new DatapointAddress("knx2n1426hvacsetpointtemp"), m.build());
-//
-//		m.setDescription("2-N14.28 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/65");
-//		m.setWriteDatapointAddress("0/3/65");
-//		knxDatapoints.put(new DatapointAddress("knx2n1428hvacsetpointtemp"), m.build());
+		m.setDescription("2-N14.02 - HVAC Cooling Status");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/40");
+		m.setWriteDatapointAddress("0/3/40");
+		knxDatapoints.put(new DatapointAddress("knx2n1402hvaccoolstatus"), m.build());
+
+		m.setDescription("2-N14.04 - HVAC Cooling Status");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/41");
+		m.setWriteDatapointAddress("0/3/41");
+		knxDatapoints.put(new DatapointAddress("knx2n1404hvaccoolstatus"), m.build());
+
+		m.setDescription("2-N14.06 - HVAC Cooling Status");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/42");
+		m.setWriteDatapointAddress("0/3/42");
+		knxDatapoints.put(new DatapointAddress("knx2n1406hvaccoolstatus"), m.build());
+
+
+
+		// ESTADOS e TEMPERATURAS HVAC 
+		m.setDescription("2-N14.08 - HVAC Current Temp.");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/43");
+		m.setWriteDatapointAddress("0/3/43");
+		knxDatapoints.put(new DatapointAddress("knx2n1408hvaccurrenttemp"), m.build());
+
+		m.setDescription("2-N14.10 - HVAC Current Temp.");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/44");
+		m.setWriteDatapointAddress("0/3/44");
+		knxDatapoints.put(new DatapointAddress("knx2n1410hvaccurrenttemp"), m.build());
+
+		m.setDescription("2-N14.12 - HVAC Current Temp.");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/45");
+		m.setWriteDatapointAddress("0/3/45");
+		knxDatapoints.put(new DatapointAddress("knx2n1412hvaccurrenttemp"), m.build());
+
+		m.setDescription("2-N14.14 - HVAC Current Temp.");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/46");
+		m.setWriteDatapointAddress("0/3/46");
+		knxDatapoints.put(new DatapointAddress("knx2n1414hvaccurrenttemp"), m.build());
+
+		m.setDescription("2-N14.16 - HVAC Current Temp.");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/47");
+		m.setWriteDatapointAddress("0/3/47");
+		knxDatapoints.put(new DatapointAddress("knx2n1416hvaccurrenttemp"), m.build());
+
+		m.setDescription("2-N14.18 - HVAC Current Temp.");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/48");
+		m.setWriteDatapointAddress("0/3/48");
+		knxDatapoints.put(new DatapointAddress("knx2n1418hvaccurrenttemp"), m.build());
+
+		m.setDescription("2-N14.20 - HVAC Current Temp.");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/49");
+		m.setWriteDatapointAddress("0/3/49");
+		knxDatapoints.put(new DatapointAddress("knx2n1420hvaccurrenttemp"), m.build());
+
+		m.setDescription("2-N14.24 - HVAC Current Temp.");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/50");
+		m.setWriteDatapointAddress("0/3/50");
+		knxDatapoints.put(new DatapointAddress("knx2n1424hvaccurrenttemp"), m.build());
+
+		m.setDescription("2-N14.26 - HVAC Current Temp.");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/51");
+		m.setWriteDatapointAddress("0/3/51");
+		knxDatapoints.put(new DatapointAddress("knx2n1426hvaccurrenttemp"), m.build());
+
+		m.setDescription("2-N14.28 - HVAC Current Temp.");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/52");
+		m.setWriteDatapointAddress("0/3/52");
+		knxDatapoints.put(new DatapointAddress("knx2n1428hvaccurrenttemp"), m.build());
+
+		m.setDescription("2-N14.02 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/53");
+		m.setWriteDatapointAddress("0/3/53");
+		knxDatapoints.put(new DatapointAddress("knx2n1402hvacsetpointtemp"), m.build());
+
+		m.setDescription("2-N14.04 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/54");
+		m.setWriteDatapointAddress("0/3/54");
+		knxDatapoints.put(new DatapointAddress("knx2n1404hvacsetpointtemp"), m.build());
+
+		m.setDescription("2-N14.06 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/55");
+		m.setWriteDatapointAddress("0/3/55");
+		knxDatapoints.put(new DatapointAddress("knx2n1406hvacsetpointtemp"), m.build());
+
+		m.setDescription("2-N14.08 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/56");
+		m.setWriteDatapointAddress("0/3/56");
+		knxDatapoints.put(new DatapointAddress("knx2n1408hvacsetpointtemp"), m.build());
+
+		m.setDescription("2-N14.10 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/57");
+		m.setWriteDatapointAddress("0/3/57");
+		knxDatapoints.put(new DatapointAddress("knx2n1410hvacsetpointtemp"), m.build());
+
+		m.setDescription("2-N14.12 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/58");
+		m.setWriteDatapointAddress("0/3/58");
+		knxDatapoints.put(new DatapointAddress("knx2n1412hvacsetpointtemp"), m.build());
+
+		m.setDescription("2-N14.14 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/59");
+		m.setWriteDatapointAddress("0/3/59");
+		knxDatapoints.put(new DatapointAddress("knx2n1414hvacsetpointtemp"), m.build());
+
+		m.setDescription("2-N14.16 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/60");
+		m.setWriteDatapointAddress("0/3/60");
+		knxDatapoints.put(new DatapointAddress("knx2n1416hvacsetpointtemp"), m.build());
+
+
+
+		// ESTADOS e TEMPERATURAS HVAC 
+		m.setDescription("2-N14.18 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/61");
+		m.setWriteDatapointAddress("0/3/61");
+		knxDatapoints.put(new DatapointAddress("knx2n1418hvacsetpointtemp"), m.build());
+
+		m.setDescription("2-N14.20 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/62");
+		m.setWriteDatapointAddress("0/3/62");
+		knxDatapoints.put(new DatapointAddress("knx2n1420hvacsetpointtemp"), m.build());
+
+		m.setDescription("2-N14.24 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/63");
+		m.setWriteDatapointAddress("0/3/63");
+		knxDatapoints.put(new DatapointAddress("knx2n1424hvacsetpointtemp"), m.build());
+
+		m.setDescription("2-N14.26 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/64");
+		m.setWriteDatapointAddress("0/3/64");
+		knxDatapoints.put(new DatapointAddress("knx2n1426hvacsetpointtemp"), m.build());
+
+		m.setDescription("2-N14.28 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/65");
+		m.setWriteDatapointAddress("0/3/65");
+		knxDatapoints.put(new DatapointAddress("knx2n1428hvacsetpointtemp"), m.build());
 //
 //		m.setDescription("2-N14 - All HVAC Current Temp.");
 //		m.setAccessType(AccessType.READ_WRITE);

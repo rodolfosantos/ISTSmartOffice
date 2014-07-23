@@ -17,6 +17,16 @@ $(".chartselection > li > a").bind('click', function(){
     plotRealTimeEnergyConsumption("powerconsumption", address, 3600000/4);
 });
 
+$(".nav-tabs").bind('click', function(){
+    //alert("click1");
+    setTimeout(function() {
+    renderCharts();
+}, 1);
+    
+});
+
+
+
 //$(".chartselection > li > a")[0].className
 
 function loadDashboardPage(){
@@ -27,14 +37,26 @@ function loadDashboardPage(){
 
         plotSensorData("indoor1", "knx158sensortemp", "ºC");
         plotSensorData("indoor2", "knx158sensorco", "ppm");
-        plotSensorData("indoor3", "knx158sensorlux", "Lux");        
+        plotSensorData("indoor3", "knx158sensorlux", "Lux");
+        
+        
+        plotSensorData("outdoor1", "knx2n14meteooutsidetempsensorprecision", "ºC");
+        plotSensorData("outdoor2", "knx2n14meteorelativehumsensorprecision", "%");
+        plotSensorData("outdoor3", "knx2n14meteowindspeedsensor", "m/s");
+        plotSensorData("outdoor4", "knx2n14meteoluminositysouthsensor", "Lux");
+        
         loaded1 = true;
     }
     else{
-        //update
+        renderCharts();
+    }
+}
+
+
+function renderCharts(){
+    //update
         for (var i = 0; i<charts.length;i++)
             charts[i].render();
-    }
 }
 
 

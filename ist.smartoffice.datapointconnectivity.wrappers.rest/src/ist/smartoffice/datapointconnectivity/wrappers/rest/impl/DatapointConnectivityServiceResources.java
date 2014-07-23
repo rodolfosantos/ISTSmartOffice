@@ -1,6 +1,11 @@
 package ist.smartoffice.datapointconnectivity.wrappers.rest.impl;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -254,7 +259,7 @@ public class DatapointConnectivityServiceResources {
 	 */
 	public static final class DatapointListingResource extends ServerResource {
 		@Get
-		public JSONObject doGet() {
+		public String doGet() {
 			Form responseHeaders = (Form) getResponse().getAttributes().get(
 					"org.restlet.http.headers");
 			if (responseHeaders == null) {
@@ -272,17 +277,25 @@ public class DatapointConnectivityServiceResources {
 							getRequest().getRootRef().toString())
 					.getAllDatapoints();
 			JSONArray array = new JSONArray();
+			
+			List<DatapointAddress> addrList = Arrays.asList(allDatapoints);
+			
+			Collections.sort(addrList);
+			
 			for (DatapointAddress datapointAddress : allDatapoints) {
 				array.put(datapointAddress.getAddress());
 			}
 			try {
 				result.put("addresses", array);
-				return result;
+				return result.toString(3);
 			} catch (JSONException e) {
 				getResponse().setStatus(Status.SERVER_ERROR_INTERNAL);
 				System.err.println(e.getMessage());
 			}
-			return result;
+			
+			System.out.println(result.toString());
+			
+			return result.toString();
 		}
 	}
 
@@ -352,6 +365,8 @@ public class DatapointConnectivityServiceResources {
 				}
 
 				result.put("reading", readingsArray);
+				
+				
 				return result;
 			} catch (JSONException e) {
 				getResponse().setStatus(Status.SERVER_ERROR_INTERNAL);

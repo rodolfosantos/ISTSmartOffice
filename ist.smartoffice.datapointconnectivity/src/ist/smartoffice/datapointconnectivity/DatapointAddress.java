@@ -7,7 +7,7 @@ package ist.smartoffice.datapointconnectivity;
  * 
  * 
  */
-public class DatapointAddress {
+public class DatapointAddress implements Comparable<DatapointAddress> {
 
 	private String address;
 
@@ -51,6 +51,13 @@ public class DatapointAddress {
 	@Override
 	public String toString() {
 		return address;
+	}
+
+	@Override
+	public int compareTo(DatapointAddress other) {
+		String thisS = this.address;
+		String otherS =  other.getAddress();
+		return thisS.compareTo(otherS);
 	}
 
 }

@@ -1226,113 +1226,113 @@ public class KNXServiceConfig {
 		m.setWriteDatapointAddress("0/3/52");
 		knxDatapoints.put(new DatapointAddress("knx2n1428hvaccurrenttemp"), m.build());
 
-//		m.setDescription("2-N14.02 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/53");
-//		m.setWriteDatapointAddress("0/3/53");
-//		knxDatapoints.put(new DatapointAddress("knx2n1402hvacsetpointtemp"), m.build());
-//
-//		m.setDescription("2-N14.04 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/54");
-//		m.setWriteDatapointAddress("0/3/54");
-//		knxDatapoints.put(new DatapointAddress("knx2n1404hvacsetpointtemp"), m.build());
-//
-//		m.setDescription("2-N14.06 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/55");
-//		m.setWriteDatapointAddress("0/3/55");
-//		knxDatapoints.put(new DatapointAddress("knx2n1406hvacsetpointtemp"), m.build());
-//
-//		m.setDescription("2-N14.08 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/56");
-//		m.setWriteDatapointAddress("0/3/56");
-//		knxDatapoints.put(new DatapointAddress("knx2n1408hvacsetpointtemp"), m.build());
-//
-//		m.setDescription("2-N14.10 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/57");
-//		m.setWriteDatapointAddress("0/3/57");
-//		knxDatapoints.put(new DatapointAddress("knx2n1410hvacsetpointtemp"), m.build());
-//
-//		m.setDescription("2-N14.12 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/58");
-//		m.setWriteDatapointAddress("0/3/58");
-//		knxDatapoints.put(new DatapointAddress("knx2n1412hvacsetpointtemp"), m.build());
-//
-//		m.setDescription("2-N14.14 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/59");
-//		m.setWriteDatapointAddress("0/3/59");
-//		knxDatapoints.put(new DatapointAddress("knx2n1414hvacsetpointtemp"), m.build());
-//
-//		m.setDescription("2-N14.16 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/60");
-//		m.setWriteDatapointAddress("0/3/60");
-//		knxDatapoints.put(new DatapointAddress("knx2n1416hvacsetpointtemp"), m.build());
-//
-//
-//
-//		// ESTADOS e TEMPERATURAS HVAC 
-//		m.setDescription("2-N14.18 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/61");
-//		m.setWriteDatapointAddress("0/3/61");
-//		knxDatapoints.put(new DatapointAddress("knx2n1418hvacsetpointtemp"), m.build());
-//
-//		m.setDescription("2-N14.20 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/62");
-//		m.setWriteDatapointAddress("0/3/62");
-//		knxDatapoints.put(new DatapointAddress("knx2n1420hvacsetpointtemp"), m.build());
-//
-//		m.setDescription("2-N14.24 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/63");
-//		m.setWriteDatapointAddress("0/3/63");
-//		knxDatapoints.put(new DatapointAddress("knx2n1424hvacsetpointtemp"), m.build());
-//
-//		m.setDescription("2-N14.26 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/64");
-//		m.setWriteDatapointAddress("0/3/64");
-//		knxDatapoints.put(new DatapointAddress("knx2n1426hvacsetpointtemp"), m.build());
-//
-//		m.setDescription("2-N14.28 - HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/65");
-//		m.setWriteDatapointAddress("0/3/65");
-//		knxDatapoints.put(new DatapointAddress("knx2n1428hvacsetpointtemp"), m.build());
-//
-//		m.setDescription("2-N14 - All HVAC Current Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/66");
-//		m.setWriteDatapointAddress("0/3/66");
-//		knxDatapoints.put(new DatapointAddress("knx2n14allhvaccurrenttemp"), m.build());
-//
-//		m.setDescription("2-N14 - All HVAC Set Point Temp.");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.BYTE_2);
-//		m.setReadDatapointAddress("0/3/67");
-//		m.setWriteDatapointAddress("0/3/67");
-//		knxDatapoints.put(new DatapointAddress("knx2n14allhvacsetpointtemp"), m.build());
+		m.setDescription("2-N14.02 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/53");
+		m.setWriteDatapointAddress("0/3/53");
+		knxDatapoints.put(new DatapointAddress("knx2n1402hvacsetpointtemp"), m.build());
+
+		m.setDescription("2-N14.04 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/54");
+		m.setWriteDatapointAddress("0/3/54");
+		knxDatapoints.put(new DatapointAddress("knx2n1404hvacsetpointtemp"), m.build());
+
+		m.setDescription("2-N14.06 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/55");
+		m.setWriteDatapointAddress("0/3/55");
+		knxDatapoints.put(new DatapointAddress("knx2n1406hvacsetpointtemp"), m.build());
+
+		m.setDescription("2-N14.08 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/56");
+		m.setWriteDatapointAddress("0/3/56");
+		knxDatapoints.put(new DatapointAddress("knx2n1408hvacsetpointtemp"), m.build());
+
+		m.setDescription("2-N14.10 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/57");
+		m.setWriteDatapointAddress("0/3/57");
+		knxDatapoints.put(new DatapointAddress("knx2n1410hvacsetpointtemp"), m.build());
+
+		m.setDescription("2-N14.12 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/58");
+		m.setWriteDatapointAddress("0/3/58");
+		knxDatapoints.put(new DatapointAddress("knx2n1412hvacsetpointtemp"), m.build());
+
+		m.setDescription("2-N14.14 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/59");
+		m.setWriteDatapointAddress("0/3/59");
+		knxDatapoints.put(new DatapointAddress("knx2n1414hvacsetpointtemp"), m.build());
+
+		m.setDescription("2-N14.16 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/60");
+		m.setWriteDatapointAddress("0/3/60");
+		knxDatapoints.put(new DatapointAddress("knx2n1416hvacsetpointtemp"), m.build());
+
+
+
+		// ESTADOS e TEMPERATURAS HVAC 
+		m.setDescription("2-N14.18 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/61");
+		m.setWriteDatapointAddress("0/3/61");
+		knxDatapoints.put(new DatapointAddress("knx2n1418hvacsetpointtemp"), m.build());
+
+		m.setDescription("2-N14.20 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/62");
+		m.setWriteDatapointAddress("0/3/62");
+		knxDatapoints.put(new DatapointAddress("knx2n1420hvacsetpointtemp"), m.build());
+
+		m.setDescription("2-N14.24 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/63");
+		m.setWriteDatapointAddress("0/3/63");
+		knxDatapoints.put(new DatapointAddress("knx2n1424hvacsetpointtemp"), m.build());
+
+		m.setDescription("2-N14.26 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/64");
+		m.setWriteDatapointAddress("0/3/64");
+		knxDatapoints.put(new DatapointAddress("knx2n1426hvacsetpointtemp"), m.build());
+
+		m.setDescription("2-N14.28 - HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/65");
+		m.setWriteDatapointAddress("0/3/65");
+		knxDatapoints.put(new DatapointAddress("knx2n1428hvacsetpointtemp"), m.build());
+
+		m.setDescription("2-N14 - All HVAC Current Temp.");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/66");
+		m.setWriteDatapointAddress("0/3/66");
+		knxDatapoints.put(new DatapointAddress("knx2n14allhvaccurrenttemp"), m.build());
+
+		m.setDescription("2-N14 - All HVAC Set Point Temp.");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.BYTE_2);
+		m.setReadDatapointAddress("0/3/67");
+		m.setWriteDatapointAddress("0/3/67");
+		knxDatapoints.put(new DatapointAddress("knx2n14allhvacsetpointtemp"), m.build());
 
 
 

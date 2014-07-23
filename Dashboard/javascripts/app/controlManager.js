@@ -189,6 +189,15 @@ function assingEventHandlers(){
     
     setupLightSwitch('.knx2n14alllights', 'knx2n14alllights');
     
+    
+    setupLightSwitch('.knx2n1418lights', 'knx2n1418lights');
+    setupHvacSwitch('.knx2n1418hvacmode', 'knx2n1418hvacmode');
+    setupLamp('.knx2n1418fanstep', '.knx2n1418fanstepslider', 'knx2n1418fanstep');
+    
+    setupLightSwitch('.knx2n1424lights', 'knx2n1424lights');
+    setupHvacSwitch('.knx2n1424hvacmode', 'knx2n1424hvacmode');
+    setupLamp('.knx2n1424fanstep', '.knx2n1424fanstepslider', 'knx2n1424fanstep');
+    
     $(".modehvac").bootstrapSwitch('onText', 'Hot', true);
     $(".modehvac").bootstrapSwitch('offText', 'Cold', true);
     setupHvacSwitch('.modehvac', 'knx158hvacmode');

@@ -335,7 +335,7 @@ public class KNXServiceConfig {
 		m.setDatatype(Datatype.SWITCH);
 		m.setReadDatapointAddress("0/1/0");
 		m.setWriteDatapointAddress("0/1/0");
-		//knxDatapoints.put(new DatapointAddress("knx2n14hvacallfanstep"), m.build());
+		knxDatapoints.put(new DatapointAddress("knx2n14hvacallfanstep"), m.build());
 
 		m.setDescription("2-N14.02 - Fan Step");
 		m.setAccessType(AccessType.READ_WRITE);
@@ -794,36 +794,36 @@ public class KNXServiceConfig {
 //		m.setWriteDatapointAddress("0/2/11");
 //		knxDatapoints.put(new DatapointAddress("knx2n14energytimeresetcircdhvacsupply"), m.build());
 //
-//		m.setDescription("2-N14 - Status - Circ. A - Hall Lights");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/2/12");
-//		m.setWriteDatapointAddress("0/2/12");
-//		knxDatapoints.put(new DatapointAddress("knx2n14statuscircahalllights"), m.build());
+		m.setDescription("2-N14 - Status - Circ. A - Hall Lights");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/2/12");
+		m.setWriteDatapointAddress("0/2/12");
+		knxDatapoints.put(new DatapointAddress("knx2n14statuscircahalllights"), m.build());
 //
-//		m.setDescription("2-N14 - Status - Circ. B - Hall Lights");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/2/13");
-//		m.setWriteDatapointAddress("0/2/13");
-//		knxDatapoints.put(new DatapointAddress("knx2n14statuscircbhalllights"), m.build());
+		m.setDescription("2-N14 - Status - Circ. B - Hall Lights");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/2/13");
+		m.setWriteDatapointAddress("0/2/13");
+		knxDatapoints.put(new DatapointAddress("knx2n14statuscircbhalllights"), m.build());
 //
-//		m.setDescription("2-N14 - Status - Circ. C - HVAC Supply");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/2/14");
-//		m.setWriteDatapointAddress("0/2/14");
-//		knxDatapoints.put(new DatapointAddress("knx2n14statuscircchvacsupply"), m.build());
+		m.setDescription("2-N14 - Status - Circ. C - HVAC Supply");
+		m.setAccessType(AccessType.READ_ONLY);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/2/14");
+		m.setWriteDatapointAddress("0/2/14");
+		knxDatapoints.put(new DatapointAddress("knx2n14statuscircchvacsupply"), m.build());
 
 
 
 		// ENERGIA e SENSORES GERAIS 
-//		m.setDescription("2-N14 - Status - Circ. D - HVAC Supply");
-//		m.setAccessType(AccessType.READ_WRITE);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/2/15");
-//		m.setWriteDatapointAddress("0/2/15");
-//		knxDatapoints.put(new DatapointAddress("knx2n14statuscircdhvacsupply"), m.build());
+		m.setDescription("2-N14 - Status - Circ. D - HVAC Supply");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/2/15");
+		m.setWriteDatapointAddress("0/2/15");
+		knxDatapoints.put(new DatapointAddress("knx2n14statuscircdhvacsupply"), m.build());
 
 		m.setDescription("2-N14 - Luminosity - Hall - North Sensor");
 		m.setAccessType(AccessType.READ_ONLY);
@@ -849,12 +849,12 @@ public class KNXServiceConfig {
 
 
 		// ESTADOS e TEMPERATURAS HVAC 
-//		m.setDescription("2-N14 - HVAC All States and Temp.");
-//		m.setAccessType(AccessType.READ_ONLY);
-//		m.setDatatype(Datatype.SWITCH);
-//		m.setReadDatapointAddress("0/3/0");
-//		m.setWriteDatapointAddress("0/3/0");
-//		knxDatapoints.put(new DatapointAddress("knx2n14hvacallstatestemp"), m.build());
+		m.setDescription("2-N14 - HVAC Geral ONOFF");
+		m.setAccessType(AccessType.READ_WRITE);
+		m.setDatatype(Datatype.SWITCH);
+		m.setReadDatapointAddress("0/3/0");
+		m.setWriteDatapointAddress("0/3/0");
+		knxDatapoints.put(new DatapointAddress("knx2n14hvacall"), m.build());
 
 //		m.setDescription("2-N14.02 - HVAC Heating Status");
 //		m.setAccessType(AccessType.READ_WRITE);

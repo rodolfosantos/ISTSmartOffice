@@ -191,6 +191,7 @@ function assingEventHandlers(){
     
     
     
+    setupLightSwitch('.knx2n1411e2elights', 'knx2n1411e2elights');
     
     setupLightSwitch('.knx2n1418lights', 'knx2n1418lights');
     setupHvacSwitch('.knx2n1418hvacmode', 'knx2n1418hvacmode');

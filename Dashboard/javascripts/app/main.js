@@ -27,11 +27,9 @@ $(document).bind("ready", function (e, data) {
     
     faye = new Faye.Client('http://it4energy.tagus.ist.utl.pt:8000/faye');
     
-    
-   // loadDashboardPage();
-    changePage("page1", null);
 
-   
+    var pageHash = document.URL.substring(document.URL.indexOf("#") + 1);
+    changePage(pageHash, null);
 });
 
 

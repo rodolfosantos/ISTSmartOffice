@@ -1,7 +1,7 @@
 /**
- * main.js
- * Rodolfo Santos, nº 76590
- */
+     * main.js
+     * Rodolfo Santos, nº 76590
+     */
 
 var pageNameMapping = {
     page1: "Dashboard", 
@@ -15,7 +15,7 @@ var pageNameMapping = {
 
 
 $(window).load(function() {
- // executes when complete page is fully loaded, including frames,objects and images
+    // executes when complete page is fully loaded, including frames,objects and images
 }); 
 
 // Listen for initial load of home page.
@@ -24,12 +24,20 @@ $(document).bind("ready", function (e, data) {
     scenariosApi = new DatapointConnectivityService("scenarios", "it4energy.tagus.ist.utl.pt", 8182);
     //api = new DatapointConnectivityService("remoteactuation", "localhost", 8182);
     //scenariosApi = new DatapointConnectivityService("scenarios", "localhost", 8182);
-    
+
     faye = new Faye.Client('http://it4energy.tagus.ist.utl.pt:8000/faye');
-    
+
 
     var pageHash = document.URL.substring(document.URL.indexOf("#") + 1);
-    changePage(pageHash, null);
+
+    if ( pageHash.indexOf('page') > -1 ) {
+
+        changePage(pageHash, null);
+    } else {
+
+        changePage('page1', null);
+    }
+
 });
 
 
@@ -37,12 +45,12 @@ function changePage(newHash, oldHash) {
     //TODO old not used
     $("nav > ul  > li.active").removeClass("active")
     $("div[class^='page'],div[class*='page']").hide()
-  
+
 
     $('nav > ul  > li > a[href$="' + newHash + '"]').parent().addClass('active')
     $("." + newHash).show().trigger('isVisible');;
-  
-    
+
+
     changeBreadcrumb(pageNameMapping[newHash]);
 }
 
@@ -67,8 +75,8 @@ $(window).on('hashchange', function (e) {
 
 function pushNotification(text, autoDismissTiming){
     Notifications.push({
-            imagePath: "images/avatar.png",
-            text: "<p><b>Alert!</b></p><div>"+text+"</div>",
-            autoDismiss: 10
-        });
+        imagePath: "images/avatar.png",
+        text: "<p><b>Alert!</b></p><div>"+text+"</div>",
+        autoDismiss: 10
+    });
 }

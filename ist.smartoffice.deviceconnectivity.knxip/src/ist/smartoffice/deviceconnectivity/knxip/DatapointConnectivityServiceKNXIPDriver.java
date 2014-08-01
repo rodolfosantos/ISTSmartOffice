@@ -74,7 +74,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 				public void groupWrite(ProcessEvent arg0) {
 					final String knxAddress = arg0.getDestination().toString();
 					log.d("KNX  GW Event: " + gwAddr + ":" + knxAddress);
-					
+
 					final DatapointAddress datapointAddress = getMasterAddress(knxAddress);
 
 					if (datapointAddress == null) {
@@ -83,8 +83,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 					log.d("KNX Event: " + gwAddr + ":" + datapointAddress);
 
-					if (!datapointsMetadata.keySet().contains(
-							datapointAddress))
+					if (!datapointsMetadata.keySet().contains(datapointAddress))
 						return;
 
 					if ((datapointsMetadata.get(datapointAddress)
@@ -92,19 +91,18 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 						return;
 
 					if (uptadingDatapoint.contains(datapointAddress)) {
-						//uptadingDatapoint.remove(datapointAddress);
+						// uptadingDatapoint.remove(datapointAddress);
 						return;
 					}
-					
+
 					uptadingDatapoint.add(datapointAddress);
-										// update value
+					// update value
 					new Thread(new Runnable() {
 
 						@Override
 						public void run() {
-							
-							
-							requestDatapointRead(datapointAddress,
+
+							requestDatapointReadDevice(datapointAddress,
 									new ReadCallback() {
 
 										@Override
@@ -115,30 +113,31 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 											datapointsStatus.put(
 													datapointAddress,
 													readings[0]);
-											log.d("KNX Update: " + gwAddr + ":" + address
-													+ "="
+											log.d("KNX Update: " + gwAddr + ":"
+													+ address + "="
 													+ readings[0].getValue());
 
 											// notifyDatapointUpdate(datapointAddress,
 											// readings);
-											
+
 											new Thread(new Runnable() {
-												
+
 												@Override
 												public void run() {
-													// TODO Auto-generated method stub
+													// TODO Auto-generated
+													// method stub
 													try {
 														Thread.sleep(800);
 													} catch (InterruptedException e) {
-														// TODO Auto-generated catch block
+														// TODO Auto-generated
+														// catch block
 														e.printStackTrace();
 													}
-													uptadingDatapoint.remove(datapointAddress);
+													uptadingDatapoint
+															.remove(datapointAddress);
 												}
 											}).start();
-											
-											
-											
+
 										}
 
 										@Override
@@ -203,7 +202,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 					.next();
 			DatapointMetadata m = datapointsMetadata.get(datapointAddress);
 			if (DatapointMetadata.AccessType.WRITE_ONLY != m.getAccessType()) {
-				requestDatapointRead(datapointAddress, new ReadCallback() {
+				requestDatapointReadDevice(datapointAddress, new ReadCallback() {
 
 					@Override
 					public void onReadCompleted(DatapointAddress address,
@@ -280,6 +279,35 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 
 	@Override
 	public int requestDatapointRead(DatapointAddress address,
+			ReadCallback readCallback) {
+		return requestDatapointReadCache(address, readCallback);
+	}
+
+	private int requestDatapointReadCache(DatapointAddress address,
+			ReadCallback readCallback) {
+
+		DatapointMetadata m = getDatapointMetadata(address);
+		String readAddr = m.getReadDatapointAddress();
+		KNXGatewayIPDriver gw = gateways.get(m.getGatewayAddress());
+
+		if (m.getAccessType() == AccessType.WRITE_ONLY) {
+			readCallback.onReadAborted(address,
+					ErrorType.UNSUPORTED_DATAPOINT_OPERATION, 0);
+			return 0;
+		}
+
+		DatapointValue reading = datapointsStatus.get(address);
+		if (reading != null)
+			readCallback.onReadCompleted(address,
+					new DatapointValue[] { reading }, 0);
+		else
+			readCallback.onReadAborted(address,
+					ErrorType.DEVICE_NOT_RESPONDING, 0);
+
+		return 0;
+	}
+
+	private int requestDatapointReadDevice(DatapointAddress address,
 			ReadCallback readCallback) {
 		DatapointMetadata m = getDatapointMetadata(address);
 		String readAddr = m.getReadDatapointAddress();

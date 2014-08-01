@@ -202,24 +202,27 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 					.next();
 			DatapointMetadata m = datapointsMetadata.get(datapointAddress);
 			if (DatapointMetadata.AccessType.WRITE_ONLY != m.getAccessType()) {
-				requestDatapointReadDevice(datapointAddress, new ReadCallback() {
+				requestDatapointReadDevice(datapointAddress,
+						new ReadCallback() {
 
-					@Override
-					public void onReadCompleted(DatapointAddress address,
-							DatapointValue[] readings, int requestId) {
-						datapointsStatus.put(datapointAddress, readings[0]);
-						log.d("KNX Update: " + address + "="
-								+ readings[0].getValue());
+							@Override
+							public void onReadCompleted(
+									DatapointAddress address,
+									DatapointValue[] readings, int requestId) {
+								datapointsStatus.put(datapointAddress,
+										readings[0]);
+								log.d("KNX Update: " + address + "="
+										+ readings[0].getValue());
 
-					}
+							}
 
-					@Override
-					public void onReadAborted(DatapointAddress address,
-							ErrorType reason, int requestId) {
-						notifyDatapointError(datapointAddress,
-								ErrorType.DEVICE_NOT_RESPONDING);
-					}
-				});
+							@Override
+							public void onReadAborted(DatapointAddress address,
+									ErrorType reason, int requestId) {
+								notifyDatapointError(datapointAddress,
+										ErrorType.DEVICE_NOT_RESPONDING);
+							}
+						});
 			}
 		}
 	}
@@ -406,6 +409,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 			try {
 				float f = Float.parseFloat(values[0].getValue());
 				gw.writePercentage(writeAddr, Math.round(f));
+				datapointsStatus.put(address, values[0]);
 				writeCallback.onWriteCompleted(address,
 						WritingConfirmationLevel.DEVICE_ACTION_TAKEN, 0);
 				notifyDatapointUpdate(address, values);
@@ -421,6 +425,7 @@ public class DatapointConnectivityServiceKNXIPDriver implements
 				System.err.println("DOOR" + values[0].getValue());
 				gw.writeSwitch(writeAddr,
 						Boolean.parseBoolean(values[0].getValue()));
+				datapointsStatus.put(address, values[0]);
 				writeCallback.onWriteCompleted(address,
 						WritingConfirmationLevel.DEVICE_ACTION_TAKEN, 0);
 				notifyDatapointUpdate(address, values);

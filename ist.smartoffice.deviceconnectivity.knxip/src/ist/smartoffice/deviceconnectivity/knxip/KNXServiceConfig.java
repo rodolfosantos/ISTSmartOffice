@@ -1338,7 +1338,7 @@ public class KNXServiceConfig {
 
 		// ESTACAO METEOROLOGICA - BUS Q.E. PISO 1 
 		
-		m.setGatewayAddress("172.20.70.247");
+		m.setGatewayAddress("172.20.70.147");
 		
 		m.setDescription("2-N14 - Meteo - Luminosity - East Sensor");
 		m.setAccessType(AccessType.READ_ONLY);
